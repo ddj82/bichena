@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProdDAO">
+	<resultMap type="prodDTO" id="prodList">
+		<id property="p_no" column="P_NO" />
+		<result property="p_name" column="P_NAME" />
+		<result property="p_desc" column="P_DESC" />
+		<result property="p_price" column="P_PRICE" />
+		<result property="p_made" column="P_MADE" />
+		<result property="p_type" column="P_TYPE" />
+		<result property="p_dgr" column="P_DGR" />
+		<result property="p_sw" column="P_SW" />
+		<result property="p_su" column="P_SU" />
+		<result property="p_sp" column="P_SP" />
+		<result property="p_mat" column="P_MAT" />
+		<result property="p_cap" column="P_CAP" />
+		<result property="p_stock" column="P_STOCK" />
+		<result property="p_img" column="P_IMG" />
+	</resultMap>
+
+	<select id="prodList" resultMap="prodList">
+		SELECT * FROM BC_PROD
+	</select>
+	
+	<select id="prodOne" resultType="prodDTO">
+		SELECT * FROM BC_PROD WHERE P_NO = #{p_no}
+	</select>
+
+	<insert id="insertSomething">
+	</insert>
+
+	<update id="updateSomething">
+	</update>
+
+	<delete id="deleteSomething">
+	</delete>
+
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProdRevDAO">
+	<resultMap type="prodRevDTO" id="prodRevList">
+		<id property="pr_no" column="PR_NO" />
+		<result property="u_no" column="U_NO" />
+		<result property="u_nick" column="U_NICK" />
+		<result property="p_no" column="P_NO" />
+		<result property="p_name" column="P_NAME" />
+		<result property="pr_content" column="PR_CONTENT" />
+		<result property="pr_star" column="PR_STAR" />
+		<result property="pr_date" column="PR_DATE" />
+		<result property="pr_img" column="PR_IMG" />
+	</resultMap>
+	
+	<select id="prodOneRev" resultMap="prodRevList">
+		SELECT * FROM BC_PRODREV WHERE P_NO = #{p_no}
+	</select>
+
+	<insert id="insertSomething">
+	</insert>
+
+	<update id="updateSomething">
+	</update>
+
+	<delete id="deleteSomething">
+	</delete>
+
+</mapper>
