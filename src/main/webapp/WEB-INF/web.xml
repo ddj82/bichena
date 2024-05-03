@@ -8,6 +8,20 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:business-layer.xml</param-value>
 	</context-param>
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<include-prelude>/WEB-INF/common/header.jsp</include-prelude>
+		</jsp-property-group>
+<!-- 		<jsp-property-group> -->
+<!-- 			<url-pattern>*.jsp</url-pattern> -->
+<!-- 			<include-prelude>/WEB-INF/common/navbar.jsp</include-prelude> -->
+<!-- 		</jsp-property-group> -->
+<!-- 		<jsp-property-group> -->
+<!-- 			<url-pattern>*.jsp</url-pattern> -->
+<!-- 			<include-coda>/WEB-INF/common/footer.jsp</include-coda> -->
+<!-- 		</jsp-property-group> -->
+	</jsp-config>
 	<filter>
 		<filter-name>characterEncoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

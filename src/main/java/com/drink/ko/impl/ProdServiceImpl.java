@@ -6,16 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.drink.ko.ProdService;
-import com.drink.ko.ProdVO;
+import com.drink.ko.impl.dao.ProdDAO;
+import com.drink.ko.vo.ProdVO;
 
 @Service
 public class ProdServiceImpl implements ProdService {
 	@Autowired
-	ProdDAO dao;
+	private ProdDAO dao;
 
 	@Override
-	public ProdVO prodOne(String pno) {
-		return dao.prodOne(pno);
+	public ProdVO prodOne(String p_no) {
+		return dao.prodOne(p_no);
 	}
 
 	@Override

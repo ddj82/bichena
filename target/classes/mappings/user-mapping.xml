@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserDAO">
+
+	<resultMap type="userdto" id="users">
+		<id property="u_id" column="U_ID" />
+		<result property="u_pw" column="U_PW" />
+		<result property="u_name" column="U_NAME" />
+		<result property="u_nick" column="U_NICK" />
+		<result property="u_gen" column="U_GEN" />
+		<result property="u_birth" column="U_BIRTH" />
+		<result property="u_tel" column="U_TEL" />
+		<result property="u_email" column="U_EMAIL" />
+		<result property="addr1" column="ADDR1" />
+		<result property="addr2" column="ADDR2" />
+		<result property="addr3" column="ADDR3" />
+		<result property="u_lev" column="U_LEV" />
+		<result property="u_state" column="U_STATE" />
+	</resultMap>
+
+	<select id="checkId" resultType="userdto">
+		SELECT * FROM bc_users WHERE U_ID = #{u_id}
+	</select>
+
+	<insert id="insertUser">
+		INSERT INTO
+		bc_users(U_ID,U_PW,U_NAME,U_NICK,U_GEN,U_BIRTH,U_TEL,U_EMAIL,ADDR1,ADDR2,ADDR3)
+		VALUES(#{u_id},#{u_pw},#{u_name},#{u_nick},#{u_gen},#{u_birth},#{u_tel},#{u_email},#{addr1},#{addr2},#{addr3})
+	</insert>
+
+	<!-- 마이 페이지 -> 내 정보 관리 넘어갈 때 비번 재확인 -->
+	<select id="checkPw" resultType="userdto">
+		SELECT * FROM BC_USERS WHERE U_PW = #{u_pw}
+	</select>
+
+	<!-- 회원 상세정보 -->
+	<select id="selectOne" parameterType="string" resultMap="users">
+		SELECT * FROM BC_USERS WHERE U_ID = #{selId} 
+	</select>
+
+	<!--회원 정보 수정 -->
+	<update id="updateUser"> 
+		UPDATE BC_USERS SET U_NAME = #{u_name}, U_NICK = #{u_nick}, U_PW = #{u_pw}, U_TEL = #{u_tel}, U_EMAIL = #{u_email}, ADDR1 =#{addr1}, ADDR2 =#{addr2}, ADDR3 =#{addr3} WHERE U_ID =#{u_id}
+	</update>
+
+	<!-- 닉네임 중복 -->
+	<select id="checkNick" resultType="userdto">
+		SELECT * FROM BC_USERS WHERE u_nick = #{u_nick}
+	</select>
+
+	<!--회원 계정 삭제 -->
+	<update id="deleteUser">  
+		UPDATE BC_USERS SET U_STATE = '0' WHERE U_ID = #{u_id};
+	</update>
+
+</mapper>

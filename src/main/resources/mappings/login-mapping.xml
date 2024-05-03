@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserDAO">
+
+	<resultMap type="userdto" id="user">
+		<id property="u_no" column="U_NO" />
+		<result property="u_id" column="U_ID" />
+		<result property="u_pw" column="U_PW" />
+		<result property="u_name" column="U_NAME" />
+		<result property="u_nick" column="U_NICK" />
+		<result property="u_gen" column="U_GEN" />
+		<result property="u_birth" column="U_BIRTH" />
+		<result property="u_tel" column="U_TEL" />
+		<result property="u_email" column="U_EMAIL" />
+		<result property="addr1" column="ADDR1" />
+		<result property="addr2" column="ADDR2" />
+		<result property="addr3" column="ADDR3" />
+		<result property="u_lev" column="U_LEV" />
+		<result property="u_state" column="U_STATE" />
+	</resultMap>
+	
+	<select id="loginSelectOne" resultMap="user">
+		SELECT * FROM BC_USERS WHERE U_ID = #{u_id} AND U_PW = #{u_pw} AND U_STATE != 0
+	</select>
+	
+	<select id="idFindEmail" resultMap="user">
+		SELECT * FROM BC_USERS WHERE U_EMAIL = #{u_email}
+	</select>
+	
+	<select id="idFindPhon" resultMap="user">
+		SELECT * FROM BC_USERS WHERE U_TEL = #{u_tel}
+	</select>
+	
+	<select id="pwFind" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM BC_USERS WHERE U_ID = #{u_id}
+	</select>
+	
+	<update id="pwFindStart">
+		UPDATE BC_USERS SET U_PW = #{n_pw} WHERE U_ID = #{u_id}
+	</update>
+	
+	<select id="selectPW" resultMap="user">
+		SELECT u_pw FROM BC_USERS WHERE U_ID = #{u_id}
+	</select>
+
+	<select id="kakaoLogin" resultMap="user">
+		SELECT * FROM BC_USERS WHERE
+		U_ID = #{u_id} AND U_TEL = #{u_tel}
+	</select>
+
+	<!-- 변경하기  -->
+   <insert id="kakaoLoginFirst">
+      INSERT INTO BC_USERS
+         (U_ID,U_PW,U_NAME,U_BIRTH,U_TEL,ADDR1,ADDR2,ADDR3,U_EMAIL,U_NICK,U_GEN)
+      VALUES(#{u_id},'kakao',#{u_name},#{u_birth},#{u_tel},#{addr1},#{addr2},#{addr3},#{u_email},#{u_nick},#{u_gen})
+   </insert>
+   
+</mapper>

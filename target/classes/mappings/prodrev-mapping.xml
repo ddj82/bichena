@@ -19,7 +19,12 @@
 		SELECT * FROM BC_PRODREV WHERE P_NO = #{p_no}
 	</select>
 
-	<insert id="insertSomething">
+	<insert id="prodRevInsert">
+		INSERT INTO BC_PRODREV (U_NO, U_NICK, P_NO, P_NAME, PR_CONTENT, PR_STAR, PR_IMG)
+		SELECT u.U_NO, u.U_NICK, p.P_NO, p.P_NAME, #{pr_content}, #{pr_star}, #{pr_img}
+		FROM bc_users AS u
+		JOIN bc_prod AS p ON p.P_NO = #{p_no}
+		WHERE u.U_NO = #{u_no}
 	</insert>
 
 	<update id="updateSomething">
