@@ -60,6 +60,11 @@
 								<i class="fas fa-chart-area"></i>
 							</div> 공지사항
 						</a> 
+						<a class="nav-link" href="adminqnaList.ko" target="contentFrame">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-table"></i>
+							</div> 상품후기 게시판
+						</a>
 						<a class="nav-link" href="" target="contentFrame">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-table"></i>
@@ -70,6 +75,7 @@
 								<i class="fas fa-table"></i>
 							</div> QNA 게시판
 						</a>
+						
 					</div>
 				</div>
 			</nav>

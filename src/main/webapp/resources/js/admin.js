@@ -6,25 +6,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
   if (datatablesSimple) {
     new simpleDatatables.DataTable(datatablesSimple);
   }
-});
 
-/*!
- * Start Bootstrap - SB Admin v7.0.7 (https://startbootstrap.com/template/sb-admin)
- * Copyright 2013-2023 Start Bootstrap
- * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
- */
-//
-// Scripts
-//
-
-window.addEventListener("DOMContentLoaded", (event) => {
   // Toggle the side navigation
   const sidebarToggle = document.body.querySelector("#sidebarToggle");
   if (sidebarToggle) {
-    // Uncomment Below to persist sidebar toggle between refreshes
-    // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-    //     document.body.classList.toggle('sb-sidenav-toggled');
-    // }
     sidebarToggle.addEventListener("click", (event) => {
       event.preventDefault();
       document.body.classList.toggle("sb-sidenav-toggled");
@@ -34,4 +19,24 @@ window.addEventListener("DOMContentLoaded", (event) => {
       );
     });
   }
+
+  // Add event listener to sidebar links
+  const sidebarLinks = document.querySelectorAll("#layoutSidenav_nav .nav-link");
+
+  sidebarLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      // Check if the link is clicked when the sidebar is toggled on small screens
+      if (window.innerWidth <= 991 && document.body.classList.contains("sb-sidenav-toggled")) {
+        event.preventDefault();
+        document.body.classList.remove("sb-sidenav-toggled");
+
+        // Get the href attribute of the clicked link
+        const href = link.getAttribute("href");
+
+        // Set the src attribute of the iframe to the href value
+        const iframe = document.getElementById("contentFrame");
+        iframe.src = href;
+      }
+    });
+  });
 });
