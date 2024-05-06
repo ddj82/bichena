@@ -10,6 +10,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
   // Toggle the side navigation
   const sidebarToggle = document.body.querySelector("#sidebarToggle");
   if (sidebarToggle) {
+    // Uncomment Below to persist sidebar toggle between refreshes
+    // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
+    //     document.body.classList.toggle('sb-sidenav-toggled');
+    // }
     sidebarToggle.addEventListener("click", (event) => {
       event.preventDefault();
       document.body.classList.toggle("sb-sidenav-toggled");
@@ -20,22 +24,40 @@ window.addEventListener("DOMContentLoaded", (event) => {
     });
   }
 
-  // Add event listener to sidebar links
+  // Close sidebar when clicking outside of it or on a link
+  document.addEventListener("click", (event) => {
+    const sidebar = document.getElementById("layoutSidenav_nav");
+    const sidebarToggle = document.getElementById("sidebarToggle");
+    const sidebarLinks = document.querySelectorAll("#layoutSidenav_nav .nav-link");
+    
+    if (
+      window.innerWidth <= 991 &&
+      document.body.classList.contains("sb-sidenav-toggled") &&
+      sidebar &&
+      sidebarToggle &&
+      !sidebar.contains(event.target) &&
+      event.target !== sidebarToggle &&
+      !Array.from(sidebarLinks).some(link => link.contains(event.target))
+    ) {
+      document.body.classList.remove("sb-sidenav-toggled");
+      localStorage.setItem("sb|sidebar-toggle", false);
+    }
+  });
+
+  // Prevent default behavior of sidebarToggle when clicked
+  if (sidebarToggle) {
+    sidebarToggle.addEventListener("click", (event) => {
+      event.preventDefault();
+    });
+  }
+
+  // Close sidebar when clicking on a link
   const sidebarLinks = document.querySelectorAll("#layoutSidenav_nav .nav-link");
-
-  sidebarLinks.forEach((link) => {
-    link.addEventListener("click", (event) => {
-      // Check if the link is clicked when the sidebar is toggled on small screens
-      if (window.innerWidth <= 991 && document.body.classList.contains("sb-sidenav-toggled")) {
-        event.preventDefault();
+  sidebarLinks.forEach(link => {
+    link.addEventListener("click", () => {
+      if (window.innerWidth <= 991) {
         document.body.classList.remove("sb-sidenav-toggled");
-
-        // Get the href attribute of the clicked link
-        const href = link.getAttribute("href");
-
-        // Set the src attribute of the iframe to the href value
-        const iframe = document.getElementById("contentFrame");
-        iframe.src = href;
+        localStorage.setItem("sb|sidebar-toggle", false);
       }
     });
   });
