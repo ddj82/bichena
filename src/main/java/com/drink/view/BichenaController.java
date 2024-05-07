@@ -80,6 +80,7 @@ public class BichenaController {
 	@RequestMapping("/insertUser.ko")
 	public String insertUser(UsersVO vo) {
 		usersService.insertUser(vo);
+		
 		return "/WEB-INF/join/success.jsp";
 	}
 
@@ -403,12 +404,12 @@ public class BichenaController {
 		}
 	}
 
-	@RequestMapping("admin.ko")
+	@RequestMapping("/admin.ko")
 	public String admin() {
 		return "/WEB-INF/admin/adminMain.jsp";
 	}
 
-	@RequestMapping("/adminqnaList.ko")
+	@RequestMapping("/adminQnaList.ko")
 	public String adminqnaList(Model model) {
 		List<QnaVO> qnaList = qnaService.qnaList();
 		model.addAttribute("qnaList", qnaList);
@@ -422,12 +423,35 @@ public class BichenaController {
 		return "/WEB-INF/admin/adminOrderList.jsp";
 	}
 
-	@GetMapping("adminOrderDetail.ko")
+	@GetMapping("/adminOrderDetail.ko")
 	@ResponseBody
 	public Object adminOrderDetail(@RequestParam(value = "o_no") String o_no, Model model) {
 		OrderVO adminOrderDetail = orderService.myOrderDetail(o_no);
 		model.addAttribute("adminOrderDetail", adminOrderDetail);
 		return adminOrderDetail;
 	}
+	
+	@RequestMapping("/adminQnaView.ko")
+	public String adminQnaView(@RequestParam(value = "q_no") String q_no, Model model) {
+		System.out.println("관리자가 qna상세보기 : "+q_no);
+		QnaVO qnaView = qnaService.qnaView(q_no);
+		model.addAttribute("qnaView", qnaView);
+		System.out.println(qnaView);
+		return "/WEB-INF/admin/adminQnaView.jsp";
+	}
 
+	@GetMapping("/adminProdList.ko")
+	public String adminProdList(Model model) {
+		List<ProdVO> adminProdList = prodService.prodList();
+		model.addAttribute("adminProdList", adminProdList);
+		return "/WEB-INF/admin/adminProdView.jsp";
+	}
+	
+	@GetMapping("/adminProdDetail.ko")
+	@ResponseBody
+	public Object adminProdDetail(@RequestParam(value = "p_no") String p_no, Model model) {
+		ProdVO adminProdDetail = prodService.prodOne(p_no);
+		model.addAttribute("adminProdDetail", adminProdDetail);
+		return adminProdDetail;
+	}
 }

@@ -9,58 +9,57 @@
 <body>
 	<section class="title">문의목록</section>
 
-	<section id="ListArea">
-		<table>
-			<tr>
-				<td>카테고리</td>
-				<td>${qnaView.q_cate }</td>
-			</tr>
-			<tr>
-				<td>제목</td>
-				<td>${qnaView.q_title }</td>
-			</tr>
-			<tr>
-				<td>작성자</td>
-				<td>${qnaView.q_writer }</td>
-			</tr>
-			<tr>
-				<td>날짜</td>
-				<td>${qnaView.q_date }</td>
-			</tr>
-			<tr>
-				<td>내용</td>
-				<td>${qnaView.q_content }</td>
-			</tr>
-			<tr>
-				<td>첨부파일</td>
-				<td>
-					<img src="img/imgQna/${qnaView.q_img }" title="img" alt="img" style="width: 200px;">
-				</td>
-			</tr>
-		</table>
-		<br>
-		<c:choose>
-			<c:when test="${userID eq 'admin' }">
-				<c:choose>
-					<c:when test="${qnaView.a_content == null}">
-						<form action="qnaAcontent.ko" method="post">
-							<input type="hidden" name="q_no" value="${qnaView.q_no }">
-							<textarea rows="10" name="a_content"></textarea>
-							<button type="submit">확인</button>
-						</form>
-					</c:when>
-					<c:otherwise>
-						<textarea rows="10" name="a_content" readonly>${qnaView.a_content }</textarea>
-					</c:otherwise>
-				</c:choose>
-			</c:when>
-			<c:otherwise>
-				<c:if test="${qnaView.a_content != null}">
+	<table>
+		<tr>
+			<td>카테고리</td>
+			<td>${qnaView.q_cate }</td>
+		</tr>
+		<tr>
+			<td>제목</td>
+			<td>${qnaView.q_title }</td>
+		</tr>
+		<tr>
+			<td>작성자</td>
+			<td>${qnaView.q_writer }</td>
+		</tr>
+		<tr>
+			<td>날짜</td>
+			<td>${qnaView.q_date }</td>
+		</tr>
+		<tr>
+			<td>내용</td>
+			<td>${qnaView.q_content }</td>
+		</tr>
+		<tr>
+			<td>첨부파일</td>
+			<td>
+				<img src="img/imgQna/${qnaView.q_img }" title="img" alt="img" style="width: 200px;">
+			</td>
+		</tr>
+	</table>
+	<br>
+	<c:choose>
+		<c:when test="${userID eq 'admin' }">
+			<c:choose>
+				<c:when test="${qnaView.a_content == null}">
+					<form action="qnaAcontent.ko" method="post">
+						<input type="hidden" name="q_no" value="${qnaView.q_no }">
+						<textarea rows="10" name="a_content"></textarea>
+						<button type="submit">확인</button>
+					</form>
+				</c:when>
+				<c:otherwise>
 					<textarea rows="10" name="a_content" readonly>${qnaView.a_content }</textarea>
-				</c:if>
-			</c:otherwise>
-		</c:choose>
-	</section>
+				</c:otherwise>
+			</c:choose>
+		</c:when>
+		<c:otherwise>
+			<c:if test="${qnaView.a_content != null}">
+				<textarea rows="10" name="a_content" readonly>${qnaView.a_content }</textarea>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
+	
 	<button type="button" class="btndel btn" onclick="qnaDelbtn(${qnaView.q_no })">삭제</button>
 	
 <script>

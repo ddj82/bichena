@@ -17,19 +17,10 @@ table {
 	text-align: center;
 }
 </style>
-<script>
-function qnaView(uid, qno, sid) {
-	if (uid == sid || sid == 'admin') {
-		location.href = 'qnaView.ko?q_no=' + qno;
-	} else {
-		alert('작성자만 조회 가능합니다.');
-	}
-}
-</script>
+
 </head>
 <body>
 <div class="container">
-	<section class="title">문의목록</section>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -43,7 +34,7 @@ function qnaView(uid, qno, sid) {
 	    </thead>
 	    <tbody>
 		<c:forEach items="${qnaList }" var="qna">
-			<tr onclick="qnaView('${qna.q_writer }', ${qna.q_no }, '${userID }')" style="cursor: pointer">
+			<tr onclick="location.href = 'adminQnaView.ko?q_no=${qna.q_no }';" style="cursor: pointer">
 				<td>${qna.q_no }</td>
 				<td>${qna.q_cate }</td>
 				<td>${qna.q_title }</td>
@@ -54,10 +45,6 @@ function qnaView(uid, qno, sid) {
 		</c:forEach>
 	    </tbody>
 	</table>
-		
-	<c:if test="${userID != null }">
-		<button type="button" class="btndel btn" onclick="location.href = 'qnaInsertbtn.ko';">문의하기</button>
-	</c:if>
 </div>
 </body>
 </html>

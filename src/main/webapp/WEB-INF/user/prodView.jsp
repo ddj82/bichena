@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <style>
 span.prod img {
-width: 300px;
+width: 200px;
 }
 span.prod {
 cursor: pointer;
