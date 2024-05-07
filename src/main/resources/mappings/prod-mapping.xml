@@ -28,7 +28,9 @@
 		SELECT * FROM BC_PROD WHERE P_NO = #{p_no}
 	</select>
 
-	<insert id="insertSomething">
+	<insert id="adminProdInsert">
+		INSERT INTO BC_PROD (P_NAME, P_DESC, P_PRICE, P_MADE, P_TYPE, P_DGR, P_SW, P_SU, P_SP, P_MAT, P_CAP, P_STOCK, P_IMG)
+		VALUES (#{p_name}, #{p_desc}, #{p_price}, #{p_made}, #{p_type}, #{p_dgr}, #{p_sw}, #{p_su}, #{p_sp}, #{p_mat}, #{p_cap}, #{p_stock}, #{p_img})
 	</insert>
 
 	<update id="updateSomething">

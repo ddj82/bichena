@@ -21,4 +21,8 @@ public class ProdDAO {
 		return mybatis.selectList("ProdDAO.prodList");
 	}
 	
+	public int adminProdInsert(ProdVO vo) {
+		return mybatis.insert("ProdDAO.adminProdInsert", vo);
+	}
+	
 }

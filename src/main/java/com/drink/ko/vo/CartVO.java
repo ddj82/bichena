@@ -1,12 +1,13 @@
 package com.drink.ko.vo;
 
 public class CartVO {
-	private int p_no;
-	private String p_name;
-	private int c_stock;
-	private String u_id;
-	private int c_total;
 	
+	private int p_no; // 상품번호
+	private String p_name; //  상품이름
+	private int c_stock; // 주문수량(개수)
+	private String u_id; //회원번호
+	private int c_total; // 장바구니 총 가격
+	private String p_img; // 상품테이블의 이미지
 	public int getP_no() {
 		return p_no;
 	}
@@ -37,11 +38,18 @@ public class CartVO {
 	public void setC_total(int c_total) {
 		this.c_total = c_total;
 	}
-	
+	public String getP_img() {
+		return p_img;
+	}
+	public void setP_img(String p_img) {
+		this.p_img = p_img;
+	}
 	@Override
 	public String toString() {
 		return "CartVO [p_no=" + p_no + ", p_name=" + p_name + ", c_stock=" + c_stock + ", u_id=" + u_id + ", c_total="
-				+ c_total + "]";
+				+ c_total + ", p_img=" + p_img + "]";
 	}
+	
+
 	
 }

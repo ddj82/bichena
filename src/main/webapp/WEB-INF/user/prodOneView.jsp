@@ -5,68 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>주류상세페이지</title>
+<link href="${pageContext.request.contextPath}/resources/css/prodOne.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
-<style>
-table {
-width: 30%;
-border: 1px solid black;
-border-collapse: collapse;
-}
-th {
-text-align: left;
-}
-img {
-width: 300px;
-}
-div.div1 {
-height: 350px;
-}
-div.clear span {
-padding: 10px;
-margin: 10px;
-}
-span.span2 {
-font-size: 25px;
-}
-span.span1 {
-color: gray;
-font-weight: bold;
-}
-p {
-margin: 10px 0;
-}
-p.p1 {
-margin-bottom: 0;
-}
-p.p2 {
-margin-top: 0;
-}
-div.clear {
-padding: 10px 0;
-}
-.float {
-float: left;
-}
-.clear {
-clear: right;
-}
-.dtable {
-padding: 10px;
-}
-.main {
-width: 60%;
-margin: 0 20%;
-position: relative;
-}
-.main div {
-width: 100%;
-}
-.pay {
-position: fixed;
-left: 65%;
-top: 0;
-}
-</style>
 <script>
 $(function(){
 	let pno = ${prodOne.p_no};

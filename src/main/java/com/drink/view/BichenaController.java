@@ -231,7 +231,7 @@ public class BichenaController {
 		return count;
 	}
 
-	@RequestMapping("main.ko")
+	@RequestMapping("/main.ko")
 	public String main() {
 		return "/main.jsp";
 	}
@@ -246,7 +246,7 @@ public class BichenaController {
 		return "/WEB-INF/user/myPageMain.jsp";
 	}
 
-	@GetMapping("myOrderDetail.ko")
+	@GetMapping("/myOrderDetail.ko")
 	public String myOrderDetail(@RequestParam(value = "o_no") String o_no, Model model) {
 		OrderVO myOrderDetail = orderService.myOrderDetail(o_no);
 		model.addAttribute("myOrderDetail", myOrderDetail);
@@ -260,7 +260,7 @@ public class BichenaController {
 		return "/WEB-INF/user/prodView.jsp";
 	}
 
-	@GetMapping("/prodOne.ko")
+	@RequestMapping("/prodOne.ko")
 	public String prodOne(@RequestParam(value = "p_no") String p_no, Model model) {
 		ProdVO prodOne = prodService.prodOne(p_no);
 		model.addAttribute("prodOne", prodOne);
@@ -400,7 +400,7 @@ public class BichenaController {
 			return "qnaList.ko";
 		} else {
 			System.out.println("등록실패");
-			return "redirect:/index.jsp";
+			return "redirect:main.ko";
 		}
 	}
 
@@ -440,7 +440,7 @@ public class BichenaController {
 		return "/WEB-INF/admin/adminQnaView.jsp";
 	}
 
-	@GetMapping("/adminProdList.ko")
+	@RequestMapping("/adminProdList.ko")
 	public String adminProdList(Model model) {
 		List<ProdVO> adminProdList = prodService.prodList();
 		model.addAttribute("adminProdList", adminProdList);
@@ -453,5 +453,31 @@ public class BichenaController {
 		ProdVO adminProdDetail = prodService.prodOne(p_no);
 		model.addAttribute("adminProdDetail", adminProdDetail);
 		return adminProdDetail;
+	}
+	
+	@PostMapping("/adminProdInsert.ko")
+	public String adminProdInsert(ProdVO vo) throws IllegalStateException, IOException {
+		MultipartFile uploadFile = vo.getUploadFile();
+		File f = new File(realPath);
+		if (!f.exists()) {
+			f.mkdirs();
+		}
+
+		if (!uploadFile.isEmpty()) {
+			vo.setP_img(uploadFile.getOriginalFilename());
+			// 실질적으로 파일이 설정한 경로에 업로드 되는 지점
+			uploadFile.transferTo(new File(realPath + vo.getP_img()));
+		}
+		
+		System.out.println(vo);
+		int cnt = prodService.adminProdInsert(vo);
+
+		if (cnt > 0) {
+			System.out.println("등록완료");
+			return "adminProdList.ko";
+		} else {
+			System.out.println("등록실패");
+			return "redirect:adminProdList.ko";
+		}
 	}
 }

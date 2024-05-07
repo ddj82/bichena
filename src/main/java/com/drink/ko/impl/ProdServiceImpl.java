@@ -23,5 +23,10 @@ public class ProdServiceImpl implements ProdService {
 	public List<ProdVO> prodList() {
 		return dao.prodList();
 	}
+
+	@Override
+	public int adminProdInsert(ProdVO vo) {
+		return dao.adminProdInsert(vo);
+	}
 	
 }

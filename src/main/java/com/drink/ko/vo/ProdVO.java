@@ -1,5 +1,7 @@
 package com.drink.ko.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ProdVO {
 	private int p_no;
 	private String p_name;
@@ -15,6 +17,8 @@ public class ProdVO {
 	private String p_cap;
 	private int p_stock;
 	private String p_img;
+	
+	private MultipartFile uploadFile;
 	
 	public int getP_no() {
 		return p_no;
@@ -99,6 +103,12 @@ public class ProdVO {
 	}
 	public void setP_img(String p_img) {
 		this.p_img = p_img;
+	}
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
 	}
 	
 	@Override

@@ -146,89 +146,89 @@ text-align: right;
 	</div>
 	
 	
-	<div class="modal fade" id="myModal2" role="dialog">
-	    <div class="modal-dialog">
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+		<form action="adminProdInsert.ko" method="post" enctype="multipart/form-data">
 	        <div class="modal-content">
 	            <div class="modal-body">
-	                <form action="" method="" enctype="multipart/form-data">
 	                    <table class="table table0" id="form">
 	                        <tr>
 	                            <td rowspan="5" id="td-rowspan5">
 	                                <img id="preview" src="img/" alt="" style="width: 200px;"></td>
-	                            <td><label for="">상품 이름</label> <input type="text" id="" name="p_name"></td>
+	                            <td><label for="name">상품 이름</label> <input type="text" id="name" name="p_name"></td>
 	                        </tr>
 	
-	                        <tr><td><label for="">상품 가격</label> <textarea id="" name="p_price" rows="3"></textarea></td></tr>
+	                        <tr><td><label for="desc">상품 설명</label> <textarea id="desc" name="p_desc" rows="3"></textarea></td></tr>
 	
-	                        <tr><td><label for="">상품 가격</label> <input type="text" id="" name="p_price"></td></tr>
+	                        <tr><td><label for="price">상품 가격</label> <input type="text" id="price" name="p_price"></td></tr>
 	
-	                        <tr><td><label for="">제조사</label> <input type="text" id="" name="p_made"></td></tr>
+	                        <tr><td><label for="made">제조사</label> <input type="text" id="made" name="p_made"></td></tr>
 	
-	                        <tr><td><label for="">도수</label> <input type="text" id="" name="p_dgr"> %</td></tr>
+	                        <tr><td><label for="dgr">도수</label> <input type="text" id="dgr" name="p_dgr"> %</td></tr>
 	
 	                        <tr>
 	                            <td id="td-rowspan2">
 	                                <div id="div-filename"></div>
 	                            </td>
-	                            <td><label for="">용량</label> <input type="text" id="" name="p_cap"> ml</td>
+	                            <td><label for="cap">용량</label> <input type="text" id="cap" name="p_cap"> ml</td>
 	                        </tr>
 	
 	                        <tr>
 	                            <td id="td-rowspan2">
 	                                <button type="button" class="btn btn-default" onclick="fileUploadBtn()">사진등록</button>
 	                                <label for="p_img" class="custom-file-label"></label>
-	                                <input type="file" id="p_img" name="">
+	                                <input type="file" id="p_img" name="uploadFile">
 	                            </td>
-	                            <td><label for="">수량</label> <input type="text" id="" name="p_stock"> 개</td>
+	                            <td><label for="stock">수량</label> <input type="text" id="stock" name="p_stock"> 개</td>
 	                        </tr>
 	                    </table>
 	
 	                    <table class="table table0" id="form1">
 	                        <tr>
 	                            <th>주류종류</th>
-	                            <td><input type="radio" name="p_type"> <label for="">약·청주</label></td>
-	                            <td><input type="radio" name="p_type"> <label for="">소주</label></td>
-	                            <td><input type="radio" name="p_type"> <label for="">증류주</label></td>
-	                            <td><input type="radio" name="p_type"> <label for="">과실주</label></td>
-	                            <td><input type="radio" name="p_type"> <label for="">기타</label></td>
+	                            <td><input type="radio" name="p_type" id="p_type1" value="약·청주"> <label for="p_type1">약·청주</label></td>
+	                            <td><input type="radio" name="p_type" id="p_type2" value="소주"> <label for="p_type2">소주</label></td>
+	                            <td><input type="radio" name="p_type" id="p_type3" value="증류주"> <label for="p_type3">증류주</label></td>
+	                            <td><input type="radio" name="p_type" id="p_type4" value="과실주"> <label for="p_type4">과실주</label></td>
+	                            <td><input type="radio" name="p_type" id="p_type5" value="기타"> <label for="p_type5">기타</label></td>
 	                        </tr>
 	                        <tr>
 	                            <th>단맛</th>
-	                            <td><input type="radio" name="p_sw"> <label for="">강</label></td>
-	                            <td><input type="radio" name="p_sw"> <label for="">중</label></td>
-	                            <td><input type="radio" name="p_sw"> <label for="">약</label></td>
+	                            <td><input type="radio" name="p_sw" id="p_sw1" value="강"> <label for="p_sw1">강</label></td>
+	                            <td><input type="radio" name="p_sw" id="p_sw2" value="중"> <label for="p_sw2">중</label></td>
+	                            <td><input type="radio" name="p_sw" id="p_sw3" value="약"> <label for="p_sw3">약</label></td>
 	                        </tr>
 	                        <tr>
 	                            <th>신맛</th>
-	                            <td><input type="radio" name="p_su"> <label for="">강</label></td>
-	                            <td><input type="radio" name="p_su"> <label for="">중</label></td>
-	                            <td><input type="radio" name="p_su"> <label for="">약</label></td>
+	                            <td><input type="radio" name="p_su" id="p_su1" value="강"> <label for="p_su1">강</label></td>
+	                            <td><input type="radio" name="p_su" id="p_su2" value="중"> <label for="p_su2">중</label></td>
+	                            <td><input type="radio" name="p_su" id="p_su3" value="약"> <label for="p_su3">약</label></td>
 	                        </tr>
 	                        <tr>
 	                            <th>탄산</th>
-	                            <td><input type="radio" name="p_sp"> <label for="">강</label></td>
-	                            <td><input type="radio" name="p_sp"> <label for="">중</label></td>
-	                            <td><input type="radio" name="p_sp"> <label for="">약</label></td>
-	                            <td><input type="radio" name="p_sp"> <label for="">없음</label></td>
+	                            <td><input type="radio" name="p_sp" id="p_sp1" value="강"> <label for="p_sp1">강</label></td>
+	                            <td><input type="radio" name="p_sp" id="p_sp2" value="중"> <label for="p_sp2">중</label></td>
+	                            <td><input type="radio" name="p_sp" id="p_sp3" value="약"> <label for="p_sp3">약</label></td>
+	                            <td><input type="radio" name="p_sp" id="p_sp4" value="없음"> <label for="p_sp4">없음</label></td>
 	                        </tr>
 	                        <tr>
 	                            <th>원료</th>
-	                            <td><input type="radio" name="p_mat"> <label for="">과일</label></td>
-	                            <td><input type="radio" name="p_mat"> <label for="">꽃</label></td>
-	                            <td><input type="radio" name="p_mat"> <label for="">견과</label></td>
-	                            <td><input type="radio" name="p_mat"> <label for="">약재</label></td>
-	                            <td><input type="radio" name="p_mat"> <label for="">기타</label></td>
+	                            <td><input type="radio" name="p_mat" id="p_mat1" value="과일"> <label for="p_mat1">과일</label></td>
+	                            <td><input type="radio" name="p_mat" id="p_mat2" value="꽃"> <label for="p_mat2">꽃</label></td>
+	                            <td><input type="radio" name="p_mat" id="p_mat3" value="견과"> <label for="p_mat3">견과</label></td>
+	                            <td><input type="radio" name="p_mat" id="p_mat4" value="약재"> <label for="p_mat4">약재</label></td>
+	                            <td><input type="radio" name="p_mat" id="p_mat5" value="기타"> <label for="p_mat5">기타</label></td>
 	                        </tr>
 	                    </table>
-	                </form>
 	            </div>
 	            <div class="modal-footer">
-	                <button type="button" class="btn btn-primary" data-dismiss="modal">상품등록</button>
+	                <button type="submit" class="btn btn-primary">상품등록</button>
 	                <button type="button" class="btn btn-default" data-dismiss="modal">등록취소</button>
 	            </div>
 	        </div>
-	    </div>
-	</div>
+		</form>
+    </div>
+</div>
 	
 	
 	<script>
