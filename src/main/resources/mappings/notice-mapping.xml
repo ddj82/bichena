@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="NoticeDAO">
+	<select id="getNotice" resultType="noticedto">
+		SELECT * FROM BC_NOTICE WHERE
+		NOT_NO = #{not_no}
+	</select>
+
+	<insert id="insertNotice">
+		INSERT INTO BC_NOTICE(NOT_TITLE, NOT_WRITER,
+		NOT_CONTENT,
+		NOT_IMG) VALUES(#{not_title},
+		#{not_writer},
+		#{not_content},
+		#{not_img})
+	</insert>
+
+	<update id="updateNotice">
+		UPDATE BC_NOTICE SET
+		NOT_TITLE =#{not_title},
+		NOT_CONTENT =#{not_content},
+		NOT_IMG =#{not_img}
+		WHERE
+		NOT_NO =#{not_no}
+	</update>
+
+	<delete id="deleteNotice">
+		DELETE FROM BC_NOTICE WHERE NOT_NO =#{not_no}
+	</delete>
+
+	<select id="getNoticeListPaging" resultType="noticedto">
+		SELECT *
+		FROM BC_NOTICE
+		WHERE 1=1
+		<if test="searchCondition == 'CONTENT' "> AND NOT_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchCondition  == 'TITLE' "> AND NOT_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		ORDER BY NOT_NO DESC
+		LIMIT #{sizePerPage} OFFSET #{startList}
+	</select>
+
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*) FROM BC_NOTICE
+		WHERE 1=1
+		<if test="searchCondition == 'CONTENT' "> AND NOT_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchCondition == 'TITLE' "> AND NOT_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		ORDER BY NOT_NO
+	</select>
+
+</mapper>

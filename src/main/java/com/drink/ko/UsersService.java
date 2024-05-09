@@ -5,20 +5,24 @@ import java.util.List;
 import com.drink.ko.vo.UsersVO;
 
 public interface UsersService {
-	public int insertUser(UsersVO vo);
-	public UsersVO checkId(String id);
-	public UsersVO loginSelectOne(UsersVO vo);
-	public UsersVO idFindEmail(UsersVO vo);
-	public UsersVO idFindPhon(UsersVO vo);
-	public int pwFind(UsersVO vo);
-	public String pwFindStart(UsersVO vo);
-	public void updateUser(UsersVO vo); //정보 수정
-	public void deleteUser(UsersVO vo); //회원 삭제
-	public UsersVO selectOne(String selId); //상세페이지
-	public UsersVO checkNick(String nick);
-	public UsersVO checkPw(String pw, String id);
-	public List<UsersVO> selectList(String keyword);
-	public int kakaoLoginFirst(UsersVO vo);
-	public UsersVO kakaoLogin(UsersVO vo);
+	int insertUser(UsersVO vo);
+	UsersVO checkId(String id);
+	int pwFind(UsersVO vo);
+	void updateUser(UsersVO vo); //정보 수정
+	void deleteUser(UsersVO vo); //회원 삭제
+	UsersVO selectOne(String selId); //상세페이지
+	UsersVO checkNick(String nick);
+	UsersVO checkPw(String pw, String id);
+	List<UsersVO> selectList(String keyword);
+	UsersVO loginSelectOne(UsersVO vo);
+	UsersVO idFindEmail(UsersVO vo);
+	List<UsersVO> idFindPhone(UsersVO vo);
+	String pwFindId(UsersVO vo);
+	String pwFindStart(UsersVO vo);
+	int kakaoLoginFirst(UsersVO vo);
+	UsersVO kakaoLogin(UsersVO vo);
+	int naverLoginFirst(UsersVO vo);
+	UsersVO naverLogin(UsersVO vo);
+	List<UsersVO> getUserList(UsersVO vo);
 }
 

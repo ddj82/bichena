@@ -8,6 +8,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.SessionAttributes;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -16,74 +21,92 @@ import com.google.gson.JsonParser;
 
 
 
+@SessionAttributes("apikey")
 public class KaKaoVO {
-
+	
 //    @Value("${kakao.api_key}")
+//    private String kakaoApiKey = "1ff9357a4c169b4218e2b018cb73122a";
     private String kakaoApiKey = "f8801431aadfbf2a0016165e1408e997";
-    
 //    @Value("${kakao.redirect_uri}")
     private String kakaoRedirectUri = "http://localhost:8090/ko/kakao.ko";
+ 
+    //5-5 시작 : kakao 뒤로 가기시 에러나는 부분 수정
+    public String getAccessToken(String code,HttpSession session) {
+    	   
+        String apikey = (String)session.getAttribute("apikey");
+        System.out.println("apikey : "+apikey);
+        if(apikey == null || apikey == "") {
+        	System.out.println("apikey를 새로 발급받습니다.");
+        	String accessToken = "";
+            String refreshToken = "";
+            String reqUrl = "https://kauth.kakao.com/oauth/token";
 
-    public String getAccessToken(String code) {
-        String accessToken = "";
-        String refreshToken = "";
-        String reqUrl = "https://kauth.kakao.com/oauth/token";
+            try {
+                URL url = new URL(reqUrl);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-        try {
-            URL url = new URL(reqUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                //필수 헤더 세팅
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+                conn.setDoOutput(true); //OutputStream으로 POST 데이터를 넘겨주겠다는 옵션.
 
-            //필수 헤더 세팅
-            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-            conn.setDoOutput(true); //OutputStream으로 POST 데이터를 넘겨주겠다는 옵션.
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+                StringBuilder sb = new StringBuilder();
 
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-            StringBuilder sb = new StringBuilder();
+                //필수 쿼리 파라미터 세팅
+                sb.append("grant_type=authorization_code");
+                sb.append("&client_id=").append(kakaoApiKey);
+                sb.append("&redirect_uri=").append(kakaoRedirectUri);
+                sb.append("&code=").append(code);
 
-            //필수 쿼리 파라미터 세팅
-            sb.append("grant_type=authorization_code");
-            sb.append("&client_id=").append(kakaoApiKey);
-            sb.append("&redirect_uri=").append(kakaoRedirectUri);
-            sb.append("&code=").append(code);
+                bw.write(sb.toString());
+                bw.flush();
 
-            bw.write(sb.toString());
-            bw.flush();
+                int responseCode = conn.getResponseCode();
+                System.out.println("[KakaoApi.getAccessToken] responseCode = " + responseCode);
 
-            int responseCode = conn.getResponseCode();
-            System.out.println("[KakaoApi.getAccessToken] responseCode = " + responseCode);
+                BufferedReader br;
+                if (responseCode >= 200 && responseCode <= 300) {
+                    br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                } else {
+                    return null;
+                }
 
-            BufferedReader br;
-            if (responseCode >= 200 && responseCode <= 300) {
-                br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            } else {
-                br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+                String line = "";
+                StringBuilder responseSb = new StringBuilder();
+                while ((line = br.readLine()) != null) {
+                    responseSb.append(line);
+                }
+                String result = responseSb.toString();
+                System.out.println("responseBody = " + result);
+
+                JsonParser parser = new JsonParser();
+                JsonElement element = parser.parse(result);
+                JsonObject jsonObject = element.getAsJsonObject();
+                accessToken = jsonObject.get("access_token").getAsString();
+                // 5-5 추가
+                session.setAttribute("apikey", accessToken);
+                // 5-5 추가 끝
+                refreshToken = jsonObject.get("refresh_token").getAsString();
+
+                br.close();
+                bw.close();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
-            String line = "";
-            StringBuilder responseSb = new StringBuilder();
-            while ((line = br.readLine()) != null) {
-                responseSb.append(line);
-            }
-            String result = responseSb.toString();
-            System.out.println("responseBody = " + result);
-
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(result);
-            JsonObject jsonObject = element.getAsJsonObject();
-            accessToken = jsonObject.get("access_token").getAsString();
-            refreshToken = jsonObject.get("refresh_token").getAsString();
-
-            br.close();
-            bw.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+            return accessToken;
+        	
+        }else {
+        	System.out.println("기존의 apikey를 사용합니다.");
+        	return apikey;
         }
-        return accessToken;
+        
+        //5-5 끝
     }
 
     
     
-    public HashMap<String, Object> getUserInfo(String accessToken) {
+    public HashMap<String, Object> getUserInfo(String accessToken,HttpSession session) {
         HashMap<String, Object> userInfo = new HashMap<>();
         String reqUrl = "https://kapi.kakao.com/v2/user/me";
         try{
@@ -111,7 +134,8 @@ public class KaKaoVO {
 
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
-
+            
+         
             System.out.println("element : "+element);
             JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
@@ -125,9 +149,9 @@ public class KaKaoVO {
             System.out.println("nickName : "+nickName);
             String gen = kakaoAccount.getAsJsonObject().get("has_gender").getAsString();
             if(gen.equals("true")) {
-               userInfo.put("gen",kakaoAccount.getAsJsonObject().get("gender").getAsString());
+            	userInfo.put("gen",kakaoAccount.getAsJsonObject().get("gender").getAsString());
             }else if(gen.equals("false")) {
-               userInfo.put("gen", "-");
+            	userInfo.put("gen", "-");
             }
             userInfo.put("birthday", birthday);
             userInfo.put("kakaoID", kakaoID);
@@ -140,6 +164,8 @@ public class KaKaoVO {
             url = new URL(reqUrl);
             conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
+//            conn.setRequestMethod("POST");
+//            conn.setDoOutput(true);
             conn.setRequestProperty("Authorization", "Bearer " + accessToken);
             
             responseCode = conn.getResponseCode();
@@ -187,24 +213,35 @@ public class KaKaoVO {
                 userInfo.put("phone_number1", phone_number1);
             }
             
-            
             br.close();
 
         }catch (Exception e){
             e.printStackTrace();
         }
+        System.out.println("session apikey가 null??"+session.getAttribute("apikey"));
         return userInfo;
     }
     
     //로그아웃
-    public void kakaoLogout(String accessToken) {
-        String reqUrl = "https://kapi.kakao.com/v1/user/logout";
+    public void kakaoLogout(String accessToken,String id) {
+//        String reqUrl = "https://kapi.kakao.com/v1/user/logout";
+        String reqUrl = "https://kapi.kakao.com/v1/user/unlink";
         System.out.println("kakaoLogout 진행 중....");
         try{
             URL url = new URL(reqUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
             conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("target_id_type=user_id");
+            sb.append("&target_id=").append(id);
+            
+            bw.write(sb.toString());
+            bw.flush();
 
             int responseCode = conn.getResponseCode();
 
@@ -222,6 +259,9 @@ public class KaKaoVO {
             }
             String result = responseSb.toString();
             System.out.println("result : "+result);
+            
+            br.close();
+            bw.close();
 
         }catch (Exception e){
             e.printStackTrace();

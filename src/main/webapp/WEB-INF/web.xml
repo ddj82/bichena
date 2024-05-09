@@ -12,8 +12,6 @@
 		<jsp-property-group>
 			<url-pattern>*.jsp</url-pattern>
 			<include-prelude>/WEB-INF/common/header.jsp</include-prelude>
-<!-- 			<include-prelude>/WEB-INF/common/navbar.jsp</include-prelude> -->
-<!-- 			<include-coda>/WEB-INF/common/footer.jsp</include-coda> -->
 		</jsp-property-group>
 	</jsp-config>
 	<filter>

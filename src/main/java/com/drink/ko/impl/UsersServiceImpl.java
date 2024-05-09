@@ -31,7 +31,6 @@ public class UsersServiceImpl implements UsersService {
 	// 비밀번호 재확인 후 내 정보 진입
 	@Override
 	public UsersVO checkPw(String pw, String id) {
-		System.out.println("비번 재확인 Impl");
 		return usersDAO.checkPw(pw, id);
 	}
 
@@ -49,7 +48,6 @@ public class UsersServiceImpl implements UsersService {
 	// 닉 중복체크
 	@Override
 	public UsersVO checkNick(String nick) {
-		System.out.println("checkNick : " + nick);
 		return usersDAO.checkNick(nick);
 	}
 
@@ -66,34 +64,35 @@ public class UsersServiceImpl implements UsersService {
 	// 로그인
 	@Override
 	public UsersVO loginSelectOne(UsersVO vo) {
-		System.out.println("UserServeImpl까지는 탔습니다.");
-		System.out.println("vo : " + vo);
 		return usersDAO.loginSelectOne(vo);
 	}
 
 	@Override
 	public UsersVO idFindEmail(UsersVO vo) {
 		System.out.println("idFind의 UserServeImpl까지는 탔습니다.");
-		System.out.println("idFind name : " + vo.getU_email());
+		System.out.println("idFind name : "+vo.getU_email());
 		return usersDAO.idFindEmail(vo);
 	}
 
 	@Override
-	public UsersVO idFindPhon(UsersVO vo) {
+	public List<UsersVO> idFindPhone(UsersVO vo) {
 		System.out.println("idFind의 UserServeImpl까지는 탔습니다.");
-		System.out.println("idFind name : " + vo.getU_email());
-		return usersDAO.idFindPhon(vo);
+		System.out.println("idFind name : "+vo.getU_email());
+		return usersDAO.idFindPhone(vo);
 	}
 
 	@Override
 	public int pwFind(UsersVO vo) {
-		System.out.println("UsersServeImpl vo.id : " + vo.getU_id());
 		return usersDAO.pwFind(vo);
 	}
 
 	@Override
+	public String pwFindId(UsersVO vo) {
+		return usersDAO.pwFindId(vo);
+	}
+
+	@Override
 	public String pwFindStart(UsersVO vo) {
-		System.out.println("pwFindStart vo.id : " + vo.getU_id());
 		return usersDAO.pwFindStart(vo);
 	}
 
@@ -105,6 +104,21 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public UsersVO kakaoLogin(UsersVO vo) {
 		return usersDAO.kakaoLogin(vo);
+	}
+
+	@Override
+	public int naverLoginFirst(UsersVO vo) {
+		return usersDAO.naverLoginFirst(vo);
+	}
+	
+	@Override
+	public UsersVO naverLogin(UsersVO vo) {
+		return usersDAO.naverLogin(vo);
+	}
+
+	@Override
+	public List<UsersVO> getUserList(UsersVO vo) {
+		return usersDAO.getUserList(vo);
 	}
 }
 

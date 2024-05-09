@@ -26,18 +26,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.drink.ko.FaqService;
+import com.drink.ko.NoticeService;
 import com.drink.ko.OrderService;
 import com.drink.ko.ProdRevService;
 import com.drink.ko.ProdService;
 import com.drink.ko.QnaService;
 import com.drink.ko.UsersService;
+import com.drink.ko.vo.FaqVO;
+import com.drink.ko.vo.NoticeVO;
 import com.drink.ko.vo.OrderVO;
 import com.drink.ko.vo.ProdRevVO;
 import com.drink.ko.vo.ProdVO;
@@ -59,6 +65,10 @@ public class BichenaController {
 	@Autowired
 	private UsersService usersService;
 	@Autowired
+	private NoticeService noticeService;
+	@Autowired
+	private FaqService faqService;
+	@Autowired
 	private BCryptPasswordEncoder encoder;
 
 	String realPath = "C:/swork/bichena/src/main/webapp/img/";
@@ -77,11 +87,277 @@ public class BichenaController {
 	// 아임포트 가맹점 식별코드 값
 	public final String IMPORT_ID = "imp70405420";
 
+	@RequestMapping("/main.ko")
+	public String main() {
+		return "/main.jsp";
+	}
+
+	@RequestMapping("/terms.ko")
+	public String terms(UsersVO vo) {
+		return "/WEB-INF/join/terms.jsp";
+	}
+
+	@RequestMapping("/insertPage.ko")
+	public String insertPage(UsersVO vo) {
+		return "/WEB-INF/join/insert.jsp";
+	}
+
+	@RequestMapping("/serviceTerms.ko")
+	public String serviceTerms(UsersVO vo) {
+		return "/WEB-INF/join/serviceTerms.jsp";
+	}
+
+	@RequestMapping("/personalTerms.ko")
+	public String personalTerms(UsersVO vo) {
+		return "/WEB-INF/join/personalTerms.jsp";
+	}
+
 	@RequestMapping("/insertUser.ko")
 	public String insertUser(UsersVO vo) {
 		usersService.insertUser(vo);
-		
+
 		return "/WEB-INF/join/success.jsp";
+	}
+
+	// 검색기능을 위한 모델 어트리뷰트
+	@ModelAttribute("conditionMap")
+	public Map<String, String> searchConditionMap() {
+		Map<String, String> conditionMap = new HashMap<String, String>();
+		conditionMap.put("제목", "TITLE");
+		conditionMap.put("내용", "CONTENT");
+		return conditionMap;
+	}
+
+	// 공지 쓰기
+	@RequestMapping("/writeNotice.ko")
+	public String writeNotice(NoticeVO vo) {
+		return "WEB-INF/admin/insertNotice.jsp";
+	}
+
+	// 공지 등록
+	@PostMapping(value = "/insertNotice.ko")
+	public String insertNotice(NoticeVO vo) throws IllegalStateException, IOException {
+		realPath += "imgNotice/";
+		System.out.println("공지 업로드 : " + vo);
+		MultipartFile uploadFile = vo.getUploadFile();
+		File f = new File(realPath);
+
+		if (!f.exists())
+			f.mkdirs();
+		System.out.println("공지업로드 후 1번지점");
+		String fileName = uploadFile.getOriginalFilename();
+		if (!uploadFile.isEmpty()) { // uploadFile이 널이 아니고 비어있지 않은 경우에만 처리
+			System.out.println("공지업로드 후 2번지점");
+			vo.setNot_img(fileName);
+			System.out.println("공지업로드 후 번지점");
+			uploadFile.transferTo(new File(realPath + fileName));
+		}
+		System.out.println("그러면 여기겠지?");
+		noticeService.insertNotice(vo);
+		return "/getNoticeList.ko";
+	}
+
+	// 공지 수정
+	@RequestMapping("/modifyNotice.ko")
+	public String ModyfyNotice(NoticeVO vo, Model model) {
+		System.out.println("공지 수정시 조회 :" + vo);
+		model.addAttribute("notice", noticeService.getNotice(vo));
+		return "WEB-INF/admin/updateNotice.jsp";
+	}
+
+	// 공지 수정 업데이트
+	@RequestMapping("/updateNotice.ko")
+	public String updateNotice(@ModelAttribute("notice") NoticeVO vo, HttpSession session) {
+		realPath += "imgNotice/";
+		System.out.println("공지 업데이트 : " + vo);
+		MultipartFile uploadFile = vo.getUploadFile();
+		File f = new File(realPath);
+
+		if (!f.exists())
+			f.mkdirs();
+		System.out.println("공지업데이트 후 1번지점");
+		String fileName = uploadFile.getOriginalFilename();
+		if (!uploadFile.isEmpty()) { // uploadFile이 널이 아니고 비어있지 않은 경우에만 처리
+			System.out.println("공지업데이트 후 2번지점");
+			vo.setNot_img(fileName);
+			System.out.println("공지업데이트 후 3번지점");
+			try {
+				uploadFile.transferTo(new File(realPath + fileName));
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("수정 후 vo 값 : " + vo);
+
+		noticeService.updateNotice(vo);
+		return "getNoticeList.ko";
+	}
+
+	// 공지 삭제
+	@RequestMapping("/deleteNotice.ko")
+	public String deleteNotice(NoticeVO vo) {
+		noticeService.deleteNotice(vo);
+		return "getNoticeList.ko";
+	}
+
+	// 공지 상세 조회
+	@RequestMapping("/getNotice.ko")
+	public String getNotice(NoticeVO vo, Model model) {
+		System.out.println("공지 상세조회 : " + vo);
+		model.addAttribute("notice", noticeService.getNotice(vo));
+		return "WEB-INF/user/getNotice.jsp";
+	}
+	// 공지 상세 조회 (관리자)
+	@RequestMapping("/adminGetNotice.ko")
+	public String adminGetNotice(NoticeVO vo, Model model) {
+		System.out.println("공지 상세조회 : " + vo);
+		model.addAttribute("notice", noticeService.getNotice(vo));
+		return "WEB-INF/admin/adminGetNotice.jsp";
+	}
+
+	// 공지 목록
+	@RequestMapping("/getNoticeList.ko")
+	public ModelAndView getNoticeListPost(NoticeVO vo,
+			@RequestParam(value = "searchCondition", defaultValue = "TITLE", required = false) String condition,
+			@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String keyword,
+			ModelAndView mav,
+			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
+			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange,
+			HttpSession session) {
+
+		int currPageNo = 0;
+		int range = 0;
+		int totalCnt = noticeService.noticeTotalCnt(vo);
+
+		try {
+			currPageNo = Integer.parseInt(NotcurrPageNo);
+			range = Integer.parseInt(Notrange);
+		} catch (NumberFormatException e) {
+			currPageNo = 1;
+			range = 1;
+		}
+
+		vo.pageInfo(currPageNo, range, totalCnt);
+		if (vo.getNot_title() == null)
+			vo.setNot_title("");
+
+		mav.addObject("pagination", vo);
+		mav.addObject("noticeList", noticeService.noticeListPaging(vo)); // parameter로 때온 값들을 보내준다.
+		if (session.getAttribute("userID") != null) {
+			if (session.getAttribute("userID").equals("admin")) {
+				mav.setViewName("WEB-INF/admin/adminGetNoticeList.jsp");
+			} else {
+				mav.setViewName("WEB-INF/user/getNoticeList.jsp");
+			}
+			
+		} else {
+			mav.setViewName("WEB-INF/user/getNoticeList.jsp");
+		}
+		
+		return mav;
+	}
+
+// 여기서 부터는 FAQ에 관련된 내용입니다----------------
+
+	// Faq 쓰기
+	@RequestMapping("/writeFaq.ko")
+	public String writeFaq(FaqVO vo) {
+		return "WEB-INF/admin/insertFaq.jsp";
+	}
+
+	// Faq 등록
+	@PostMapping(value = "/insertFaq.ko")
+	public String insertFaq(FaqVO vo) throws IllegalStateException, IOException {
+
+		System.out.println("Faq 업로드 : " + vo);
+		faqService.insertFaq(vo);
+		return "/getFaqList.ko";
+	}
+
+	// Faq 수정
+	@RequestMapping("/modifyFaq.ko")
+	public String ModyfyFaq(FaqVO vo, Model model) {
+		System.out.println("Faq 수정시 조회 :" + vo);
+		model.addAttribute("faq", faqService.getFaq(vo));
+		return "WEB-INF/admin/updateFaq.jsp";
+	}
+
+	// Faq 수정 업데이트
+	@RequestMapping("/updateFaq.ko")
+	public String updateFaq(@ModelAttribute("faq") FaqVO vo, HttpSession session) {
+
+		System.out.println("Faq 업데이트 : " + vo);
+
+		System.out.println("Faq업데이트 후 1번지점");
+		faqService.updateFaq(vo);
+		return "getFaqList.ko";
+	}
+
+	// Faq 삭제
+	@RequestMapping("/deleteFaq.ko")
+	public String deleteFaq(FaqVO vo) {
+		faqService.deleteFaq(vo);
+		return "getFaqList.ko";
+	}
+
+	// Faq 상세 조회
+	@RequestMapping("/getFaq.ko")
+	public String getFaq(FaqVO vo, Model model) {
+		System.out.println("Faq 상세조회 : " + vo);
+		model.addAttribute("faq", faqService.getFaq(vo));
+		return "WEB-INF/user/getFaq.jsp";
+	}
+	// Faq 상세 조회 (관리자)
+	@RequestMapping("/adminGetFaq.ko")
+	public String adminGetFaq(FaqVO vo, Model model) {
+		System.out.println("Faq 상세조회 : " + vo);
+		model.addAttribute("faq", faqService.getFaq(vo));
+		return "WEB-INF/admin/adminGetFaq.jsp";
+	}
+
+	// Faq 목록
+	@RequestMapping("/getFaqList.ko")
+	public ModelAndView getFaqListPost(FaqVO vo,
+			@RequestParam(value = "searchCondition", defaultValue = "TITLE", required = false) String condition,
+			@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String keyword,
+			ModelAndView mav,
+			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
+			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange,
+			HttpSession session) {
+
+		int currPageNo = 0;
+		int range = 0;
+		int totalCnt = faqService.faqTotalCnt(vo);
+
+		try {
+			currPageNo = Integer.parseInt(NotcurrPageNo);
+			range = Integer.parseInt(Notrange);
+		} catch (NumberFormatException e) {
+			currPageNo = 1;
+			range = 1;
+		}
+
+		vo.pageInfo(currPageNo, range, totalCnt);
+		if (vo.getFaq_title() == null)
+			vo.setFaq_title("");
+
+		mav.addObject("pagination", vo);
+		mav.addObject("faqList", faqService.faqListPaging(vo)); // parameter로 때온 값들을 보내준다.
+		
+		if (session.getAttribute("userID") != null) {
+			if (session.getAttribute("userID").equals("admin")) {
+				mav.setViewName("WEB-INF/admin/adminGetFaqList.jsp");
+			} else {
+				mav.setViewName("WEB-INF/user/getFaqList.jsp");
+			}
+			
+		} else {
+			mav.setViewName("WEB-INF/user/getFaqList.jsp");
+		}
+		
+		return mav;
 	}
 
 	@RequestMapping("/checkId.ko")
@@ -94,21 +370,6 @@ public class BichenaController {
 			count = 1;
 		}
 		return count;
-	}
-
-	@RequestMapping("/terms.ko")
-	public String terms(UsersVO vo) {
-		return "/WEB-INF/join/terms.jsp";
-	}
-
-	@RequestMapping("/requestCertPage.ko")
-	public String certPage(UsersVO vo) {
-		return "/WEB-INF/join/requestCert.jsp";
-	}
-	
-	@RequestMapping("/insertPage.ko")
-	public String insertPage(UsersVO vo) {
-		return "/WEB-INF/join/insert.jsp";
 	}
 
 	// 아임포트 인증(토큰)을 받아주는 함수
@@ -229,11 +490,6 @@ public class BichenaController {
 			count = 1;
 		}
 		return count;
-	}
-
-	@RequestMapping("/main.ko")
-	public String main() {
-		return "/main.jsp";
 	}
 
 	@RequestMapping("/myPage.ko")
@@ -430,10 +686,10 @@ public class BichenaController {
 		model.addAttribute("adminOrderDetail", adminOrderDetail);
 		return adminOrderDetail;
 	}
-	
+
 	@RequestMapping("/adminQnaView.ko")
 	public String adminQnaView(@RequestParam(value = "q_no") String q_no, Model model) {
-		System.out.println("관리자가 qna상세보기 : "+q_no);
+		System.out.println("관리자가 qna상세보기 : " + q_no);
 		QnaVO qnaView = qnaService.qnaView(q_no);
 		model.addAttribute("qnaView", qnaView);
 		System.out.println(qnaView);
@@ -446,7 +702,7 @@ public class BichenaController {
 		model.addAttribute("adminProdList", adminProdList);
 		return "/WEB-INF/admin/adminProdView.jsp";
 	}
-	
+
 	@GetMapping("/adminProdDetail.ko")
 	@ResponseBody
 	public Object adminProdDetail(@RequestParam(value = "p_no") String p_no, Model model) {
@@ -454,7 +710,7 @@ public class BichenaController {
 		model.addAttribute("adminProdDetail", adminProdDetail);
 		return adminProdDetail;
 	}
-	
+
 	@PostMapping("/adminProdInsert.ko")
 	public String adminProdInsert(ProdVO vo) throws IllegalStateException, IOException {
 		MultipartFile uploadFile = vo.getUploadFile();
@@ -468,7 +724,7 @@ public class BichenaController {
 			// 실질적으로 파일이 설정한 경로에 업로드 되는 지점
 			uploadFile.transferTo(new File(realPath + vo.getP_img()));
 		}
-		
+
 		System.out.println(vo);
 		int cnt = prodService.adminProdInsert(vo);
 
@@ -479,5 +735,41 @@ public class BichenaController {
 			System.out.println("등록실패");
 			return "redirect:adminProdList.ko";
 		}
+	}
+
+	@RequestMapping("/getUserList.ko")
+	public ModelAndView getUserList(@ModelAttribute("searchWord") String searchWord,
+			@ModelAttribute("searchVoca") String searchVoca, ModelAndView mav) {
+		System.out.println("searchWord: " + searchWord);
+		System.out.println("searchVoca: " + searchVoca);
+		UsersVO vo = new UsersVO();
+		vo.setSearchVoca(searchVoca);
+		vo.setSearchWord(searchWord);
+
+		System.out.println("searchVoca111: " + searchVoca);
+		List<UsersVO> userList = usersService.getUserList(vo);
+		System.out.println("searchVoca222: " + searchVoca);
+		mav.addObject("userList", userList);
+		mav.setViewName("WEB-INF/admin/memberList.jsp");
+		return mav;
+	}
+
+	@RequestMapping("/userDetail.ko")
+	@ResponseBody
+	public UsersVO userDetail(UsersVO vo) {
+		String selId = vo.getU_id();
+		return usersService.selectOne(selId);
+	}
+
+	// 검색 select option
+	@ModelAttribute("conditionMapMem")
+	public Map<String, String> searchVocaMap() {
+		Map<String, String> conditionMapMem = new HashMap<>();
+		conditionMapMem.put("회원번호", "u_no");
+		conditionMapMem.put("ID", "u_id");
+		conditionMapMem.put("회원명", "u_name");
+		conditionMapMem.put("휴대전화", "u_tel");
+		conditionMapMem.put("이메일", "u_email");
+		return conditionMapMem;
 	}
 }

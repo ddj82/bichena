@@ -56,7 +56,7 @@ function qnaView(uid, qno, sid) {
 		</c:forEach>
 	    </tbody>
 	</table>
-	<c:if test="${userID != null }">
+	<c:if test="${userID != null && userID != 'admin' }">
 		<button type="button" class="btndel btn" onclick="location.href = 'qnaInsertbtn.ko';">문의하기</button>
 	</c:if>
 </div>	

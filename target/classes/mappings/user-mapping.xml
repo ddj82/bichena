@@ -21,7 +21,8 @@
 	</resultMap>
 
 	<select id="checkId" resultType="userdto">
-		SELECT * FROM bc_users WHERE U_ID = #{u_id}
+		SELECT * FROM bc_users WHERE
+		U_ID = #{u_id}
 	</select>
 
 	<insert id="insertUser">
@@ -32,27 +33,43 @@
 
 	<!-- 마이 페이지 -> 내 정보 관리 넘어갈 때 비번 재확인 -->
 	<select id="checkPw" resultType="userdto">
-		SELECT * FROM BC_USERS WHERE U_PW = #{u_pw}
+		SELECT * FROM BC_USERS WHERE
+		U_PW = #{u_pw}
 	</select>
 
 	<!-- 회원 상세정보 -->
 	<select id="selectOne" parameterType="string" resultMap="users">
-		SELECT * FROM BC_USERS WHERE U_ID = #{selId} 
+		SELECT *
+		FROM BC_USERS WHERE U_ID = #{selId}
 	</select>
 
 	<!--회원 정보 수정 -->
-	<update id="updateUser"> 
-		UPDATE BC_USERS SET U_NAME = #{u_name}, U_NICK = #{u_nick}, U_PW = #{u_pw}, U_TEL = #{u_tel}, U_EMAIL = #{u_email}, ADDR1 =#{addr1}, ADDR2 =#{addr2}, ADDR3 =#{addr3} WHERE U_ID =#{u_id}
+	<update id="updateUser">
+		UPDATE BC_USERS SET U_NAME = #{u_name}, U_NICK = #{u_nick}, U_PW = #{u_pw},
+		U_TEL = #{u_tel}, U_EMAIL = #{u_email}, ADDR1 =#{addr1}, ADDR2
+		=#{addr2}, ADDR3 =#{addr3} WHERE U_ID =#{u_id}
 	</update>
 
 	<!-- 닉네임 중복 -->
 	<select id="checkNick" resultType="userdto">
-		SELECT * FROM BC_USERS WHERE u_nick = #{u_nick}
+		SELECT * FROM BC_USERS WHERE
+		u_nick = #{u_nick}
 	</select>
 
 	<!--회원 계정 삭제 -->
-	<update id="deleteUser">  
+	<update id="deleteUser">
 		UPDATE BC_USERS SET U_STATE = '0' WHERE U_ID = #{u_id};
 	</update>
 
+	<select id="getUserList" resultType="userdto">
+		SELECT * FROM BC_USERS WHERE 1=1
+		<if test="searchVoca != null">
+			<if test="searchVoca == 'u_no' "> AND U_NO LIKE CONCAT('%', #{searchWord}, '%') </if>
+			<if test="searchVoca == 'u_id' "> AND U_ID LIKE CONCAT('%', #{searchWord}, '%') </if>
+			<if test="searchVoca == 'u_name' "> AND U_NAME LIKE CONCAT('%', #{searchWord}, '%') </if>
+			<if test="searchVoca == 'u_tel' "> AND U_TEL LIKE CONCAT('%', #{searchWord}, '%') </if>
+			<if test="searchVoca == 'u_email' "> AND U_EMAIL LIKE CONCAT('%', #{searchWord}, '%') </if>
+		</if>
+		ORDER BY U_NO ASC
+	</select>
 </mapper>

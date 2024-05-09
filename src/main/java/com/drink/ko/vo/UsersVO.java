@@ -17,6 +17,9 @@ public class UsersVO {
 	private int u_state;
 	private String n_pw;
 
+	private String searchVoca;
+	private String searchWord;
+
 	public int getU_no() {
 		return u_no;
 	}
@@ -135,6 +138,22 @@ public class UsersVO {
 
 	public void setN_pw(String n_pw) {
 		this.n_pw = n_pw;
+	}
+
+	public String getSearchVoca() {
+		return searchVoca;
+	}
+
+	public void setSearchVoca(String searchVoca) {
+		this.searchVoca = searchVoca;
+	}
+
+	public String getSearchWord() {
+		return searchWord;
+	}
+
+	public void setSearchWord(String searchWord) {
+		this.searchWord = searchWord;
 	}
 
 	@Override

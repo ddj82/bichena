@@ -20,41 +20,49 @@
 		<result property="u_lev" column="U_LEV" />
 		<result property="u_state" column="U_STATE" />
 	</resultMap>
-	
+
 	<select id="loginSelectOne" resultMap="user">
-		SELECT * FROM BC_USERS WHERE U_ID = #{u_id} AND U_PW = #{u_pw} AND U_STATE != 0
+		SELECT * FROM BC_USERS WHERE U_ID = #{u_id} AND U_STATE != 0
 	</select>
-	
+
 	<select id="idFindEmail" resultMap="user">
 		SELECT * FROM BC_USERS WHERE U_EMAIL = #{u_email}
 	</select>
-	
-	<select id="idFindPhon" resultMap="user">
-		SELECT * FROM BC_USERS WHERE U_TEL = #{u_tel}
+
+	<select id="idFindPhone" resultMap="user">
+		SELECT U_ID,U_STATE FROM BC_USERS WHERE U_TEL = #{u_tel} AND U_NAME = #{u_name}
 	</select>
-	
-	<select id="pwFind" resultType="java.lang.Integer">
-		SELECT COUNT(*) FROM BC_USERS WHERE U_ID = #{u_id}
+
+	<select id="pwFindId" resultType="java.lang.String">
+		SELECT U_EMAIL FROM BC_USERS WHERE U_EMAIL = #{u_email} AND U_STATE = 1
 	</select>
-	
+
 	<update id="pwFindStart">
-		UPDATE BC_USERS SET U_PW = #{n_pw} WHERE U_ID = #{u_id}
+		UPDATE BC_USERS SET U_PW = #{n_pw} WHERE U_EMAIL = #{u_email} AND U_STATE = 1
 	</update>
-	
+
 	<select id="selectPW" resultMap="user">
-		SELECT u_pw FROM BC_USERS WHERE U_ID = #{u_id}
+		SELECT U_PW FROM BC_USERS WHERE U_ID = #{u_id}
 	</select>
 
-	<select id="kakaoLogin" resultMap="user">
-		SELECT * FROM BC_USERS WHERE
-		U_ID = #{u_id} AND U_TEL = #{u_tel}
+	<insert id="kakaoLoginFirst">
+		INSERT INTO BC_USERS 
+		(U_ID, U_PW, U_NAME, U_BIRTH, U_TEL, ADDR1, ADDR2, ADDR3, U_EMAIL, U_NICK, U_GEN, U_STATE) 
+		VALUES(#{u_email}, 'kakao', #{u_name}, #{u_birth}, #{u_tel}, #{addr1}, #{addr2}, #{addr3}, #{u_email}, #{u_nick}, #{u_gen}, 2)
+	</insert>
+
+	<select id="kakaoLogin" resultType="userdto">
+		SELECT * FROM BC_USERS WHERE U_ID = #{u_email} AND U_TEL = #{u_tel}
 	</select>
 
-	<!-- 변경하기  -->
-   <insert id="kakaoLoginFirst">
-      INSERT INTO BC_USERS
-         (U_ID,U_PW,U_NAME,U_BIRTH,U_TEL,ADDR1,ADDR2,ADDR3,U_EMAIL,U_NICK,U_GEN)
-      VALUES(#{u_id},'kakao',#{u_name},#{u_birth},#{u_tel},#{addr1},#{addr2},#{addr3},#{u_email},#{u_nick},#{u_gen})
-   </insert>
-   
+	<insert id="naverLoginFirst">
+		INSERT INTO BC_USERS
+		(U_ID,U_PW,U_NAME,U_BIRTH,U_TEL,ADDR1,ADDR2,ADDR3,U_EMAIL,U_NICK,U_GEN,U_STATE)
+		VALUES(#{u_email},'naver',#{u_name},#{u_birth},#{u_tel},#{addr1},#{addr2},#{addr3},#{u_email},#{u_nick},#{u_gen},3)
+	</insert>
+
+	<select id="naverLogin" resultMap="user">
+		SELECT * FROM BC_USERS WHERE U_ID = #{u_email} AND U_EMAIL = #{u_email}
+	</select>
+
 </mapper>
