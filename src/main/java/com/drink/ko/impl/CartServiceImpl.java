@@ -43,5 +43,15 @@ public class CartServiceImpl implements CartService {
 	public List<CartVO> selectList(CartVO vo) {
 		return cartDAO.selectAllCarts(vo);
 	}
+	
+	@Override
+	public CartVO selectOrder(CartVO vo) {
+		return cartDAO.selectOrder(vo);
+	}
+
+	@Override
+	public String orderNoCreate() {
+		return cartDAO.orderNoCreate();
+	}
 
 }

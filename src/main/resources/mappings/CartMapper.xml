@@ -36,5 +36,14 @@
     <delete id="deleteCart">
         DELETE FROM BC_CART WHERE P_NO = #{p_no}
     </delete>
+    
+    <select id="selectOrder" resultMap="cartMap">
+	     SELECT * FROM BC_CART WHERE P_NO = #{p_no} AND U_ID = #{u_id}
+	</select>
+	
+	<!-- 주문번호 생성 -->
+	<select id="orderNoCreate" resultType="string">
+		SELECT CONCAT(DATE_FORMAT(NOW(), '%Y%m%d'), LPAD(NEXTVAL(O_NO_SEQ), 3, '0'))
+	</select>
 
 </mapper>

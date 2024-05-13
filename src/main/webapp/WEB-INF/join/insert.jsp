@@ -1,13 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <script src="resources/js/check.js"></script>
 <script>
 	var cnt = 0;
+	var nickCheck = 0;
 	$(function() {
 		//아이디 중복체크
 		$("#check").change(function() {
@@ -45,6 +49,72 @@
 				});
 			}
 		});
+		
+		//닉네임 중복체크
+		$("#nick").change(function() {
+			var nickCheckMessage = document.getElementById('nickCheckMessage');
+			let nick = document.joinform.nick.value;
+			let nickval = {
+				"u_nick" : nick
+			};
+			console.log(nick);
+			if (nick == '') {
+				nickCheckMessage.style.display = 'none';
+			} else {
+				$.ajax({
+					url : "checkNick.ko",
+					type : "post",
+					data : nickval,
+					dataType : "json",
+					cache : false,
+					async : false,
+					success : function(data) {
+						if (data > 0) {
+							nickCheckMessage.style.display = 'block';
+						} else {
+							nickCheckMessage.style.display = 'none';
+							nickCheck++;
+						}
+					},
+					error : function(err) {
+						console.log('error객체 : ', err);
+					}
+				});
+			}
+		});
+		
+		//email 중복체크
+		$("#email").change(function() {
+			var emailCheckMessage = document.getElementById('emailCheckMessage');
+			let email = document.joinform.email.value;
+			let emailval = {
+				"u_email" : email
+			};
+			console.log(email);
+			if (email == '') {
+				emailCheckMessage.style.display = 'none';
+			} else {
+				$.ajax({
+					url : "checkEmail.ko",
+					type : "post",
+					data : emailval,
+					dataType : "json",
+					cache : false,
+					async : false,
+					success : function(data) {
+						if (data > 0) {
+							emailCheckMessage.style.display = 'block';
+						} else {
+							emailCheckMessage.style.display = 'none';
+							emailCheck++;
+						}
+					},
+					error : function(err) {
+						console.log('error객체 : ', err);
+					}
+				});
+			}
+		});
 	});
 </script>
 <style>
@@ -60,12 +130,11 @@
 	position: relative;
 	box-sizing: border-box;
 	max-width: 100%;
-	/* 	min-height: 50px; */
 	padding: 0 10px 0 0px;
 }
 
 .inner {
-	width: 400px;
+	width: 300px;
 	margin: 0 auto;
 }
 
@@ -115,6 +184,10 @@ input.menu_h:hover {
 	background: rgb(178, 178, 178); 
 	cursor: pointer;
 }
+input.nick_h:hover {
+	background: rgb(178, 178, 178); 
+	cursor: pointer;
+}
 
 .gender_item {
 	display: flex;
@@ -149,14 +222,10 @@ input.menu_h:hover {
 	margin-bottom: 8px;
 	margin-top: 8px;
 }
+
 .send {
 	margin-top: 40px;
-	width: 322px;
-    padding: 5px;
-}
-.send {
-	margin-top: 40px;
-	width: 322px;
+	width: 300px;
     padding: 5px;
     height: 40px;
     background-color: rgb(0, 150, 243);
@@ -167,125 +236,141 @@ input.menu_h:hover {
 	font-size: 15px;
 	font-weight: bold;
 }
+/* extra small */
+@media screen and (max-width:540px) {
+	.inner {
+		width: 320px;
+	}
+}
+/* small */
+@media screen and (min-width:541px) and (max-width:720px) {
+	.inner {
+		width: 310px;
+	}
+	.joinform {
+		width: 105%;
+	}
+}
+/* medium */
+@media screen and (min-width:721px) and (max-width:960px) {
+	.inner {
+		width: 330px;
+	}
+}
+/* large */
+@media screen and (min-width:961px) and (max-width:1140px) {
+	.inner {
+		width: 350px;
+	}
+	.joinform {
+		width: 95%;
+	}
+}
+
 </style>
 </head>
 <body>
 	<div class="inner">
-		<form class="joinform" name="joinform" action="insertUser.ko"
-			method="post" onSubmit="return insertchk()">
+		<form class="joinform" name="joinform" action="insertUser.ko" method="post" onSubmit="return insertchk()">
 			<div class="item_name">아이디</div>
 			<div class="form_item">
 				<div id="check" onclick="idInput()">
 					<input type="text" id="id" name="u_id" placeholder="영문 대소문자, 숫자 포함 최소 9자이상">
 				</div>
 			</div>
-			<div id="idErrorMessage" style="display: none; color: red;"><small>* 아이디를
-				올바른 형식으로 입력해주세요.</small></div>
-			<div id="idNoneMessage" style="display: none; color: red;"><small>* 아이디를
-				입력해주세요.</small></div>
-			<div id="idCheckMessage" style="display: none; color: red;"><small>* 이미
-				사용중인 아이디입니다.</small></div>
+			<div id="idErrorMessage" style="display: none; color: red;"><small>* 아이디를 올바른 형식으로 입력해주세요.</small></div>
+			<div id="idNoneMessage" style="display: none; color: red;"><small>* 아이디를 입력해주세요.</small></div>
+			<div id="idCheckMessage" style="display: none; color: red;"><small>* 이미 사용중인 아이디입니다.</small></div>
+				
 			<div class="item_name">비밀번호</div>
 			<div class="form_item">
 				<div onclick="pwInput()">
 					<input type="password" id="pw" name="u_pw" placeholder="영문 대소문자,특수문자,숫자 포함 8~15자">
 				</div>
 			</div>
-			<div id="pwErrorMessage" style="display: none; color: red;"><small>* 비밀번호를 올바른
-				형식으로 입력해주세요.</small></div>
+			<div id="pwErrorMessage" style="display: none; color: red;"><small>* 비밀번호를 올바른 형식으로 입력해주세요.</small></div>
+			
 			<div class="item_name">비밀번호 확인</div>
 			<div class="form_item">
 				<div onclick="pw1Input()">
 					<input type="password" id="pw1" name="pw1" placeholder="비밀번호 확인">
 				</div>
 			</div>
-			<div id="pw1ErrorMessage" style="display: none; color: red;"><small>* 비밀번호와
-				일치시켜 주세요.</small></div>
+			<div id="pw1ErrorMessage" style="display: none; color: red;"><small>* 비밀번호와 일치시켜 주세요.</small></div>
 			<div class="item_name">이름</div>
 			<div class="form_item">
 				<div onclick="nameInput()">
-					<input type="text" id="name" name="u_name" placeholder="이름"
-						minlength="1" value="<%=request.getParameter("name")%>" readonly>
+					<input type="text" id="name" name="u_name" placeholder="이름" minlength="1" value="<%=request.getParameter("name")%>" readonly>
 				</div>
 			</div>
-			<div id="nameErrorMessage" style="display: none; color: red;"><small>* 이름을
-				입력해주세요.</small></div>
-			<div class="item_name">닉네임<small style="font-weight: bold;">(선택)</small></div>
+			<div id="nameErrorMessage" style="display: none; color: red;"><small>* 이름을 입력해주세요.</small></div>
+				
+			<div class="item_name">닉네임</div>
 			<div class="form_item">
-				<div>
-					<input type="text" id="nick" name="u_nick" placeholder="닉네임(입력하지 않을 시 이름으로 등록)"
-						minlength="1">
+				<div onclick="nickInput()">
+					<input type="text" id="nick" name="u_nick" class="nick" placeholder="특수문자,띄어쓰기 불가" minlength="1">
 				</div>
 			</div>
+			<div id="nickCheckMessage" style="display: none; color: red;"><small>* 이미 존재하는 닉네임입니다.</small></div>
+			<div id="nickErrorMessage" style="display: none; color: red;"><small>* 닉네임을 올바른 형식으로 입력해주세요.</small></div>
 
 			<div class="item_name">성별</div>
 			<div class="form_item">
-				<div class="gender_item">
-					<input type="radio" id="male" name="u_gen" value="남자" checked><label
-						for="male">남자</label> <input type="radio" id="female" name="u_gen"
-						value="여자"><label for="female">여자</label>
+				<div class="gender_item" style="width: 300px;">
+					<input type="radio" id="male" name="u_gen" value="남자" checked><label for="male">남자</label>
+					<input type="radio" id="female" name="u_gen" value="여자"><label for="female">여자</label>
 				</div>
 			</div>
-			<div id="genderErrorMessage" style="display: none; color: red;"><small>* 성별을
-				선택해주세요.</small></div>
+			<div id="genderErrorMessage" style="display: none; color: red;"><small>* 성별을 선택해주세요.</small></div>
 
 			<div class="item_name">생년월일</div>
 			<div class="form_item">
 				<div onclick="birthInput()">
-					<input type="text" id="birth" name="u_birth" placeholder="생년월일"
-						value="<%=request.getParameter("birth")%>" readonly><br>
+					<input type="text" id="birth" name="u_birth" placeholder="생년월일" value="<%=request.getParameter("birth")%>" readonly><br>
 				</div>
 			</div>
-			<div id="birthErrorMessage" style="display: none; color: red;"><small>* 올바른
-				생년월일을 입력해주세요.</small></div>
+			<div id="birthErrorMessage" style="display: none; color: red;"><small>* 올바른 생년월일을 입력해주세요.</small></div>
+				
 			<div class="item_name">전화번호</div>
 			<div class="form_item">
 				<div onclick="telInput()">
-					<input type="tel" id="tel" name="u_tel" placeholder="전화번호"
-						value="<%=request.getParameter("tel")%>" readonly><br>
+					<input type="tel" id="tel" name="u_tel" placeholder="전화번호" value="<%=request.getParameter("tel")%>" readonly><br>
 				</div>
 			</div>
-			<div id="telErrorMessage" style="display: none; color: red;"><small>* 전화번호를
-				입력해주세요.</small></div>
+			<div id="telErrorMessage" style="display: none; color: red;"><small>* 전화번호를 입력해주세요.</small></div>
+				
 			<div class="item_name">이메일</div>
 			<div class="form_item">
 				<div onclick="emailInput()">
 					<input type="text" id="email" name="u_email" placeholder="이메일"><br>
 				</div>
 			</div>
-			<div id="emailNoneMessage" style="display: none; color: red;"><small>* 이메일을
-				입력해주세요.</small></div>
-			<div id="emailErrorMessage" style="display: none; color: red;"><small>* 이메일을
-				올바른 형식으로 입력해주세요.</small></div>
+			<div id="emailNoneMessage" style="display: none; color: red;"><small>* 이메일을 입력해주세요.</small></div>
+			<div id="emailErrorMessage" style="display: none; color: red;"><small>* 이메일을 올바른 형식으로 입력해주세요.</small></div>
+			<div id="emailCheckMessage" style="display: none; color: red;"><small>* 이미 존재하는 이메일입니다.</small></div>
+				
 			<div class="item_name">주소</div>
 			<div class="form_item">
 				<div onclick="postcodeInput()">
-					<input type="text" id="postcode" name="addr1" class="postcode" placeholder="우편번호"
-						readonly><br>
+					<input type="text" id="postcode" name="addr1" class="postcode" placeholder="우편번호" readonly><br>
 				</div>
 				<div>
-					<input type="button" class="menu_h" onclick="execDaumPostcode()"
-						value="우편번호 찾기">
+					<input type="button" class="menu_h" onclick="execDaumPostcode()" value="우편번호 찾기">
 				</div>
 			</div>
-			<div id="postcodeErrorMessage" style="display: none; color: red;"><small>* 우편번호를
-				입력해주세요.</small></div>
 			<div class="form_item">
 				<div onclick="addressInput()">
-					<input type="text" class="address" id="address" name="addr2" placeholder="주소"
-						readonly><br>
+					<input type="text" class="address" id="address" name="addr2" placeholder="주소" readonly><br>
 				</div>
 			</div>
-			<div id="addressErrorMessage" style="display: none; color: red;"><small>* 주소를
-				입력해주세요.</small></div>
 			<div class="form_item">
 				<div onclick="detailInput()">
-					<input type="text" class="detailAddress" id="detailAddress" name="addr3"
-						placeholder="상세주소"><br>
+					<input type="text" class="detailAddress" id="detailAddress" name="addr3" placeholder="상세주소"><br>
 				</div>
 			</div>
-			<div id="detailErrorMessage" style="display: none; color: red;"><small>* 상세주소를
-				입력해주세요.</small></div>
+			<div id="postcodeErrorMessage" style="display: none; color: red;"><small>* 우편번호를 입력해주세요.</small></div>
+			<div id="addressErrorMessage" style="display: none; color: red;"><small>* 주소를 입력해주세요.</small></div>
+			<div id="detailErrorMessage" style="display: none; color: red;"><small>* 상세주소를 입력해주세요.</small></div>
 
 			<button class="send" type="submit">회원가입 하기</button>
 		</form>

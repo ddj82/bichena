@@ -5,10 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>문의사항</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
 table th {
     text-align: center;
@@ -30,7 +26,7 @@ function qnaView(uid, qno, sid) {
 </script>
 </head>
 <body>
-	<section class="title">문의목록</section>
+<%@ include file="../../common/navbar.jsp" %>
 <div class="container">
 	<table class="table table-hover">
 		<thead>

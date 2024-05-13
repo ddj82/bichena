@@ -29,6 +29,17 @@
 		DELETE FROM BC_FAQ WHERE FAQ_NO =#{faq_no}
 	</delete>
 
+	<update id="updateFaq_no1">
+		SET @row_number := 0;
+	</update>
+	
+	<update id="updateFaq_no2">
+		UPDATE BC_FAQ
+		SET FAQ_NO =
+		(@row_number:=@row_number+1)
+		ORDER BY FAQ_NO;
+	</update>
+
 	<select id="getFaqListPaging" resultType="faqdto">
 		SELECT *
 		FROM BC_FAQ

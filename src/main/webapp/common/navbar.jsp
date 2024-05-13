@@ -11,6 +11,8 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css">
+
+
 <style>
 body {
 	background-color: white;
@@ -82,7 +84,7 @@ a:hover {
 
 .navbar {
 	display: block;
-/* 	max-height: 8vh; */
+    background-color: white;
 }
 
 .bottom-line {
@@ -328,7 +330,7 @@ nav.navbar.navbar-expand-sm#nav-footer {
 	background-color: #FFFFFF;
 	border-top: 1px solid #E0E0E0;
 }
-p#ptag {
+p#ptag, #ptag {
 	font-family: "Noto Sans KR", sans-serif;
 	font-optical-sizing: auto;
 	font-style: normal;
@@ -399,7 +401,14 @@ $(document).ready(function() {
 					</form>
 				</div>
 				<div class="login_signup">
-					<a class="login" href="loginPage.ko">로그인 / 회원가입 > </a>
+					<c:choose>
+						<c:when test="${userID eq null }">
+							<a class="login" href="loginPage.ko">로그인 / 회원가입 > </a>
+						</c:when>
+						<c:otherwise>
+							<a class="login" href="myPage.ko">${userID }님 </a>&nbsp;환영합니다. 
+						</c:otherwise>
+					</c:choose>
 					<button class="navbar-toggler" type="button" aria-label="Toggle side menu">
 						<i class="fas fa-bars"></i>
 					</button>
@@ -440,42 +449,60 @@ $(document).ready(function() {
 				</ul>
 			</div>
 		</div>
+<!-- 	<div class="bottom-line"></div> -->
 	</nav>
 
 
 	<div class="side-menu" id="sideMenu">
-		<div class="profile">
-			<a href="">사용자님 ></a>
-			<div class="mini-menu">
-
-				<div class="quick-group">
-					<div class="quick-group-in" onclick="location.href='logout.ko';">
-						<img src="${pageContext.request.contextPath}/img/navbar/logout.png" width="100" height="100" />
-						<p>로그아웃</p>
+		<c:choose>
+			<c:when test="${userID eq null }">
+				<div class="profile">
+					<div class="card">
+						<div class="card-header">
+							<a class="collapsed card-link" href="loginPage.ko">로그인 / 회원가입 ></a>
+						</div>
 					</div>
+					<div class="side-bottom-line"></div>
 				</div>
-
-				<div class="quick-group">
-					<div class="quick-group-in" onclick="">
-						<img src="${pageContext.request.contextPath}/img/navbar/checklist.png" width="100" height="100" />
-						<p>주문내역</p>
+			</c:when>
+			<c:otherwise>
+				<div class="profile">
+					<div class="card">
+						<div class="card-header">
+							<a class="collapsed card-link" href="myPage.ko">${userID }님</a>
+						</div>
 					</div>
-				</div>
-
-				<div class="quick-group">
-					<div class="quick-group-in" onclick="">
-						<img src="${pageContext.request.contextPath}/img/navbar/rating.png" width="100" height="100" />
-						<p>리 뷰</p>
+					<div class="mini-menu">
+						<div class="quick-group">
+							<div class="quick-group-in" onclick="location.href='logout.ko';">
+								<img src="${pageContext.request.contextPath}/img/navbar/logout.png" width="100" height="100" />
+								<p>로그아웃</p>
+							</div>
+						</div>
+						<div class="quick-group">
+							<div class="quick-group-in" onclick="location.href='myPage.ko';">
+								<img src="${pageContext.request.contextPath}/img/navbar/checklist.png" width="100" height="100" />
+								<p>주문내역</p>
+							</div>
+						</div>
+		
+						<div class="quick-group">
+							<div class="quick-group-in" onclick="location.href='myRevList.ko';">
+								<img src="${pageContext.request.contextPath}/img/navbar/rating.png" width="100" height="100" />
+								<p>리 뷰</p>
+							</div>
+						</div>
 					</div>
+					<div class="side-bottom-line"></div>
 				</div>
-			</div>
-			<div class="side-bottom-line"></div>
-		</div>
+			</c:otherwise>
+		</c:choose>
 		<ul class="navbar-nav navbar-nav-side">
 			<div id="accordion">
+				<!-- 0511 -->
 				<div class="card">
 					<div class="card-header">
-						<a class="collapsed card-link" data-toggle="collapse" href="main.ko"> 홈 </a>
+						<a class="collapsed card-link" href="main.ko"> 홈 </a>
 					</div>
 				</div>
 				<div class="card">

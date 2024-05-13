@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+if (session.getAttribute("userID") == null) {%>
+<script>
+location.href="main.ko";
+</script>
+<%}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,8 +14,9 @@
 <meta http-equiv="Cache-Control" content="no-store" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <title>FAQ</title>
 <style>
@@ -23,9 +31,15 @@ table.table>tbody>tr>td, table.table>tbody>tr>th, table th {
 table {
     text-align: center;
 }
+#footer {
+    text-align: right;
+    padding-right: 15px;
+	display: none;
+}
 </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
 <div class="container">
 	<div class="jumbotron">
 		<h1>Faq</h1>
@@ -45,8 +59,8 @@ table {
 		<table class="table table">
 			<thead>
 				<tr>
-					<th>번호</th>
-					<th>제목</th>
+					<th style="width: 10%;">번호</th>
+					<th style="width: 90%; text-align: center;">제목</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -59,8 +73,11 @@ table {
 			</tbody>
 		</table>
 		
+		<div id="footer">
+			<button type="button" class="btn btn-primary btn-sm conWrite">글쓰기</button>
+		</div>	
+		
 		<!-- 페이징 처리 -->
-
 		<c:choose>
 		    <c:when test="${pagination.currPageNo == 1}">
 		        <!-- 현재 페이지가 첫 번째 페이지인 경우 -->
@@ -95,9 +112,9 @@ table {
 		</c:choose>
 		<br>
 		<br>
-		<div id="footer" style="display:none">
-			<button type="button" id="conWrite" class="btn btn-primary btn-sm">글쓰기</button>
-		</div>
+<!-- 		<div id="footer2" style="display:none"> -->
+<!-- 			<button type="button" class="btn btn-primary btn-sm conWrite">글쓰기</button> -->
+<!-- 		</div> -->
 	</div>
 </div>	
 <script>
@@ -113,9 +130,13 @@ document.addEventListener("DOMContentLoaded", function() {
 function selTr(val){
 	location.href = "adminGetFaq.ko?faq_no="+val;
 }
-$("#conWrite").click(function(){
-	location.href = "writeFaq.ko";
+
+
+// 글쓰기 버튼 클릭 시 동작할 코드
+$(".conWrite").click(function() {
+    location.href = "writeFaq.ko";
 });
+
 
 </script>
 </body>

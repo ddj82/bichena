@@ -4,7 +4,6 @@
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,16 +31,15 @@ label.control-label.col-sm-2.email {
 }
 
 label.control-label.col-sm-2.number {
-	display: flex;
 	padding: 0px;
 	margin-bottom: 15px;
 }
 
 .pwFindSubBox {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 354.91px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 324.91px;
 }
 
 .col-sm-10 {
@@ -80,14 +78,27 @@ input#number {
 	margin-bottom: 15px;
 }
 
-.alert.alert-danger {
+.alert{
 	width: 100%;
+    margin-top: 10px;
 }
 
 .pwFindMainBox {
     display: flex;
     justify-content: center;
     margin-top: 100px;
+}
+
+.emailAgain{
+	display:inline;
+	cursor : pointer;
+	bolder : 1px solie black;
+	text-decoration:none;
+}
+
+div#timebox {
+    display: flex;
+    justify-content: space-between;
 }
 
 </style>
@@ -106,19 +117,23 @@ input#number {
 					<input type="email" class="form-control" id="u_email" placeholder="이메일을 입력해 주세요" name="u_email">
 				</div>
 			</div>
+			<div class='alert alert-danger' style="display: none;" id="danger1"></div>
 			<div class="form-group" style="display: none;">
 				<label class="control-label col-sm-2 number" for="number">인증번호</label>
+				<div id="timebox">
+				<div class="time" style="display:inline;"></div>
+				<a class="emailAgain" onclick="e_again()" style="display:none;">재전송</a>
+				</div>
 				<div class="col-sm-10">
 					<input type="password" class="form-control" id="number" placeholder="인증번호를 입력해 주세요" name="number">
 				</div>
-				<div class="time"></div>
 			</div>
+			<div class='alert alert-danger my' style="display: none;" id="danger2"></div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
 					<button type="button" class="pwFindMybutton" onclick="test()">본인 인증하기</button>
 				</div>
 			</div>
-			<div class='alert alert-danger' style="display: none;"></div>
 			</div>
 		</div>
 	</div>
@@ -130,14 +145,43 @@ input#number {
 		var display = $(".time");
 		var leftSec = 180;
 
+		
+		function e_again(){
+			alert("해당 이메일로 인증번호를 재전송했습니다.");
+			const email = $("#u_email").val() // 이메일 주소값 얻어오기!
+
+			var formData = {
+				email : email
+			};
+
+			$.ajax({
+				type : 'POST',
+				data : formData,
+				url : 'mailCheck.ko',
+				success : function(data) {
+					console.log("data(인증번호ㅋ) : " + data);
+					code = data;
+					$('.form-group').css('display', 'block');
+					$('.pwFindMybutton').text("인증번호 확인");
+					$('.pwFindMybutton').attr("onclick", "check()");
+					clearInterval(timer);
+					startTimer(leftSec, display);
+				}
+			});
+		}
+		
+		
 		function test() {
 			const emailPattern = /[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i;
 			let email = $("#u_email").val();
 			if (emailPattern.test(email)) {
 				pwFind();
 			} else {
-				$(".alert-danger").css("display", "block");
-				$(".alert-danger").html("이메일 형식을 확인해 주세요");
+				$("#danger1").css("display", "block");
+				$("#danger1").html("이메일 형식을 확인해 주세요");
+				setTimeout(function(){
+				$("#danger1").css("display", "none");
+				},2000);
 			}
 		}
 
@@ -174,10 +218,14 @@ input#number {
 				success : function(res) {
 					console.log("res : ", res)
 					if (res === "error") {
-						$(".alert-danger").css("display", "block");
-						$(".alert-danger").html("존재하지 않는 이메일입니다.");
+						$("#danger1").css("display", "block");
+						$("#danger1").html("존재하지 않는 이메일입니다.");
+						setTimeout(function(){
+						$("#danger1").css("display", "none");
+						}, 2000);
 					} else {
-						$(".alert-danger").css("display","none");
+						$("#danger1").css("display","none");
+						$('.pwFindMybutton').attr("onclick", "");
 						number();
 					}
 				}
@@ -185,25 +233,31 @@ input#number {
 		}
 
 		function number() {
-			const email = $("#u_email").val() // 이메일 주소값 얻어오기!
+			if(count == 0){
+				count = 1;
+				alert("해당 이메일로 인증번호를 전송했습니다.");
+				const email = $("#u_email").val() // 이메일 주소값 얻어오기!
 
-			var formData = {
-				email : email
-			};
+				var formData = {
+					email : email
+				};
 
-			$.ajax({
-				type : 'POST',
-				data : formData,
-				url : 'mailCheck.ko',
-				success : function(data) {
-					console.log("data(인증번호ㅋ) : " + data);
-					code = data;
-					$('.form-group').css('display', 'block');
-					$('.pwFindMybutton').text("인증번호 확인");
-					$('.pwFindMybutton').attr("onclick", "check()");
-					startTimer(leftSec, display);
-				}
-			});
+				$.ajax({
+					type : 'POST',
+					data : formData,
+					url : 'mailCheck.ko',
+					success : function(data) {
+						console.log("data(인증번호ㅋ) : " + data);
+						code = data;
+						$('.form-group').css('display', 'block');
+						$('.pwFindMybutton').text("인증번호 확인");
+						$('.pwFindMybutton').attr("onclick", "check()");
+						startTimer(leftSec, display);
+						$('.emailAgain').css('display','block');
+					}
+				});
+			}
+			
 		}
 
 		function check() {
@@ -217,8 +271,11 @@ input#number {
 // 				경로 바꾸기
 				location.href="pwFindShow.ko?email="+email;
 			} else {
-				$(".alert-danger").css("display", "block");
-				$(".alert-danger").html('인증번호가 불일치 합니다. 다시 확인해주세요.');
+				$("#danger2").css("display", "block");
+				$("#danger2").html('인증번호가 불일치 합니다. 다시 확인해주세요.');
+				setTimeout(function(){
+				$("#danger2").css("display", "none");
+				},2000);
 			}
 		}
 		
@@ -245,6 +302,14 @@ input#number {
 				}
 			});
 		});
+		
+		window.onpageshow = function(event){
+			if(event.persisted || (window.performance && window.performance.navigation.type == 2)){
+				console.log("뒤로가기");
+				location.reload();
+			}
+		}
+		
 	</script>
 </body>
 </html>

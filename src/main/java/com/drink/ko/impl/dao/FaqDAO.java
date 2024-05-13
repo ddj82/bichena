@@ -47,4 +47,12 @@ public class FaqDAO {
 	public List<FaqVO> faqListPaging(FaqVO vo) {
 		return mybatis.selectList("FaqDAO.getFaqListPaging", vo);
 	}
+
+	// 글 삭제시 not_no를 업데이트 하는 메소드
+	public int updateFaq_no1(FaqVO vo) {
+		return mybatis.update("FaqDAO.updateFaq_no1", vo);
+	}
+	public int updateFaq_no2(FaqVO vo) {
+		return mybatis.update("FaqDAO.updateFaq_no2", vo);
+	}	 
 }

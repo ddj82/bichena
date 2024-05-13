@@ -8,5 +8,9 @@ public interface OrderService {
 	List<OrderVO> myOrderList(int u_no);
 	OrderVO myOrderDetail(String o_no);
 	int orderRevchk(OrderVO vo);
-	List<OrderVO> adminOrderList();
+	List<OrderVO> adminOrderList(OrderVO vo);
+	List<OrderVO> myRevIstOrder(int u_no);
+	int orderTotalCnt(OrderVO vo);// 전체 글 수 조회
+	int orderInsert(OrderVO vo);
+	void orderDelete(String mid);
 }

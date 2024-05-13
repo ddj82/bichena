@@ -3,6 +3,7 @@
 <nav class="navbar navbar-expand-sm fixed-bottom" id="nav-footer">
 	<div class="container" id="div-container">
 		<div class="prjtnm" id="div-prjtnm">비채나</div>
+		<p id="ptag" style="font-size:14px;"><a href="adminLoginPage.ko">관리자로그인</a></p>
 		<div><p id="ptag">팀장: 김동준 | 부팀장 : 제동현</p></div>
 		<div><p id="ptag">팀원: 김동욱 | 금아롬 | 양예진 | 김호석 | 이상민</p></div>
 		<br>

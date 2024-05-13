@@ -4,8 +4,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.maven.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,19 +19,23 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.drink.ko.CartService;
+import com.drink.ko.UsersService;
 import com.drink.ko.vo.CartVO;
+import com.drink.ko.vo.UsersVO;
 
 @Controller
 public class CartController {
 
 	@Autowired
 	private CartService cartService;
-	
+	@Autowired
+	private UsersService usersService;
+
 	@RequestMapping("/myCartList.ko")
 	public String myCartList() {
-		return "/WEB-INF/user/MycartList.jsp";
+		return "/WEB-INF/user/mycartList.jsp";
 	}
-	
+
 	@RequestMapping("/cartInsert.ko")
 	public String cartInsert() {
 		return "/WEB-INF/user/CartInsert.jsp";
@@ -97,5 +103,61 @@ public class CartController {
 			cartService.deleteCart(vo);
 		}
 		return "redirect:myCartList.ko";
+	}
+	
+	@RequestMapping("/orderNoCreate.ko")
+	@ResponseBody
+	public String orderNoCreate() {
+		return cartService.orderNoCreate();
+	}
+
+	// 장바구니에서 주문
+	@RequestMapping("/order.ko")
+	@ResponseBody
+//		public int order(@RequestBody List<Integer> productNos, HttpServletRequest request, Model model) {
+	public Map<String, Object> order(@RequestBody List<Integer> productNos, HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		int price = 0;
+		String id = (String) session.getAttribute("userID");
+		String p_name = "";
+		String p_no = "";
+		String addr = "";
+		String stock = "";
+		UsersVO users = new UsersVO();
+		users = usersService.checkId(id);
+		addr += users.getAddr1() + " " + users.getAddr2() + " " + users.getAddr3();
+
+		for (int i = 0; i < productNos.size(); i++) {
+			if (i == productNos.size() - 1) {
+				CartVO vo = new CartVO();
+				vo.setP_no(productNos.get(i));
+				vo.setU_id(id);
+				vo = cartService.selectOrder(vo);
+				p_name += vo.getP_name();
+				p_no += vo.getP_no();
+				price += vo.getC_total();
+				stock += vo.getC_stock();
+			} else {
+				CartVO vo = new CartVO();
+				vo.setP_no(productNos.get(i));
+				vo.setU_id(id);
+				vo = cartService.selectOrder(vo);
+				p_name += vo.getP_name() + ",";
+				p_no += vo.getP_no() + ",";
+				price += vo.getC_total();
+				stock += vo.getC_stock() + ",";
+
+			}
+		}
+//			p_name = p_name.split(",");
+		Map<String, Object> map = new HashMap<>();
+		map.put("user", users);
+		map.put("p_name", p_name);
+		map.put("p_no", p_no);
+		map.put("price", price);
+		map.put("addr", addr);
+		map.put("c_stock", stock);
+
+		return map;
 	}
 }

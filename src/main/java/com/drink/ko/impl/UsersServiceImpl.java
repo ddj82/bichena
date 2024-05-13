@@ -61,6 +61,11 @@ public class UsersServiceImpl implements UsersService {
 		return usersDAO.checkId(id);
 	}
 
+	@Override
+	public UsersVO checkEmail(String email) {
+		return usersDAO.checkEmail(email);
+	}
+
 	// 로그인
 	@Override
 	public UsersVO loginSelectOne(UsersVO vo) {
@@ -70,14 +75,14 @@ public class UsersServiceImpl implements UsersService {
 	@Override
 	public UsersVO idFindEmail(UsersVO vo) {
 		System.out.println("idFind의 UserServeImpl까지는 탔습니다.");
-		System.out.println("idFind name : "+vo.getU_email());
+		System.out.println("idFind name : " + vo.getU_email());
 		return usersDAO.idFindEmail(vo);
 	}
 
 	@Override
 	public List<UsersVO> idFindPhone(UsersVO vo) {
 		System.out.println("idFind의 UserServeImpl까지는 탔습니다.");
-		System.out.println("idFind name : "+vo.getU_email());
+		System.out.println("idFind name : " + vo.getU_email());
 		return usersDAO.idFindPhone(vo);
 	}
 
@@ -110,7 +115,7 @@ public class UsersServiceImpl implements UsersService {
 	public int naverLoginFirst(UsersVO vo) {
 		return usersDAO.naverLoginFirst(vo);
 	}
-	
+
 	@Override
 	public UsersVO naverLogin(UsersVO vo) {
 		return usersDAO.naverLogin(vo);
@@ -120,5 +125,21 @@ public class UsersServiceImpl implements UsersService {
 	public List<UsersVO> getUserList(UsersVO vo) {
 		return usersDAO.getUserList(vo);
 	}
-}
 
+	// 동준, 관리자로그인
+	@Override
+	public UsersVO loginAdmin(UsersVO vo) {
+		return usersDAO.loginAdmin(vo);
+	}
+
+	@Override
+	public void updatePw(UsersVO vo) {
+		System.out.println("비번 수정 간다.");
+		usersDAO.updatePw(vo);
+	}
+
+	@Override
+	public UsersVO checkTel(String tel, String uid) {
+		return usersDAO.checkTel(tel, uid);
+	}
+}

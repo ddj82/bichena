@@ -18,15 +18,37 @@ public class ProdServiceImpl implements ProdService {
 	public ProdVO prodOne(String p_no) {
 		return dao.prodOne(p_no);
 	}
-
+	
 	@Override
 	public List<ProdVO> prodList() {
 		return dao.prodList();
 	}
 
 	@Override
-	public int adminProdInsert(ProdVO vo) {
-		return dao.adminProdInsert(vo);
+	public List<ProdVO> prodList(ProdVO vo) {
+		return dao.prodList(vo);
+	}
+
+	@Override
+	public int prodTotalCnt(ProdVO vo) {
+		return dao.prodTotalCnt(vo);
 	}
 	
+	
+	
+	@Override
+	public int getPnoMaxNum() {
+		return dao.getPnoMaxNum();
+	}
+
+	@Override
+	public int insertProduct(ProdVO vo) {
+		return dao.insertProduct(vo);
+	}
+
+	@Override
+	public int updateProduct(ProdVO vo) { // 셀렉트 치고 수정버튼 누르면 올 것
+		return dao.updateProduct(vo);
+	}
+
 }

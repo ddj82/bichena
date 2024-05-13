@@ -23,4 +23,19 @@ public class ProdRevServiceImpl implements ProdRevService {
 	public int prodRevInsert(ProdRevVO vo) {
 		return dao.prodRevInsert(vo);
 	}
+
+	@Override
+	public List<ProdRevVO> myRevList(int u_no) {
+		return dao.myRevList(u_no);
+	}
+
+	@Override
+	public List<ProdRevVO> adminRevList(ProdRevVO vo) {
+		return dao.adminRevList(vo);
+	}
+
+	@Override
+	public int revTotalCnt(ProdRevVO vo) {
+		return dao.revTotalCnt(vo);
+	}
 }

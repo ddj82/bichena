@@ -6,6 +6,7 @@ function insertchk() {
 		var pw = document.getElementById('pw');
 		var pw1 = document.getElementById('pw1');
 		var name = document.getElementById('name');
+		var nick = document.getElementById('nick');
 		var birth = document.getElementById('birth');
 		var tel = document.getElementById('tel');
 		var email = document.getElementById('email');
@@ -17,6 +18,7 @@ function insertchk() {
 		var pwPattern = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
 		var emailPattern = /^[a-zA-Z0-9_\-~!#$%^&*()]+@[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)*$/;
 		var namePattern = /^[가-힣a-zA-Z]+$/;
+		var nickPattern = /^[가-힣a-zA-Z]+$/;
 		
 		var idErrorMessage = document.getElementById('idErrorMessage');
 		var pwErrorMessage = document.getElementById('pwErrorMessage');
@@ -25,6 +27,7 @@ function insertchk() {
 		var postcodeErrorMessage = document.getElementById('postcodeErrorMessage');
 		var addressErrorMessage = document.getElementById('addressErrorMessage');
 		var detailErrorMessage = document.getElementById('detailErrorMessage');
+		var nickErrorMessage = document.getElementById('nickErrorMessage');
 		
 		
 		if (id.value.trim() === '' || !idPattern.test(id.value)) {
@@ -44,6 +47,11 @@ function insertchk() {
 		}
 		if(name.value == '' || !namePattern.test(name.value)) {
 			name.focus();
+			istrue = false;
+		}
+		if(!nickPattern.test(nick.value)) {
+			nick.focus();
+			nickErrorMessage.style.display = 'block';
 			istrue = false;
 		}
 		if(birth.value == '' || birth.value == null) {
@@ -104,9 +112,6 @@ function insertchk() {
 				idNoneMessage.style.display = 'none';
 			}
 		});
-		
-		
-		
 	}
 	function pwInput() {
 		var pw = document.getElementById('pw');
@@ -124,6 +129,24 @@ function insertchk() {
 			}
 		});
 	}
+	
+	function nickInput() {
+		var nick = document.getElementById('nick');
+		var nickErrorMessage = document.getElementById('nickErrorMessage');
+
+		nick.focus(); // Focus on the input field
+
+		nick.addEventListener('input', function() {
+			var pattern = /^[가-힣a-zA-Z]+$/; // 정규 표현식 패턴
+			var nickvalue = nick.value.trim();
+			if(!pattern.test(nickvalue)) {
+				nickErrorMessage.style.display = 'block'; // Display error message				
+			} else {
+				nickErrorMessage.style.display = 'none'; // Hide error message
+			}
+		});
+	}
+	
 	function pw1Input() {
 		var pw1 = document.getElementById('pw1');
 		var pw1ErrorMessage = document.getElementById('pw1ErrorMessage');
@@ -199,8 +222,10 @@ function insertchk() {
 			var emailvalue = email.value.trim();
 			if (emailvalue == "") {
 				emailNoneMessage.style.display = 'block';
+				emailErrorMessage.style.display = 'none';						
 			} else if (!emailPattern.test(emailvalue)){
 				emailErrorMessage.style.display = 'block';						
+				emailNoneMessage.style.display = 'none';
 			} else {
 				emailErrorMessage.style.display = 'none';
 				emailNoneMessage.style.display = 'none';

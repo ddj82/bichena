@@ -20,4 +20,16 @@ public class ProdRevDAO {
 	public int prodRevInsert(ProdRevVO vo) {
 		return mybatis.insert("ProdRevDAO.prodRevInsert", vo);
 	}
+	
+	public List<ProdRevVO> myRevList(int u_no) {
+		return mybatis.selectList("ProdRevDAO.myRevList", u_no);
+	}
+	
+	public List<ProdRevVO> adminRevList(ProdRevVO vo) {
+		return mybatis.selectList("ProdRevDAO.adminRevList", vo);
+	}
+	
+	public int revTotalCnt(ProdRevVO vo) {
+		return mybatis.selectOne("ProdRevDAO.revTotalCnt", vo);
+	}
 }

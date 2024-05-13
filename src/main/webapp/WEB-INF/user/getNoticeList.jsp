@@ -8,18 +8,28 @@
 <meta http-equiv="Expires" content="0" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <title>공지사항</title>
 <style>
 #searchNav {
     -webkit-justify-content: flex-end;
     justify-content: flex-end;
 }
+table.table>tbody>tr>td, table.table>tbody>tr>th, table th {
+    text-align: center;
+    vertical-align: middle;
+}
+table {
+    text-align: center;
+}
+#footer {
+    text-align: right;
+    padding-right: 15px;
+    display:none;
+}
 </style>
 </head>
 <body>
+<%@ include file="../../common/navbar.jsp" %>
 <div class="container">
 	<div class="jumbotron">
 		<h1>공지 사항</h1>
@@ -40,7 +50,6 @@
 				<tr>
 					<th>번호</th>
 					<th>제목</th>
-					<th>작성자</th>
 					<th>등록일</th>
 				</tr>
 			</thead>
@@ -49,49 +58,49 @@
 					<tr onclick="selTr(${notice.not_no})" style="cursor: pointer;">
 						<td>${notice.not_no}</td>
 						<td>${notice.not_title}</td>
-						<td>${notice.not_writer}</td>
 						<td>${notice.not_date}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		
+
 		<!-- 페이징 처리 -->
-
 		<c:choose>
-	    	<c:when test="${pagination.currPageNo == 1}">
-		        <!-- 현재 페이지가 첫 번째 페이지인 경우 -->
-		        <span>이전</span>
-	    	</c:when>
-	    	<c:otherwise>
-		        <!-- 이전 페이지로 이동하는 링크 -->
-		        <a href="getNoticeList.ko?currPageNo=${pagination.currPageNo - 1}" class="btn btn-primary btn-xs">이전</a>
-	    	</c:otherwise>
+			<c:when test="${pagination.currPageNo == 1}">
+				<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
+				<span>이전</span>
+			</c:when>
+			<c:otherwise>
+				<!-- 이전 페이지로 이동하는 링크 -->
+				<a href="getNoticeList.ko?currPageNo=${pagination.currPageNo - 1}"
+					class="btn btn-info">이전</a>
+			</c:otherwise>
 		</c:choose>
 		
-        <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
-            <c:choose>
-                <c:when test="${page eq pagination.currPageNo}">
-                    <span>${page}</span>
-                </c:when>
-                <c:otherwise>
-                    <a href="getNoticeList.ko?currPageNo=${page}" class="">${page}</a>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
+		<c:forEach begin="${pagination.startPage}"
+			end="${pagination.endPage}" var="page">
+			<c:choose>
+				<c:when test="${page eq pagination.currPageNo}">
+					<span>${page}</span>
+				</c:when>
+				<c:otherwise>
+					<a href="getNoticeList.ko?currPageNo=${page}">${page}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
 
 		<c:choose>
-		    <c:when test="${pagination.currPageNo == pagination.pageCnt}">
-		        <!-- 현재 페이지가 마지막 페이지인 경우 -->
-		        <span>다음</span>
-		    </c:when>
-		    <c:otherwise>
-		        <!-- 다음 페이지로 이동하는 링크 -->
-		        <a href="getNoticeList.ko?currPageNo=${pagination.currPageNo + 1}" class="btn btn-primary btn-xs">다음</a>
-		    </c:otherwise>
+			<c:when test="${pagination.currPageNo == pagination.pageCnt}">
+				<!-- 현재 페이지가 마지막 페이지인 경우 -->
+				<span>다음</span>
+			</c:when>
+			<c:otherwise>
+				<!-- 다음 페이지로 이동하는 링크 -->
+				<a href="getNoticeList.ko?currPageNo=${pagination.currPageNo + 1}"
+					class="btn btn-info">다음</a>
+			</c:otherwise>
 		</c:choose>
-		<br>
-		<br>
+		<br> <br>
 	</div>
 </div>
 
@@ -99,9 +108,6 @@
 function selTr(val){
 	location.href = "getNotice.ko?not_no="+val;
 }
-$("#conWrite").click(function(){
-	location.href = "writeNotice.ko";
-});
 </script>
 </body>
 </html>

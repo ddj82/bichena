@@ -64,5 +64,9 @@
 	<select id="naverLogin" resultMap="user">
 		SELECT * FROM BC_USERS WHERE U_ID = #{u_email} AND U_EMAIL = #{u_email}
 	</select>
+	
+	<select id="loginAdmin" resultMap="user">
+		SELECT * FROM BC_USERS WHERE U_ID = #{u_id}
+	</select>
 
 </mapper>

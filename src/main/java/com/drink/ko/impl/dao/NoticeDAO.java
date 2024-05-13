@@ -47,4 +47,21 @@ public class NoticeDAO {
 	public List<NoticeVO> noticeListPaging(NoticeVO vo) {
 		return mybatis.selectList("NoticeDAO.getNoticeListPaging", vo);
 	}
+
+    // jsp파일을 만들때, 몇번째인지 설정하는 메소드
+	public int getMaxNotice() {
+		return mybatis.selectOne("NoticeDAO.getMaxNotice");
+	}
+	
+    // 다음글, 이전글을 불러오는 메소드
+	public NoticeVO getPrevNext(NoticeVO vo) {
+	    return mybatis.selectOne("NoticeDAO.getPrevNext", vo);
+	}	
+    // 글 삭제시, not_no를 초기화 하는 메소드
+	public int updateNot_no1(NoticeVO vo) {
+		return mybatis.update("NoticeDAO.updateNot_no1", vo);
+	}
+	public int updateNot_no2(NoticeVO vo) {
+		return mybatis.update("NoticeDAO.updateNot_no2", vo);
+	}
 }

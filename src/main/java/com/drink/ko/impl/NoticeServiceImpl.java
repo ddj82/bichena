@@ -43,16 +43,33 @@ public class NoticeServiceImpl implements NoticeService {
 	// 페이징 처리된 글 목록 조회
 	@Override
 	public List<NoticeVO> noticeListPaging(NoticeVO vo) {
-		int startList = vo.getStartList(); // 시작 목록 인덱스
-		int sizePerPage = vo.getSizePerPage(); // 페이지 당 항목 수
 		return noticeDAO.noticeListPaging(vo);
 	}
 
 	// 전체 글 수 조회
 	@Override
 	public int noticeTotalCnt(NoticeVO vo) {
-		int startList = vo.getStartList(); // 시작 목록 인덱스
-		int sizePerPage = vo.getSizePerPage(); // 페이지 당 항목 수
 		return noticeDAO.getCount(vo);
 	}
+
+    // jsp파일을 만들때, 몇번째인지 설정하는 메소드
+    @Override
+    public int getMaxNotice() {
+    	return noticeDAO.getMaxNotice();
+    }
+    
+    // 다음글, 이전글을 불러오는 메소드
+    @Override
+    public NoticeVO getPrevNext(NoticeVO vo) {
+        return noticeDAO.getPrevNext(vo);
+    }
+    
+    // 글 삭제시, not_no를 초기화 하는 메소드
+    public int updateNot_no1(NoticeVO vo) {
+    	return noticeDAO.updateNot_no1(vo);
+    }
+    
+    public int updateNot_no2(NoticeVO vo) {
+    	return noticeDAO.updateNot_no2(vo);
+    }
 }

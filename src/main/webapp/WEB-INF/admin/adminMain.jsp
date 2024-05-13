@@ -57,6 +57,11 @@ window.onload = function() {
 								<i class="fas fa-columns"></i>
 							</div> 상품관리
 						</a> 
+						<a class="nav-link collapsed" href="prodInsertEditer.ko" target="contentFrame">
+							<div class="sb-nav-link-icon">
+								<i class="fas fa-columns"></i>
+							</div> 상품추가
+						</a> 
 						<a class="nav-link collapsed" href="getUserList.ko" target="contentFrame">
 							<div class="sb-nav-link-icon">
 								<i class="fas fa-book-open"></i>

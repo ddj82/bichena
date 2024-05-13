@@ -43,16 +43,20 @@ public class FaqServiceImpl implements FaqService {
 	// 페이징 처리된 글 목록 조회
 	@Override
 	public List<FaqVO> faqListPaging(FaqVO vo) {
-		int startList = vo.getStartList(); // 시작 목록 인덱스
-		int sizePerPage = vo.getSizePerPage(); // 페이지 당 항목 수
 		return faqDAO.faqListPaging(vo);
 	}
 
 	// 전체 글 수 조회
 	@Override
 	public int faqTotalCnt(FaqVO vo) {
-		int startList = vo.getStartList(); // 시작 목록 인덱스
-		int sizePerPage = vo.getSizePerPage(); // 페이지 당 항목 수
 		return faqDAO.getCount(vo);
 	}
+	
+    // 삭제시 faq_no 업데이트
+    public int updateFaq_no1(FaqVO vo) {
+    	return faqDAO.updateFaq_no1(vo);
+    }
+    public int updateFaq_no2(FaqVO vo) {
+    	return faqDAO.updateFaq_no2(vo);
+    }
 }

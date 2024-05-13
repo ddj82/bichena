@@ -22,9 +22,9 @@ $(function(){
 				values = res.prodOneRev; //java에서 정의한 ArrayList명을 적어준다.
 				console.log("배열 : ", values);
 				$.each(values, function(i, o){
-					$("#revTB").append("<tr><td>" + o.u_nick + "</td><td>" + o.p_name + "</td><td>" + o.pr_date + "</td></tr>"
+					$("#revTB").append("<table class='dtable'><tr><td>" + o.u_nick + "</td><td>" + o.p_name + "</td><td>" + o.pr_date + "</td></tr>"
 							+ "<tr><td>" + o.pr_content + "</td><td>"
-							+ "<tr><td>" + "<img alt='' src='img/imgQna/" + o.pr_img  + "' style='width:100px;'>" + "</td><td>");
+							+ "<tr><td>" + "<img alt='' src='img/imgQna/" + o.pr_img  + "' style='width:100px;'>" + "</td><td></table>");
 				});
 				console.log("성공");
 			} else {
@@ -34,12 +34,32 @@ $(function(){
 	});
 });
 </script>
+<style>
+div.pay {
+	top: 160px;
+	border: 1px solid lightgray;
+	border-radius: 5px;
+	padding: 10px;
+}
+/* Chrome, Safari, Edge 등에서 화살표를 숨기기 */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox에서 화살표를 숨기기 */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+</style>
 </head>
 <body>
-<div class="main">
+<%@ include file="../../common/navbar.jsp" %>
+<div class="container">
 <%@ include file="pay.jsp" %>
-	<div class="div1">
-		<img class="float" src="img/${prodOne.p_img }" title="img" alt="img">
+	<div class="div1" style="width:60%;">
+		<img class="float" src="img/${prodOne.p_img }" title="img" alt="img" style="padding:10px;">
 		<div class="clear">
 			<p><span class="span1"><small>${prodOne.p_desc}</small></span></p>
 			<p><span class="span2"><strong>${prodOne.p_name}</strong></span></p>
@@ -47,8 +67,8 @@ $(function(){
 			<p class="p2"><span class="span2"><strong>${prodOne.p_price}원</strong></span></p>
 		</div>
 	</div>
-	<div class="dtable">
-		<table>
+	<div class="dtable" style="width:30%;">
+		<table style="width:100%;">
 			<tr>
 				<th>주류종류</th><td>${prodOne.p_type}</td>
 			</tr>
@@ -61,7 +81,7 @@ $(function(){
 		</table>
 	</div>
 	<br><br><br> 
-	<div class="dtable float" style="width:30%;">
+	<div class="dtable" style="display:inline-block; width:30%">
 		<table style="width:100%;">
 			<tr>
 				<th>단맛</th>
@@ -77,8 +97,8 @@ $(function(){
 			</tr>
 		</table>
 	</div>
-	<div class="dtable clear">
-		<table>
+	<div class="dtable" style="display:inline-block; width:30%">
+		<table style="width:100%;">
 			<tr>
 				<th>원료</th><td>${prodOne.p_mat}</td>
 			</tr>
@@ -87,27 +107,42 @@ $(function(){
 			</tr>
 		</table>
 	</div>
+	<div id="detail2" style="width:60%;">${pageContext.request.contextPath }/WEB-INF/product/${prodOne.editfile }</div>
+	<br>
+	<br>
+	<br> 
+	<br>
+	<br>
+	<br> 
+	<br>
+	<br>
+	<br> 
+	<br>
+	<br>
+	<br> 
+	<br>
+	<br>
+	<br> 
+	<div id="revTB"></div>
 </div>
 <br>
 <br>
 <br> 
 <br>
-<!-- 인클루드로 에디터로 만들어진 jsp파일 가져오기 -->
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<div class="main">
-	<table id="revTB" style="width:70%">
-	</table>
-</div>
+<script>
+window.onload = function(){
+	var httpReq = new XMLHttpRequest();
+	httpReq.open("GET", './productDetailpage.ko?p_no=${prodOne.p_no}', false);
+	httpReq.onreadystatechange = function(){
+		if( httpReq.readyState == 4 && httpReq.status == 200  ) {
+			var fileData = httpReq.responseText;
+			console.log('fileData: ',fileData);
+			document.querySelector("#detail2").innerHTML = fileData;
+		}
+	};
+	httpReq.send();
+};
+</script>
 <br>
 <br>
 <br> 

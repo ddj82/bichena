@@ -5,21 +5,43 @@
 <head>
 <meta charset="UTF-8">
 <title>비밀번호 재확인</title>
-</head>
+<style>
+.chanPwForm{
+	width: 1000px; 
+	height: 300px;	
+	border: 1px solid rgb(224, 224, 224);
+	border-radius: 10px;
+	margin: 0 auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	padding: 20px;
+}
 
+#upw{
+	width: 250px;
+	height: 50px;
+	padding: 10px;
+}
+
+#passPW{
+	height: 50px;
+/* 	border: 1px solid rgb(224, 224, 224); */
+/* 	border-radius: 5px; */
+/* 	padding: 10px; */
+}
+</style>
+</head>
 <body>
+<%@ include file="../../common/navbar.jsp" %>
+<div class="container">
 	<h3>비밀번호 재확인</h3>
 	<form action="reconPw.ko" class="confirmPw" id="confirmPw" method="post">
-		<p>개인정보 보호를 위해 비밀번호를 한 번 더 입력해주세요.</p>
-		<div>
-			<input type="password" id="upw" name="u_pw" maxlength="16" pattern="[a-zA-Z0-9_\-~!@#$%^&*()]+">
-		</div>
-		<div>
-			<input type="button" onclick="passChk()" value="확인">
-		</div>
+		<p><small>개인정보 보호를 위해 비밀번호를 한 번 더 입력해주세요.</small></p>
+		<input type="password" id="upw" name="u_pw" placeholder="비밀번호를 입력해주세요." maxlength="16" pattern="[a-zA-Z0-9_\-~!@#$%^&*()]+">
+		<input type="button" id="passPW" onclick="passChk()" value="확인" class="btn btn-outline-secondary">
 	</form>
+</div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
 		// 특정 입력 필드 가져오기

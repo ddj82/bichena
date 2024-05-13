@@ -48,5 +48,13 @@ public class CartDAO {
 		System.out.println("장바구니 수량, 가격을 가져올 상품번호 : " + productno);
 		return mybatis.selectOne("CartDAO.selectQuantity",productno);
 	}
+	
+	public CartVO selectOrder(CartVO vo) {
+		return mybatis.selectOne("CartDAO.selectOrder", vo);
+	}
+	
+	public String orderNoCreate() {
+		return mybatis.selectOne("CartDAO.orderNoCreate");
+	}
 
 }

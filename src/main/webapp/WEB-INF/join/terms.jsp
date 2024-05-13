@@ -139,7 +139,7 @@ span.all {
 						<input type="checkbox" name="clause" id="clause1" value="agree">
 						<a href="serviceTerms.ko">
 							<small style="font-weight: bold;">[필수]</small>서비스 이용약관 
-							<img src="img/arrow-right.png" alt="약관 페이지" width="10px" height="10px">
+							<img src="img/imgUser/arrow-right.png" alt="약관 페이지" width="10px" height="10px">
 						</a>
 					</label>
 				</span><br><br> 

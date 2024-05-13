@@ -90,11 +90,9 @@ public class LoginController {
 	public String login(UsersVO vo, Model model) {
 
 		String pw = vo.getU_pw();
-		System.out.println("getU_pw 암호화 전 비밀번호: " + vo.getU_pw());
 		UsersVO user = usersService.loginSelectOne(vo);
 
 		if (user != null) {
-			System.out.println("getU_pw 암호화한 비밀번호: " + vo.getU_pw());
 			Boolean result = encoder.matches(pw, user.getU_pw());
 			if (result == true) {
 				model.addAttribute("userID", user.getU_id());
@@ -107,9 +105,44 @@ public class LoginController {
 		}
 		return "loginErr.ko";
 	}
+	
+	// 동준, 관리자로그인, 0510
+	@RequestMapping("/loginAdmin.ko")
+	@ResponseBody
+	public String loginAD(UsersVO vo, Model model) {
+		String id = vo.getU_id();
+		if (id != null) {
+			if (id.equals("admin")) {
+				
+				String pw = vo.getU_pw();
+				UsersVO user = usersService.loginAdmin(vo);
+				
+				if (user != null) {
+					Boolean result = encoder.matches(pw, user.getU_pw());
+					if (result == true) {
+						model.addAttribute("userID", user.getU_id());
+						model.addAttribute("userNO", user.getU_no());
+						model.addAttribute("howLogin", user.getU_state());
+						return "adminOrderList.ko";
+					} else {
+						return "loginErr.ko";
+					}
+				}
+			} else {
+				return "loginErr2.ko";
+			}
+		}
+		return "loginErr.ko";
+	}
+	
+	@RequestMapping("loginErr2.ko")
+	public String loginErr2() {
+		return "/main.jsp?err=1";
+	}
+	// 0510 끝
 
 	// 05-07 수정
-	@PostMapping("/idFind.ko")
+	@RequestMapping("/idFind.ko")
 	public String idFind(UsersVO vo, Model model) {
 		List<UsersVO> userList = usersService.idFindPhone(vo);
 		if (userList == null) {

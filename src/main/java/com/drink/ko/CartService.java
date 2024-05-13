@@ -17,4 +17,8 @@ public interface CartService {
 	public CartVO selectCart(int productno);
 	
 	public List<CartVO> selectList(CartVO vo);
+	
+	public CartVO selectOrder(CartVO vo);
+	
+	String orderNoCreate(); //주문번호생성
 }

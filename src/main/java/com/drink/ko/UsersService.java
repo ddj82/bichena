@@ -7,6 +7,7 @@ import com.drink.ko.vo.UsersVO;
 public interface UsersService {
 	int insertUser(UsersVO vo);
 	UsersVO checkId(String id);
+	UsersVO checkEmail(String email);
 	int pwFind(UsersVO vo);
 	void updateUser(UsersVO vo); //정보 수정
 	void deleteUser(UsersVO vo); //회원 삭제
@@ -24,5 +25,9 @@ public interface UsersService {
 	int naverLoginFirst(UsersVO vo);
 	UsersVO naverLogin(UsersVO vo);
 	List<UsersVO> getUserList(UsersVO vo);
+	void updatePw(UsersVO vo);
+	UsersVO checkTel(String tel, String uid);
+	
+	UsersVO loginAdmin(UsersVO vo); //관리자로그인
 }
 

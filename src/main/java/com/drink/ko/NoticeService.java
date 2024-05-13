@@ -22,4 +22,14 @@ public interface NoticeService {
 
 	// 전체 글 수 조회
 	public int noticeTotalCnt(NoticeVO vo);
+	
+    // jsp파일을 만들때, 몇번째인지 설정하는 메소드
+    public int getMaxNotice();
+    
+    // 다음글, 이전글을 불러오는 메소드
+    public NoticeVO getPrevNext(NoticeVO vo);
+    
+    // 글 삭제시, not_no를 초기화 하는 메소드
+    public int updateNot_no1(NoticeVO vo);
+    public int updateNot_no2(NoticeVO vo);
 }

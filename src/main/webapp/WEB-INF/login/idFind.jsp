@@ -42,6 +42,10 @@ form#form-signin {
 	width: 100%;
 }
 
+form#form-signin-id {
+    width: 324.91px;
+}
+
 .col-sm-10 {
     width: 100%;
 }
@@ -59,6 +63,11 @@ input#u_tel{
 	width : 100%;
 }
 
+.alert {
+    margin-top: 37px;
+    margin-bottom: 0px;
+}
+
 @media (min-width: 768px) {
     .col-sm-offset-2 {
     margin: 10px 0px;
@@ -70,7 +79,7 @@ input#u_tel{
     background-color: #d5d5d5;
     font-size: 18px;
     display: flex;
-    margin-top: 50px;
+    margin-top: 30px;
     line-height: 50px;
     justify-content: center;
     outline : none !importent;
@@ -85,41 +94,43 @@ input#u_tel{
 		<div class="container">
 			<div class="idFindContainerBox">
 			<h4>아이디 찾기</h4>
-			<form action="idFind.ko" method="post" class="form-horizontal"
+			<form action="idFind.ko" method="get" class="form-horizontal"
 				id="form-signin-id">
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="u_name">이름</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="u_name"
-							placeholder="이름을 입력해주세요." name="u_name">
+						<input type="text" class="form-control" id="u_name" placeholder="이름을 입력해주세요." name="u_name">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="u_tel">휴대폰 번호</label>
 					<div class="col-sm-10">
-						<input type="text" class="form-control" id="u_tel"
-							placeholder="휴대폰 번호를 입력해 주세요." name="u_tel">
+						<input type="text" class="form-control" id="u_tel" placeholder="휴대폰 번호를 입력해 주세요." name="u_tel">
 					</div>
 				</div>
+				
+				<div class='alert alert-danger' id="pattern" style="display:none;"></div>
+				
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-10">
 						<button type="button" class="mybutton" id="btn-success">아이디 찾기</button>
 					</div>
 				</div>
 			</form>
-			<div class='alert alert-danger' id="pattern" style="display:none;"></div>
+			
 			<%
 			if (request.getParameter("error") != null && request.getParameter("error").equals("1")) {%>
 				<script>
 					$(".alert-danger").css("display","block");
 					$(".alert-danger").html("해당하는 이름이나 전화번호가 존재하지 않습니다.");
+				myExec = setTimeout(function(){ 
+					$(".alert-danger").css("display","none");
+					}, 2000);
 				</script>
-			<% }
-			%>
+			<% }%>
 		</div>
 	</div>
 </body>
-</html>
 <script>
 
 	var trimPhon;
@@ -157,9 +168,15 @@ input#u_tel{
 		} else if(name == ""){
 			$(".alert-danger").css("display","block");
 			$(".alert-danger").html("이름을 입력해 주세요.");
+			myExec = setTimeout(function(){
+			$(".alert-danger").css("display","none");
+			}, 2000);
 		}else {
 			$(".alert-danger").css("display","block");
 			$(".alert-danger").html("전화번호가 올바르지 않습니다.");
+			myExec = setTimeout(function(){
+			$(".alert-danger").css("display","none");
+			}, 2000);
 		}
 	}
 
@@ -170,9 +187,11 @@ input#u_tel{
 		document.getElementById("form-signin-id").submit();
 	}
 	
-	history.replaceState({}, null, location.pathname);
-	
-</script>
-
-</body>
+	window.onpageshow = function(event){
+		if(event.persisted || (window.performance && window.performance.navigation.type == 2)){
+			console.log("뒤로가기");
+			location.reload();
+		}
+	}
+	</script>
 </html>

@@ -10,20 +10,27 @@ if (session.getAttribute("userID") != null) {
 %>
 <!DOCTYPE html>
 <html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js" integrity="sha384-kDljxUXHaJ9xAb2AzRd59KxjrFjzHa5TAoFQ6GbYTCAG0bjM55XohjjDT7tDDC01" crossorigin="anonymous"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js"
+	integrity="sha384-kDljxUXHaJ9xAb2AzRd59KxjrFjzHa5TAoFQ6GbYTCAG0bjM55XohjjDT7tDDC01"
+	crossorigin="anonymous"></script>
 <script>
 Kakao.init('f8801431aadfbf2a0016165e1408e997'); // 사용하려는 앱의 JavaScript 키 입력
 </script>
 <!-- 네이버 시작 -->
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript"
+	src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js"
+	charset="utf-8"></script>
 <!-- 네이버 끝  -->
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- css 변경 -->
 <style>
 h2 {
@@ -32,7 +39,7 @@ h2 {
 }
 
 .container {
-	margin-top:100px;
+	margin-top: 100px;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -45,78 +52,106 @@ h2 {
 
 .form-control {
 	display: inline;
-	height: 55px;
+	height: 52px;
 	margin-bottom: 10px;
 }
 
 img {
 	width: 100%;
 	margin-bottom: 10px;
+	height: 52px;
 }
 
 form#form-signin {
 	width: 100%;
-}
-
-.btn-block {
-	display: block;
-	width: 100%;
-	height: 55px;
-	margin-bottom: 10px;
-}
-
-.btn-success {
-    color: #fff;
-    background-color: #0096f3;
-    border-color: #0096f3;
-    outline: none;
-}
-
-.btn-success:hover{
-	color: #fff;
-    background-color: #0096f3;
-    border-color: #0096f3;
-    outline: none;
-}
-
-.btn-success:focus {
-  	color: #fff;
-    background-color: #0096f3;
-    border-color: #0096f3;
-    outline: none;
-}
-
-div#find {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-around;
-}
-
-.login-membership {
-    height: 55px;
-    border: 1px solid gray;
-    border-radius: 7px;
-    text-align: center;
-    line-height: 55px;
-    font-size: 18px;
-    color: gray;
-    margin-bottom: 10px;
-}
-
-.alert{
 	margin-bottom: 0px;
 }
 
-button.btn.btn.btn-lg.btn-success.btn-block:active {
-    color: #fff;
-    background-color: #0096f3;
-    border-color: #0096f3;
-    outline: none;
+.btn-block {
+	display: flex;
+	width: 100%;
+	height: 52px;
+	margin-bottom: 10px;
+	justify-content: center;
+	align-items: center;
 }
 
-.login-membership:hover{
-	cursor:pointer;
+.btn-success {
+	color: #fff;
+	background-color: #0096f3;
+	border-color: #0096f3;
+	outline: none;
 }
+
+.btn-success:hover {
+	color: #fff;
+	background-color: #0096f3;
+	border-color: #0096f3;
+	outline: none;
+}
+
+.btn-success:focus {
+	color: #fff;
+	background-color: #0096f3;
+	border-color: #0096f3;
+	outline: none;
+}
+
+div#find {
+	margin-top: 10px;
+	display: flex;
+	justify-content: space-around;
+}
+
+.login-membership {
+	height: 52px;
+	border: 1px solid gray;
+	border-radius: 7px;
+	text-align: center;
+	line-height: 52px;
+	font-size: 18px;
+	color: gray;
+	margin-bottom: 10px;
+}
+
+.alert {
+	margin-bottom: 0px;
+	
+}
+
+.alert-danger {
+	font-size:13px;
+	margin-bottom: 10px;
+}
+
+button.btn.btn.btn-lg.btn-success.btn-block:active {
+	color: #fff;
+	background-color: #0096f3;
+	border-color: #0096f3;
+	outline: none;
+}
+
+.login-membership:hover {
+	cursor: pointer;
+}
+
+@media ( max-width : 768px) {
+
+	.col-sm-10 {
+		width: 83.33333333%;
+	}
+	
+	.alert-danger {
+	font-size: 10px;
+}
+
+.form-group {
+	display: flex;
+	justify-content: center;
+}
+
+}
+
 </style>
 </head>
 <body>
@@ -126,35 +161,25 @@ button.btn.btn.btn-lg.btn-success.btn-block:active {
 				<div class="container-sub">
 					<h2>LOGIN</h2>
 					<form id="form-signin">
-						<input type="text" class="form-control" id="u_id" placeholder="ID" name="u_id">
+						<input type="text" class="form-control" id="u_id" placeholder="ID" name="u_id"> 
 						<input type="password" class="form-control" id="u_pw" placeholder="password" name="u_pw">
 					</form>
+					<div class='alert alert-danger' style="display: none;"></div>
 					<button class="btn btn btn-lg btn-success btn-block" type="button" onclick="btn()">로그인</button>
-					<a id="kakao-login-btn" href="javascript:loginWithKakao()"> 
-						<img src="img/login/kakao.png" alt="카카오 로그인 버튼" />
-					</a> 
-					<a id="naver-login-btn" href="javascript:showLoginPopup()"> 
-						<img src="img/login/naver.png" alt="네이버 로그인 버튼" />
+					<a id="kakao-login-btn" href="javascript:loginWithKakao()"> <img src="img/login/kakao.png" alt="카카오 로그인 버튼" />
+					</a> <a id="naver-login-btn" href="javascript:showLoginPopup()"> <img src="img/login/naver.png" alt="네이버 로그인 버튼" />
 					</a>
 					<div class="login-membership" onclick="location.href='terms.ko';">이메일 회원가입</div>
-					<%
-					if (request.getParameter("error") != null && request.getParameter("error").equals("1")) {
-						out.println("<div class='alert alert-danger'>");
-						out.println("아이디와 비밀번호를 확인해 주세요");
-						out.println("</div>");
-					}
-					%>
 					<div id="find">
-						<a class="nav-item" href="idf.ko">아이디 찾기</a>
-						<a class="nav-item" href="pwf.ko">비밀번호 찾기</a>
+						<a class="nav-item" href="idf.ko">아이디 찾기</a> <a class="nav-item" href="pwf.ko">비밀번호 찾기</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
 
-<script>
+
+	<script>
 //엔터 키가 눌렸을 때 기본 이벤트(폼 제출)막고 대신 test()함수 호출
 document.addEventListener('DOMContentLoaded', function() {
 	// 특정 입력 필드 가져오기
@@ -180,15 +205,15 @@ function loginWithKakao() {
 }
 </script>
 
-<!-- 네이버 로그인  -->
-<%
+	<!-- 네이버 로그인  -->
+	<%
 SecureRandom random = new SecureRandom();
 String state = new BigInteger(130, random).toString();
 %>
 
-<c:set var="stat" value="<%=state%>" />
+	<c:set var="stat" value="<%=state%>" />
 
-<script>
+	<script>
 // 네이버 로그인을 위한 팝업창 생성
 function showLoginPopup() {
 	let uri = 'https://nid.naver.com/oauth2.0/authorize?'
@@ -201,20 +226,45 @@ function showLoginPopup() {
 }
 
 function btn() {
-	var formData = {
-		u_id : $("#u_id").val(),
-		u_pw : $("#u_pw").val()
-	};
+	if($("#u_id").val() == null || $("#u_id").val() == ""){
+		$(".alert-danger").css("display","block");
+		$(".alert-danger").html("아이디를 입력해 주세요.");
+		myExec = setTimeout(function(){ 
+		$(".alert-danger").css("display","none");
+		}, 2000);
+	}else if($("#u_pw").val() == null || $("#u_pw").val() == ""){
+		$(".alert-danger").css("display","block");
+		$(".alert-danger").html("비밀번호를 입력해 주세요.");
+		myExec = setTimeout(function(){ 
+		$(".alert-danger").css("display","none");
+		}, 2000);
+	}else{
+		var formData = {
+				u_id : $("#u_id").val(),
+				u_pw : $("#u_pw").val()
+			};
 
-	$.ajax({
-		type : 'GET',
-		data : formData,
-		url : "login.ko",
-		success : function(data) {
-			location.href = data;
-		}
-	});
+			$.ajax({
+				type : 'GET',
+				data : formData,
+				url : "login.ko",
+				success : function(data) {
+					console.log("data : "+data);
+					if(data == "loginErr.ko"){
+							$(".alert-danger").html("일치하는 아이디나 비밀번호가 존재하지 않습니다.");
+							$(".alert-danger").css("display","block");
+							myExec = setTimeout(function(){ 
+							$(".alert-danger").css("display","none");
+							}, 2000); 
+					}else{
+						location.href = data;
+					}
+				}
+			});
+	}
+	
 }
+
 </script>
 
 </body>

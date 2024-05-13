@@ -1,38 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <%
-if(session.getAttribute("userID") == null){
-	response.sendRedirect("loginPage.ko");	
-}else{
+if (session.getAttribute("userID") == null) {%>
+<script>
+location.href="main.ko";
+</script>
+<%}
 %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style>
+	.container {
+		width: 80%;
+		margin: 0 aut;
+	}
+</style>
+</head>
 <body>
-<div class="jumbotron">
+<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
+<div>
    <h1>글쓰기</h1>      
 </div>
-<div>
-
-  <form action="updateFaq.ko" method="post" enctype="multipart/form-data"> <!-- post방식에서는 받는곳에서 인코딩을 해주어야 한다, 하지만, 필터를 사용하여 넣어준다. -->
-    <input type="hidden" name="faq_no" value="${faq.faq_no}" readonly>
-    <div>
-      <div>
-        <span>제목</span>
-      </div>
-      <input type="text" name="faq_title" placeholder="제목을 입력하세요." required value="${faq.faq_title}">      
-    </div>
-
-    <div>
-      <div>
-        <span>내용</span>
-      </div>
-      <textarea rows="10" id="comment" name="faq_content">${faq.faq_content}</textarea>      
-    </div>  
-    
-    <div id="footer">
-	  	<button id="conComplete" type="submit">수정버튼</button>
-	  	<button id="conList" type="button">글목록</button>
-	 </div>
-  </form>  
+<div class="container">
+	<form action="updateFaq.ko" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="faq_no" value="${faq.faq_no}" readonly>
+		<div style="padding-left: 10px;">
+			<input type="text" name="faq_title" required value="${faq.faq_title}" style="width: 80%; height: 30px; margin: 0 auto; display: inline-block; padding-left: 10;">
+			<button type="submit" style="float: right; margin: 0 10px;">수정</button>
+			<button id="conList" type="button" style="float: right;">글목록</button>
+		</div>
+		<div>
+	    		<textarea name="faq_content" rows="10" cols="100" style="width: 100%; resize: none; height: 300px; margin-top: 50px;">${faq.faq_content}</textarea>      
+		</div>
+	</form>
 </div>
 
 <script>
@@ -41,5 +46,4 @@ if(session.getAttribute("userID") == null){
 	});
 </script>
 </body>
-<%} %>
 </html>

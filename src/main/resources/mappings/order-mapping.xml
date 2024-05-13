@@ -4,26 +4,19 @@
 
 <mapper namespace="OrderDAO">
 
-	<resultMap type="orderdto" id="orderList">
-		<result property="o_no" column="O_NO" />
-		<result property="u_no" column="U_NO" />
-		<result property="u_name" column="U_NAME" />
-		<result property="p_no" column="P_NO" />
-		<result property="o_stock" column="O_STOCK" />
-		<result property="o_total" column="O_TOTAL" />
-		<result property="o_addr" column="O_ADDR" />
-		<result property="o_date" column="O_DATE" />
-		<result property="o_state" column="O_STATE" />
-		<result property="p_desc" column="P_DESC" />
-		<result property="p_price" column="P_PRICE" />
-	</resultMap>
+	<!-- 페이징 -->
+	<select id="orderTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM BC_ORDER WHERE 1=1
+	</select>
 	
-	<select id="adminOrderList" resultMap="orderList">
+	<select id="adminOrderList" resultType="orderdto">
 		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG
 		FROM BC_ORDER AS o JOIN BC_PROD as p on o.P_NO = p.P_NO
+		ORDER BY O_NO DESC
+		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 
-	<select id="myOrderList" resultMap="orderList">
+	<select id="myOrderList" resultType="orderdto">
 		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG
 		FROM BC_ORDER AS o JOIN BC_PROD AS p on o.P_NO = p.P_NO where U_NO = #{u_no}
 	</select>
@@ -32,15 +25,21 @@
 		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG
 		FROM BC_ORDER AS o JOIN BC_PROD AS p on o.P_NO = p.P_NO where O_NO = #{o_no}
 	</select>
-
-	<insert id="insertSomething">
-	</insert>
+	
+	<select id="myRevIstOrder" resultType="orderdto">
+		SELECT * FROM BC_ORDER WHERE U_NO = #{u_no} AND O_REVSTATE = 0 AND O_STATE = '배송완료'
+	</select>
 
 	<update id="orderRevchk">
 		UPDATE BC_ORDER SET O_REVSTATE = 1 WHERE O_NO = #{o_no}
 	</update>
 
-	<delete id="deleteSomething">
+	<insert id="insertOrder">
+		INSERT INTO BC_ORDER (O_NO, U_NO, U_NAME, P_NO, P_NAME, O_STOCK, O_TOTAL, O_ADDR, U_TEL) 
+		VALUES(#{o_no}, #{u_no}, #{u_name}, #{p_no}, #{p_name}, #{o_stock}, #{o_total}, #{o_addr}, #{u_tel})
+	</insert>
+	
+	<delete id="deleteOrder">
+		DELETE FROM BC_ORDER WHERE O_NO = #{o_no}
 	</delete>
-
 </mapper>

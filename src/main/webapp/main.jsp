@@ -1,39 +1,36 @@
-<%-- <%@ include file="common/navbar.jsp" %> --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <c:set var="result" value='<%=request.getParameter("result")%>'/>
-<c:choose>
-	<c:when test="${result eq '2'}">
-		<script>
-			alert('미성년자는 가입이 불가합니다.');
-		</script>
-	</c:when>
-</c:choose>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
+<%
+if (request.getParameter("err") != null && request.getParameter("err").equals("1")) {
+%>
+<script>
+alert('관리자만 접근 가능합니다.');
+</script>
+<%
+}
+%>
 <script>
 history.replaceState({}, null, location.pathname);
 </script>
 </head>
 <body>
-<!-- <p style="display:none;"> -->
-<!-- https://docs.google.com/spreadsheets/d/1-TviEZdj-1Jx-0CRodoYHl_dpwcom3HCH_jVk4wYQDE/edit?usp=sharing -->
-<!-- </p> -->
-<!-- <p style="display:none;"> -->
-<!-- https://www.figma.com/file/347Ybkp07g466wFj8kWRHt/Untitled?type=design&node-id=0%3A1&mode=design&t=9LpKk6BlD65Vs4TM-1 -->
-<!-- </p> -->
+<%@ include file="common/navbar.jsp" %>
 <div class="container">
 	<c:choose>
 		<c:when test='${userID ne NULL}'>
-			<div>${userID}님, user1 - KQLHA1288418</div>
+			<div>${userID}님</div>
 			<c:choose>
 				<c:when test="${userID eq 'admin'}">
 					<div>
 						<a href="admin.ko">관리자페이지</a>
+						<br>
+						<a href="admin2.ko">관리자페이지2</a>
 					</div>
 				</c:when>
 				<c:otherwise>
@@ -59,9 +56,13 @@ history.replaceState({}, null, location.pathname);
 		</c:when>
 	</c:choose>
 	<a href="loginPage.ko">로그인</a>
+	<br>
+	<a href="adminLoginPage.ko">관리자로그인</a>
+	
+	<h1>${aaa }</h1>
 </div>
 
-<%-- <%@ include file="common/footer.jsp" %> --%>
+<%@ include file="common/footer.jsp" %>
 
 <script>
 window.onpageshow = function(event){

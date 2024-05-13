@@ -17,6 +17,7 @@ cursor: pointer;
 </script>
 </head>
 <body>
+<%@ include file="../../common/navbar.jsp" %>
 <c:forEach items="${prodList }" var="list">
 	<span class="prod" onclick="location.href = 'prodOne.ko?p_no=${list.p_no}';">
 		<img class="float" src="img/${list.p_img }" title="img" alt="img"> <br>

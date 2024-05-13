@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+if (session.getAttribute("userID") == null) {%>
+<script>
+location.href="main.ko";
+</script>
+<%}
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <title>Bootstrap Example</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
 table.table>tbody>tr>td, table.table>tbody>tr>th, table th {
@@ -21,6 +27,7 @@ table {
 </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
 <div class="container">
     <h3>회원 전체 목록</h3>
 	<table class="table">

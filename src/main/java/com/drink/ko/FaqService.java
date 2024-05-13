@@ -22,4 +22,9 @@ public interface FaqService {
 
 	// 전체 글 수 조회
 	public int faqTotalCnt(FaqVO vo);
+	
+    // 글 삭제시 faq_no 업데이트
+    public int updateFaq_no1(FaqVO vo);
+    public int updateFaq_no2(FaqVO vo);
+    
 }

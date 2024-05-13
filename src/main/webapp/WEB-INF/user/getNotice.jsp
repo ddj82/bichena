@@ -7,124 +7,220 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <title>상세보기</title>
 <style>
-#imgBox {
-	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100vh!imporpant;
-	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 9999999;
+.notice_container {
+	width: 876px;
+	margin: 0 auto;
+	float: left;
 }
 
-#imgContentBox {
-	width: 600px;
-	max-height: 550px;
-	overflow: auto;
-	position: absolute;
-	top: 30%;
-	left: 30%;
-	border-radius: 5px;
-	z-index: 9999999;
-}
-
-#imgBoxTitleBar {
-	border-bottom: 1px solid #777;
-	border-radius: 5px 0 0;
-	background-color: #ddd;
+.not_title_wrapper {
 	width: 100%;
-	padding: 10px;
+	line-height: 1.3;
+	border-top: 1px solid #7e7e7e;
+	color: #333;
+	font-size: 24px;
+	background-color: #f9f9f9;
+	word-break: break-all;
+	font-weight: bold;
+	padding: 25px 0;
+	margin-top: 0 !important;
+}
+
+.not_title {
+	margin: 0 25px;
+}
+
+.not_date_wrapper {
+	width: 100%;
+	height: 55px;
+	line-height: 55px;
+	border-top: 1px solid #e3e3e3;
+	border-bottom: 1px solid #e3e3e3;
 	text-align: right;
-	font-size: 20px;
-	font-weight: bolder;
 }
 
-#imgBoxImg {
+.not_date {
+	padding-right: 25px;
+}
+
+.not_content_wrapper {
+	margin: 25px;
+	width: 80%;
+	margin: 0 auto;
+}
+
+.not_content {
+	
+}
+
+.back_btn {
+	display: inline-block;
+	font-size: 13px;
+	color: #666;
+	padding: 13px 11px;
+	line-height: 1;
+	border: 1px solid #e6e6e6;
+	text-align: center;
+	float: right;
+	margin: 0 10px;
+	background-color: white;
+	width: 60px;
+	cursor: pointer;
+	border-radius: 10px;
+}
+
+.back_btn:hover {
+	background-color: #0056b3;
+	color: #ffffff;
+}
+/* 이전 다음글 */
+.pn {
+	text-align: center;
+}
+
+.preNext {
 	width: 100%;
-	border-radius: 0 0 5px 5px;
+	margin: 100px auto;
+	border-collapse: collapse;
 }
 
-#closeX {
-	padding: 5px 20px;
-	border-radius: 5px;
-	border: 1px solid #777;
-	background-color: red;
-	color: #fff;
+td {
+	padding: 10px 0;
+	border-top: 1px solid #777;
+	border-bottom: 1px solid #777;
+	border-col
 }
 
-#closeX:hover {
-	background-color: #777;
+.preNextTitle {
+	width: 70%;
+}
+
+.preNextDate {
+	width: 15%;
+	text-align: center;
+	font-size: 15;
+	color: #999;
+}
+
+.preNextLink {
+	color: #666;
+	text-decoration: none;
+}
+
+.preNextArrow {
+	vertical-align: middle;
+	padding-right: 3px;
+}
+
+.preNext_link:hover {
 	cursor: pointer;
 }
 </style>
 </head>
 <body>
-	<div>
-		<h1>상세 보기</h1>
-	</div>
-	<div>
-		<input type="hidden" name="not_no" value="${notice.not_no}" readonly>
+<%@ include file="../../common/navbar.jsp" %>
+<div class="container" style="width: 80%; margin: 0 auto;">
+	<div class="notice_container">
 		<div>
-			<div>
-				<span>제목</span>
-			</div>
-			<input type="text" name="not_title" value="${notice.not_title}" readonly>
+			<h1>
+				공지 사항
+				<button id="conList" class="back_btn" type="button">목록</button>
+				<button class="back_btn conMod" type="button">수정</button>
+				<button class="back_btn conDel" type="button">삭제</button>
+			</h1>
 		</div>
-		<div>
-			<div>
-				<span>작성자</span>
-			</div>
-			<input type="text" value="${notice.not_writer}" readonly>
-		</div>
-		<div>
-			<div>
-				<span>내용</span>
-			</div>
-			<textarea rows="10" id="comment" name="not_content" readonly>${notice.not_content}</textarea>
-		</div>
-		<div>
-			<div>
-				<span>파일</span> <input type="hidden" name="not_img" value="${notice.not_img}" readonly>
-			</div>
-			<c:if test="${notice.not_img ne NULL }">
-				<span style="cursor: pointer; adding: 0 20px;" onclick="seeImg()">[파일보기]</span>
-				<script>
-					function seeImg() {
-						$("#imgBox").show();
-					}
-				</script>
-			</c:if>
-		</div>
-		<div>
-			<div>
-				<span>등록일</span>
-			</div>
-			<input type="text" name="regDate" value="${notice.not_date}" readonly>
-		</div>
-		<button id="conList" type="button">글목록</button>
-	</div>
 
-	<div id="imgBox">
-		<div id="imgContentBox">
-			<div id="imgBoxTitleBar">
-				<span id="closeX" onclick="closeX()">X</span>
-				<script>
-					function closeX(){
-						$("#imgBox").hide();
-					}
-					
-					
-				</script>
-			</div>
-			<img id="imgBoxImg" src="img/${notice.not_img }">
+		<div class="not_title_wrapper">
+			<span class="not_title">${notice.not_title}</span>
 		</div>
+		<div class="not_date_wrapper">
+			<span class="not_date">${notice.not_date}</span>
+		</div>
+		<div class="not_content_wrapper">
+			<div class="not_content" style="clear: both;">${notice.not_content }</div>
+		</div>
+		<div id="footer" style="display: none">
+			<button class="back_btn conMod" type="button">수정</button>
+			<button class="back_btn conDel" type="button">삭제</button>
+		</div>
+		
+		<!-- 이전 다음글 -->
+		<table class="preNext">
+			<tr>
+				<td class="pn" onclick="goToPrevPage()"><span
+					class="preNext_link"><img class="preNextArrow"
+						src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/page_up.png"
+						alt="이전글"> 이전글</span></td>
+				<td class="preNextTitle"><c:choose>
+						<c:when test="${prevNextNotice.prevNum == 0}">
+							<span style="color: gray;">이전글이 없습니다.</span>
+						</c:when>
+						<c:otherwise>
+							<a class="preNextLink" id="prevLink"
+								href="getNotice.ko?not_no=${prevNextNotice.prevNum}">${prevNextNotice.prevTitle}</a>
+						</c:otherwise>
+					</c:choose></td>
+				<td class="preNextDate"><c:choose>
+						<c:when test="${prevNextNotice.prevNum != 0}">
+							<span><img
+								src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/sub_date_new.png"
+								alt="시간">${prevNextNotice.prevDate}</span>
+						</c:when>
+						<c:otherwise>
+							<span style="color: gray;">-</span>
+						</c:otherwise>
+					</c:choose></td>
+			</tr>
+			<tr class="preNextContent">
+				<td class="pn" onclick="goToNextPage()"><span
+					class="preNext_link"><img class="preNextArrow"
+						src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/page_down.png"
+						alt="다음글"> 다음글</span>
+				</td>
+				<td class="preNextTitle"><c:choose>
+						<c:when test="${prevNextNotice.nextNum == 0}">
+							<span style="color: gray;">다음글이 없습니다.</span>
+						</c:when>
+						<c:otherwise>
+							<a class="preNextLink" id="nextLink"
+								href="getNotice.ko?not_no=${prevNextNotice.nextNum}">${prevNextNotice.nextTitle}</a>
+						</c:otherwise>
+					</c:choose>
+				</td>
+				<td class="preNextDate"><c:choose>
+						<c:when test="${prevNextNotice.nextNum != 0}">
+							<span><img
+								src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/sub_date_new.png"
+								alt="시간">${prevNextNotice.nextDate}</span>
+						</c:when>
+						<c:otherwise>
+							<span style="color: gray;">-</span>
+						</c:otherwise>
+					</c:choose>
+				</td>
+			</tr>
+		</table>
 	</div>
-	
+</div>
 	
 <script>
 $("#conList").click(function(){
 	location.href = "getNoticeList.ko";
 });
+
+function goToPrevPage() {
+	// 이전글 링크로 이동합니다.
+	if ('${prevNextNotice.prevNum}' != 0) {
+		window.location.href = "getNotice.ko?not_no=${prevNextNotice.prevNum}";
+	}
+}
+
+function goToNextPage() {
+	// 다음글 링크로 이동합니다.
+	if ('${prevNextNotice.nextNum}' != 0) {
+		window.location.href = "getNotice.ko?not_no=${prevNextNotice.nextNum}";
+	}
+}
 </script>
 </body>
 </html>

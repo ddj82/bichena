@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+if (session.getAttribute("userID") == null) {%>
+<script>
+location.href="main.ko";
+</script>
+<%}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,8 +15,8 @@
 <meta http-equiv="Expires" content="0" />
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <title>공지사항</title>
 <style>
@@ -24,12 +31,21 @@ table.table>tbody>tr>td, table.table>tbody>tr>th, table th {
 table {
     text-align: center;
 }
+#footer {
+    text-align: right;
+    padding-right: 15px;
+    display:none;
+}
 </style>
 </head>
 <body>
+<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
 <div class="container">
 	<div class="jumbotron">
 		<h1>공지 사항</h1>
+	</div>
+	<div id="footer" style="display: none">
+		<button type="button" id="conWrite">글쓰기</button>
 	</div>
 	<nav id="searchNav">
 		<form action="getNoticeList.ko" method="post">
@@ -47,7 +63,6 @@ table {
 				<tr>
 					<th>번호</th>
 					<th>제목</th>
-					<th>작성자</th>
 					<th>등록일</th>
 				</tr>
 			</thead>
@@ -56,53 +71,52 @@ table {
 					<tr onclick="selTr(${notice.not_no})" style="cursor: pointer;">
 						<td>${notice.not_no}</td>
 						<td>${notice.not_title}</td>
-						<td>${notice.not_writer}</td>
 						<td>${notice.not_date}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
-		
+
 		<!-- 페이징 처리 -->
 
 		<c:choose>
-		    <c:when test="${pagination.currPageNo == 1}">
-		        <!-- 현재 페이지가 첫 번째 페이지인 경우 -->
-		        <span>이전</span>
-		    </c:when>
-		    <c:otherwise>
-		        <!-- 이전 페이지로 이동하는 링크 -->
-		        <a href="getNoticeList.ko?currPageNo=${pagination.currPageNo - 1}" class="btn btn-primary btn-xs">이전</a>
-		    </c:otherwise>
+			<c:when test="${pagination.currPageNo == 1}">
+				<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
+				<span>이전</span>
+			</c:when>
+			<c:otherwise>
+				<!-- 이전 페이지로 이동하는 링크 -->
+				<a href="getNoticeList.ko?currPageNo=${pagination.currPageNo - 1}"
+					class="btn btn-info">이전</a>
+			</c:otherwise>
 		</c:choose>
 		
-        <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
-            <c:choose>
-                <c:when test="${page eq pagination.currPageNo}">
-                    <span>${page}</span>
-                </c:when>
-                <c:otherwise>
-                    <a href="getNoticeList.ko?currPageNo=${page}" class="">${page}</a>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
+		<c:forEach begin="${pagination.startPage}"
+			end="${pagination.endPage}" var="page">
+			<c:choose>
+				<c:when test="${page eq pagination.currPageNo}">
+					<span>${page}</span>
+				</c:when>
+				<c:otherwise>
+					<a href="getNoticeList.ko?currPageNo=${page}">${page}</a>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
 
 		<c:choose>
-		    <c:when test="${pagination.currPageNo == pagination.pageCnt}">
-		        <!-- 현재 페이지가 마지막 페이지인 경우 -->
-		        <span>다음</span>
-		    </c:when>
-		    <c:otherwise>
-		        <!-- 다음 페이지로 이동하는 링크 -->
-		        <a href="getNoticeList.ko?currPageNo=${pagination.currPageNo + 1}" class="btn btn-primary btn-xs">다음</a>
-		    </c:otherwise>
+			<c:when test="${pagination.currPageNo == pagination.pageCnt}">
+				<!-- 현재 페이지가 마지막 페이지인 경우 -->
+				<span>다음</span>
+			</c:when>
+			<c:otherwise>
+				<!-- 다음 페이지로 이동하는 링크 -->
+				<a href="getNoticeList.ko?currPageNo=${pagination.currPageNo + 1}"
+					class="btn btn-info">다음</a>
+			</c:otherwise>
 		</c:choose>
-		
-		<br>
-		<br>
-		<div id="footer" style="display:none">
-			<button type="button" id="conWrite" class="btn btn-primary btn-sm">글쓰기</button>
-		</div>
+
+
+		<br> <br>
 	</div>
 </div>
 

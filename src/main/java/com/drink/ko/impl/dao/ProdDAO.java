@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.drink.ko.vo.ProdVO;
 
+
 @Repository
 public class ProdDAO {
 	@Autowired
@@ -18,11 +19,28 @@ public class ProdDAO {
 	}
 	
 	public List<ProdVO> prodList() {
-		return mybatis.selectList("ProdDAO.prodList");
+		return mybatis.selectList("ProdDAO.prodListUser");
 	}
 	
-	public int adminProdInsert(ProdVO vo) {
-		return mybatis.insert("ProdDAO.adminProdInsert", vo);
+	public List<ProdVO> prodList(ProdVO vo) {
+		return mybatis.selectList("ProdDAO.prodList", vo);
+	}
+	
+	public int prodTotalCnt(ProdVO vo) {
+		return mybatis.selectOne("ProdDAO.prodTotalCnt", vo);
+	}
+	
+	
+	
+	public int getPnoMaxNum() {
+		return mybatis.selectOne("ProdDAO.getPnoMaxNum");
+	}
+	
+	public int insertProduct(ProdVO vo) {
+		return mybatis.insert("ProdDAO.insertProduct", vo);
+	}
+	public int updateProduct(ProdVO vo) { //셀렉트 치고 수정버튼 누르면 올 것
+		return mybatis.update("ProdDAO.updateProduct", vo);
 	}
 	
 }

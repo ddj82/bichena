@@ -18,6 +18,26 @@
 	<select id="prodOneRev" resultMap="prodRevList">
 		SELECT * FROM BC_PRODREV WHERE P_NO = #{p_no}
 	</select>
+	
+	<select id="myRevList" resultMap="prodRevList">
+		SELECT * FROM BC_PRODREV WHERE U_NO = #{u_no} ORDER BY PR_NO
+	</select>
+	
+	<!-- 페이징 -->
+	<select id="revTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM BC_PRODREV WHERE 1=1
+	</select>
+	
+	<select id="adminRevList" resultMap="prodRevList">
+		SELECT * FROM BC_PRODREV WHERE 1=1
+		<if test="searchCondition != null">
+			<if test="searchCondition == 'pname' "> AND P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == 'pno' "> AND P_NO LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == 'prstar' "> AND PR_STAR LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		</if>
+		ORDER BY PR_NO DESC
+		LIMIT #{sizePerPage} OFFSET #{startList}
+	</select>
 
 	<insert id="prodRevInsert">
 		INSERT INTO BC_PRODREV (U_NO, U_NICK, P_NO, P_NAME, PR_CONTENT, PR_STAR, PR_IMG)

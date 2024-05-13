@@ -70,6 +70,10 @@ public class UsersDAO {
 		return mybatis.selectOne("UserDAO.checkId", id);
 	}
 
+	public UsersVO checkEmail(String email) {
+		return mybatis.selectOne("UserDAO.checkEmail", email);
+	}
+	
 	// 로그인
 	public UsersVO loginSelectOne(UsersVO vo) {
 		System.out.println("UserDAOMybatis를 탔습니다.");
@@ -157,7 +161,25 @@ public class UsersDAO {
 	}
 
 	public List<UsersVO> getUserList(UsersVO vo) {
-		System.out.println("DAO  : " + vo.getSearchVoca() + vo.getSearchWord());
 		return mybatis.selectList("UserDAO.getUserList", vo);
+	}
+	
+	public void updatePw(UsersVO vo) {
+		String encodingStr = encoder.encode(vo.getU_pw());
+		vo.setU_pw(encodingStr);
+		mybatis.update("UserDAO.updatePw", vo);
+	}
+	
+	public UsersVO checkTel(String tel, String uid) {
+		UsersVO vo = new UsersVO();
+		vo.setU_tel(tel);
+		vo.setU_id(uid);
+		return mybatis.selectOne("UserDAO.checkTel", vo);
+	}
+	
+	
+	//동준, 관리자로그인
+	public UsersVO loginAdmin(UsersVO vo) {
+		return mybatis.selectOne("UserDAO.loginAdmin", vo);
 	}
 }

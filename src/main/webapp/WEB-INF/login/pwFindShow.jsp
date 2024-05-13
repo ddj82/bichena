@@ -55,8 +55,44 @@ div#finallyPW {
     font-size: 20px;
 }
 
+@media ( max-width : 768px) {
+	.idFindSearchSubBox {
+		width: 324.91px;
+	}
+	
+	a.loginbutton{
+		width: 100;
+		font-size: 13px;
+	}
+	
+	div#finallyPW{
+		 text-align: center;
+	}
+	
+}
 </style>
+<script>
 
+$(document).ready(function(){
+	if($(window).width() < 768){
+		$("#box1").html("회원님의 임시 비밀번호가 <br> 발급되었습니다.");
+	}
+});
+
+$(window).resize(function() {
+	if($(window).width() < 768) { 	
+		$("#box1").html("회원님의 임시 비밀번호가 <br> 발급되었습니다.");
+	} 
+});
+
+
+$(window).resize(function() {
+	if($(window).width() >= 768) { 	
+		$("#box1").html("회원님의 임시 비밀번호가 발급되었습니다.");
+	} 
+});
+
+</script>
 </head>
 <body>
 <% String email = request.getParameter("email"); %>
@@ -84,7 +120,7 @@ div#finallyPW {
 			success : function(data) {
 				console.log("data : " + data);
 				code = data;
-				$('#finallyPW').html("<b>회원님의 비밀번호는</b>"+" <span style='color:#1890ff;'>"+data+"</span> <b>입니다.</b>");
+				$('#finallyPW').html("<b>회원님의 임시 비밀번호는</b> "+" <span style='color:#1890ff;'>"+data+"</span> <b>입니다.</b>");
 			}
 		});
 		
