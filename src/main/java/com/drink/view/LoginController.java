@@ -85,6 +85,26 @@ public class LoginController {
 		return "/WEB-INF/login/pwFindShow.jsp?email=" + email;
 	}
 
+	@RequestMapping("/loginFailure.ko")
+	public String loginFailure() {
+		return "/WEB-INF/join/success.jsp?result=1";
+	}
+
+	@RequestMapping("/logoutProceeding.ko")
+	public String logoutProceeding(@RequestParam(value = "logout", defaultValue = "", required = false) String i) {
+		if (i.equals("2")) {
+			return "/WEB-INF/login/logout.jsp?logout=2";
+		} else if (i.equals("3")) {
+			return "/WEB-INF/login/logout.jsp?logout=3";
+		} else if (i.equals("s2")) {
+			return "/WEB-INF/login/logout.jsp?logout=s2";
+		} else if (i.equals("s3")) {
+			return "/WEB-INF/login/logout.jsp?logout=s3";
+		} else {
+			return "logout.ko";
+		}
+	}
+
 	@RequestMapping("/login.ko")
 	@ResponseBody
 	public String login(UsersVO vo, Model model) {
@@ -105,7 +125,7 @@ public class LoginController {
 		}
 		return "loginErr.ko";
 	}
-	
+
 	// 동준, 관리자로그인, 0510
 	@RequestMapping("/loginAdmin.ko")
 	@ResponseBody
@@ -113,10 +133,10 @@ public class LoginController {
 		String id = vo.getU_id();
 		if (id != null) {
 			if (id.equals("admin")) {
-				
+
 				String pw = vo.getU_pw();
 				UsersVO user = usersService.loginAdmin(vo);
-				
+
 				if (user != null) {
 					Boolean result = encoder.matches(pw, user.getU_pw());
 					if (result == true) {
@@ -134,7 +154,7 @@ public class LoginController {
 		}
 		return "loginErr.ko";
 	}
-	
+
 	@RequestMapping("loginErr2.ko")
 	public String loginErr2() {
 		return "/main.jsp?err=1";
@@ -159,7 +179,8 @@ public class LoginController {
 		if (kakao != null) {
 			kakao.kakaoLogout(accessToken, session.getAttribute("userID").toString());
 			HttpClient client = HttpClientBuilder.create().build();
-			HttpGet httpGet = new HttpGet("https://accounts.kakao.com/logout?continue=https://accounts.kakao.com/weblogin/account");
+			HttpGet httpGet = new HttpGet(
+					"https://accounts.kakao.com/logout?continue=https://accounts.kakao.com/weblogin/account");
 			HttpResponse res = client.execute(httpGet);
 			String body = EntityUtils.toString(res.getEntity());
 			System.out.println("로그아웃 후: " + body);
@@ -171,7 +192,8 @@ public class LoginController {
 
 	@RequestMapping("/logoutNaver.ko")
 	@ResponseBody
-	public String logoutNaver(HttpSession session, SessionStatus sessionStatus, RedirectAttributes ra) throws Exception {
+	public String logoutNaver(HttpSession session, SessionStatus sessionStatus, RedirectAttributes ra)
+			throws Exception {
 		naverService.naverLogout(naver);
 		sessionStatus.setComplete();
 		session.invalidate();
@@ -225,20 +247,21 @@ public class LoginController {
 	}
 
 	@RequestMapping("/kakao.ko")
-	public String kakaoLogin(@RequestParam String code, HttpSession session, Model model) {
-		kakao = new KaKaoVO();
+	public String kakaoLogin(@RequestParam(value = "code", defaultValue = "", required = false) String code,
+			@RequestParam(value = "version", defaultValue = "", required = false) String version, HttpSession session,
+			Model model) throws Exception {
+
+		System.out.println("code : " + code);
+		System.out.println("version : " + version);
+		kakao = new KaKaoVO(version);
 		// 1. 인가 코드 받기 (@RequestParam String code)
 		System.out.println("code : " + code);
-//		        // 2. 토큰 받기
+		// 2. 토큰 받기
 		accessToken = kakao.getAccessToken(code, session);
-		System.out.println("accessToken : " + accessToken);
-		// 5-5 수정
 		if (accessToken == null || accessToken == "") {
 			return "main.ko";
 		}
-		// 5-5 수정 끝
 
-		// 3. 사용자 정보 받기
 		Map<String, Object> userInfo = kakao.getUserInfo(accessToken, session);
 		UsersVO vo = new UsersVO();
 		vo.setU_id((String) userInfo.get("kakaoID"));
@@ -275,12 +298,23 @@ public class LoginController {
 				return "loginErr.ko";
 			}
 		} else {
-			model.addAttribute("userID", user.getU_id());
-			model.addAttribute("userNO", user.getU_no());
-			// 수정1
-			System.out.println("howLogin : " + user.getU_state());
-			model.addAttribute("howLogin", user.getU_state());
-			return "main.ko";
+
+			if (user.getU_state() == 2) {
+				model.addAttribute("userID", user.getU_id());
+				model.addAttribute("userNO", user.getU_no());
+				model.addAttribute("howLogin", user.getU_state());
+				return "main.ko";
+			} else {
+				model.addAttribute("userID", user.getU_id());
+				return "logoutProceeding.ko?logout=s2";
+			}
+
+//				model.addAttribute("userID", user.getU_id());
+//				model.addAttribute("userNO", user.getU_no());
+//				// 수정1
+//				System.out.println("howLogin : " + user.getU_state());
+//				model.addAttribute("howLogin", user.getU_state());
+//				return "main.ko";
 		}
 		return "loginErr.ko";
 	}
@@ -299,10 +333,14 @@ public class LoginController {
 		UsersVO user = usersService.naverLogin(vo);
 		if (user != null) {
 			System.out.println("이미 가입한 사용자입니다.");
-			model.addAttribute("userID", user.getU_id());
-			model.addAttribute("userNO", user.getU_no());
-			model.addAttribute("howLogin", user.getU_state());
-			return "/main.jsp";
+			if (user.getU_state() == 3) {
+				model.addAttribute("userID", user.getU_id());
+				model.addAttribute("userNO", user.getU_no());
+				model.addAttribute("howLogin", user.getU_state());
+				return "main.ko";
+			} else {
+				return "logoutProceeding.ko?logout=s3";
+			}
 		} else if (user == null) {
 			int i = usersService.naverLoginFirst(vo);
 			if (i <= 0) {
@@ -315,7 +353,7 @@ public class LoginController {
 				return "main.ko";
 			}
 		}
-		
+
 		return "loginErr.ko";
 	}
 }

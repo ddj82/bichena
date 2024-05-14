@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <c:set var="result" value='<%=request.getParameter("result")%>'/>
+<%
+response.setHeader("cache-control","no-cache");
+response.setHeader("expires","0");
+response.setHeader("pragma","no-cache");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,7 +64,6 @@ history.replaceState({}, null, location.pathname);
 	<br>
 	<a href="adminLoginPage.ko">관리자로그인</a>
 	
-	<h1>${aaa }</h1>
 </div>
 
 <%@ include file="common/footer.jsp" %>
@@ -67,33 +71,37 @@ history.replaceState({}, null, location.pathname);
 <script>
 window.onpageshow = function(event){
 	if(event.persisted || (window.performance && window.performance.navigation.type == 2)){
-		console.log("뒤로가기");
 		location.reload();
 	}
 }
 
 function kakaoLogout(){
-	location.href="logout.ko";
-	let ifr = document.createElement("iframe");
-	ifr.setAttribute("src","https://accounts.kakao.com/logout?continue=https://accounts.kakao.com/weblogin/account");
-	ifr.setAttribute("style","display:none");
-	document.body.appendChild(ifr);
+	location.href="logoutProceeding.ko?logout=2";
+// 	location.href="logout.ko";
+// 	let ifr = document.createElement("iframe");
+// 	ifr.setAttribute("src","https://accounts.kakao.com/logout?continue=https://accounts.kakao.com/weblogin/account");
+// 	ifr.setAttribute("style","display:none");
+// 	document.body.appendChild(ifr);
 }
 
 function naverLogout(){
-	$.ajax({
-		type: 'POST',
-		url: "logoutNaver.ko",
-		success : function(res){
-			let popup = window.open("https://nid.naver.com/nidlogin.logout");	
-			myExec = setTimeout(function(){ 
-				popup.close();
-				location.reload();
-			}, 10); 
-		}
-	});
-	
+	location.href="logoutProceeding.ko?logout=3";
+// 	$.ajax({
+// 		type: 'POST',
+// 		url: "logoutNaver.ko",
+// 		success : function(res){
+// 			let popup = window.open("https://nid.naver.com/nidlogin.logout");	
+// 			myExec = setTimeout(function(){ 
+// 				popup.close();
+// 				location.reload();
+// 			}, 10); 
+// 		}
+// 	});
 }
+
+window.onload = function(){ //쿼리스트링 지워주는 친구
+	history.replaceState({}, null, location.pathname);
+};
 </script>
 </body>
 </html>

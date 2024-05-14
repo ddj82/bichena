@@ -115,34 +115,38 @@ public class UsersDAO {
 	}
 
 	public String pwFindStart(UsersVO vo) {
-		Random rnd = new Random();
+	      Random rnd = new Random();
 
-		StringBuffer randomAlpanumerics = new StringBuffer();
+	      StringBuffer randomAlpanumerics = new StringBuffer();
 
-		for (int i = 0; i < 12; i++) {
-			if (i < 5)
-				randomAlpanumerics.append((char) ((rnd.nextInt(26)) + 'A'));
-			else
-				randomAlpanumerics.append(rnd.nextInt(10));
-		}
+	      for (int i = 0; i < 12; i++) {
+	         if (i < 3)
+	            randomAlpanumerics.append((char) ((rnd.nextInt(26)) + 'A'));
+	         else if(i < 5)
+	            randomAlpanumerics.append(rnd.nextInt(10));
+	         else if(i < 7)
+	            randomAlpanumerics.append((char)((rnd.nextInt(26)) + 'a' ));
+	         else
+	            randomAlpanumerics.append(rnd.nextInt(10));
+	      }
 
-		String random = randomAlpanumerics.toString();
+	      String random = randomAlpanumerics.toString();
 
-		System.out.println("단방향 암호화 진행 : " + random);
+	      System.out.println("단방향 암호화 진행 : " + random);
 
-		String encodingStr = encoder.encode(random); // 암호화 처리된 문자열로 리턴(로그인 할 때 비밀번호)
+	      String encodingStr = encoder.encode(random); // 암호화 처리된 문자열로 리턴(로그인 할 때 비밀번호)
 
-		vo.setN_pw(encodingStr);
+	      vo.setN_pw(encodingStr);
 
-		int i = mybatis.update("UserDAO.pwFindStart", vo);
+	      int i = mybatis.update("UserDAO.pwFindStart", vo);
 
-		if (i == 0) {
-			System.out.println("pwFindStart : 에러에러에러");
-		} else if (i > 0) {
-			return random;
-		}
-		return null;
-	}
+	      if (i == 0) {
+	         System.out.println("pwFindStart : 에러에러에러");
+	      } else if (i > 0) {
+	         return random;
+	      }
+	      return null;
+	   }
 
 	public int kakaoLoginFirst(UsersVO vo) {
 		return mybatis.insert("UserDAO.kakaoLoginFirst", vo);
@@ -159,10 +163,6 @@ public class UsersDAO {
 	public UsersVO naverLogin(UsersVO vo) {
 		return mybatis.selectOne("UserDAO.naverLogin", vo);
 	}
-
-	public List<UsersVO> getUserList(UsersVO vo) {
-		return mybatis.selectList("UserDAO.getUserList", vo);
-	}
 	
 	public void updatePw(UsersVO vo) {
 		String encodingStr = encoder.encode(vo.getU_pw());
@@ -170,11 +170,26 @@ public class UsersDAO {
 		mybatis.update("UserDAO.updatePw", vo);
 	}
 	
-	public UsersVO checkTel(String tel, String uid) {
+	public UsersVO checkTel(String tel) {
+		UsersVO vo = new UsersVO();
+		vo.setU_tel(tel);
+		return mybatis.selectOne("UserDAO.checkTelId", vo);
+	}
+	
+	public UsersVO checkTelId(String tel, String uid) {
 		UsersVO vo = new UsersVO();
 		vo.setU_tel(tel);
 		vo.setU_id(uid);
-		return mybatis.selectOne("UserDAO.checkTel", vo);
+		return mybatis.selectOne("UserDAO.checkTelId", vo);
+	}
+
+	public List<UsersVO> getUserList(UsersVO vo) {
+		System.out.println("DAO  : " + vo.getSearchVoca() + vo.getSearchWord());
+		return mybatis.selectList("UserDAO.getUserList", vo);
+	}
+	
+	public int getCount(UsersVO vo) {
+		return mybatis.selectOne("UserDAO.getCount", vo);
 	}
 	
 	

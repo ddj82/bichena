@@ -13,8 +13,16 @@ public class QnaDAO {
 	@Autowired
 	SqlSessionTemplate mybatis;
 
-	public List<QnaVO> qnaList() {
-		return mybatis.selectList("QnaDAO.qnaList");
+	public List<QnaVO> qnaList(QnaVO vo) {
+		return mybatis.selectList("QnaDAO.qnaList", vo);
+	}
+	
+	public List<QnaVO> qnaListMy(QnaVO vo) {
+		return mybatis.selectList("QnaDAO.qnaListMy", vo);
+	}
+	
+	public int qnaTotalCnt(QnaVO vo) {
+		return mybatis.selectOne("QnaDAO.qnaTotalCnt", vo);
 	}
 
 	public QnaVO qnaView(String q_no) {

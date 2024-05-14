@@ -63,7 +63,7 @@ input[type="file"]#p_img {
 </script>
 </head>
 <body>
-<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
+<%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div class="container">
 	<nav id="searchNav">
 		<form action="adminProdList.ko" method="post">

@@ -3,16 +3,32 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비채나</title>
 </head>
 <style>
+.service {
+	width: 700px;
+	margin: 0 auto;
+}
+/* extra small */
+@media screen and (max-width:540px) {
 	.service {
-		width: 700px;
+		width: 300px;
 		margin: 0 auto;
 	}
+}
+/* small */
+@media screen and (min-width:541px) and (max-width:720px) {
+	.service {
+		width: 400px;
+		margin: 0 auto;
+	}
+}
 </style>
 <body>
+<%@include file="/common/navbar.jsp" %>
 <div class="service">
 	<p>제1조(목적)</p>
 <p>이 약관은 비체나(전자거래 사업자)가 운영하는 홈페이지(이하 "쇼핑몰"이라 한다)에서 제공하는 인터넷 관련 서비스(이하 "서비스"라 한다)를 이용함에 있어 비체나와 이용자의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.

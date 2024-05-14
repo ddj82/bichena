@@ -5,39 +5,47 @@ body {
     display: flex;
     justify-content: center;
     align-items: start;
-    min-height: 100vh;
+/*     min-height: 100vh; */
 }
 
 button {
     cursor: pointer;
 }
 
-a {
+/* a { */
+/*     text-decoration: none; */
+/*     cursor: pointer; */
+/*     color: rgb(0, 150, 243); */
+/*     margin-left : 250px; */
+/* } */
+#deletechk {
     text-decoration: none;
     cursor: pointer;
     color: rgb(0, 150, 243);
-    margin-left : 270px;
+    margin-left : 250px;
 }
-
+.bichena {
+	width : 100% !important;
+	display : flex;
+	flex-direction : column;
+}
 .box1 {
     display: flex;
     gap: 20px;
-    width: 900px;
-    margin-top: 80px;
+    width: 100%;
     margin-bottom: 20px;
-    margin: auto;
-    padding-bottom: 60px;
-}
-.container {
+    margin: 0 auto;
+    justify-content: center;
 	padding-right : 0 !important;
 	padding-left : 0 !important;
-	position : fixed;
-	margin-top : 50px;
+	margin-top : 110px;
 }
 
 .header-container {
     position: relative;
     width: 100%;
+    padding : 0!important;
+    margin-top : 110px;
 }
 #All {
 	margin-left : 27px;
@@ -47,10 +55,8 @@ a {
     color: white;
     padding: 10px;
     font-weight: bold;
-/*     right: 15px; */
-    width: 500px;
-/*     width: auto; */
-/*     width: 600px; */
+/*     width: 500px; */
+    width: 100%;
     position: relative;
 }
 
@@ -61,11 +67,11 @@ a {
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     position: relative;
-    width: 300px;
-/*     width: 100%; */
+/*     width: 300px; */
+    width: 100%;
     flex: 0 0 300px;
     height: 350px;
-    margin-top: 75px;
+    margin-top: 140px;
 }
 
 .cart {
@@ -73,9 +79,8 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     position: relative;
-    width: 500px;
-/*     width: 100%; */
-/*     width: 600px; */
+/*     width: 500px; */
+    width: 100%;
 }
 
 table {
@@ -153,9 +158,11 @@ border : 0.1px solid gray;
     color: rgb(0, 150, 243);
 }
 
-#deletechk {
+.deletechk {
     width: 100%;
-    text-align: right;
+    color: rgb(0, 150, 243);
+    text-decoration : none;
+    margin-left : 250px;
 }
 
 .roll {
@@ -168,7 +175,7 @@ border : 0.1px solid gray;
 img {
     width: 80px;
     height: 80px;
-    background: #ccc;
+/*     background: #ccc; */
 }
  #dddd {
  width : 500px;
@@ -185,10 +192,24 @@ img {
     background-color: white;
 }
 
+.box {
+    justify-content : center;
+    box-sizing : border-box;
+}
+.navbar {
+	width : 100%;
+    top: 0;
+    left: 0;
+    margin : 0 auto;
+	position: fixed !important;
+    z-index: 1000;
+}
+
+
 #Xcart {
     width: 450px;
     height: 100px;
-/*     background-color: rgb(201, 201, 201); */
+    background-color: rgb(201, 201, 201);
     text-align: center;
     margin-top: 20px;
     margin: auto;
@@ -197,6 +218,7 @@ img {
 
 .first-box {
 	width : 500px;
+/* 	width : 100%; */
     display: flex;
     flex-direction: column;
 }
@@ -204,7 +226,7 @@ img {
 	padding-right : 8px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 500px) {
     .box1 {
         flex-direction: column;
         align-items: flex-start;
@@ -215,6 +237,7 @@ img {
     margin-top : 0;
     }
     .cart {
+/*         width: 500px; */
         width: 100%;
     }
     .summary {
@@ -224,4 +247,53 @@ img {
     .button {
         width: 100%;
     }
+    #dddd {
+    margin-top : 140px;
+    }
+    .box {
+    width : 500px;
+    }
 }
+@media (max-width : 900px) and (min-width : 500px) {
+    .first-box {width : 899px !important;}
+    .box1 {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%!important ;
+        margin : 0 !important;
+        padding : 0 !important;
+    }
+    #dddd {
+    margin-top : 90px;
+    }
+    .summary {
+        width: 899px;
+        margin-top: 20px;
+    }
+    .box {
+    width : 899px !important;
+    }
+    .deletechk {
+    margin-left : 650px;
+    }
+    .button-container {
+    padding-left : 100px !important;}
+    .showpping {width : calc(100% - 40px);}
+    .button {width : 100%;}
+    #dddd {width : 899px;}
+    #Xcart {width : 100%;}
+    c:otherwise {
+    display : none;}
+	
+}
+
+@media (min-width: 576px) {
+    .container, .container-sm {
+        max-width: 100%!important;
+    }
+}
+
+@media (min-width: 768px) {
+    .container, .container-md, .container-sm {
+        max-width: 100%!important ;
+    }

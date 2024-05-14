@@ -28,6 +28,8 @@ function qnaView(uid, qno, sid) {
 <body>
 <%@ include file="../../common/navbar.jsp" %>
 <div class="container">
+	<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href = 'qnaList.ko';">목록</button>
+	<button type="button" class="btn btn-outline-info btn-sm" onclick="location.href = 'qnaListMy.ko';">내 문의</button>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -53,8 +55,43 @@ function qnaView(uid, qno, sid) {
 	    </tbody>
 	</table>
 	<c:if test="${userID != null && userID != 'admin' }">
-		<button type="button" class="btndel btn" onclick="location.href = 'qnaInsertbtn.ko';">문의하기</button>
+		<button type="button" class="btn btn-outline-primary" onclick="location.href = 'qnaInsertbtn.ko';">문의하기</button>
 	</c:if>
+	<br>
+	<br>
+	<!-- 페이징 처리 -->
+	<c:choose>
+	    <c:when test="${pagination.currPageNo == 1}">
+	        <!-- 현재 페이지가 첫 번째 페이지인 경우 -->
+	        <span>이전</span>
+	    </c:when>
+	    <c:otherwise>
+	        <!-- 이전 페이지로 이동하는 링크 -->
+	        <a href="qnaList.ko?currPageNo=${pagination.currPageNo - 1}" class="btn btn-primary btn-xs">이전</a>
+	    </c:otherwise>
+	</c:choose>
+	
+	<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
+		<c:choose>
+			<c:when test="${page eq pagination.currPageNo}">
+				<span>${page}</span>
+			</c:when>
+			<c:otherwise>
+				<a href="qnaList.ko?currPageNo=${page}" class="">${page}</a>
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+	
+	<c:choose>
+	    <c:when test="${pagination.currPageNo == pagination.pageCnt}">
+	        <!-- 현재 페이지가 마지막 페이지인 경우 -->
+	        <span>다음</span>
+	    </c:when>
+	    <c:otherwise>
+	        <!-- 다음 페이지로 이동하는 링크 -->
+	        <a href="qnaList.ko?currPageNo=${pagination.currPageNo + 1}" class="btn btn-primary btn-xs">다음</a>
+	    </c:otherwise>
+	</c:choose>
 </div>	
 </body>
 </html>

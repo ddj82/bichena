@@ -4,14 +4,16 @@
 <%@ page import="java.security.SecureRandom"%>
 <%@ page import="java.math.BigInteger"%>
 <%
-if (session.getAttribute("userID") != null) {
-	response.sendRedirect("main.ko");
+if (session.getAttribute("userID") != null) {%>
+<script>
+location.href="main.ko";
+</script>
+<%
 }
 %>
+<%@ include file="../../common/navbar.jsp" %>
 <!DOCTYPE html>
 <html>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.1/kakao.min.js"
 	integrity="sha384-kDljxUXHaJ9xAb2AzRd59KxjrFjzHa5TAoFQ6GbYTCAG0bjM55XohjjDT7tDDC01"
 	crossorigin="anonymous"></script>
@@ -27,10 +29,6 @@ Kakao.init('f8801431aadfbf2a0016165e1408e997'); // 사용하려는 앱의 JavaSc
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <!-- css 변경 -->
 <style>
 h2 {
@@ -179,7 +177,7 @@ button.btn.btn.btn-lg.btn-success.btn-block:active {
 	</div>
 
 
-	<script>
+<script>
 //엔터 키가 눌렸을 때 기본 이벤트(폼 제출)막고 대신 test()함수 호출
 document.addEventListener('DOMContentLoaded', function() {
 	// 특정 입력 필드 가져오기
@@ -199,29 +197,48 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- 카카오 로그인  -->
 
 function loginWithKakao() {
+	let url = window.location.href;
+	if(url.indexOf('localhost:8090') >= 0){
+		Kakao.Auth.authorize({
+			redirectUri : "http://localhost:8090/ko/kakao.ko?version=1"
+		});
+	}else if(url.indexOf('localhost:14192') > 0){
+		Kakao.Auth.authorize({
+			redirectUri : "http://localhost:8090/ko/kakao.ko?version=1"
+		});
+	}else{
 	Kakao.Auth.authorize({
-		redirectUri : 'http://localhost:8090/ko/kakao.ko'
+		redirectUri : "http://bichena.kro.kr/ko/kakao.ko?version=2"
 	});
+	}
 }
-</script>
 
-	<!-- 네이버 로그인  -->
-	<%
+<!-- 네이버 로그인  -->
+<%
 SecureRandom random = new SecureRandom();
 String state = new BigInteger(130, random).toString();
 %>
 
 	<c:set var="stat" value="<%=state%>" />
 
-	<script>
 // 네이버 로그인을 위한 팝업창 생성
 function showLoginPopup() {
+	let url = window.location.href;
+	let r_u ="";
+	alert("url : "+url)
+	if(url.indexOf('localhost:8090') > 0){
+		r_u = 'http://localhost:8090/ko/NaverLoginCallback.ko';
+	}else if(url.indexOf('localhost:14192') > 0){
+		r_u = 'http://localhost:8090/ko/NaverLoginCallback.ko';
+	}else{
+		r_u = 'http://bichena.kro.kr/ko/NaverLoginCallback.ko';
+	}
 	let uri = 'https://nid.naver.com/oauth2.0/authorize?'
 			+ 'response_type=code' + // 인증과정에 대한 내부 구분값 code 로 전공 (고정값)
 			'&client_id=zxmdaRxHzFpwT89DdNZe' + // 발급받은 client_id 를 입력
 			'&state=${stat}' + // CORS 를 방지하기 위한 특정 토큰값(임의값 사용)
-			'&redirect_uri=http://localhost:8090/ko/NaverLoginCallback.ko'; // 어플케이션에서 등록했던 CallBack URL를 입력
-
+			'&redirect_uri='+r_u; // 어플케이션에서 등록했던 CallBack URL를 입력
+	alert("uri : "+uri);		
 	location.href = uri;
 }
 
@@ -265,7 +282,9 @@ function btn() {
 	
 }
 
+window.onload = function(){ //쿼리스트링 지워주는 친구
+	history.replaceState({}, null, location.pathname);
+};
 </script>
-
 </body>
 </html>

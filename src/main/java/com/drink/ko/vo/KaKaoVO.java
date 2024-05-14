@@ -23,16 +23,26 @@ import com.google.gson.JsonParser;
 
 @SessionAttributes("apikey")
 public class KaKaoVO {
+	private String kakaoRedirectUri = null;
 	
+	public KaKaoVO(String version){
+		if (version.equals("1")) {
+			kakaoRedirectUri = "http://localhost:8090/ko/kakao.ko?version=1";
+		}else if(version.equals("2")) {
+			kakaoRedirectUri = "http://bichena.kro.kr/ko/kakao.ko?version=2";
+		}
+	}
 //    @Value("${kakao.api_key}")
 //    private String kakaoApiKey = "1ff9357a4c169b4218e2b018cb73122a";
     private String kakaoApiKey = "f8801431aadfbf2a0016165e1408e997";
 //    @Value("${kakao.redirect_uri}")
-    private String kakaoRedirectUri = "http://localhost:8090/ko/kakao.ko";
- 
+//    private String kakaoRedirectUri = "http://localhost:8090/ko/kakao.ko";
+    
+//    private String kakaoRedirectUri = "http://bichena1.kro.kr/ko/kakao.ko";
+    
     //5-5 시작 : kakao 뒤로 가기시 에러나는 부분 수정
     public String getAccessToken(String code,HttpSession session) {
-    	   
+       
         String apikey = (String)session.getAttribute("apikey");
         System.out.println("apikey : "+apikey);
         if(apikey == null || apikey == "") {
@@ -53,6 +63,7 @@ public class KaKaoVO {
                 BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
                 StringBuilder sb = new StringBuilder();
 
+                System.out.println("kakaoRedirectUri : "+kakaoRedirectUri);
                 //필수 쿼리 파라미터 세팅
                 sb.append("grant_type=authorization_code");
                 sb.append("&client_id=").append(kakaoApiKey);

@@ -1,18 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ include file="../../common/navbar.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+<!-- <link rel="stylesheet" -->
+<!-- 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<!-- <script -->
+<!-- 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
 
 <style>
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: inline;
+	height: 52px;
+	margin-bottom: 10px;
+}
+
 
 h4{
 	margin-bottom:20px;
@@ -39,7 +61,7 @@ label.control-label.col-sm-2.number {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 324.91px;
+    width: 334.91px;
 }
 
 .col-sm-10 {
@@ -65,7 +87,7 @@ button.pwFindMybutton {
 	font-size: 18px;
 	border: 0px;
 	border-radius: 5px;
-	margin-top: 20px;
+	margin-top: 30px;
 }
 
 input#u_email {
@@ -78,9 +100,27 @@ input#number {
 	margin-bottom: 15px;
 }
 
+
+.alert {
+	width: 334.91px;
+	margin-top:20px;
+    padding: 15px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+    
+.alert-danger {
+	font-size:13px;
+	margin-bottom: 10px;
+	color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
 .alert{
 	width: 100%;
     margin-top: 10px;
+    box-sizing: border-box;
 }
 
 .pwFindMainBox {
@@ -97,6 +137,7 @@ input#number {
 }
 
 div#timebox {
+	margin-top: 10px;
     display: flex;
     justify-content: space-between;
 }
@@ -145,9 +186,10 @@ div#timebox {
 		var display = $(".time");
 		var leftSec = 180;
 
-		
+		//05-12 연속 클릭 수정
 		function e_again(){
 			alert("해당 이메일로 인증번호를 재전송했습니다.");
+			$(".emailAgain").attr("onclick","");
 			const email = $("#u_email").val() // 이메일 주소값 얻어오기!
 
 			var formData = {
@@ -166,6 +208,7 @@ div#timebox {
 					$('.pwFindMybutton').attr("onclick", "check()");
 					clearInterval(timer);
 					startTimer(leftSec, display);
+					$(".emailAgain").attr("onclick","e_again()");
 				}
 			});
 		}

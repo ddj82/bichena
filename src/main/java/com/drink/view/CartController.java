@@ -33,12 +33,7 @@ public class CartController {
 
 	@RequestMapping("/myCartList.ko")
 	public String myCartList() {
-		return "/WEB-INF/user/mycartList.jsp";
-	}
-
-	@RequestMapping("/cartInsert.ko")
-	public String cartInsert() {
-		return "/WEB-INF/user/CartInsert.jsp";
+		return "/WEB-INF/user/myCartList.jsp";
 	}
 
 	// 내 장바구니 리스트 불러오기

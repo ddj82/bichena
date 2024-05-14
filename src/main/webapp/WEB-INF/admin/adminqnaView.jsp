@@ -17,7 +17,7 @@ location.href="main.ko";
 <title>문의보기</title>
 </head>
 <body>
-<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
+<%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 	<section class="title">문의목록</section>
 
 	<table>

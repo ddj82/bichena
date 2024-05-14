@@ -12,9 +12,6 @@ location.href="main.ko";
 <head>
 <meta charset="UTF-8">
 <title>문의사항</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
 table th {
     text-align: center;
@@ -26,8 +23,20 @@ table {
 
 </head>
 <body>
-<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
+<%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div class="container">
+	<nav id="searchNav">
+		<form action="adminQnaList.ko" method="post">
+			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
+				<option value="${conditionMapQNA['카테고리']}">카테고리</option>
+				<option value="${conditionMapQNA['상태']}">상태</option>
+				<option value="${conditionMapQNA['제목']}">제목</option>
+				<option value="${conditionMapQNA['작성자']}">작성자</option>
+			</select> 
+			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+			<button type="submit" class="btn btn-primary btn-sm">검색</button>
+		</form>
+	</nav>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -52,6 +61,39 @@ table {
 		</c:forEach>
 	    </tbody>
 	</table>
+	<!-- 페이징 처리 -->
+	<c:choose>
+	    <c:when test="${pagination.currPageNo == 1}">
+	        <!-- 현재 페이지가 첫 번째 페이지인 경우 -->
+	        <span>이전</span>
+	    </c:when>
+	    <c:otherwise>
+	        <!-- 이전 페이지로 이동하는 링크 -->
+	        <a href="adminQnaList.ko?currPageNo=${pagination.currPageNo - 1}" class="btn btn-primary btn-xs">이전</a>
+	    </c:otherwise>
+	</c:choose>
+	
+	<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
+		<c:choose>
+			<c:when test="${page eq pagination.currPageNo}">
+				<span>${page}</span>
+			</c:when>
+			<c:otherwise>
+				<a href="adminQnaList.ko?currPageNo=${page}" class="">${page}</a>
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+	
+	<c:choose>
+	    <c:when test="${pagination.currPageNo == pagination.pageCnt}">
+	        <!-- 현재 페이지가 마지막 페이지인 경우 -->
+	        <span>다음</span>
+	    </c:when>
+	    <c:otherwise>
+	        <!-- 다음 페이지로 이동하는 링크 -->
+	        <a href="adminQnaList.ko?currPageNo=${pagination.currPageNo + 1}" class="btn btn-primary btn-xs">다음</a>
+	    </c:otherwise>
+	</c:choose>
 </div>
 </body>
 </html>

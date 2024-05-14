@@ -30,7 +30,7 @@ public class ProdVO {
 
 	// 페이징 처리를 위한 변수
 	private int currPageNo; // 현재 페이지 번호
-	private int sizePerPage = 2; // 한 페이지당 보여질 리스트 개수
+	private int sizePerPage = 16; // 한 페이지당 보여질 리스트 개수
 	private int totalCnt; // 전체 목록 개수
 	private int pageCnt; // 전체 페이지 개수
 	private int startList; // 게시판 시작 번호
@@ -40,6 +40,10 @@ public class ProdVO {
 	private int endPage; // 각 페이지 범위 끝 번호
 	private boolean prev; // 이전 페이지 여부
 	private boolean next; // 다음 페이지 여부
+	
+	
+	private String selectedFilterType;
+	private String selectedFilter;
 
 	public int getP_no() {
 		return p_no;
@@ -295,6 +299,19 @@ public class ProdVO {
 
 	public void setNext(boolean next) {
 		this.next = next;
+	}
+	
+	public String getSelectedFilterType() {
+		return selectedFilterType;
+	}
+	public void setSelectedFilterType(String selectedFilterType) {
+		this.selectedFilterType = selectedFilterType;
+	}
+	public String getSelectedFilter() {
+		return selectedFilter;
+	}
+	public void setSelectedFilter(String selectedFilter) {
+		this.selectedFilter = selectedFilter;
 	}
 
 	// 페이지 정보 설정 메서드

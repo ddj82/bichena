@@ -43,7 +43,6 @@ public class OrderDAO {
 		String pno = vo.getP_no();
 		String[] pnoArray = pno.split(","); //고른 제품 번호
 		String pname = "";
-		String stock = "";
 			
 		for (int i = 0; i < pnoArray.length; i++) {
 			ProdVO pVO = new ProdVO();
@@ -61,6 +60,6 @@ public class OrderDAO {
 	}
 		
 	public void orderDelete(String mid) {
-		mybatis.delete("OrderDAO.deleteOrder", mid);
+		mybatis.update("OrderDAO.deleteOrder", mid);
 	}
 }

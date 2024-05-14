@@ -20,13 +20,13 @@ public class ProdServiceImpl implements ProdService {
 	}
 	
 	@Override
-	public List<ProdVO> prodList() {
-		return dao.prodList();
+	public List<ProdVO> prodList(ProdVO vo) {
+		return dao.prodList(vo);
 	}
 
 	@Override
-	public List<ProdVO> prodList(ProdVO vo) {
-		return dao.prodList(vo);
+	public List<ProdVO> adminProdList(ProdVO vo) {
+		return dao.adminProdList(vo);
 	}
 
 	@Override
@@ -49,6 +49,11 @@ public class ProdServiceImpl implements ProdService {
 	@Override
 	public int updateProduct(ProdVO vo) { // 셀렉트 치고 수정버튼 누르면 올 것
 		return dao.updateProduct(vo);
+	}
+
+	@Override
+	public List<ProdVO> prodFilteredList(ProdVO vo) {
+		return dao.prodFilteredList(vo);
 	}
 
 }

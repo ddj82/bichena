@@ -18,7 +18,7 @@ table {
 </style>
 </head>
 <body>
-<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
+<%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div class="container">
 	<nav id="searchNav">
 		<form action="adminRevList.ko" method="post">
@@ -50,7 +50,7 @@ table {
 	            <td>${rev.u_nick }</td>
 	            <td>${rev.p_no }</td>
 	            <td>${rev.p_name }</td>
-	            <td>
+	            <td style="color:DarkOrange;">
 	            	<c:choose>
 	            	<c:when test="${rev.pr_star eq '1' }">
 	            		<span class="glyphicon glyphicon-star"></span>

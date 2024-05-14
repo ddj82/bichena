@@ -23,32 +23,46 @@
 	<!-- 페이징 -->
 	<select id="prodTotalCnt" resultType="int">
 		SELECT COUNT(*) FROM BC_PROD WHERE 1=1
+		<if test="searchCondition != null">
+			<if test="searchCondition == 'pname' "> AND P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == 'pno' "> AND P_NO LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == 'ptype' "> AND P_TYPE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		</if>
 	</select>
 	
-	<select id="prodList" resultType="prodDTO">
+	<select id="adminProdList" resultType="prodDTO">
 		SELECT * FROM BC_PROD WHERE 1=1
 		<if test="searchCondition != null">
 			<if test="searchCondition == 'pname' "> AND P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'pno' "> AND P_NO LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'ptype' "> AND P_TYPE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 		</if>
-		ORDER BY P_NO ASC
+		ORDER BY P_NO DESC
 		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 	
-	<select id="prodListUser" resultMap="prodList">
+	<select id="prodFilteredList" resultMap="prodList">
+		SELECT * FROM BC_PROD WHERE 
+		<if test="selectedFilterType != null">
+			<if test="selectedFilterType == '주종'"> P_TYPE = #{selectedFilter}</if>
+			<if test="selectedFilterType == '단맛'"> P_SW = #{selectedFilter}</if>
+			<if test="selectedFilterType == '신맛'"> P_SU = #{selectedFilter}</if>
+			<if test="selectedFilterType == '탄산'"> P_SP = #{selectedFilter}</if>
+			<if test="selectedFilterType == '원료'"> P_MAT = #{selectedFilter}</if>
+		</if>
+		ORDER BY P_NO DESC
+		LIMIT #{sizePerPage} OFFSET #{startList}
+	</select>
+	
+	<select id="prodList" resultMap="prodList">
 		SELECT * FROM BC_PROD
+		ORDER BY P_NO DESC
+		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 	
 	<select id="prodOne" resultType="prodDTO">
 		SELECT * FROM BC_PROD WHERE P_NO = #{p_no}
 	</select>
-
-	<update id="updateProduct">
-	</update>
-
-	<delete id="deleteSomething">
-	</delete>
 	
 	
 	<select id="getPnoMaxNum" resultType="_int">

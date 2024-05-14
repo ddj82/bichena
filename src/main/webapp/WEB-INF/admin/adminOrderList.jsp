@@ -37,7 +37,7 @@ table {
 </style>
 </head>
 <body>
-<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
+<%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div class="container">
 	<table class="table table-bordered">
 		<thead>
@@ -98,7 +98,7 @@ table {
 	            <td>${order.o_total }</td>
 	            <td>${order.o_state }</td>
 	            <td>
-	                <button type="button" class="btn btn-danger btn-sm del" onclick="">주문취소</button>
+	                <button type="button" class="btn btn-danger btn-sm del" id="cancel_module" value="${order.o_no }">주문취소</button>
 	            </td>
 	            <td>
 	                <button type="button" class="btn btn-primary btn-sm tail" data-toggle="modal" data-target="#myModal" onclick="orderDetail('${order.o_no }')">상세보기</button>
@@ -169,6 +169,28 @@ $(document).ready(function(){
             $(this).toggle($(this).children(".p_name").text().toLowerCase().indexOf(value) > -1)
         });
     });
+});
+
+$("#cancel_module").click(function () {
+	let result = confirm('취소하시겠습니까?');
+	if(result){
+		$.ajax({
+			url : "cancle.ko",
+			data : {"mid": $("#cancel_module").val()},
+			method : "POST",
+			success : function(val){
+				console.log(val);
+				if(val==1){
+					alert("취소 완료");
+					location.href = "myPage.ko";
+				}
+				else alert("취소 실패\n이미 취소되었거나 잘못된 정보입니다.");
+			},
+			error :  function(request, status){
+				alert("취소가 실패하였습니다.");
+			}
+		});
+	}
 });
 
 function orderDetail(ono){

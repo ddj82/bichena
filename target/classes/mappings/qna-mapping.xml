@@ -15,10 +15,56 @@
 		<result property="q_img" column="Q_IMG" />
 		<result property="a_content" column="A_CONTENT" />
 	</resultMap>
-
-	<select id="qnaList" resultMap="qnalist">
-		SELECT * FROM BC_QNA
+	
+	<!-- 페이징 -->
+	<select id="qnaTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM BC_QNA WHERE 1=1
+		<if test="searchCondition != null">
+			<if test="searchCondition == 'q_cate' "> AND Q_CATE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == 'q_state' "> AND Q_STATE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == 'q_title' "> AND Q_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == 'q_writer' "> AND Q_WRITER LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		</if>
 	</select>
+	
+<!-- 	<select id="qnaTotalCnt" resultType="int"> -->
+<!-- 		SELECT COUNT(*) FROM BC_QNA WHERE 1=1 -->
+<!-- 		<if test="searchCondition != null"> -->
+<!-- 			<if test="searchCondition == 'q_cate' "> AND Q_CATE LIKE CONCAT('%', #{searchKeyword}, '%') </if> -->
+<!-- 			<if test="searchCondition == 'q_state' "> AND Q_STATE LIKE CONCAT('%', #{searchKeyword}, '%') </if> -->
+<!-- 			<if test="searchCondition == 'q_title' "> AND Q_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') </if> -->
+<!-- 		</if> -->
+<!-- 	</select> -->
+	
+	<select id="qnaList" resultMap="qnalist">
+		SELECT * FROM BC_QNA WHERE 1=1
+		<if test="searchCondition != null">
+			<if test="searchCondition == 'q_cate' "> AND Q_CATE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == 'q_state' "> AND Q_STATE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == 'q_title' "> AND Q_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == 'q_writer' "> AND Q_WRITER LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		</if>
+		ORDER BY Q_NO ASC
+		LIMIT #{sizePerPage} OFFSET #{startList}
+	</select>
+	
+	<select id="qnaListMy" resultMap="qnalist">
+		SELECT * FROM BC_QNA WHERE Q_WRITER = #{q_writer}
+		<if test="searchCondition != null">
+			<if test="searchCondition == '123' "> AND 123 LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == '123' "> AND 123 LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == '123' "> AND 123 LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		</if>
+		ORDER BY Q_NO ASC
+		LIMIT #{sizePerPage} OFFSET #{startList}
+	</select>
+
+<!-- 	<select id="qnaList" resultMap="qnalist"> -->
+<!-- 		SELECT * FROM BC_QNA -->
+<!-- 	</select> -->
+<!-- 	<select id="qnaListMy" resultMap="qnalist"> -->
+<!-- 		SELECT * FROM BC_QNA WHERE Q_WRITER = #{q_writer} -->
+<!-- 	</select> -->
 	
 	<select id="qnaView" resultType="qnaDTO">
 		SELECT * FROM BC_QNA WHERE Q_NO = #{q_no}

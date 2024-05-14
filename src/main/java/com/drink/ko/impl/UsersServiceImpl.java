@@ -121,11 +121,6 @@ public class UsersServiceImpl implements UsersService {
 		return usersDAO.naverLogin(vo);
 	}
 
-	@Override
-	public List<UsersVO> getUserList(UsersVO vo) {
-		return usersDAO.getUserList(vo);
-	}
-
 	// 동준, 관리자로그인
 	@Override
 	public UsersVO loginAdmin(UsersVO vo) {
@@ -139,7 +134,23 @@ public class UsersServiceImpl implements UsersService {
 	}
 
 	@Override
-	public UsersVO checkTel(String tel, String uid) {
-		return usersDAO.checkTel(tel, uid);
+	public UsersVO checkTel(String tel) {
+		return usersDAO.checkTel(tel);
 	}
+	
+	@Override
+	public UsersVO checkTelId(String tel, String uid) {
+		return usersDAO.checkTelId(tel, uid);
+	}
+
+	@Override
+	public List<UsersVO> getUserList(UsersVO vo) {
+		return usersDAO.getUserList(vo);
+	}
+	
+	@Override
+	public int userTotalCnt(UsersVO vo){
+		return usersDAO.getCount(vo);
+	}
+
 }

@@ -6,12 +6,13 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비채나</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
-<script src="resources/js/check.js"></script>
+<script src="resources/js/check.js?ver=1"></script>
 <script>
-	var cnt = 0;
-	var nickCheck = 0;
+var cnt = 0;
+var nickCheck = 0;
+var emailCheck = 0;
 	$(function() {
 		//아이디 중복체크
 		$("#check").change(function() {
@@ -83,7 +84,7 @@
 			}
 		});
 		
-		//email 중복체크
+		//닉네임 중복체크
 		$("#email").change(function() {
 			var emailCheckMessage = document.getElementById('emailCheckMessage');
 			let email = document.joinform.email.value;
@@ -130,11 +131,12 @@
 	position: relative;
 	box-sizing: border-box;
 	max-width: 100%;
+	/* 	min-height: 50px; */
 	padding: 0 10px 0 0px;
 }
 
 .inner {
-	width: 300px;
+	width: 330px;
 	margin: 0 auto;
 }
 
@@ -191,6 +193,7 @@ input.nick_h:hover {
 
 .gender_item {
 	display: flex;
+	width: 300px;
 }
 .gender_item input[type=radio]{
     display: none;
@@ -222,7 +225,6 @@ input.nick_h:hover {
 	margin-bottom: 8px;
 	margin-top: 8px;
 }
-
 .send {
 	margin-top: 40px;
 	width: 300px;
@@ -270,6 +272,7 @@ input.nick_h:hover {
 </style>
 </head>
 <body>
+<%@include file="/common/navbar.jsp" %>
 	<div class="inner">
 		<form class="joinform" name="joinform" action="insertUser.ko" method="post" onSubmit="return insertchk()">
 			<div class="item_name">아이디</div>
@@ -316,7 +319,7 @@ input.nick_h:hover {
 
 			<div class="item_name">성별</div>
 			<div class="form_item">
-				<div class="gender_item" style="width: 300px;">
+				<div class="gender_item">
 					<input type="radio" id="male" name="u_gen" value="남자" checked><label for="male">남자</label>
 					<input type="radio" id="female" name="u_gen" value="여자"><label for="female">여자</label>
 				</div>
@@ -352,7 +355,7 @@ input.nick_h:hover {
 			<div class="item_name">주소</div>
 			<div class="form_item">
 				<div onclick="postcodeInput()">
-					<input type="text" id="postcode" name="addr1" class="postcode" placeholder="우편번호" readonly><br>
+					<input type="text" id="postcode" name="addr1" class="postcode" placeholder="우편번호"><br>
 				</div>
 				<div>
 					<input type="button" class="menu_h" onclick="execDaumPostcode()" value="우편번호 찾기">
@@ -360,7 +363,7 @@ input.nick_h:hover {
 			</div>
 			<div class="form_item">
 				<div onclick="addressInput()">
-					<input type="text" class="address" id="address" name="addr2" placeholder="주소" readonly><br>
+					<input type="text" class="address" id="address" name="addr2" placeholder="주소"><br>
 				</div>
 			</div>
 			<div class="form_item">

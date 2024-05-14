@@ -35,7 +35,7 @@ function insertchk() {
         	idErrorMessage.style.display = 'block';
         	istrue = false;
     	}
-		if(pw.value == '' || pw.value == null) {
+		if(pw.value == '' || pw.value == null || !pwPattern.test(pw.value)) {
 			pw.focus();
 			pwErrorMessage.style.display = 'block';
 			istrue = false;
@@ -81,6 +81,14 @@ function insertchk() {
 		
 		if(cnt == 0) {
 			alert('아이디 중복체크를 해주세요');
+			istrue = false;
+		}
+		if(nickCheck == 0) {
+			alert('닉네임 중복체크를 해주세요');
+			istrue = false;
+		}
+		if(emailCheck == 0) {
+			alert('이메일 중복체크를 해주세요');
 			istrue = false;
 		}
 		console.log(istrue);

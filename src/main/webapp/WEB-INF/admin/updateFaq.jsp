@@ -22,7 +22,7 @@ location.href="main.ko";
 </style>
 </head>
 <body>
-<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
+<%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div>
    <h1>글쓰기</h1>      
 </div>

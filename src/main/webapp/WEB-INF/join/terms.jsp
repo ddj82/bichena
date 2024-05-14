@@ -3,15 +3,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://code.jquery.com/jquery-3.6.4.js"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>약관동의</title>
+<title>비채나</title>
 <style>
 .wrapSign {
-	width: 400px;
+	width: 310px;
 	margin: 0 auto;
+	margin-top: 30px;
 }
-
+.form1 {
+	margin-top: 30px;
+}
 .div1 {
 	width: 600px;
 	padding: 0px 0px 0px 3px;
@@ -124,10 +129,56 @@ a:visited {
 span.all {
 	font-weight: bold;
 }
+#clauseAll {
+	margin-right: 10px;
+}
+.arrow {
+	margin-bottom: 5px;
+}
+/* extra small */
+@media screen and (max-width:540px) {
+	.wrapSign {
+		width: 300px;
+	}
+	.div1 {
+		width: 300px;
+	}
+}
+/* small */
+@media screen and (min-width:541px) and (max-width:720px) {
+	.wrapSign {
+		width: 305px;
+	}
+	.div1 {
+		width: 300px;
+	}
+}
+/* medium */
+@media screen and (min-width:721px) and (max-width:960px) {
+	.wrapSign {
+		width: 300px;
+	}
+	.div1 {
+		width: 300px;
+	}
+}
+/* large */
+@media screen and (min-width:961px) and (max-width:1140px) {
+	.wrapSign {
+		width: 300px;
+	}
+	.div1 {
+		width: 300px;
+	}
+}
 </style>
 </head>
 <body>
+<%@include file="/common/navbar.jsp" %>
+
+
 	<div class="wrapSign">
+		<h2 class="welcome" style="font-weight: bold;">환영해요!</h2>
 		<div class="a">
 			<form class="form1" name="form1">
 				<span class="all">
@@ -135,21 +186,21 @@ span.all {
 				</span>
 				<br><br> 
 				<span class="must">
+					<input type="checkbox" name="clause" id="clause1" value="agree">
 					<label>
-						<input type="checkbox" name="clause" id="clause1" value="agree">
 						<a href="serviceTerms.ko">
-							<small style="font-weight: bold;">[필수]</small>서비스 이용약관 
-							<img src="img/imgUser/arrow-right.png" alt="약관 페이지" width="10px" height="10px">
+							[필수]서비스 이용약관 
+							<img src="img/imguser/arrow-right.png" class="arrow" alt="약관 페이지" width="10px" height="10px">
 						</a>
 					</label>
 				</span><br><br> 
 				
 				<span class="must">
+					<input type="checkbox" name="clause" id="clause2" value="agree">
 					<label>
-						<input type="checkbox" name="clause" id="clause2" value="agree">
 						<a href="personalTerms.ko">
-							<small style="font-weight: bold;">[필수]</small>개인정보 수집 및 이용 
-							<img src="img/arrow-right.png" alt="약관 페이지" width="10px" height="10px">
+							[필수]개인정보 수집 및 이용 
+							<img src="img/imguser/arrow-right.png" class="arrow" alt="약관 페이지" width="10px" height="10px">
 						</a>
 					</label>
 				</span><br><br>
@@ -199,43 +250,45 @@ span.all {
 		
 		IMP.init("imp70405420");
 
-	function requestCert(){
+		function requestCert(){
 			
-		IMP.certification(
-				  {
-				    pg: "inicis_unified.MIIiasTest"
-// 				    ,
-// 				    m_redirect_url: "http://localhost:8090"
-				  },
-				  function (rsp) {
-					  console.log(rsp);
-				    if (rsp.success) {
-				    	jQuery.ajax({
-				            url: "cer.ko",
-				            method: "POST",
-				            async : false,
-				            data: { "imp_uid" : rsp.imp_uid }
-				          }).done(function(res){
-				        	  console.log(res);
-				        	  if(res == '') {
-				        		  location.href = "success.ko?result=1";
-// 				        	  } else if(2006 > 2005) {
-				        	  } else if(new Date(res.birth).getFullYear() > 2005) {
-				        		  location.href = "main.ko?result=2";
-				        	  } else if(new Date(res.birth).getFullYear() <= 2005){
-				        		  location.href = "insertPage.ko?name="+res.name+"&tel="+res.phone+"&birth="+res.birth;
-				        	  } else {
-				        		  alert('인증에 실패하였습니다. 에러 내용 : ' + res.msg);
-				        	  }
-				          });
-				        
-				    } else {
-				    	alert("인증에 실패하였습니다. 에러 내용: " + rsp.error_msg);
-				    }
-				  },
-				  
-				);
+			IMP.certification(
+					  {
+					    pg: "inicis_unified.MIIiasTest"
+// 					    ,
+// 					    m_redirect_url: "http://localhost:8090"
+					  },
+					  function (rsp) {
+						  console.log(rsp);
+					    if (rsp.success) {
+					    	jQuery.ajax({
+					            url: "cer.ko",
+					            method: "POST",
+					            async : false,
+					            data: { "imp_uid" : rsp.imp_uid }
+					          }).done(function(res){
+					        	  console.log(res);
+					        	  if(res == '') {
+					        		  location.href = "success.ko?result=1";
+					        	  } else if(new Date(res.birth).getFullYear() > 2005) {
+					        		  location.href = "main.ko?result=2";
+					        	  } else if(new Date(res.birth).getFullYear() <= 2005){
+					        		  location.href = "insertPage.ko?name="+res.name+"&tel="+res.phone+"&birth="+res.birth;
+					        	  } else {
+					        		  alert('인증에 실패하였습니다. 에러 내용 : ' + res.msg);
+					        	  }
+					          });
+					        
+					    } else {
+					    	
+					    }
+					  },
+					  
+					);
+			
+			
 		}
 	</script>
+	
 </body>
 </html>

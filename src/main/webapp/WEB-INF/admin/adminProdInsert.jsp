@@ -14,7 +14,7 @@ location.href="main.ko";
 <title>주류추가</title>
 </head>
 <body>
-<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
+<%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div class="container">
 <%@ include file="/prodInsertEditer.jsp" %>
 </div>

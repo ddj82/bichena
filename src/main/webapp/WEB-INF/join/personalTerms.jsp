@@ -3,16 +3,40 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비채나</title>
 <style>
+.personal {
+	width: 700px;
+	margin: 0 auto;
+}
+/* extra small */
+@media screen and (max-width:540px) {
 	.personal {
-		width: 700px;
+		width: 300px;
 		margin: 0 auto;
 	}
+}
+/* small */
+@media screen and (min-width:541px) and (max-width:720px) {
+	.personal {
+		width: 400px;
+		margin: 0 auto;
+	}
+}
+/* medium */
+@media screen and (min-width:721px) and (max-width:960px) {
+	
+}
+/* large */
+@media screen and (min-width:961px) and (max-width:1140px) {
+	
+}
 </style>
 </head>
 <body>
+<%@include file="/common/navbar.jsp" %>
 <div class="personal">
 <p>■ 개인정보 수집방법 및 수집·이용 목적</p>
 <p>- 홈페이지 회원가입 및 관리</p>

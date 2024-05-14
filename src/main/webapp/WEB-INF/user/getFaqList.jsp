@@ -20,6 +20,22 @@ table.table>tbody>tr>td, table.table>tbody>tr>th, table th {
 table {
     text-align: center;
 }
+.accordionFaq {
+	max-width: 100%;
+	margin: auto;
+}
+.accordionFaq-item {
+	border-bottom: 1px solid #ddd;
+}
+.accordionFaq-header {
+	background-color: #f4f4f4;
+	padding: 10px;
+	cursor: pointer;
+}
+.accordionFaq-body {
+	display: none;
+	padding: 10px;
+}
 </style>
 </head>
 <body>
@@ -49,27 +65,31 @@ table {
 		</thead>
 	</table>    
 	<!-- 아코디언 시작 부분 -->
-	<div id="accordion">	
-		<c:forEach items="${faqList}" var="faq">
-			<div class="card">
-				<div class="card-header" data-toggle="collapse" href="#collapse${faq.faq_no}">
-					<table style="width: 100%">
-						<tbody>
-							<tr>
-								<td style="width: 10%;">${faq.faq_no}</td>
-								<th style="width: 90%; text-align: center;">${faq.faq_title}</th>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-				<div id="collapse${faq.faq_no}" class="collapse" data-parent="#accordion">
-					<div class="card-body">
-						${faq.faq_content}
-					</div>
-				</div>
-			</div>
-		</c:forEach> 
-	</div><!-- 아코디언 종료 -->  
+    <div class="accordionFaq">
+
+      <c:forEach items="${faqList}" var="faq">
+        <div class="accordionFaq-item">
+
+          <div class="accordionFaq-header">
+
+            <table style="width: 100%">
+              <tbody>
+                <tr>
+                  <td style="width: 10%;">${faq.faq_no}</td>
+                  <th style="width: 90%; text-align: center;">${faq.faq_title}</th>
+                </tr>
+              </tbody>
+            </table>   
+
+          </div>
+
+          <div class="accordionFaq-body">
+            ${faq.faq_content}
+          </div>
+
+        </div>
+      </c:forEach> 
+    </div><!-- 아코디언 종료 -->  
 	
 	<!-- 페이징 처리 -->
 	<c:choose>
@@ -107,5 +127,33 @@ table {
 	<br>
 	<br>
 </div>	
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const accordionItems = document.querySelectorAll('.accordionFaq-item');
+
+    accordionItems.forEach(item => {
+      const header = item.querySelector('.accordionFaq-header');
+
+      header.addEventListener('click', function() {
+        const body = this.nextElementSibling;
+
+        // Close all other accordion bodies
+        accordionItems.forEach(otherItem => {
+          const otherBody = otherItem.querySelector('.accordionFaq-body');
+          if (otherBody !== body) {
+            otherBody.style.display = 'none';
+          }
+        });
+
+        if (body.style.display === 'block') {
+          body.style.display = 'none';
+        } else {
+          body.style.display = 'block';
+        }
+      });
+    });
+  });
+</script>
 </body>
 </html>

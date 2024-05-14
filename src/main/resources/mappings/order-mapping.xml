@@ -39,7 +39,7 @@
 		VALUES(#{o_no}, #{u_no}, #{u_name}, #{p_no}, #{p_name}, #{o_stock}, #{o_total}, #{o_addr}, #{u_tel})
 	</insert>
 	
-	<delete id="deleteOrder">
-		DELETE FROM BC_ORDER WHERE O_NO = #{o_no}
-	</delete>
+	<update id="deleteOrder">
+		UPDATE BC_ORDER SET O_STATE = '취소' WHERE O_NO = #{o_no}
+	</update>
 </mapper>

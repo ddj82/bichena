@@ -7,8 +7,8 @@
 <title>문의보기</title>
 </head>
 <body>
-	<section class="title">문의목록</section>
-
+<%@ include file="../../common/navbar.jsp" %>
+<div class="container">
 	<table>
 		<tr>
 			<td>카테고리</td>
@@ -41,10 +41,13 @@
 	<c:if test="${qnaView.a_content != null}">
 		<textarea rows="10" name="a_content" readonly>${qnaView.a_content }</textarea>
 	</c:if>
+	<br>
+	<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='qnaList.ko';">목록보기</button>
 	<c:if test="${qnaView.a_content == null}">
-		<button type="button" class="btndel btn" onclick="qnaDelbtn(${qnaView.q_no })">삭제</button>
+		<button type="button" class="btn btn-outline-danger btn-sm" onclick="qnaDelbtn(${qnaView.q_no })">삭제</button>
 	</c:if>
 	
+</div>	
 <script>
 	function qnaDelbtn(qno) {
 		let con = confirm("정말 삭제하시겠습니까?");

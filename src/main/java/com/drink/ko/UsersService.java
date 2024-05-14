@@ -24,9 +24,15 @@ public interface UsersService {
 	UsersVO kakaoLogin(UsersVO vo);
 	int naverLoginFirst(UsersVO vo);
 	UsersVO naverLogin(UsersVO vo);
-	List<UsersVO> getUserList(UsersVO vo);
 	void updatePw(UsersVO vo);
-	UsersVO checkTel(String tel, String uid);
+	UsersVO checkTel(String tel);
+	UsersVO checkTelId(String tel, String uid);
+
+	// 페이징 처리된 글 목록 조회
+	List<UsersVO> getUserList(UsersVO vo);
+
+	// 전체 글 수 조회
+	int userTotalCnt(UsersVO vo);
 	
 	UsersVO loginAdmin(UsersVO vo); //관리자로그인
 }

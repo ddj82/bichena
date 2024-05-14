@@ -126,7 +126,7 @@ td {
 }
 </style>
 <body>
-<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
+<%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div class="container" style="width: 80%; margin: 0 auto;">
 	<div class="notice_container">
 		<div>

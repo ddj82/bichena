@@ -5,8 +5,7 @@
 <mapper namespace="FaqDAO">
 	<select id="getFaq" resultType="faqdto">
 		SELECT * FROM BC_FAQ WHERE
-		faq_NO
-		= #{faq_no}
+		faq_NO = #{faq_no}
 	</select>
 
 	<insert id="insertFaq">

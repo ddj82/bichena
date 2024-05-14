@@ -77,7 +77,7 @@ public class BichenaController {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
-	String realPath = "C:/swork/bichena1/src/main/webapp/img/";
+	String realPath = "C:/swork/bichena/src/main/webapp/img/";
 
 	public final String IMPORT_TOKEN_URL = "https://api.iamport.kr/users/getToken";
 	public final String IMPORT_PAYMENTINFO_URL = "https://api.iamport.kr/payments/find/";
@@ -151,10 +151,10 @@ public class BichenaController {
 		System.out.println("vo 값을 확인해 봅시다. : " + vo);
 		vo.setFilename(filename);
 		// 총 파일의 갯수 + 1 을 한 숫자값을 가져와 pno + 숫자값.jsp 파일을 만들 준비를 함 == filename
-		File file = new File(realPath);
-		if(!file.exists()) {
+		File file = new File("C:/swork/bichena/src/main/webapp/WEB-INF/notice");
+		if (!file.exists()) {
 			file.mkdir();
-		} //폴더 생성
+		} // 폴더 생성
 		FileWriter fw = null;
 		// 파일에 문자를 쓰기 위한, 표준 라이브러리
 		try {
@@ -162,19 +162,18 @@ public class BichenaController {
 			fw.write("<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>");
 			fw.write(vo.getNot_content());
 			fw.flush(); // 내보내기
-		} catch(IOException e) {
+		} catch (IOException e) {
 			System.out.println(e.getMessage());
-		}finally {
+		} finally {
 			try {
 				fw.close();
-			} catch(IOException e) {
+			} catch (IOException e) {
 				System.out.println(e.getMessage());
 			}
 		}
-		
-		
-	    noticeService.insertNotice(vo);
-	    return "/getNoticeList.ko";
+
+		noticeService.insertNotice(vo);
+		return "/getNoticeList.ko";
 	}
 
 	// 공지 수정
@@ -188,72 +187,71 @@ public class BichenaController {
 	// 공지 수정 업데이트
 	@RequestMapping("/updateNotice.ko")
 	public String updateNotice(@ModelAttribute("notice") NoticeVO vo, HttpSession session) {
-	    System.out.println("공지 업데이트 : " + vo);
-	    
-	    // 기존 파일 삭제
-	    String fileName = "not_no" + vo.getNot_no() + ".jsp";
-	    vo.setFilename(fileName);
-	    File oldFile = new File(realPath + "/" + vo.getFilename());
-	    System.out.println("옛날 파일 이름:" + oldFile);
-	    if (oldFile.exists()) {
-	        oldFile.delete(); // 파일 삭제
-	    }
-	    
-	    // 새로운 파일 생성
-	    int not_no = vo.getNot_no();
-	    String filename = vo.getFilename();
-	    vo.setNot_no(not_no);
-	    vo.setFilename(filename);
-	    // 총 파일의 갯수 + 1 을 한 숫자값을 가져와 pno + 숫자값.jsp 파일을 만들 준비를 함 == filename
+		System.out.println("공지 업데이트 : " + vo);
 
-	    File file = new File(realPath);
-	    if (!file.exists()) {
-	        file.mkdir();
-	    } //폴더 생성
-	    
-	    FileWriter fw = null;
-	    // 파일에 문자를 쓰기 위한, 표준 라이브러리
-	    try {
-	        fw = new FileWriter(file + "/" + filename); // // 경로 + / + 파일.jsp
-	        fw.write("<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>");
-	        fw.write(vo.getNot_content());
-	        fw.flush(); // 내보내기
-	    } catch (IOException e) {
-	        System.out.println(e.getMessage());
-	    } finally {
-	        try {
-	            fw.close();
-	        } catch (IOException e) {
-	            System.out.println(e.getMessage());
-	        }
-	    }
-	    System.out.println("공지 업데이트 확인부분 : " + vo);
-	    noticeService.updateNotice(vo);
-	    System.out.println("공지 업데이트 확인부분2 : " + vo);
-	    return "getNoticeList.ko";
+		// 기존 파일 삭제
+		String fileName = "not_no" + vo.getNot_no() + ".jsp";
+		vo.setFilename(fileName);
+		File oldFile = new File("C:/swork/bichena/src/main/webapp/WEB-INF/notice" + "/" + vo.getFilename());
+		System.out.println("옛날 파일 이름:" + oldFile);
+		if (oldFile.exists()) {
+			oldFile.delete(); // 파일 삭제
+		}
+
+		// 새로운 파일 생성
+		int not_no = vo.getNot_no();
+		String filename = vo.getFilename();
+		vo.setNot_no(not_no);
+		vo.setFilename(filename);
+		// 총 파일의 갯수 + 1 을 한 숫자값을 가져와 pno + 숫자값.jsp 파일을 만들 준비를 함 == filename
+
+		File file = new File("C:/swork/bichena/src/main/webapp/WEB-INF/notice");
+		if (!file.exists()) {
+			file.mkdir();
+		} // 폴더 생성
+
+		FileWriter fw = null;
+		// 파일에 문자를 쓰기 위한, 표준 라이브러리
+		try {
+			fw = new FileWriter(file + "/" + filename); // // 경로 + / + 파일.jsp
+			fw.write("<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>");
+			fw.write(vo.getNot_content());
+			fw.flush(); // 내보내기
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				fw.close();
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		System.out.println("공지 업데이트 확인부분 : " + vo);
+		noticeService.updateNotice(vo);
+		System.out.println("공지 업데이트 확인부분2 : " + vo);
+		return "getNoticeList.ko";
 	}
 
 	// 공지 삭제
 	@RequestMapping("/deleteNotice.ko")
 	public String deleteNotice(NoticeVO vo) {
-		 // 파일 경로 설정
-//		String realPath ="C:/swork/prjBichena4/src/main/webapp/notice/";
-        String directoryPath = "C:/swork/prjBichena4/src/main/webapp/notice/";
-        String fileName = "not_no" + vo.getNot_no() + ".jsp";
-        
-        // 파일 객체 생성
-        File file = new File(directoryPath, fileName);
-        System.out.println("파일명: " +  fileName);
-        // 파일 삭제
-        if (file.exists()) {
-            if (file.delete()) {
-                System.out.println("파일이 성공적으로 삭제되었습니다.");
-            } else {
-                System.out.println("파일을 삭제하는 데 실패했습니다.");
-            }
-        } else {
-            System.out.println("삭제할 파일이 존재하지 않습니다.");
-        }
+		// 파일 경로 설정
+		String directoryPath = "C:/swork/bichena/src/main/webapp/WEB-INF/notice";
+		String fileName = "not_no" + vo.getNot_no() + ".jsp";
+
+		// 파일 객체 생성
+		File file = new File(directoryPath, fileName);
+		System.out.println("파일명: " + fileName);
+		// 파일 삭제
+		if (file.exists()) {
+			if (file.delete()) {
+				System.out.println("파일이 성공적으로 삭제되었습니다.");
+			} else {
+				System.out.println("파일을 삭제하는 데 실패했습니다.");
+			}
+		} else {
+			System.out.println("삭제할 파일이 존재하지 않습니다.");
+		}
 		noticeService.deleteNotice(vo);
 		noticeService.updateNot_no1(vo);
 		noticeService.updateNot_no2(vo);
@@ -264,15 +262,16 @@ public class BichenaController {
 	@RequestMapping("/getNotice.ko")
 	public String getNotice(NoticeVO vo, Model model) {
 		System.out.println("공지 상세조회 : " + vo);
-	    model.addAttribute("prevNextNotice", noticeService.getPrevNext(vo));
+		model.addAttribute("prevNextNotice", noticeService.getPrevNext(vo));
 		model.addAttribute("notice", noticeService.getNotice(vo));
 		return "WEB-INF/user/getNotice.jsp";
 	}
+
 	// 공지 상세 조회 (관리자)
 	@RequestMapping("/adminGetNotice.ko")
 	public String adminGetNotice(NoticeVO vo, Model model) {
 		System.out.println("공지 상세조회 : " + vo);
-	    model.addAttribute("prevNextNotice", noticeService.getPrevNext(vo));
+		model.addAttribute("prevNextNotice", noticeService.getPrevNext(vo));
 		model.addAttribute("notice", noticeService.getNotice(vo));
 		return "WEB-INF/admin/adminGetNotice.jsp";
 	}
@@ -284,8 +283,7 @@ public class BichenaController {
 			@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String keyword,
 			ModelAndView mav,
 			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
-			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange,
-			HttpSession session) {
+			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, HttpSession session) {
 
 		int currPageNo = 0;
 		int range = 0;
@@ -312,11 +310,11 @@ public class BichenaController {
 			} else {
 				mav.setViewName("WEB-INF/user/getNoticeList.jsp");
 			}
-			
+
 		} else {
 			mav.setViewName("WEB-INF/user/getNoticeList.jsp");
 		}
-		
+
 		return mav;
 	}
 
@@ -364,7 +362,7 @@ public class BichenaController {
 		faqService.updateFaq_no2(vo);
 		return "getFaqList.ko";
 	}
-	
+
 	// Faq 목록
 	@RequestMapping("/getFaqList.ko")
 	public ModelAndView getFaqListPost(FaqVO vo,
@@ -372,8 +370,7 @@ public class BichenaController {
 			@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String keyword,
 			ModelAndView mav,
 			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
-			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange,
-			HttpSession session) {
+			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, HttpSession session) {
 
 		int currPageNo = 0;
 		int range = 0;
@@ -393,22 +390,21 @@ public class BichenaController {
 
 		mav.addObject("pagination", vo);
 		mav.addObject("faqList", faqService.faqListPaging(vo)); // parameter로 때온 값들을 보내준다.
-		
+
 		if (session.getAttribute("userID") != null) {
 			if (session.getAttribute("userID").equals("admin")) {
 				mav.setViewName("WEB-INF/admin/adminGetFaqList.jsp");
 			} else {
 				mav.setViewName("WEB-INF/user/getFaqList.jsp");
 			}
-			
+
 		} else {
 			mav.setViewName("WEB-INF/user/getFaqList.jsp");
 		}
-		
+
 		return mav;
 	}
-	
-	
+
 	// 관리자 Faq 자세히 보기
 	@RequestMapping("/adminGetFaq.ko")
 	public String getFaq(FaqVO vo, Model model) {
@@ -416,14 +412,6 @@ public class BichenaController {
 		model.addAttribute("faq", faqService.getFaq(vo));
 		return "WEB-INF/admin/getFaq.jsp";
 	}
-	
-//	// Faq 상세 조회 (관리자)
-//	@RequestMapping("/adminGetFaq.ko")
-//	public String adminGetFaq(FaqVO vo, Model model) {
-//		System.out.println("Faq 상세조회 : " + vo);
-//		model.addAttribute("faq", faqService.getFaq(vo));
-//		return "WEB-INF/admin/adminGetFaq.jsp";
-//	}
 
 	@RequestMapping("/checkId.ko")
 	@ResponseBody
@@ -447,6 +435,16 @@ public class BichenaController {
 			count = 1;
 		}
 		return count;
+	}
+
+	@RequestMapping("/requestCertPage.ko")
+	public String certPage(UsersVO vo) {
+		return "/WEB-INF/join/requestCert.jsp";
+	}
+
+	@RequestMapping("/success.ko")
+	public String success(UsersVO vo) {
+		return "/WEB-INF/join/success.jsp";
 	}
 
 	// 아임포트 인증(토큰)을 받아주는 함수
@@ -483,7 +481,7 @@ public class BichenaController {
 
 	@RequestMapping(value = "/cer.ko", method = RequestMethod.POST)
 	@ResponseBody
-	public Object certification(HttpServletRequest request) throws IOException {
+	public Object certification(HttpSession session, HttpServletRequest request) throws IOException {
 		String imp_uid = request.getParameter("imp_uid");
 		String token = getImportToken();
 		Map<String, String> map = new HashMap<String, String>();
@@ -501,10 +499,17 @@ public class BichenaController {
 			System.out.println("내역이 없습니다.");
 			map.put("msg", "인증 과정 중 오류 발생");
 		} else {
-			map.put("imp_uid", resNode.get("imp_uid").asText());
-			map.put("name", resNode.get("name").asText());
-			map.put("birth", resNode.get("birthday").asText());
-			map.put("phone", resNode.get("phone").asText());
+			UsersVO vo = usersService.checkTel(resNode.get("phone").asText());
+			System.out.println("vo : " + vo);
+			if(vo == null) {
+				map.put("imp_uid", resNode.get("imp_uid").asText());
+				map.put("name", resNode.get("name").asText());
+				map.put("birth", resNode.get("birthday").asText());
+				map.put("phone", resNode.get("phone").asText());				
+			} else {
+				return null;
+			}
+					
 		}
 
 		return map;
@@ -532,16 +537,16 @@ public class BichenaController {
 
 	// 결제 진행 폼=> 이곳에서 DB저장 로직도 추가하기
 	@RequestMapping(value = "/pay.ko")
-	public String payment(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
+	public String payment(HttpSession session, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+		UsersVO userVO = new UsersVO();
 		OrderVO orderVO = new OrderVO();
 		CartVO cartVO = new CartVO();
 		String total = request.getParameter("o_total");
 		int o_total = Integer.parseInt(total);
 		int count = 0;
-		
-		UsersVO userVO = new UsersVO(); //유저 한줄
-		userVO = usersService.checkTel(request.getParameter("u_tel"), (String) session.getAttribute("userID"));
+
+		userVO = usersService.checkTelId(request.getParameter("u_tel"), (String) session.getAttribute("userID"));
 
 		orderVO.setO_no(request.getParameter("o_no"));
 		orderVO.setU_no(userVO.getU_no());
@@ -568,7 +573,7 @@ public class BichenaController {
 			return "myCartList.ko";
 		}
 	}
-
+	
 	@RequestMapping(value = "/cancle.ko", method = RequestMethod.POST)
 	@ResponseBody
 	public int cancle(String mid) throws IOException {
@@ -590,11 +595,11 @@ public class BichenaController {
 			e.printStackTrace();
 		}
 		if (asd.equals("null")) {
-			System.err.println("환불실패");
+			System.out.println("환불실패");
 			return -1;
 		} else {
 			orderService.orderDelete(mid);
-			System.err.println("환불성공");
+			System.out.println("환불성공");
 			return 1;
 		}
 	}
@@ -669,11 +674,13 @@ public class BichenaController {
 	}
 
 	// 회원계정 삭제
-	@ResponseBody
 	@RequestMapping("/delUser.ko")
+	@ResponseBody
 	public String quitMem(HttpSession session) throws Exception {
 		System.out.println("회원 탈퇴 컨트롤러");
-		UsersVO vo = (UsersVO) session.getAttribute("user");
+		UsersVO vo = new UsersVO();
+ 		String id = (String) session.getAttribute("userID");
+ 		vo.setU_id(id);
 		usersService.deleteUser(vo);
 		session.invalidate();
 		return "success";
@@ -718,18 +725,81 @@ public class BichenaController {
 			prodVO.setO_stock(o_stock[i]);
 			list.add(prodVO);
 		}
-		
+
 		model.addAttribute("detailList", list);
 		model.addAttribute("myOrderDetail", myOrderDetail);
-		
+
 		return "/WEB-INF/user/myOrderDetail.jsp";
 	}
 
 	@GetMapping("/prodList.ko")
-	public String prodList(Model model) {
-		List<ProdVO> prodList = prodService.prodList();
+	public String prodList(ProdVO vo, Model model,
+			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String currPageNo,
+			@RequestParam(value = "range", required = false, defaultValue = "1") String range, 
+			HttpSession session) {
+
+		int totalCnt = prodService.prodTotalCnt(vo);
+		System.out.printf("currPageNo: %s /range: %s / totalCnt : %d ", currPageNo, range, totalCnt);
+		System.out.println();
+		vo.pageInfo(Integer.parseInt(currPageNo), Integer.parseInt(range), totalCnt);
+
+		List<ProdVO> prodList = prodService.prodList(vo);
+		model.addAttribute("totalCnt", totalCnt);
+		model.addAttribute("pagination", vo);
 		model.addAttribute("prodList", prodList);
-		return "/WEB-INF/user/prodView.jsp";
+
+		return "/WEB-INF/user/prodList.jsp";
+	}
+
+	// productFiltered 목록
+	@GetMapping("/getFilteredProducts.ko")
+	public String getFilteredProducts(ProdVO vo, Model mav,
+			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String currPageNo,
+			@RequestParam(value = "range", required = false, defaultValue = "1") String range,
+			@RequestParam(value = "selectedFilterType") String selectedFilterType,
+			@RequestParam(value = "selectedFilter") String selectedFilter, HttpSession session) {
+
+		List<ProdVO> filteredProducts = null;
+
+		if (selectedFilterType.equals("주종")) {
+			vo = new ProdVO();
+			vo.setSelectedFilterType(selectedFilterType);
+			vo.setSelectedFilter(selectedFilter);
+			filteredProducts = prodService.prodFilteredList(vo);
+		} else if (selectedFilterType.equals("단맛")) {
+			vo = new ProdVO();
+			vo.setSelectedFilterType(selectedFilterType);
+			vo.setSelectedFilter(selectedFilter);
+			filteredProducts = prodService.prodFilteredList(vo);
+		} else if (selectedFilterType.equals("신맛")) {
+			vo = new ProdVO();
+			vo.setSelectedFilterType(selectedFilterType);
+			vo.setSelectedFilter(selectedFilter);
+			filteredProducts = prodService.prodFilteredList(vo);
+		} else if (selectedFilterType.equals("탄산")) {
+			vo = new ProdVO();
+			vo.setSelectedFilterType(selectedFilterType);
+			vo.setSelectedFilter(selectedFilter);
+			filteredProducts = prodService.prodFilteredList(vo);
+		} else if (selectedFilterType.equals("원료")) {
+			vo = new ProdVO();
+			vo.setSelectedFilterType(selectedFilterType);
+			vo.setSelectedFilter(selectedFilter);
+			filteredProducts = prodService.prodFilteredList(vo);
+		}
+
+		int totalCnt = filteredProducts.size();
+		System.out.println("currPageNo: " + currPageNo + ", range:  " + range + ", totalCnt :  " + totalCnt);
+		vo.pageInfo(Integer.parseInt(currPageNo), Integer.parseInt(range), totalCnt);
+
+		mav.addAttribute("totalCnt", totalCnt);
+		mav.addAttribute("pagination", vo);
+		mav.addAttribute("prodFilteredList", filteredProducts); // parameter로 때온 값들을 보내준다.
+
+		System.out.println(selectedFilterType);
+		System.out.println(selectedFilter);
+
+		return "WEB-INF/user/prodList.jsp";
 	}
 
 	@RequestMapping("/prodOne.ko")
@@ -816,11 +886,86 @@ public class BichenaController {
 	}
 
 	@RequestMapping("/qnaList.ko")
-	public String qnaList(Model model) {
-		List<QnaVO> qnaList = qnaService.qnaList();
+	public String qnaList(QnaVO vo,
+//			@RequestParam(value = "searchCondition", defaultValue = "TITLE", required = false) String condition,
+//			@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String keyword,
+			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
+			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
+
+		int currPageNo = 0;
+		int range = 0;
+		int totalCnt = qnaService.qnaTotalCnt(vo);
+
+		try {
+			currPageNo = Integer.parseInt(NotcurrPageNo);
+			range = Integer.parseInt(Notrange);
+		} catch (NumberFormatException e) {
+			currPageNo = 1;
+			range = 1;
+		}
+
+		vo.pageInfo(currPageNo, range, totalCnt);
+//		if (vo.getFaq_title() == null)
+//		vo.setFaq_title("");
+		model.addAttribute("pagination", vo);
+
+		List<QnaVO> qnaList = qnaService.qnaList(vo);
 		model.addAttribute("qnaList", qnaList);
 		return "/WEB-INF/user/qnaList.jsp";
 	}
+
+	@RequestMapping("/qnaListMy.ko")
+	public String qnaListMy(HttpSession session, QnaVO vo,
+//		@RequestParam(value = "searchCondition", defaultValue = "TITLE", required = false) String condition,
+//		@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String keyword,
+			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
+			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
+
+		String q_writer = (String) session.getAttribute("userID");
+		vo.setQ_writer(q_writer);
+		int currPageNo = 0;
+		int range = 0;
+		int totalCnt = qnaService.qnaTotalCnt(vo);
+
+		try {
+			currPageNo = Integer.parseInt(NotcurrPageNo);
+			range = Integer.parseInt(Notrange);
+		} catch (NumberFormatException e) {
+			currPageNo = 1;
+			range = 1;
+		}
+
+		vo.pageInfo(currPageNo, range, totalCnt);
+//		if (vo.getFaq_title() == null)
+//		vo.setFaq_title("");
+		model.addAttribute("pagination", vo);
+
+		List<QnaVO> qnaList = qnaService.qnaListMy(vo);
+		model.addAttribute("qnaList", qnaList);
+		return "/WEB-INF/user/qnaList.jsp";
+	}
+//		
+//		int currPageNo = 0;
+//		int range = 0;
+//		int totalCnt = qnaService.qnaTotalCnt(vo);
+//		
+//		try {
+//			currPageNo = Integer.parseInt(NotcurrPageNo);
+//			range = Integer.parseInt(Notrange);
+//		} catch (NumberFormatException e) {
+//			currPageNo = 1;
+//			range = 1;
+//		}
+//		
+//		vo.pageInfo(currPageNo, range, totalCnt);
+////		if (vo.getFaq_title() == null)
+////		vo.setFaq_title("");
+//		model.addAttribute("pagination", vo);
+//		
+//		List<QnaVO> qnaList = qnaService.qnaList(vo);
+//		model.addAttribute("qnaList", qnaList);
+//		return "/WEB-INF/user/qnaList.jsp";
+//	}
 
 	@GetMapping("/qnaView.ko")
 	public String qnaView(@RequestParam(value = "q_no") String q_no, Model model) {
@@ -903,23 +1048,50 @@ public class BichenaController {
 		return "/WEB-INF/admin/adminLogin.jsp";
 	}
 
+	// 검색기능을 위한 모델 어트리뷰트
+	@ModelAttribute("conditionMapQNA")
+	public Map<String, String> searchConditionMapQNA() {
+		Map<String, String> conditionMapQNA = new HashMap<String, String>();
+		conditionMapQNA.put("카테고리", "q_cate");
+		conditionMapQNA.put("상태", "q_state");
+		conditionMapQNA.put("제목", "q_title");
+		conditionMapQNA.put("작성자", "q_writer");
+		return conditionMapQNA;
+	}
+	
 	@RequestMapping("/adminQnaList.ko")
-	public String adminqnaList(Model model) {
-		List<QnaVO> qnaList = qnaService.qnaList();
+	public String adminqnaList(QnaVO vo,
+		@RequestParam(value = "searchCondition", defaultValue = "q_cate", required = false) String condition,
+		@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String keyword,
+		@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
+		@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
+
+		int currPageNo = 0;
+		int range = 0;
+		int totalCnt = qnaService.qnaTotalCnt(vo);
+
+		try {
+			currPageNo = Integer.parseInt(NotcurrPageNo);
+			range = Integer.parseInt(Notrange);
+		} catch (NumberFormatException e) {
+			currPageNo = 1;
+			range = 1;
+		}
+
+		vo.pageInfo(currPageNo, range, totalCnt);
+		if (vo.getQ_title() == null)
+		vo.setQ_title("");
+		model.addAttribute("pagination", vo);
+
+		List<QnaVO> qnaList = qnaService.qnaList(vo);
 		model.addAttribute("qnaList", qnaList);
 		return "/WEB-INF/admin/adminQna.jsp";
 	}
 
-//	@RequestMapping("/adminOrderList.ko")
-//	public String adminOrderList(Model model) {
-//		List<OrderVO> adminOrderList = orderService.adminOrderList();
-//		model.addAttribute("adminOrderList", adminOrderList);
-//		return "/WEB-INF/admin/adminOrderList.jsp";
-//	}
 	@RequestMapping("/adminOrderList.ko")
 	public String adminOrderList(OrderVO vo,
-			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
-			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
+		@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
+		@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
 
 		int currPageNo = 0;
 		int range = 0;
@@ -989,7 +1161,11 @@ public class BichenaController {
 		}
 
 		vo.pageInfo(currPageNo, range, totalCnt);
-		List<ProdVO> adminProdList = prodService.prodList(vo);
+		if (vo.getP_name() == null) {
+			vo.setP_name("");
+		}
+
+		List<ProdVO> adminProdList = prodService.adminProdList(vo);
 		model.addAttribute("pagination", vo);
 		model.addAttribute("adminProdList", adminProdList);
 		return "/WEB-INF/admin/adminProdView.jsp";
@@ -1036,7 +1212,7 @@ public class BichenaController {
 		String editFilename = "pno" + pno + ".jsp";
 		vo.setEditfile(editFilename);
 
-		File file = new File("C:/swork/bichena1/src/main/webapp/WEB-INF/product");
+		File file = new File("C:/swork/bichena/src/main/webapp/WEB-INF/product");
 		if (!file.exists()) {
 			file.mkdirs();
 		}
@@ -1118,18 +1294,65 @@ public class BichenaController {
 //		
 //	}
 
-	@RequestMapping("/getUserList.ko")
-	public ModelAndView getUserList(@ModelAttribute("searchWord") String searchWord,
-			@ModelAttribute("searchVoca") String searchVoca, ModelAndView mav) {
-		UsersVO vo = new UsersVO();
-		vo.setSearchVoca(searchVoca);
-		vo.setSearchWord(searchWord);
+	// 관리자 회원 목록 (+ select option)
+		@RequestMapping("/getUserList.ko")
+		@ResponseBody
+		public ModelAndView getUserList(@ModelAttribute("searchWord") String searchWord,
+				@ModelAttribute("searchVoca") String searchVoca,
+				@ModelAttribute("selectedStateValue") String selectedStateValue,
+				@RequestParam(value = "orderBy", required = false) String orderBy,
+				@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
+				@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, ModelAndView mav,
+				HttpSession session) {
 
-		List<UsersVO> userList = usersService.getUserList(vo);
-		mav.addObject("userList", userList);
-		mav.setViewName("WEB-INF/admin/memberList.jsp");
-		return mav;
-	}
+			UsersVO vo = new UsersVO();
+
+			int currPageNo = 0;
+			int range = 0;
+			int totalCnt = usersService.userTotalCnt(vo);
+
+			try {
+				currPageNo = Integer.parseInt(NotcurrPageNo);
+				range = Integer.parseInt(Notrange);
+			} catch (NumberFormatException e) {
+				currPageNo = 1;
+				range = 1;
+			}
+
+			vo.setSearchVoca(searchVoca);
+			vo.setSearchWord(searchWord);
+			vo.pageInfo(currPageNo, range, totalCnt);
+			if (vo.getU_id() == null)
+				vo.setU_id("");
+
+			System.out.println("searchVoca111: " + searchVoca);
+
+			if (orderBy == null) {
+				// orderBy가 null일 때만 selectedStateValue를 기반으로 orderBy를 설정합니다.
+				if (selectedStateValue != null) {
+					System.out.println("orderBy0: " + orderBy);
+					if (selectedStateValue.equals("1")) {
+						System.out.println("orderBy1: " + orderBy);
+						orderBy = "1";
+					} else if (selectedStateValue.equals("0")) {
+						orderBy = "0";
+						System.out.println("orderBy2: " + orderBy);
+					}
+				}
+			}
+			vo.setOrderBy(orderBy);
+			System.out.println("orderBy3: " + orderBy);
+
+			List<UsersVO> userList = usersService.getUserList(vo);
+			mav.addObject("pagination", vo);
+			mav.addObject("userList", userList);
+			mav.addObject("state", selectedStateValue);
+			mav.addObject("voca", searchVoca);
+			mav.addObject("word", searchWord);
+			mav.setViewName("WEB-INF/admin/memberList.jsp");
+			return mav;
+
+		}
 
 	@RequestMapping("/userDetail.ko")
 	@ResponseBody

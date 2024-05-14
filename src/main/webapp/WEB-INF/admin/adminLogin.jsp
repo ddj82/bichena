@@ -166,6 +166,10 @@ function btn() {
 		}
 	});
 }
+
+window.onload = function(){ //쿼리스트링 지워주는 친구
+	history.replaceState({}, null, location.pathname);
+};
 </script>
 
 </body>

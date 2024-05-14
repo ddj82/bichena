@@ -58,22 +58,25 @@
 </div>
 <script>
 $("#cancel_module").click(function () {
-	$.ajax({
-		url : "cancle.ko",
-		data : {"mid": $("#cancel_module").val()},
-		method : "POST",
-		success : function(val){
-			console.log(val);
-			if(val==1){
-				alert("취소 완료");
-				location.href = "myPage.ko";
+	let result = confirm('취소하시겠습니까?');
+	if(result){
+		$.ajax({
+			url : "cancle.ko",
+			data : {"mid": $("#cancel_module").val()},
+			method : "POST",
+			success : function(val){
+				console.log(val);
+				if(val==1){
+					alert("취소 완료");
+					location.href = "myPage.ko";
+				}
+				else alert("취소 실패\n이미 취소되었거나 잘못된 정보입니다.");
+			},
+			error :  function(request, status){
+				alert("취소가 실패하였습니다.");
 			}
-			else alert("취소 실패\n이미 취소되었거나 잘못된 정보입니다.");
-		},
-		error :  function(request, status){
-			alert("취소가 실패하였습니다.");
-		}
-	});
+		});
+	}
 });
 </script>
 </body>

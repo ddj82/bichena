@@ -50,7 +50,7 @@ $(function(){
 </script>
 </head>
 <body>
-<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
+<%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div class="container">
 	<div class="main">
 		<div class="div1" style="width:60%;">

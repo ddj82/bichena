@@ -1,21 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-if (session.getAttribute("userID") == null) {%>
-<script>
-location.href="main.ko";
-</script>
-<%}
-%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="adminMain.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <title>Bootstrap Example</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
 table.table>tbody>tr>td, table.table>tbody>tr>th, table th {
     text-align: center;
@@ -25,9 +17,18 @@ table {
 	text-align: center;
 }
 </style>
+<script>
+$(function(){
+	$("#selecState").change(function(){
+		stateValue = document.getElementById("selecState").value;
+		console.log("stateValue : " + stateValue);
+    	location.href = "getUserList.ko?selectedStateValue=" + stateValue;
+	});
+	
+});
+</script>
 </head>
 <body>
-<%@ include file="/WEB-INF/admin/adminMain2.jsp" %>
 <div class="container">
     <h3>회원 전체 목록</h3>
 	<table class="table">
@@ -39,7 +40,13 @@ table {
                 <th>전화번호</th>
                 <th>이메일</th>
                 <th>등급</th>
-                <th>회원상태</th>
+                <th>회원상태
+               	<select name="selecState"  id="selecState">
+                	<option selected>==</option>
+                	<option value="1">활동</option>
+                	<option value="0">비활성</option>
+                </select> 
+                </th>
                 <th>상세보기</th>
             </tr>
         </thead>
@@ -53,8 +60,13 @@ table {
                         <td>${user.u_tel}</td>
                         <td>${user.u_email}</td>
                         <td>${user.u_lev}</td>
-                        <td>${user.u_state}</td>
-                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="detailMem('${user.u_id}')">회원 상세 보기</button>
+						<td id="userState">
+							<c:choose>
+								<c:when test="${user.u_state == '1'}">활동</c:when>
+								<c:when test="${user.u_state == '0'}">비활성</c:when>
+							</c:choose>
+						</td>
+                        <td><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" onclick="detailMem('${user.u_id}')">회원 상세 보기</button>
                     </tr>
                 </c:if>
             </c:forEach>
@@ -65,16 +77,57 @@ table {
     <form action="getUserList.ko" class="searchUser" id="searchUser" method="post">
     <select id="selOp" name="searchVoca">
     	<c:forEach items="${conditionMapMem}" var="option">
-    		<option value="${option.value}">${option.key}</option>
+    	<c:choose>
+			<c:when test="${option.key == 'ID'}">
+    			<option value="${option.value}" selected>${option.key}</option>
+    		</c:when>
+    		<c:otherwise>
+    			<option value="${option.value}">${option.key}</option>
+    		</c:otherwise>
+    		</c:choose>
 		</c:forEach>
     </select>
     	<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
-    	<button type="submit" onclick="searchMem()" class="btn btn-primary btn-sm">검색</button>
+    	<button type="submit" onclick="searchMem()">검색</button>
     </form>
     </div>
     
-    <script>
     
+    <!-- 페이징 처리 -->
+		<c:choose>
+	    	<c:when test="${pagination.currPageNo == 1}">
+		        <!-- 현재 페이지가 첫 번째 페이지인 경우 -->
+		        <span>이전</span>
+	    	</c:when>
+	    	<c:otherwise>
+		        <!-- 이전 페이지로 이동하는 링크 -->
+		        <a href="getUserList.ko?currPageNo=${pagination.currPageNo - 1}&selectedStateValue=${state}&searchVoca=${voca}&searchWord=${word}" class="btn btn-primary btn-xs">이전</a>
+	    	</c:otherwise>
+		</c:choose>
+		
+        <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
+            <c:choose>
+                <c:when test="${page eq pagination.currPageNo}">
+                    <span>${page}</span>
+                </c:when>
+                <c:otherwise>
+                    <a href="getUserList.ko?currPageNo=${page}&selectedStateValue=${state}&searchVoca=${voca}&searchWord=${word}" class="">${page}</a>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+
+		<c:choose>
+		    <c:when test="${pagination.currPageNo == pagination.pageCnt}">
+		        <!-- 현재 페이지가 마지막 페이지인 경우 -->
+		        <span>다음</span>
+		    </c:when>
+		    <c:otherwise>
+		        <!-- 다음 페이지로 이동하는 링크 -->
+		        <a href="getUserList.ko?currPageNo=${pagination.currPageNo + 1}&selectedStateValue=${state}&searchVoca=${voca}&searchWord=${word}" class="btn btn-primary btn-xs">다음</a>
+		    </c:otherwise>
+		</c:choose>
+    
+    <script>
     function searchMem(){
     	if(searchUser.searchWord.value == ""){
     		alert("검색어를 입력해 주세요.");
@@ -83,10 +136,9 @@ table {
     		searchUser.submit();    		
     	}
     }
-
     
 	function detailMem(u_id){
-		console.log("u_id:" + u_id);
+		console.log("u_id:"+u_id);
 		let objParams = {"u_id":u_id};
 		$.ajax({
 			type : "post",
@@ -115,14 +167,16 @@ table {
 				$("#user-phone").append("휴대전화 : " + val.u_tel);
 				$("#user-email").append("이메일 : " + val.u_email);
 				$("#user-addr").append("주소 : " + val.addr1 + " " + val.addr2 + " " + val.addr3);
-				$("#user-state").append("회원상태 : " + val.u_state);
+				$("#user-state").append("회원상태 : ");
+				if(val.u_state == 1){
+					$("#user-state").append("활동 중");
+				} else if(val.u_state == 0){
+					$("#user-state").append("비활성화");
+				}
 			}
 		});	
 	}
 </script>
-
-
-
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">

@@ -15,8 +15,18 @@ public class QnaServiceImpl implements QnaService{
 	private QnaDAO dao;
 
 	@Override
-	public List<QnaVO> qnaList() {
-		return dao.qnaList();
+	public List<QnaVO> qnaList(QnaVO vo) {
+		return dao.qnaList(vo);
+	}
+
+	@Override
+	public List<QnaVO> qnaListMy(QnaVO vo) {
+		return dao.qnaListMy(vo);
+	}
+
+	@Override
+	public int qnaTotalCnt(QnaVO vo) {
+		return dao.qnaTotalCnt(vo);
 	}
 
 	@Override
@@ -43,5 +53,7 @@ public class QnaServiceImpl implements QnaService{
 	public int qnaInsert(QnaVO vo) {
 		return dao.qnaInsert(vo);
 	}
+
+
 	
 }
