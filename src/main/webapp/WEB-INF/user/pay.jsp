@@ -72,19 +72,6 @@ function stockPlus() {
 }
 
 
-// document.getElementById("stock").addEventListener("change", function(e){
-// 	//수량
-// 	let tot = e.target.value; 
-// 	console.log("tot: ",tot);
-// 	//상품금액
-// 	let price = document.getElementById("defaultPrice").innerText; //기본가격
-// 	console.log("price: ",price);
-// 	let total = tot * price;
-// 	console.log("total: ",total);
-	
-// 	document.getElementById("total").value = total;
-// });
-
 function Total(p_price) {
 	var tot = $('#stock').val();
 	var price = p_price; 
@@ -103,7 +90,6 @@ function addCart(uid) {
 	        data: JSON.stringify({ p_no: $('#productno').val() }),
 	        success: function(response) {
 	            if (response.code === "no") {
-	//                 alert("이미 등록된 상품입니다.");
 	                updateCart(response.c_stock, response.c_total);
 	            } else {
 	                AddCartInsert(uid);

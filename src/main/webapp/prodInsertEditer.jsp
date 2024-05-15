@@ -101,7 +101,7 @@ table.table#form>tbody>tr>td#td-rowspan2 {
 						<table class="table table0" id="form">
 						    <tr>
 						        <td rowspan="5" id="td-rowspan5">
-						            <img id="preview" src="img/" alt="" style="width: 200px;"></td>
+						            <img id="preview" src="" alt="" style="width: 200px;"></td>
 						    	<td><label for="name">상품 이름</label> <input type="text" id="name" name="p_name"></td>
 							</tr>
 							

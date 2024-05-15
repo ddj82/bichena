@@ -10,4 +10,6 @@ public interface ProdRevService {
 	List<ProdRevVO> myRevList(int u_no);
 	List<ProdRevVO> adminRevList(ProdRevVO vo);
 	int revTotalCnt(ProdRevVO vo);// 전체 글 수 조회
+	int prodRevDelete(ProdRevVO vo);
+	ProdRevVO revDelSelect(ProdRevVO vo);
 }

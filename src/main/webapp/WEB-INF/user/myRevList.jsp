@@ -149,12 +149,20 @@ width: 100%;
 					<th class="my-rev-th">첨부파일</th>
 					<c:choose>
 						<c:when test="${rev.pr_img ne null }">
-							<td class="my-rev-td">${rev.pr_img }</td>
+						<!-- 05/15 -->
+							<td class="my-rev-td"><img alt="" src="img/imgRev/${rev.pr_img }" style="width:100px;"></td>
 						</c:when>
 						<c:otherwise>
 							<td class="my-rev-td">없음</td>
 						</c:otherwise>
 					</c:choose>
+				</tr>
+				<tr>
+					<td colspan="2" style="text-align:right;">
+					<!-- 05/15 -->
+						<button type="button" class="btn btn-outline-danger btn-sm" style="margin:5px 0; margin-right:20px;" 
+						onclick="revDel('${rev.pr_no }', '${rev.p_name }', '${userNO }')">삭제하기</button>
+					</td>
 				</tr>
 			</table>
 		</c:forEach>
@@ -212,6 +220,7 @@ width: 100%;
 					<br><br>
 					<textarea rows="8" name="pr_content"></textarea>
 					<br><br>
+					<div><img id="preview" src="" alt="" style=""></div>
 					<label for="file" class="btn btn-outline-secondary btn-sm">첨부파일</label>
 					<input type="file" id="file" name="uploadFile" class="btn btn-outline-secondary btn-sm" style="display:none;">
 					<br>
@@ -280,6 +289,7 @@ $('#myModal').on('hidden.bs.modal', function () {
 	let spanEnd = '</span> ';
     let starFill = document.getElementById("star-fill");
     starFill.innerHTML = spanTag1 + fillNone + spanEnd + spanTag2 + fillNone + spanEnd + spanTag3 + fillNone + spanEnd + spanTag4 + fillNone + spanEnd + spanTag5 + fillNone + spanEnd;
+    document.getElementById('preview').style = "display:none;";
 });
 
 function starFill(star) {
@@ -331,6 +341,39 @@ function starFill(star) {
 	    });
 	}
 };
+
+document.getElementById("file").addEventListener('change', function(event){
+    var fileInput = document.getElementById('file');
+    // 파일이 선택되었는지 확인합니다.
+    if (fileInput.files.length > 0) {
+        // 파일 입력 요소에서 선택된 파일 가져오기
+        var file = event.target.files[0];
+
+        // FileReader 객체 생성
+        var reader = new FileReader();
+
+        // 파일을 읽은 후 실행될 함수 정의
+        reader.onload = function(event) {
+            // 이미지를 표시할 img 요소 가져오기
+            var imgElement = document.getElementById('preview');
+
+            // FileReader가 읽은 데이터를 img 요소의 src 속성에 설정하여 이미지 표시
+            imgElement.src = event.target.result;
+            imgElement.style = "width:200px;";
+        };
+
+        // 파일을 읽기
+        reader.readAsDataURL(file);
+    }
+});
+
+<!-- 05/15 -->
+function revDel(prNo, pName, uNO) {
+	let result = confirm("리뷰를 삭제하시겠습니까?");
+	if (result) {
+		location.href="prodRevDelete.ko?pr_no=" + prNo + "&p_name=" + pName;
+	}
+}
 </script>
 </body>
 </html>

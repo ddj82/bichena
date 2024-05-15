@@ -30,9 +30,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
+	public int orderRevDelchk(String o_no) {
+		return dao.orderRevDelchk(o_no);
+	}
+
+	@Override
 	public List<OrderVO> adminOrderList(OrderVO vo) {
-		int startList = vo.getStartList(); // 시작 목록 인덱스
-		int sizePerPage = vo.getSizePerPage(); // 페이지 당 항목 수
 		return dao.adminOrderList(vo);
 	
 	}
@@ -46,8 +49,6 @@ public class OrderServiceImpl implements OrderService {
 	// 전체 글 수 조회
 	@Override
 	public int orderTotalCnt(OrderVO vo) {
-		int startList = vo.getStartList(); // 시작 목록 인덱스
-		int sizePerPage = vo.getSizePerPage(); // 페이지 당 항목 수
 		return dao.orderTotalCnt(vo);
 	}
 
@@ -60,4 +61,5 @@ public class OrderServiceImpl implements OrderService {
 	public void orderDelete(String mid) {
 		dao.orderDelete(mid);
 	}
+
 }

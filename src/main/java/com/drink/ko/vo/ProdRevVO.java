@@ -12,6 +12,8 @@ public class ProdRevVO {
 	private int pr_star;
 	private String pr_date;
 	private String pr_img;
+	
+	private String o_no;
 
 	private MultipartFile uploadFile;
 
@@ -110,6 +112,14 @@ public class ProdRevVO {
 
 	public void setUploadFile(MultipartFile uploadFile) {
 		this.uploadFile = uploadFile;
+	}
+	
+	public String getO_no() {
+		return o_no;
+	}
+
+	public void setO_no(String o_no) {
+		this.o_no = o_no;
 	}
 
 	@Override

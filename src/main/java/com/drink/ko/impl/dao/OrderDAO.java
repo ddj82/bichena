@@ -26,6 +26,10 @@ public class OrderDAO {
 		return mybatis.update("OrderDAO.orderRevchk", vo);
 	}
 	
+	public int orderRevDelchk(String o_no) {
+		return mybatis.update("OrderDAO.orderRevDelchk", o_no);
+	}
+	
 	public List<OrderVO> adminOrderList(OrderVO vo) {
 		return mybatis.selectList("OrderDAO.adminOrderList", vo);
 	}

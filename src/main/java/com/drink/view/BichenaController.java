@@ -706,7 +706,6 @@ public class BichenaController {
 		HttpSession session = request.getSession();
 		int u_no = (int) session.getAttribute("userNO");
 		List<OrderVO> myOrderList = orderService.myOrderList(u_no);
-		System.out.println(myOrderList);
 		model.addAttribute("myOrderList", myOrderList);
 		return "/WEB-INF/user/myPageMain.jsp";
 	}
@@ -821,7 +820,7 @@ public class BichenaController {
 		return prodOneRevMap;
 	}
 
-	@RequestMapping("myRevList.ko")
+	@RequestMapping("myRevList.ko") //마이페이지-리뷰
 	public String myRevList(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		int u_no = (int) session.getAttribute("userNO");
@@ -830,7 +829,7 @@ public class BichenaController {
 		return "WEB-INF/user/myRevList.jsp";
 	}
 
-	@RequestMapping("/myRevIstOrder.ko")
+	@RequestMapping("/myRevIstOrder.ko") //작성 가능한 리뷰
 	@ResponseBody
 	public Object myRevIstOrder(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
@@ -843,7 +842,7 @@ public class BichenaController {
 		return myRevIstOrderMap;
 	}
 
-	@PostMapping("/prodRevInsert.ko")
+	@PostMapping("/prodRevInsert.ko") //리뷰 등록
 	public String prodRevInsert(ProdRevVO vo, @RequestParam(value = "o_no") String o_no)
 			throws IllegalStateException, IOException {
 		System.out.println(vo);
@@ -864,25 +863,40 @@ public class BichenaController {
 
 		if (cnt > 0) {
 			System.out.println("등록완료");
-			return "orderRevchk.ko";
+			return "orderRevchk.ko"; //리뷰state 처리
 		} else {
 			System.out.println("등록실패");
-			return "redirect:/index.jsp";
+			return "redirect:/myRevList.ko";
 		}
 	}
 
-	@RequestMapping("/orderRevchk.ko")
+	@RequestMapping("/orderRevchk.ko") //리뷰state 처리
 	public String orderRevchk(OrderVO vo) {
-		int cnt = orderService.orderRevchk(vo);
 		System.out.println(vo);
-
+		orderService.orderRevchk(vo);
+		return "redirect:/myRevList.ko";
+	}
+	
+//	<!-- 05/15 -->
+	@RequestMapping("/prodRevDelete.ko")
+	public String prodRevDelete(ProdRevVO vo, HttpSession session, Model model) {
+		vo.setU_no((int) session.getAttribute("userNO"));
+		ProdRevVO revVO = prodRevService.revDelSelect(vo);
+		String delRevONO = revVO.getO_no();
+		int cnt = prodRevService.prodRevDelete(revVO);
 		if (cnt > 0) {
-			System.out.println("변경완료");
-			return "myPage.ko";
+			System.out.println("삭제완료");
+			return "orderRevDelchk.ko?o_no=" + delRevONO; //리뷰state 처리
 		} else {
-			System.out.println("변경실패");
-			return "redirect:/index.jsp";
+			System.out.println("삭제실패");
+			return "redirect:/myRevList.ko";
 		}
+	}
+//	<!-- 05/15 -->
+	@RequestMapping("/orderRevDelchk.ko") //리뷰state 처리
+	public String orderRevDelchk(@RequestParam(value = "o_no") String o_no, HttpSession session) {
+		orderService.orderRevDelchk(o_no);
+		return "redirect:/myRevList.ko";
 	}
 
 	@RequestMapping("/qnaList.ko")

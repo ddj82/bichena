@@ -13,13 +13,14 @@
 		<result property="pr_star" column="PR_STAR" />
 		<result property="pr_date" column="PR_DATE" />
 		<result property="pr_img" column="PR_IMG" />
+		<result property="o_no" column="O_NO" />
 	</resultMap>
 	
-	<select id="prodOneRev" resultMap="prodRevList">
+	<select id="prodOneRev" resultType="prodRevDTO">
 		SELECT * FROM BC_PRODREV WHERE P_NO = #{p_no}
 	</select>
 	
-	<select id="myRevList" resultMap="prodRevList">
+	<select id="myRevList" resultType="prodRevDTO">
 		SELECT * FROM BC_PRODREV WHERE U_NO = #{u_no} ORDER BY PR_NO
 	</select>
 	
@@ -28,7 +29,7 @@
 		SELECT COUNT(*) FROM BC_PRODREV WHERE 1=1
 	</select>
 	
-	<select id="adminRevList" resultMap="prodRevList">
+	<select id="adminRevList" resultType="prodRevDTO">
 		SELECT * FROM BC_PRODREV WHERE 1=1
 		<if test="searchCondition != null">
 			<if test="searchCondition == 'pname' "> AND P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') </if>
@@ -47,10 +48,17 @@
 		WHERE u.U_NO = #{u_no}
 	</insert>
 
-	<update id="updateSomething">
-	</update>
 
-	<delete id="deleteSomething">
+<!-- 05/15 -->
+	<delete id="prodRevDelete">
+		DELETE FROM BC_PRODREV WHERE PR_NO = #{pr_no};
 	</delete>
+	
+	<select id="revDelSelect" resultMap="prodRevList">
+		SELECT pr.*, o.O_NO 
+		FROM BC_PRODREV AS pr 
+		JOIN BC_ORDER AS o on pr.U_NO = #{u_no} 
+		WHERE o.U_NO = #{u_no} and o.P_NAME = #{p_name} and PR_NO = #{pr_no}
+	</select>
 
 </mapper>

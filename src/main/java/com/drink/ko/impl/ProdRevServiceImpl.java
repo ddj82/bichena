@@ -38,4 +38,14 @@ public class ProdRevServiceImpl implements ProdRevService {
 	public int revTotalCnt(ProdRevVO vo) {
 		return dao.revTotalCnt(vo);
 	}
+
+	@Override
+	public int prodRevDelete(ProdRevVO vo) {
+		return dao.prodRevDelete(vo);
+	}
+
+	@Override
+	public ProdRevVO revDelSelect(ProdRevVO vo) {
+		return dao.revDelSelect(vo);
+	}
 }

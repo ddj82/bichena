@@ -32,4 +32,12 @@ public class ProdRevDAO {
 	public int revTotalCnt(ProdRevVO vo) {
 		return mybatis.selectOne("ProdRevDAO.revTotalCnt", vo);
 	}
+	
+	public int prodRevDelete(ProdRevVO vo) {
+		return mybatis.delete("ProdRevDAO.prodRevDelete", vo);
+	}
+	
+	public ProdRevVO revDelSelect(ProdRevVO vo) {
+		return mybatis.selectOne("ProdRevDAO.revDelSelect", vo);
+	}
 }

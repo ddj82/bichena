@@ -33,6 +33,10 @@
 	<update id="orderRevchk">
 		UPDATE BC_ORDER SET O_REVSTATE = 1 WHERE O_NO = #{o_no}
 	</update>
+<!-- 05/15 -->
+	<update id="orderRevDelchk">
+		UPDATE BC_ORDER SET O_REVSTATE = 0 WHERE O_NO = #{o_no}
+	</update>
 
 	<insert id="insertOrder">
 		INSERT INTO BC_ORDER (O_NO, U_NO, U_NAME, P_NO, P_NAME, O_STOCK, O_TOTAL, O_ADDR, U_TEL) 
