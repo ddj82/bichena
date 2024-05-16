@@ -24,7 +24,7 @@ $(function(){
 				$.each(values, function(i, o){
 					$("#revTB").append("<table class='dtable'><tr><td>" + o.u_nick + "</td><td>" + o.p_name + "</td><td>" + o.pr_date + "</td></tr>"
 							+ "<tr><td>" + o.pr_content + "</td><td>"
-							+ "<tr><td>" + "<img alt='' src='img/imgQna/" + o.pr_img  + "' style='width:100px;'>" + "</td><td></table>");
+							+ "<tr><td>" + "<img alt='' src='img/imgRev/" + o.pr_img  + "' style='width:100px;'>" + "</td><td></table>");
 				});
 				console.log("성공");
 			} else {

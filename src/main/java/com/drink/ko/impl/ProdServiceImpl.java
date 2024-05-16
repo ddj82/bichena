@@ -56,4 +56,9 @@ public class ProdServiceImpl implements ProdService {
 		return dao.prodFilteredList(vo);
 	}
 
+	@Override
+	public int deleteProduct(String p_no) {
+		return dao.deleteProduct(p_no);
+	}
+
 }

@@ -37,10 +37,29 @@ table {
 	<nav id="searchNav">
 		<form action="getNoticeList.ko" method="post">
 			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
-				<option value="${conditionMap['제목']}">제목</option>
-				<option value="${conditionMap['내용']}">내용</option>
-			</select> 
-			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+			    <c:choose>
+			        <c:when test="${condition == 'TITLE'}">
+			            <option value="${conditionMap['제목']}">제목</option>
+			            <option value="${conditionMap['내용']}">내용</option>
+			        </c:when>
+			        <c:when test="${condition == 'CONTENT'}">
+			            <option value="${conditionMap['내용']}">내용</option>
+			            <option value="${conditionMap['제목']}">제목</option>
+			        </c:when>
+			        <c:otherwise>
+			            <option value="${conditionMap['제목']}">제목</option>
+			            <option value="${conditionMap['내용']}">내용</option>
+			        </c:otherwise>
+			    </c:choose>
+			</select>
+			<c:choose>
+				<c:when test="${keyword == ''}">
+					<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+				</c:when>
+				<c:otherwise>
+					<input type="text" name="searchKeyword" value="${keyword}">
+				</c:otherwise>
+			</c:choose>
 			<button type="submit" class="btn btn-primary btn-sm">검색</button>
 		</form>
 	</nav>
@@ -72,8 +91,7 @@ table {
 			</c:when>
 			<c:otherwise>
 				<!-- 이전 페이지로 이동하는 링크 -->
-				<a href="getNoticeList.ko?currPageNo=${pagination.currPageNo - 1}"
-					class="btn btn-info">이전</a>
+				<a href="getNoticeList.ko?currPageNo=${pagination.currPageNo - 1}&searchKeyword=${keyword}&searchCondition=${condition}" class="btn btn-primary btn-xs">이전</a>
 			</c:otherwise>
 		</c:choose>
 		
@@ -84,7 +102,7 @@ table {
 					<span>${page}</span>
 				</c:when>
 				<c:otherwise>
-					<a href="getNoticeList.ko?currPageNo=${page}">${page}</a>
+					<a href="getNoticeList.ko?currPageNo=${page}&searchKeyword=${keyword}&searchCondition=${condition}" class="">${page}</a>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
@@ -96,8 +114,7 @@ table {
 			</c:when>
 			<c:otherwise>
 				<!-- 다음 페이지로 이동하는 링크 -->
-				<a href="getNoticeList.ko?currPageNo=${pagination.currPageNo + 1}"
-					class="btn btn-info">다음</a>
+				<a href="getNoticeList.ko?currPageNo=${pagination.currPageNo + 1}&searchKeyword=${keyword}&searchCondition=${condition}" class="btn btn-primary btn-xs">다음</a>
 			</c:otherwise>
 		</c:choose>
 		<br> <br>

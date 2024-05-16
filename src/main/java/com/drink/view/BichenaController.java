@@ -300,7 +300,9 @@ public class BichenaController {
 		vo.pageInfo(currPageNo, range, totalCnt);
 		if (vo.getNot_title() == null)
 			vo.setNot_title("");
-
+		
+		mav.addObject("keyword", keyword);
+		mav.addObject("condition", condition);
 		mav.addObject("pagination", vo);
 		mav.addObject("noticeList", noticeService.noticeListPaging(vo)); // parameter로 때온 값들을 보내준다.
 		if (session.getAttribute("userID") != null) {
@@ -329,12 +331,14 @@ public class BichenaController {
 	// Faq 등록
 	@PostMapping(value = "/insertFaq.ko")
 	public String insertFaq(FaqVO vo) throws IllegalStateException, IOException {
-
-		System.out.println("Faq 업로드 : " + vo);
-		faqService.insertFaq(vo);
-		return "/getFaqList.ko";
+		int faq_no = faqService.faqTotalCnt(vo);
+		faq_no += 1;
+		vo.setFaq_no(faq_no);
+	    System.out.println("Faq 업로드 : " + vo);
+	    faqService.insertFaq(vo);
+	    return "/getFaqList.ko";
 	}
-
+	
 	// Faq 수정
 	@RequestMapping("/modifyFaq.ko")
 	public String ModyfyFaq(FaqVO vo, Model model) {
@@ -387,7 +391,9 @@ public class BichenaController {
 		vo.pageInfo(currPageNo, range, totalCnt);
 		if (vo.getFaq_title() == null)
 			vo.setFaq_title("");
-
+		
+		mav.addObject("keyword", keyword);
+		mav.addObject("condition", condition);
 		mav.addObject("pagination", vo);
 		mav.addObject("faqList", faqService.faqListPaging(vo)); // parameter로 때온 값들을 보내준다.
 
@@ -501,15 +507,15 @@ public class BichenaController {
 		} else {
 			UsersVO vo = usersService.checkTel(resNode.get("phone").asText());
 			System.out.println("vo : " + vo);
-			if(vo == null) {
+			if (vo == null) {
 				map.put("imp_uid", resNode.get("imp_uid").asText());
 				map.put("name", resNode.get("name").asText());
 				map.put("birth", resNode.get("birthday").asText());
-				map.put("phone", resNode.get("phone").asText());				
+				map.put("phone", resNode.get("phone").asText());
 			} else {
 				return null;
 			}
-					
+
 		}
 
 		return map;
@@ -551,9 +557,9 @@ public class BichenaController {
 		orderVO.setO_no(request.getParameter("o_no"));
 		orderVO.setU_no(userVO.getU_no());
 		orderVO.setU_name(request.getParameter("u_name"));
-		orderVO.setP_no(request.getParameter("p_no"));
-		orderVO.setP_name(request.getParameter("p_name"));
-		orderVO.setO_stock(request.getParameter("o_stock"));
+		orderVO.setP_no(request.getParameter("p_no")); // 1
+		orderVO.setP_name(request.getParameter("p_name")); // 2
+		orderVO.setO_stock(request.getParameter("o_stock")); // 3
 		orderVO.setO_total(o_total);
 		orderVO.setO_addr(request.getParameter("o_addr"));
 		orderVO.setU_tel(request.getParameter("u_tel"));
@@ -573,7 +579,7 @@ public class BichenaController {
 			return "myCartList.ko";
 		}
 	}
-	
+
 	@RequestMapping(value = "/cancle.ko", method = RequestMethod.POST)
 	@ResponseBody
 	public int cancle(String mid) throws IOException {
@@ -679,8 +685,8 @@ public class BichenaController {
 	public String quitMem(HttpSession session) throws Exception {
 		System.out.println("회원 탈퇴 컨트롤러");
 		UsersVO vo = new UsersVO();
- 		String id = (String) session.getAttribute("userID");
- 		vo.setU_id(id);
+		String id = (String) session.getAttribute("userID");
+		vo.setU_id(id);
 		usersService.deleteUser(vo);
 		session.invalidate();
 		return "success";
@@ -713,6 +719,7 @@ public class BichenaController {
 	@GetMapping("/myOrderDetail.ko")
 	public String myOrderDetail(@RequestParam(value = "o_no") String o_no, Model model) {
 		OrderVO myOrderDetail = orderService.myOrderDetail(o_no);
+
 		List<ProdVO> list = new ArrayList<>();
 		ProdVO prodVO = new ProdVO();
 		String pno = myOrderDetail.getP_no();
@@ -734,8 +741,7 @@ public class BichenaController {
 	@GetMapping("/prodList.ko")
 	public String prodList(ProdVO vo, Model model,
 			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String currPageNo,
-			@RequestParam(value = "range", required = false, defaultValue = "1") String range, 
-			HttpSession session) {
+			@RequestParam(value = "range", required = false, defaultValue = "1") String range, HttpSession session) {
 
 		int totalCnt = prodService.prodTotalCnt(vo);
 		System.out.printf("currPageNo: %s /range: %s / totalCnt : %d ", currPageNo, range, totalCnt);
@@ -820,7 +826,7 @@ public class BichenaController {
 		return prodOneRevMap;
 	}
 
-	@RequestMapping("myRevList.ko") //마이페이지-리뷰
+	@RequestMapping("myRevList.ko") // 마이페이지-리뷰
 	public String myRevList(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		int u_no = (int) session.getAttribute("userNO");
@@ -829,7 +835,7 @@ public class BichenaController {
 		return "WEB-INF/user/myRevList.jsp";
 	}
 
-	@RequestMapping("/myRevIstOrder.ko") //작성 가능한 리뷰
+	@RequestMapping("/myRevIstOrder.ko") // 작성 가능한 리뷰
 	@ResponseBody
 	public Object myRevIstOrder(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
@@ -842,10 +848,10 @@ public class BichenaController {
 		return myRevIstOrderMap;
 	}
 
-	@PostMapping("/prodRevInsert.ko") //리뷰 등록
+	@PostMapping("/prodRevInsert.ko") // 리뷰 등록
 	public String prodRevInsert(ProdRevVO vo, @RequestParam(value = "o_no") String o_no)
 			throws IllegalStateException, IOException {
-		System.out.println(vo);
+		System.out.println("리뷰등록 : " + vo);
 		MultipartFile uploadFile = vo.getUploadFile();
 		realPath += "imgRev/";
 		File f = new File(realPath);
@@ -863,37 +869,36 @@ public class BichenaController {
 
 		if (cnt > 0) {
 			System.out.println("등록완료");
-			return "orderRevchk.ko"; //리뷰state 처리
+			return "orderRevchk.ko"; // 리뷰state 처리
 		} else {
 			System.out.println("등록실패");
 			return "redirect:/myRevList.ko";
 		}
 	}
 
-	@RequestMapping("/orderRevchk.ko") //리뷰state 처리
+	@RequestMapping("/orderRevchk.ko") // 리뷰state 처리
 	public String orderRevchk(OrderVO vo) {
 		System.out.println(vo);
 		orderService.orderRevchk(vo);
 		return "redirect:/myRevList.ko";
 	}
-	
+
 //	<!-- 05/15 -->
 	@RequestMapping("/prodRevDelete.ko")
 	public String prodRevDelete(ProdRevVO vo, HttpSession session, Model model) {
 		vo.setU_no((int) session.getAttribute("userNO"));
-		ProdRevVO revVO = prodRevService.revDelSelect(vo); //123123132
-		String delRevONO = revVO.getO_no();
-		int cnt = prodRevService.prodRevDelete(revVO);
+		int cnt = prodRevService.prodRevDelete(vo);
 		if (cnt > 0) {
 			System.out.println("삭제완료");
-			return "orderRevDelchk.ko?o_no=" + delRevONO; //리뷰state 처리
+			return "orderRevDelchk.ko"; // 리뷰state 처리
 		} else {
 			System.out.println("삭제실패");
 			return "redirect:/myRevList.ko";
 		}
 	}
+
 //	<!-- 05/15 -->
-	@RequestMapping("/orderRevDelchk.ko") //리뷰state 처리
+	@RequestMapping("/orderRevDelchk.ko") // 리뷰state 처리
 	public String orderRevDelchk(@RequestParam(value = "o_no") String o_no, HttpSession session) {
 		orderService.orderRevDelchk(o_no);
 		return "redirect:/myRevList.ko";
@@ -1072,13 +1077,13 @@ public class BichenaController {
 		conditionMapQNA.put("작성자", "q_writer");
 		return conditionMapQNA;
 	}
-	
+
 	@RequestMapping("/adminQnaList.ko")
 	public String adminqnaList(QnaVO vo,
-		@RequestParam(value = "searchCondition", defaultValue = "q_cate", required = false) String condition,
-		@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String keyword,
-		@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
-		@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
+			@RequestParam(value = "searchCondition", defaultValue = "q_cate", required = false) String condition,
+			@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String keyword,
+			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
+			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
 
 		int currPageNo = 0;
 		int range = 0;
@@ -1094,7 +1099,7 @@ public class BichenaController {
 
 		vo.pageInfo(currPageNo, range, totalCnt);
 		if (vo.getQ_title() == null)
-		vo.setQ_title("");
+			vo.setQ_title("");
 		model.addAttribute("pagination", vo);
 
 		List<QnaVO> qnaList = qnaService.qnaList(vo);
@@ -1104,8 +1109,8 @@ public class BichenaController {
 
 	@RequestMapping("/adminOrderList.ko")
 	public String adminOrderList(OrderVO vo,
-		@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
-		@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
+			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
+			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
 
 		int currPageNo = 0;
 		int range = 0;
@@ -1251,7 +1256,7 @@ public class BichenaController {
 
 		if (cnt > 0) {
 			System.out.println("등록완료");
-			return "adminProdList.ko";
+			return "redirect:adminProdList.ko";
 		} else {
 			System.out.println("등록실패");
 			return "redirect:adminProdList.ko";
@@ -1300,73 +1305,85 @@ public class BichenaController {
 //		
 //		if (cnt > 0) {
 //			System.out.println("수정완료");
-//			return "adminProdList.ko";
+//			return "redirect:adminProdList.ko";
 //		} else {
 //			System.out.println("수정실패");
 //			return "redirect:adminProdList.ko";
 //		}
 //		
 //	}
+	
+	@RequestMapping("adminProdDelete.ko")
+	public String adminProdDelete(@RequestParam(value = "p_no") String p_no, Model model) {
+		int cnt = prodService.deleteProduct(p_no);
+		if (cnt > 0) {
+			System.out.println("삭제완료");
+			return "redirect:adminProdList.ko";
+		} else {
+			System.out.println("삭제실패");
+			return "redirect:adminProdList.ko";
+		}
+	}
 
 	// 관리자 회원 목록 (+ select option)
-		@RequestMapping("/getUserList.ko")
-		@ResponseBody
-		public ModelAndView getUserList(@ModelAttribute("searchWord") String searchWord,
-				@ModelAttribute("searchVoca") String searchVoca,
-				@ModelAttribute("selectedStateValue") String selectedStateValue,
-				@RequestParam(value = "orderBy", required = false) String orderBy,
-				@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
-				@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, ModelAndView mav,
-				HttpSession session) {
+	@RequestMapping("/getUserList.ko")
+	@ResponseBody
+	public ModelAndView getUserList(@ModelAttribute("searchWord") String searchWord,
+			@ModelAttribute("searchVoca") String searchVoca,
+			@ModelAttribute("selectedStateValue") String selectedStateValue,
+			@RequestParam(value = "orderBy", required = false) String orderBy,
+			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
+			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, ModelAndView mav,
+			HttpSession session) {
 
-			UsersVO vo = new UsersVO();
+		UsersVO vo = new UsersVO();
 
-			int currPageNo = 0;
-			int range = 0;
-			int totalCnt = usersService.userTotalCnt(vo);
+		int currPageNo = 0;
+		int range = 0;
+		int totalCnt = usersService.userTotalCnt(vo);
 
-			try {
-				currPageNo = Integer.parseInt(NotcurrPageNo);
-				range = Integer.parseInt(Notrange);
-			} catch (NumberFormatException e) {
-				currPageNo = 1;
-				range = 1;
-			}
+		try {
+			currPageNo = Integer.parseInt(NotcurrPageNo);
+			range = Integer.parseInt(Notrange);
+		} catch (NumberFormatException e) {
+			currPageNo = 1;
+			range = 1;
+		}
 
-			vo.setSearchVoca(searchVoca);
-			vo.setSearchWord(searchWord);
-			vo.pageInfo(currPageNo, range, totalCnt);
-			if (vo.getU_id() == null)
-				vo.setU_id("");
+		vo.setSearchVoca(searchVoca);
+		vo.setSearchWord(searchWord);
+		vo.pageInfo(currPageNo, range, totalCnt);
+		if (vo.getU_id() == null)
+			vo.setU_id("");
 
-			System.out.println("searchVoca111: " + searchVoca);
+		System.out.println("searchVoca111: " + searchVoca);
 
-			if (orderBy == null) {
-				// orderBy가 null일 때만 selectedStateValue를 기반으로 orderBy를 설정합니다.
-				if (selectedStateValue != null) {
-					System.out.println("orderBy0: " + orderBy);
-					if (selectedStateValue.equals("1")) {
-						System.out.println("orderBy1: " + orderBy);
-						orderBy = "1";
-					} else if (selectedStateValue.equals("0")) {
-						orderBy = "0";
-						System.out.println("orderBy2: " + orderBy);
-					}
+		if (orderBy == null) {
+			// orderBy가 null일 때만 selectedStateValue를 기반으로 orderBy를 설정합니다.
+			if (selectedStateValue != null) {
+				System.out.println("orderBy0: " + orderBy);
+				if (selectedStateValue.equals("1")) {
+					System.out.println("orderBy1: " + orderBy);
+					orderBy = "1";
+				} else if (selectedStateValue.equals("0")) {
+					orderBy = "0";
+					System.out.println("orderBy2: " + orderBy);
 				}
 			}
-			vo.setOrderBy(orderBy);
-			System.out.println("orderBy3: " + orderBy);
-
-			List<UsersVO> userList = usersService.getUserList(vo);
-			mav.addObject("pagination", vo);
-			mav.addObject("userList", userList);
-			mav.addObject("state", selectedStateValue);
-			mav.addObject("voca", searchVoca);
-			mav.addObject("word", searchWord);
-			mav.setViewName("WEB-INF/admin/memberList.jsp");
-			return mav;
-
 		}
+		vo.setOrderBy(orderBy);
+		System.out.println("orderBy3: " + orderBy);
+
+		List<UsersVO> userList = usersService.getUserList(vo);
+		mav.addObject("pagination", vo);
+		mav.addObject("userList", userList);
+		mav.addObject("state", selectedStateValue);
+		mav.addObject("voca", searchVoca);
+		mav.addObject("word", searchWord);
+		mav.setViewName("WEB-INF/admin/memberList.jsp");
+		return mav;
+
+	}
 
 	@RequestMapping("/userDetail.ko")
 	@ResponseBody

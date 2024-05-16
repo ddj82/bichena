@@ -157,7 +157,10 @@ function prodUpdate(pno){
 	location.href = 'adminProdUpdateSet.ko?p_no=' + pno;
 }
 function prodDelete(pno){
-	location.href = '.ko?p_no=' + pno;
+	let result = confirm("해당 상품을 삭제하시겠습니까?");
+	if (result) {
+		location.href = 'adminProdDelete.ko?p_no=' + pno;
+	}
 }
 </script>
 <div class="modal fade" id="myModal" role="dialog">

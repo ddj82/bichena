@@ -126,7 +126,7 @@ public class ProdRevVO {
 	public String toString() {
 		return "ProdRevVO [pr_no=" + pr_no + ", u_no=" + u_no + ", u_nick=" + u_nick + ", p_no=" + p_no + ", p_name="
 				+ p_name + ", pr_content=" + pr_content + ", pr_star=" + pr_star + ", pr_date=" + pr_date + ", pr_img="
-				+ pr_img + "]";
+				+ pr_img + ", o_no=" + o_no + "]";
 	}
 
 	public String getSearchCondition() {

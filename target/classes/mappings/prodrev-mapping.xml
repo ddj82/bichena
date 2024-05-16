@@ -22,6 +22,11 @@
 	
 	<select id="myRevList" resultType="prodRevDTO">
 		SELECT * FROM BC_PRODREV WHERE U_NO = #{u_no} ORDER BY PR_NO
+<!-- 		SELECT pr.*, o.O_NO  -->
+<!-- 		FROM BC_PRODREV AS pr  -->
+<!-- 		JOIN BC_ORDER AS o on pr.U_NO = #{u_no} -->
+<!-- 		WHERE o.U_NO = #{u_no} and o.P_NO = 2 and pr.PR_NO = 1 -->
+<!-- 		ORDER BY PR_NO -->
 	</select>
 	
 	<!-- 페이징 -->
@@ -41,8 +46,8 @@
 	</select>
 
 	<insert id="prodRevInsert">
-		INSERT INTO BC_PRODREV (U_NO, U_NICK, P_NO, P_NAME, PR_CONTENT, PR_STAR, PR_IMG)
-		SELECT u.U_NO, u.U_NICK, p.P_NO, p.P_NAME, #{pr_content}, #{pr_star}, #{pr_img}
+		INSERT INTO BC_PRODREV (U_NO, U_NICK, P_NO, P_NAME, PR_CONTENT, PR_STAR, PR_IMG, O_NO)
+		SELECT u.U_NO, u.U_NICK, p.P_NO, p.P_NAME, #{pr_content}, #{pr_star}, #{pr_img}, #{o_no}
 		FROM bc_users AS u
 		JOIN bc_prod AS p ON p.P_NO = #{p_no}
 		WHERE u.U_NO = #{u_no}
@@ -55,10 +60,10 @@
 	</delete>
 	
 	<select id="revDelSelect" resultMap="prodRevList">
-		SELECT pr.*, o.O_NO 
-		FROM BC_PRODREV AS pr 
-		JOIN BC_ORDER AS o on pr.U_NO = #{u_no} 
-		WHERE o.U_NO = #{u_no} and o.P_NO = #{p_no} and PR_NO = #{pr_no}
+<!-- 		SELECT pr.*, o.O_NO  -->
+<!-- 		FROM BC_PRODREV AS pr  -->
+<!-- 		JOIN BC_ORDER AS o on pr.U_NO = #{u_no}  -->
+<!-- 		WHERE o.U_NO = #{u_no} and o.P_NO = #{p_no} and PR_NO = #{pr_no} and O_REVSTATE = '1' AND o.O_NO = #{o_no} -->
 	</select>
 
 </mapper>

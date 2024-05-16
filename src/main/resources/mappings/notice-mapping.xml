@@ -40,8 +40,8 @@
 		SELECT *
 		FROM BC_NOTICE
 		WHERE 1=1
-		<if test="searchCondition == 'CONTENT' "> AND NOT_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
-		</if>
+        <if test="searchCondition == 'CONTENT' ">AND REGEXP_REPLACE(not_content, '&lt;(/)?(img|label|table|thead|tbody|tfoot|tr|td|p|br|div|span|font|strong|b)(.|\s|\t|\n|\r\n)*?&gt;', '') LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
 		<if test="searchCondition  == 'TITLE' "> AND NOT_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
 		ORDER BY NOT_NO DESC
@@ -51,8 +51,8 @@
 	<select id="getCount" resultType="int">
 		SELECT COUNT(*) FROM BC_NOTICE
 		WHERE 1=1
-		<if test="searchCondition == 'CONTENT' "> AND NOT_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
-		</if>
+        <if test="searchCondition == 'CONTENT' ">AND REGEXP_REPLACE(not_content, '&lt;(/)?(img|label|table|thead|tbody|tfoot|tr|td|p|br|div|span|font|strong|b)(.|\s|\t|\n|\r\n)*?&gt;', '') LIKE CONCAT('%', #{searchKeyword}, '%')
+        </if>
 		<if test="searchCondition == 'TITLE' "> AND NOT_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
 		ORDER BY NOT_NO

@@ -75,5 +75,9 @@
 		VALUES 
 		(#{p_name}, #{p_price}, #{editfile}, #{p_img}, #{edithtml}, #{p_desc}, #{p_made}, #{p_type}, #{p_dgr}, #{p_sw}, #{p_su}, #{p_sp}, #{p_mat}, #{p_cap}, #{p_stock});
 	</insert>
+	
+	<delete id="deleteProduct">
+		DELETE FROM BC_PROD WHERE P_NO = #{p_no}
+	</delete>
 
 </mapper>

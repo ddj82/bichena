@@ -48,4 +48,8 @@ public class ProdDAO {
 		return mybatis.selectList("ProdDAO.prodFilteredList", vo);
 	}
 	
+	public int deleteProduct(String p_no) {
+		return mybatis.delete("ProdDAO.deleteProduct", p_no);
+	}
+	
 }

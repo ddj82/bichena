@@ -10,9 +10,11 @@
 
 	<insert id="insertFaq">
 		INSERT INTO BC_FAQ(
+		FAQ_NO,
 		FAQ_TITLE,
 		FAQ_CONTENT)
 		VALUES(
+		#{faq_no},
 		#{faq_title},
 		#{faq_content})
 	</insert>

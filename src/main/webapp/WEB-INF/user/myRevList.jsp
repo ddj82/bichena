@@ -161,7 +161,7 @@ width: 100%;
 					<td colspan="2" style="text-align:right;">
 					<!-- 05/15 -->
 						<button type="button" class="btn btn-outline-danger btn-sm" style="margin:5px 0; margin-right:20px;" 
-						onclick="revDel('${rev.pr_no }', '${rev.p_name }', '${userNO }')">삭제하기</button>
+						onclick="revDel('${rev.pr_no }', '${rev.p_no }', '${rev.o_no }')">삭제하기</button>
 					</td>
 				</tr>
 			</table>
@@ -368,10 +368,10 @@ document.getElementById("file").addEventListener('change', function(event){
 });
 
 <!-- 05/15 -->
-function revDel(prNo, pName, uNO) {
+function revDel(prNo, pNo, oNo) {
 	let result = confirm("리뷰를 삭제하시겠습니까?");
 	if (result) {
-		location.href="prodRevDelete.ko?pr_no=" + prNo + "&p_name=" + pName;
+		location.href="prodRevDelete.ko?pr_no=" + prNo + "&p_no=" + pNo + "&o_no=" + oNo;
 	}
 }
 </script>

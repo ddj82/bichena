@@ -13,6 +13,7 @@ public interface ProdService {
 	int getPnoMaxNum();
 	int insertProduct(ProdVO vo);
 	int updateProduct(ProdVO vo);
+	int deleteProduct(String p_no);
 	
 	//필터링된 상품리스트 
 	List<ProdVO> prodFilteredList(ProdVO vo);
