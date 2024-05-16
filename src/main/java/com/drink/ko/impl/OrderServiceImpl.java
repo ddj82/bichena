@@ -18,9 +18,14 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderVO> myOrderList(int u_no) {
 		return dao.myOrderList(u_no);
 	}
+	
+	@Override
+	public List<OrderVO> myOrderConfirm(int u_no) {
+		return dao.myOrderConfirm(u_no);
+	}
 
 	@Override
-	public OrderVO myOrderDetail(String o_no) {
+	public List<OrderVO> myOrderDetail(String o_no) {
 		return dao.myOrderDetail(o_no);
 	}
 
@@ -30,8 +35,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public int orderRevDelchk(String o_no) {
-		return dao.orderRevDelchk(o_no);
+	public int orderRevDelchk(OrderVO vo) {
+		return dao.orderRevDelchk(vo);
 	}
 
 	@Override

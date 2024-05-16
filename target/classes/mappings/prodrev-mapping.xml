@@ -39,7 +39,7 @@
 		<if test="searchCondition != null">
 			<if test="searchCondition == 'pname' "> AND P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'pno' "> AND P_NO LIKE CONCAT('%', #{searchKeyword}, '%') </if>
-			<if test="searchCondition == 'prstar' "> AND PR_STAR LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+			<if test="searchCondition == 'unick' "> AND U_NICK LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 		</if>
 		ORDER BY PR_NO DESC
 		LIMIT #{sizePerPage} OFFSET #{startList}

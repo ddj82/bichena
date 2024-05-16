@@ -17,9 +17,13 @@
 	</select>
 
 	<select id="myOrderList" resultType="orderdto">
+      SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG
+      FROM BC_ORDER AS o JOIN BC_PROD AS p on o.P_NO = p.P_NO where U_NO = #{u_no} GROUP BY O_NO ORDER BY O_DATE DESC
+   	</select>
+	
+	<select id="myOrderConfirm" resultType="orderdto">
 		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG
-		FROM BC_ORDER AS o JOIN BC_PROD AS p on o.P_NO = p.P_NO where U_NO = #{u_no} 
-		ORDER BY O_DATE DESC
+		FROM BC_ORDER AS o JOIN BC_PROD AS p on o.P_NO = p.P_NO where U_NO = #{u_no} ORDER BY O_DATE DESC
 	</select>
 	
 	<select id="myOrderDetail" resultType="orderdto">
@@ -32,11 +36,11 @@
 	</select>
 
 	<update id="orderRevchk">
-		UPDATE BC_ORDER SET O_REVSTATE = 1 WHERE O_NO = #{o_no}
+		UPDATE BC_ORDER SET O_REVSTATE = 1 WHERE O_NO = #{o_no} and P_NO = #{p_no}
 	</update>
 <!-- 05/15 -->
 	<update id="orderRevDelchk">
-		UPDATE BC_ORDER SET O_REVSTATE = 0 WHERE O_NO = #{o_no}
+		UPDATE BC_ORDER SET O_REVSTATE = 0 WHERE O_NO = #{o_no} and P_NO = #{p_no}
 	</update>
 
 	<insert id="insertOrder">

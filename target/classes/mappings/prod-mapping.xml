@@ -73,11 +73,19 @@
 		INSERT INTO BC_PROD
 		(P_NAME, P_PRICE, EDITFILE, P_IMG, EDITHTML, P_DESC, P_MADE, P_TYPE, P_DGR, P_SW, P_SU, P_SP, P_MAT, P_CAP, P_STOCK)
 		VALUES 
-		(#{p_name}, #{p_price}, #{editfile}, #{p_img}, #{edithtml}, #{p_desc}, #{p_made}, #{p_type}, #{p_dgr}, #{p_sw}, #{p_su}, #{p_sp}, #{p_mat}, #{p_cap}, #{p_stock});
+		(#{p_name}, #{p_price}, #{editfile}, #{p_img}, #{edithtml}, #{p_desc}, #{p_made}, #{p_type}, #{p_dgr}, #{p_sw}, #{p_su}, #{p_sp}, #{p_mat}, #{p_cap}, #{p_stock})
 	</insert>
 	
 	<delete id="deleteProduct">
 		DELETE FROM BC_PROD WHERE P_NO = #{p_no}
 	</delete>
+	
+	<update id="updateProduct">
+		UPDATE BC_PROD SET
+		P_NAME = #{p_name}, P_PRICE = #{p_price}, EDITFILE = #{editfile}, P_IMG = #{p_img}, EDITHTML = #{edithtml}, 
+		P_DESC = #{p_desc}, P_MADE = #{p_made}, P_TYPE = #{p_type}, P_DGR = #{p_dgr}, P_SW = #{p_sw}, 
+		P_SU = #{p_su}, P_SP = #{p_sp}, P_MAT = #{p_mat}, P_CAP = #{p_cap}, P_STOCK = #{p_stock} 
+		WHERE P_NO = #{p_no}
+	</update>
 
 </mapper>

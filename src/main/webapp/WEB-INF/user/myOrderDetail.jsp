@@ -10,60 +10,65 @@
 <%@ include file="../../common/navbar.jsp" %>
 <%@ include file="myPageHeader.jsp" %>
 <div class="container">
-	<table>
-		<tr>
-			<td>${myOrderDetail.o_date }</td>
-		</tr>
-		<tr>
-			<td>${myOrderDetail.o_no }</td>
-		</tr>
-		<tr>
-			<td>${myOrderDetail.u_name } | ${myOrderDetail.u_tel }</td>
-		</tr>
-		<tr>
-			<td>${myOrderDetail.o_state }</td>
-		</tr>
-		<c:forEach items="${detailList }" var="detail">
-			<tr>
-				<td><img alt="img" title="img" src="img/${detail.p_img }" style="width:50px"></td>
-			</tr>
-			<tr>
-				<td>
-					${detail.p_name } / ${detail.p_price }원 / 수량 ${detail.o_stock }개
-					<c:if test="${myOrderDetail.o_state eq '배송완료' }">
-						<c:if test="${myOrderDetail.o_revstate eq '0' }">
-							<button type='button' class='btn btn-outline-primary btn-sm' data-toggle='modal' data-target='#myModal' data-pno="${detail.p_no }" data-ono="${myOrderDetail.o_no }">리뷰작성</button>
+		<c:forEach items="${myOrderDetail }" var="detail">
+			<table>
+				<tr>
+					<td>${detail.o_date }</td>
+				</tr>
+				<tr>
+					<td>${detail.o_no }</td>
+				</tr>
+				<tr>
+					<td>${detail.u_name } | ${detail.u_tel }</td>
+				</tr>
+				<tr>
+					<td>${detail.o_state }</td>
+				</tr>
+				<tr>
+					<td><img alt="img" title="img" src="img/${detail.p_img }" style="width:50px"></td>
+				</tr>
+				<tr>
+					<td>${detail.p_name } / 수량 ${detail.o_stock }개 / ${detail.o_total }원</td>
+				</tr>
+				<tr>
+					<td>
+						<c:if test="${detail.o_state eq '배송완료' }">
+							<c:if test="${detail.o_revstate eq '0' }">
+								<button type='button' class='btn btn-outline-primary btn-sm' data-toggle='modal' data-target='#myModal' 
+								data-pno="${detail.p_no }" data-ono="${detail.o_no }">리뷰작성</button>
+							</c:if>
 						</c:if>
-					</c:if>
-				</td>
-			</tr>
+					</td>
+				</tr>
+			</table>
+			<br><br>
 		</c:forEach>
-	</table>
-	<table>
-		<tr>
-			<td colspan="2">받는 분 정보</td>
-		</tr>
-		<tr>
-			<td>받는분</td>
-			<td>${myOrderDetail.u_name } | ${myOrderDetail.u_tel }</td>
-		</tr>
-		<tr>
-			<td>주소</td>
-			<td>${myOrderDetail.o_addr }</td>
-		</tr>
-	</table>
-	<table>
-		<tr>
-			<td colspan="2">계산서</td>
-		</tr>
-		<tr>
-			<td>총 결제 금액</td>
-			<td>${myOrderDetail.o_total }</td>
-		</tr>
-	</table>
-	<c:if test="${myOrderDetail.o_state eq '상품 준비중' }">
-		<button id="cancel_module" type="button" value="${myOrderDetail.o_no }" class="btn btn-outline-warning btn-sm">결제취소</button>
-	</c:if>
+		<c:forEach items="${myOrderDetail }" var="detail" begin="0" end="0">
+			<table>
+				<tr>
+					<td colspan="2">받는 분 정보</td>
+				</tr>
+				<tr>
+					<td>받는분</td>
+					<td>${detail.u_name } | ${detail.u_tel }</td>
+				</tr>
+				<tr>
+					<td>주소</td>
+					<td>${detail.o_addr }</td>
+				</tr>
+			</table>
+			
+			<table>
+				<tr>
+					<td colspan="2">계산서</td>
+				</tr>
+				<tr>
+					<td>총 결제 금액</td>
+					<td>${allTotal}</td>
+				</tr>
+			</table>
+			<button type="button" value="${detail.o_no }" class="btn btn-outline-warning btn-sm cancel_module">결제취소</button>
+		</c:forEach>
 </div>
 
 
@@ -130,6 +135,7 @@
 		</div>
 	</div>
 </div>
+
 <script>
 $('#myModal').on('show.bs.modal', function (event) {
 	var button = $(event.relatedTarget); // modal을 열기 위해 클릭한 버튼
@@ -239,12 +245,12 @@ function revDel(prNo, pNo) {
 }
 </script>
 <script>
-$("#cancel_module").click(function () {
+$(".cancel_module").click(function () {
 	let result = confirm('취소하시겠습니까?');
 	if(result){
 		$.ajax({
 			url : "cancle.ko",
-			data : {"mid": $("#cancel_module").val()},
+			data : {"mid": $(".cancel_module").val()},
 			method : "POST",
 			success : function(val){
 				console.log(val);

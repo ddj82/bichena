@@ -88,7 +88,7 @@ input[type="file"]#p_img {
 				<th>재고</th>
 				<th>상세보기</th>
 				<th>수정하기</th>
-				<th>삭제하기</th>
+<!-- 				<th>삭제하기</th> -->
 			</tr>
 		</thead>
 		<tbody id="myList">
@@ -108,9 +108,9 @@ input[type="file"]#p_img {
 	            <td>
 	                <button type="button" class="btn btn-success btn-sm" onclick="prodUpdate('${prodlist.p_no }')">수정하기</button>
 	            </td>
-	            <td>
-	                <button type="button" class="btn btn-danger btn-sm" onclick="prodDelete('${prodlist.p_no }')">삭제하기</button>
-	            </td>
+<!-- 	            <td> -->
+<%-- 	                <button type="button" class="btn btn-danger btn-sm" onclick="prodDelete('${prodlist.p_no }')">삭제하기</button> --%>
+<!-- 	            </td> -->
 	        </tr>
 		</c:forEach>
 		</tbody>

@@ -25,7 +25,7 @@ table {
 			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
 				<option value="${conditionMapRev['상품명']}">상품명</option>
 				<option value="${conditionMapRev['상품번호']}">상품번호</option>
-				<option value="${conditionMapRev['별점']}">별점</option>
+				<option value="${conditionMapRev['작성자']}">작성자</option>
 			</select>
 			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
 			<button type="submit" class="btn btn-primary btn-sm">검색</button>
@@ -92,7 +92,8 @@ table {
 	            <td>${rev.pr_date }</td>
 	            <td>
 	                <button type="button" class="btn btn-primary btn-sm tail" 
-	                data-toggle="modal" data-target="#myModal" data-unick="${rev.u_nick }" data-con="${rev.pr_content }">상세보기</button>
+	                data-toggle="modal" data-target="#myModal" data-prno="${rev.pr_no }"
+	                data-unick="${rev.u_nick }" data-con="${rev.pr_content }">상세보기</button>
 	            </td>
 	        </tr>
 		</c:forEach>
@@ -140,10 +141,10 @@ table {
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h3 class="modal-title" id="tail-date"></h3>
             </div>
-            <div class="modal-body">
-            	
-            </div>
+            <div class="modal-body"></div>
+            <div class="modal-none" id="delPrNo" style="display:none;"></div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="revDel()">삭제</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
             </div>
         </div>
@@ -152,15 +153,26 @@ table {
 
 <script>
 $('#myModal').on('show.bs.modal', function (event) {
-	var button = $(event.relatedTarget); // modal을 열기 위해 클릭한 버튼
-	var uNick = button.data('unick');
-	var prCon = button.data('con');
-	var modal = $(this);
+	let button = $(event.relatedTarget); // modal을 열기 위해 클릭한 버튼
+	let uNick = button.data('unick');
+	let prCon = button.data('con');
+	let prNo = button.data('prno');
+	let modal = $(this);
 	modal.find('.modal-title').text("");
 	modal.find('.modal-body').text("");
+	modal.find('.modal-none').text("");
 	modal.find('.modal-title').text(uNick + "님 리뷰");
 	modal.find('.modal-body').text(prCon);
+	modal.find('.modal-none').text(prNo);
 });
+function revDel() {
+	let result = confirm("해당 리뷰를 정말 삭제하시겠습니까?");
+	let delPrNo = document.getElementById("delPrNo").innerText;
+	if (result) {
+		console.log(delPrNo);
+// 		location.href="prodRevDelete.ko?pr_no=" + prNo;
+	}
+}
 </script>
 </body>
 </html>

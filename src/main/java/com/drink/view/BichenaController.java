@@ -300,7 +300,7 @@ public class BichenaController {
 		vo.pageInfo(currPageNo, range, totalCnt);
 		if (vo.getNot_title() == null)
 			vo.setNot_title("");
-		
+
 		mav.addObject("keyword", keyword);
 		mav.addObject("condition", condition);
 		mav.addObject("pagination", vo);
@@ -334,11 +334,11 @@ public class BichenaController {
 		int faq_no = faqService.faqTotalCnt(vo);
 		faq_no += 1;
 		vo.setFaq_no(faq_no);
-	    System.out.println("Faq 업로드 : " + vo);
-	    faqService.insertFaq(vo);
-	    return "/getFaqList.ko";
+		System.out.println("Faq 업로드 : " + vo);
+		faqService.insertFaq(vo);
+		return "/getFaqList.ko";
 	}
-	
+
 	// Faq 수정
 	@RequestMapping("/modifyFaq.ko")
 	public String ModyfyFaq(FaqVO vo, Model model) {
@@ -391,7 +391,7 @@ public class BichenaController {
 		vo.pageInfo(currPageNo, range, totalCnt);
 		if (vo.getFaq_title() == null)
 			vo.setFaq_title("");
-		
+
 		mav.addObject("keyword", keyword);
 		mav.addObject("condition", condition);
 		mav.addObject("pagination", vo);
@@ -545,37 +545,38 @@ public class BichenaController {
 	@RequestMapping(value = "/pay.ko")
 	public String payment(HttpSession session, HttpServletRequest request, HttpServletResponse response)
 			throws IOException {
+		ProdVO prodVO = new ProdVO();
 		UsersVO userVO = new UsersVO();
 		OrderVO orderVO = new OrderVO();
 		CartVO cartVO = new CartVO();
-		String total = request.getParameter("o_total");
-		int o_total = Integer.parseInt(total);
 		int count = 0;
+		String[] stock = request.getParameter("o_stock").split(",");
+		String[] pno = request.getParameter("p_no").split(",");
 
 		userVO = usersService.checkTelId(request.getParameter("u_tel"), (String) session.getAttribute("userID"));
+		for (int i = 0; i < stock.length; i++) {
+			prodVO = prodService.prodOne(pno[i]);
+			orderVO.setO_no(request.getParameter("o_no"));
+			orderVO.setU_no(userVO.getU_no());
+			orderVO.setU_name(userVO.getU_name());
+			orderVO.setP_no(pno[i]);
+			orderVO.setP_name(prodVO.getP_name());
+			orderVO.setO_stock(stock[i]);
+			orderVO.setO_total(prodVO.getP_price() * Integer.parseInt(stock[i]));
+			orderVO.setO_addr(request.getParameter("o_addr"));
+			orderVO.setU_tel(request.getParameter("u_tel"));
 
-		orderVO.setO_no(request.getParameter("o_no"));
-		orderVO.setU_no(userVO.getU_no());
-		orderVO.setU_name(request.getParameter("u_name"));
-		orderVO.setP_no(request.getParameter("p_no")); // 1
-		orderVO.setP_name(request.getParameter("p_name")); // 2
-		orderVO.setO_stock(request.getParameter("o_stock")); // 3
-		orderVO.setO_total(o_total);
-		orderVO.setO_addr(request.getParameter("o_addr"));
-		orderVO.setU_tel(request.getParameter("u_tel"));
+			count += orderService.orderInsert(orderVO);
 
-		count = orderService.orderInsert(orderVO);
+			cartVO.setP_no(prodVO.getP_no());
+			cartService.deleteCart(cartVO);
+		}
 
-		if (count > 0) {
-			String pno = orderVO.getP_no();
-			String[] p_no = pno.split(",");
-			for (int i = 0; i < p_no.length; i++) {
-				cartVO.setP_no(Integer.parseInt(p_no[i]));
-				cartService.deleteCart(cartVO);
-			}
-
+		if (count > stock.length - 1) {
+			System.out.println("주문 완료");
 			return "orderComple.ko";
 		} else {
+			System.out.println("주문 실패");
 			return "myCartList.ko";
 		}
 	}
@@ -608,6 +609,16 @@ public class BichenaController {
 			System.out.println("환불성공");
 			return 1;
 		}
+	}
+
+	@RequestMapping("/orderCancelList.ko")
+	public String orderCancleList(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		int u_no = (int) session.getAttribute("userNO");
+		List<OrderVO> myOrderList = orderService.myOrderList(u_no);
+		System.out.println(myOrderList);
+		model.addAttribute("myOrderList", myOrderList);
+		return "/WEB-INF/user/orderCancelList.jsp";
 	}
 
 	@RequestMapping("/orderComple.ko")
@@ -712,28 +723,21 @@ public class BichenaController {
 		HttpSession session = request.getSession();
 		int u_no = (int) session.getAttribute("userNO");
 		List<OrderVO> myOrderList = orderService.myOrderList(u_no);
+		List<OrderVO> myOrderConfirm = orderService.myOrderConfirm(u_no);
+		model.addAttribute("myOrderConfirm", myOrderConfirm);
 		model.addAttribute("myOrderList", myOrderList);
 		return "/WEB-INF/user/myPageMain.jsp";
 	}
 
-	@GetMapping("/myOrderDetail.ko")
+	@RequestMapping("/myOrderDetail.ko")
 	public String myOrderDetail(@RequestParam(value = "o_no") String o_no, Model model) {
-		OrderVO myOrderDetail = orderService.myOrderDetail(o_no);
-
-		List<ProdVO> list = new ArrayList<>();
-		ProdVO prodVO = new ProdVO();
-		String pno = myOrderDetail.getP_no();
-		String ostock = myOrderDetail.getO_stock();
-		String[] p_no = pno.split(",");
-		String[] o_stock = ostock.split(",");
-		for (int i = 0; i < p_no.length; i++) {
-			prodVO = prodService.prodOne(p_no[i]);
-			prodVO.setO_stock(o_stock[i]);
-			list.add(prodVO);
+		int total = 0;
+		List<OrderVO> myOrderDetail = orderService.myOrderDetail(o_no);
+		for (OrderVO detail : myOrderDetail) {
+			total += detail.getO_total();
 		}
-
-		model.addAttribute("detailList", list);
 		model.addAttribute("myOrderDetail", myOrderDetail);
+		model.addAttribute("allTotal", total);
 
 		return "/WEB-INF/user/myOrderDetail.jsp";
 	}
@@ -899,8 +903,8 @@ public class BichenaController {
 
 //	<!-- 05/15 -->
 	@RequestMapping("/orderRevDelchk.ko") // 리뷰state 처리
-	public String orderRevDelchk(@RequestParam(value = "o_no") String o_no, HttpSession session) {
-		orderService.orderRevDelchk(o_no);
+	public String orderRevDelchk(OrderVO vo, HttpSession session) {
+		orderService.orderRevDelchk(vo);
 		return "redirect:/myRevList.ko";
 	}
 
@@ -1136,7 +1140,7 @@ public class BichenaController {
 	@GetMapping("/adminOrderDetail.ko")
 	@ResponseBody
 	public Object adminOrderDetail(@RequestParam(value = "o_no") String o_no, Model model) {
-		OrderVO adminOrderDetail = orderService.myOrderDetail(o_no);
+		List<OrderVO> adminOrderDetail = orderService.myOrderDetail(o_no);
 		model.addAttribute("adminOrderDetail", adminOrderDetail);
 		return adminOrderDetail;
 	}
@@ -1264,65 +1268,73 @@ public class BichenaController {
 
 	}
 
-//	@RequestMapping("/adminProdUpdate.ko")
-//	public String adminProdUpdate(ProdVO vo) throws IllegalStateException, IOException {
-//		MultipartFile uplodFile = vo.getUploadFile();
-//		File f = new File(realPath);
-//		if (!f.exists()) {
-//			f.mkdirs();
-//		}
-//		
-//		if (!(uplodFile == null || uplodFile.isEmpty())) {
-//			vo.setP_img(uplodFile.getOriginalFilename());
-//			uplodFile.transferTo(new File(realPath + vo.getP_img()));
-//		}
-//		
-//		int pno = prodService.getPnoMaxNum();
-//		String editFilename = "pno" + pno + ".jsp";
-//		vo.setEditfile(editFilename);
-//		
-//		File file = new File("C:/swork/bichena/src/main/webapp/WEB-INF/product");
-//		if (!file.exists()) {
-//			file.mkdirs();
-//		}
-//		
-//		FileWriter fw = null;
-//		try {
-//			fw = new FileWriter(file + "/" + editFilename);
-//			fw.write("<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>");
-//			fw.write(vo.getEdithtml());
-//			fw.flush();
-//		} catch (IOException e) {
-//			System.out.println(e.getMessage());
-//		} finally {
-//			try {
-//				fw.close();
-//			} catch (IOException e) {
-//				System.out.println(e.getMessage());
-//			}
-//		}
-//		int cnt = prodService.updateProduct(vo);
-//		
-//		if (cnt > 0) {
-//			System.out.println("수정완료");
-//			return "redirect:adminProdList.ko";
-//		} else {
-//			System.out.println("수정실패");
-//			return "redirect:adminProdList.ko";
-//		}
-//		
-//	}
-	
-	@RequestMapping("adminProdDelete.ko")
-	public String adminProdDelete(@RequestParam(value = "p_no") String p_no, Model model) {
-		int cnt = prodService.deleteProduct(p_no);
+	@RequestMapping("/adminProdUpdate.ko")
+	public String adminProdUpdate(ProdVO vo) throws IllegalStateException, IOException {
+		// 기존 상품정보
+		ProdVO oldvo = prodService.prodOne(String.valueOf(vo.getP_no()));
+
+		// 기존 상품 상세페이지jsp파일
+		File oldFile = new File("C:/swork/bichena/src/main/webapp/WEB-INF/product/" + oldvo.getEditfile());
+		// 기존 상품 이미지파일
+		File oldImg = new File("C:/swork/bichena/src/main/webapp/img/" + oldvo.getP_img());
+		System.out.println("옛날 파일 경로,이름:" + oldFile);
+		System.out.println("옛날 사진 경로,이름:" + oldImg);
+		System.out.println("업데이트할 vo :" + vo);
+
+		MultipartFile uplodFile = vo.getUploadFile();
+		File f = new File(realPath);
+		if (!f.exists()) {
+			f.mkdirs();
+		}
+
+		if (!(uplodFile == null || uplodFile.isEmpty())) {
+			oldImg.delete(); // 기존 이미지 삭제
+			vo.setP_img(uplodFile.getOriginalFilename());
+			uplodFile.transferTo(new File(realPath + vo.getP_img()));
+		} else {
+			vo.setP_img(oldvo.getP_img());
+		}
+
+		// 기존 상품페이지jsp파일 삭제
+		if (oldFile.exists()) {
+			oldFile.delete(); // 파일 삭제
+			System.out.println("기존 상세페이지jsp 삭제");
+		}
+
+		int pno = oldvo.getP_no();
+		String editFilename = "pno" + pno + ".jsp";
+		vo.setEditfile(editFilename);
+
+		File file = new File("C:/swork/bichena/src/main/webapp/WEB-INF/product");
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(file + "/" + editFilename);
+			fw.write("<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>");
+			fw.write(vo.getEdithtml());
+			fw.flush();
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		} finally {
+			try {
+				fw.close();
+			} catch (IOException e) {
+				System.out.println(e.getMessage());
+			}
+		}
+		int cnt = prodService.updateProduct(vo);
+
 		if (cnt > 0) {
-			System.out.println("삭제완료");
+			System.out.println("수정완료");
 			return "redirect:adminProdList.ko";
 		} else {
-			System.out.println("삭제실패");
+			System.out.println("수정실패");
 			return "redirect:adminProdList.ko";
 		}
+
 	}
 
 	// 관리자 회원 목록 (+ select option)
@@ -1437,7 +1449,7 @@ public class BichenaController {
 		Map<String, String> conditionMapRev = new HashMap<String, String>();
 		conditionMapRev.put("상품명", "pname");
 		conditionMapRev.put("상품번호", "pno");
-		conditionMapRev.put("별점", "prstar");
+		conditionMapRev.put("작성자", "unick");
 		return conditionMapRev;
 	}
 }

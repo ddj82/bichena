@@ -18,16 +18,20 @@ public class OrderDAO {
 		return mybatis.selectList("OrderDAO.myOrderList", u_no);
 	}
 	
-	public OrderVO myOrderDetail(String o_no) {
-		return mybatis.selectOne("OrderDAO.myOrderDetail", o_no);
+	public List<OrderVO> myOrderConfirm(int u_no) {
+		return mybatis.selectList("OrderDAO.myOrderConfirm", u_no);
+	}
+	
+	public List<OrderVO> myOrderDetail(String o_no) {
+		return mybatis.selectList("OrderDAO.myOrderDetail", o_no);
 	}
 	
 	public int orderRevchk(OrderVO vo) {
 		return mybatis.update("OrderDAO.orderRevchk", vo);
 	}
 	
-	public int orderRevDelchk(String o_no) {
-		return mybatis.update("OrderDAO.orderRevDelchk", o_no);
+	public int orderRevDelchk(OrderVO vo) {
+		return mybatis.update("OrderDAO.orderRevDelchk", vo);
 	}
 	
 	public List<OrderVO> adminOrderList(OrderVO vo) {

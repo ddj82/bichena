@@ -191,7 +191,7 @@ public class ProdVO {
 
 	@Override
 	public String toString() {
-		return "ProductVO [p_no=" + p_no + ", p_name=" + p_name + ", p_price=" + p_price + ", p_img=" + p_img
+		return "ProdVO [p_no=" + p_no + ", p_name=" + p_name + ", p_price=" + p_price + ", p_img=" + p_img
 				+ ", editfile=" + editfile + ", p_desc=" + p_desc + ", p_made=" + p_made + ", p_type=" + p_type
 				+ ", p_dgr=" + p_dgr + ", p_sw=" + p_sw + ", p_su=" + p_su + ", p_sp=" + p_sp + ", p_mat=" + p_mat
 				+ ", p_cap=" + p_cap + ", p_stock=" + p_stock + ", uploadFile=" + uploadFile + "]";

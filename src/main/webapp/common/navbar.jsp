@@ -392,9 +392,7 @@ $(document).ready(function () {
           <!-- 로고와 검색창이 있는곳-->
           <div class="logo_search">
             <div class="navbar_logo" onclick="location.href='main.ko';">
-              <img
-                src="${pageContext.request.contextPath}/img/navbar/bichena.png"
-                style="width: 100px; margin: 15px 0"
+              <img src="${pageContext.request.contextPath}/img/navbar/bichena.png" style="width: 100px; margin: 15px 0"
               />
             </div>
             <form class="form-inline">
@@ -426,7 +424,12 @@ $(document).ready(function () {
                 <a class="login" href="loginPage.ko">로그인 / 회원가입 > </a>
               </c:when>
               <c:otherwise>
-                <a class="login" href="myPage.ko">${userID }님 </a>&nbsp;환영합니다.
+                <a class="login" href="myPage.ko">${userID }님 </a>&nbsp;환영합니다.&nbsp;
+                <span>
+	                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+					  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+					</svg>
+                </span>
               </c:otherwise>
             </c:choose>
             <button
