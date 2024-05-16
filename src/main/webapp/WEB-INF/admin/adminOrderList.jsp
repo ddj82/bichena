@@ -98,7 +98,7 @@ table {
 	            <td>${order.o_total }</td>
 	            <td>${order.o_state }</td>
 	            <td>
-	                <button type="button" class="btn btn-danger btn-sm del" id="cancel_module" value="${order.o_no }">주문취소</button>
+	                <button type="button" class="btn btn-danger btn-sm del cancel_module" value="${order.o_no }">주문취소</button>
 	            </td>
 	            <td>
 	                <button type="button" class="btn btn-primary btn-sm tail" data-toggle="modal" data-target="#myModal" onclick="orderDetail('${order.o_no }')">상세보기</button>
@@ -171,7 +171,7 @@ $(document).ready(function(){
     });
 });
 
-$("#cancel_module").click(function () {
+$(".cancel_module").click(function () {
 	let result = confirm('취소하시겠습니까?');
 	if(result){
 		$.ajax({

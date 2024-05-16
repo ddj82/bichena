@@ -58,7 +58,7 @@
 		SELECT pr.*, o.O_NO 
 		FROM BC_PRODREV AS pr 
 		JOIN BC_ORDER AS o on pr.U_NO = #{u_no} 
-		WHERE o.U_NO = #{u_no} and o.P_NAME = #{p_name} and PR_NO = #{pr_no}
+		WHERE o.U_NO = #{u_no} and o.P_NO = #{p_no} and PR_NO = #{pr_no}
 	</select>
 
 </mapper>

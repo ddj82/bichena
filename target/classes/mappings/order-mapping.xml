@@ -18,7 +18,8 @@
 
 	<select id="myOrderList" resultType="orderdto">
 		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG
-		FROM BC_ORDER AS o JOIN BC_PROD AS p on o.P_NO = p.P_NO where U_NO = #{u_no}
+		FROM BC_ORDER AS o JOIN BC_PROD AS p on o.P_NO = p.P_NO where U_NO = #{u_no} 
+		ORDER BY O_DATE DESC
 	</select>
 	
 	<select id="myOrderDetail" resultType="orderdto">

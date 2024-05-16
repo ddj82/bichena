@@ -54,7 +54,9 @@
 			<td>${myOrderDetail.o_total }</td>
 		</tr>
 	</table>
-	<button id="cancel_module" type="button" value="${myOrderDetail.o_no }" class="btn btn-outline-warning btn-sm">결제취소</button>
+	<c:if test="${myOrderDetail.o_state eq '상품 준비중' }">
+		<button id="cancel_module" type="button" value="${myOrderDetail.o_no }" class="btn btn-outline-warning btn-sm">결제취소</button>
+	</c:if>
 </div>
 <script>
 $("#cancel_module").click(function () {

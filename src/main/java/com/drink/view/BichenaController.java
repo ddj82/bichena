@@ -881,7 +881,7 @@ public class BichenaController {
 	@RequestMapping("/prodRevDelete.ko")
 	public String prodRevDelete(ProdRevVO vo, HttpSession session, Model model) {
 		vo.setU_no((int) session.getAttribute("userNO"));
-		ProdRevVO revVO = prodRevService.revDelSelect(vo);
+		ProdRevVO revVO = prodRevService.revDelSelect(vo); //123123132
 		String delRevONO = revVO.getO_no();
 		int cnt = prodRevService.prodRevDelete(revVO);
 		if (cnt > 0) {
