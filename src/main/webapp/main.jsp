@@ -32,19 +32,7 @@ history.replaceState({}, null, location.pathname);
 			<div>${userID}님</div>
 			<c:choose>
 				<c:when test="${userID eq 'admin'}">
-					<div>
-						<a href="admin.ko">관리자페이지</a>
-						<br>
-						<a href="admin2.ko">관리자페이지2</a>
-					</div>
 				</c:when>
-				<c:otherwise>
-					<div>
-	 					<a href="myPage.ko">나의정보</a>
-						<br>
-						<a href="myCartList.ko">장바구니</a>
-					</div>
-				</c:otherwise>
 			</c:choose>
 			<c:choose>
 				<c:when test="${howLogin eq 1}">
@@ -57,13 +45,8 @@ history.replaceState({}, null, location.pathname);
 					<a id="howLogin" href="javascript:naverLogout()">(네이버)로그아웃</a>
 				</c:when>
 			</c:choose>
-			<a href="prodList.ko">상품</a>
 		</c:when>
 	</c:choose>
-	<a href="loginPage.ko">로그인</a>
-	<br>
-	<a href="adminLoginPage.ko">관리자로그인</a>
-	
 </div>
 
 <%@ include file="common/footer.jsp" %>

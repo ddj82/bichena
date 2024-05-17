@@ -9,7 +9,8 @@ location.href="main.ko";
 <script>
 location.href="main.ko";
 </script>
-<%}
+<%
+}
 %>
 <!DOCTYPE html>
 <html lang="ko">
@@ -82,7 +83,10 @@ location.href="main.ko";
 
       .navbar-nav a,
       .navbar-title {
-        color: #707070;
+        color: black;
+      }
+      .navbar-nav a:hover, p.main-p:hover, a.to-main:hover {
+      	color:#d4a035;
       }
       .navbar-nav .dropdown-toggle::after {
         display: none; /* 화살표를 숨김 */
@@ -96,6 +100,29 @@ location.href="main.ko";
         display: flex;
         justify-content: center;
       }
+      
+      /* 부트스트랩 btn-primary */
+      .btn-primary {
+	    color: #fff;
+	    background-color: #005930;
+	    border-color: #005930;
+	  }
+	  .btn-primary:hover,
+	  .btn-primary:focus,
+	  .btn-primary:active,
+	  .btn-primary.active.focus,
+	  .btn-primary.active:focus,
+	  .btn-primary.active:hover,
+	  .btn-primary:active.focus,
+	  .btn-primary:active:focus,
+	  .btn-primary:active:hover,
+	  .open>.dropdown-toggle.btn-primary.focus,
+	  .open>.dropdown-toggle.btn-primary:focus,
+	  .open>.dropdown-toggle.btn-primary:hover  {
+	    color: #fff;
+	    background-color:  #2d4739;
+	    border-color:  #2d4739;
+	  }
 
       @media (min-width: 768px) {
         .navbar-nav {
@@ -248,13 +275,19 @@ location.href="main.ko";
     		location.reload();
     	}
     }
-
+	
+    function adminLogout() {
+    	let res = confirm("관리자 모드를 종료합니다.");
+    	if (res) {
+    		location.href="logout.ko";
+    	}
+    }
     </script>
   </head>
   <body>
     <nav class="navbar navbar-expand-sm sticky-top">
       <div class="navbar-title" id="main-title">
-        <p onclick="location.href='adminOrderList.ko';">관리자 페이지</p>
+        <p onclick="location.href='adminOrderList.ko';" class="main-p">관리자 페이지</p>
       </div>
       <div>
         <ul class="navbar-nav navbar-nav-main">
@@ -280,29 +313,19 @@ location.href="main.ko";
             <a class="nav-link" href="adminQnaList.ko">QNA</a>
           </li>
           <li>
-            <a class="to-main" href="logout.ko">
-              <svg
-                width="24"
-                height="24"
-                xmlns="http://www.w3.org/2000/svg"
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-              >
-                <path
-                  d="M11 21h8v-2l1-1v4h-9v2l-10-3v-18l10-3v2h9v5l-1-1v-3h-8v18zm10.053-9l-3.293-3.293.707-.707 4.5 4.5-4.5 4.5-.707-.707 3.293-3.293h-9.053v-1h9.053z"
-                />
-              </svg>
+            <a class="to-main" onclick="adminLogout();">
+<!--               <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" > -->
+<!--                 <path d="M11 21h8v-2l1-1v4h-9v2l-10-3v-18l10-3v2h9v5l-1-1v-3h-8v18zm10.053-9l-3.293-3.293.707-.707 4.5 4.5-4.5 4.5-.707-.707 3.293-3.293h-9.053v-1h9.053z" /> -->
+<!--               </svg> -->
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="28" fill="currentColor" class="bi bi-door-closed-fill" viewBox="0 0 16 16">
+			    <path d="M12 1a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2a1 1 0 0 1 1-1zm-2 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+			  </svg>
             </a>
           </li>
         </ul>
       </div>
       <button class="navbar-toggler" type="button" id="side-btn">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24"  height="24" viewBox="0 0 24 24" >
           <path d="M24 6h-24v-4h24v4zm0 4h-24v4h24v-4zm0 8h-24v4h24v-4z" />
         </svg>
       </button>

@@ -172,10 +172,9 @@ border : 0.1px solid gray;
     border-radius: 10px;
 }
 
-img {
+img.prodimg {
     width: 80px;
     height: 80px;
-/*     background: #ccc; */
 }
  #dddd {
  width : 500px;

@@ -31,13 +31,15 @@
 	</select>
 	
 	<select id="adminProdList" resultType="prodDTO">
-		SELECT * FROM BC_PROD WHERE 1=1
+<!-- 		SELECT * FROM BC_PROD WHERE 1=1 -->
+		SELECT p.*, ROW_NUMBER() OVER() AS rnum FROM BC_PROD p WHERE 1=1 
 		<if test="searchCondition != null">
 			<if test="searchCondition == 'pname' "> AND P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'pno' "> AND P_NO LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'ptype' "> AND P_TYPE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 		</if>
-		ORDER BY P_NO DESC
+<!-- 		ORDER BY P_NO DESC -->
+		ORDER BY rnum ASC
 		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 	
@@ -88,4 +90,7 @@
 		WHERE P_NO = #{p_no}
 	</update>
 
+	<select id="prodStock" resultMap="prodList">
+		SELECT P_STOCK FROM BC_PROD WHERE P_NO = #{p_no}
+	</select>
 </mapper>

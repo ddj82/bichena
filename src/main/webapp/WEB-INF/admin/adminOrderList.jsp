@@ -34,6 +34,17 @@ table {
 	font-size: 1.4rem;
 	background-color: #f5f5f5;
 }
+table.table.table-order>tbody#myList>tr>td {
+	vertical-align: middle;
+}
+table.table.table-order>tbody#myList>tr>td#td-detail {
+	text-align: right;
+	line-height: 1.8;
+}
+
+button.btn.btn-danger.btn-sm.del[disabled] {
+	opacity: 1;
+}
 </style>
 </head>
 <body>
@@ -58,50 +69,71 @@ table {
 			    </td>
 			</tr>
 			<tr>
-			    <td id="td-title">상품명</td>
-			    <td>
-			    	<div class="col-xs-4">
-		                <input class="form-control" id="myInput3" type="text" placeholder="상품명">
-			    	</div>
-			    </td>
-			</tr>
-			<tr>
-				<td id="td-title">상태</td>
-				<td></td>
-			</tr>
-			<tr>
 				<td id="td-title">주문 날짜</td>
-				<td></td>
+				<td>
+			    	<div class="col-xs-4">
+		                <input class="form-control" id="myInput3" type="text" placeholder="주문 날짜 yyyy-mm-dd">
+			    	</div>
+				</td>
+			</tr>
+			<tr>
+				<td id="td-title">주문 상태</td>
+				<td>
+					<div style="text-align:left;padding-left: 15px;">
+		                <label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk1" onclick="chk1()" value="상품 준비중">상품 준비중</label>
+						<label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk2" onclick="chk2()" value="배송중">배송중</label>
+						<label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk3" onclick="chk3()" value="배송완료">배송완료</label>
+						<label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk4" onclick="chk4()" value="취소">취소</label>
+			    	</div>
+				</td>
 			</tr>
 		</thead>
 	</table>
-	<table class="table">
+	<table class="table table-order">
 		<thead>
 			<tr>
+				<th id="rnum-th">번호</th>
 				<th>주문번호</th>
 				<th>주문날짜</th>
 				<th>주문자이름</th>
-				<th>상품명</th>
-				<th>주문금액</th>
 				<th>주문상태</th>
 				<th>주문취소</th>
-				<th>상세보기</th>
+				<th>주문 총금액</th>
+				<th>주문 상세보기</th>
 			</tr>
 		</thead>
 		<tbody id="myList">
-		<c:forEach items="${adminOrderList }" var="order">
+		<c:forEach items="${adminOrderRepeat }" var="order">
 			<tr>
+				<td id="rnum-td">${order.rnum }</td>
 				<td class="o_no">${order.o_no }</td>
-	            <td>${order.o_date }</td>
+	            <td class="o_date">${order.o_date }</td>
 	            <td class="u_name">${order.u_name }</td>
-	            <td class="p_name">${order.p_name }</td>
-	            <td>${order.o_total }</td>
-	            <td>${order.o_state }</td>
-	            <td>
-	                <button type="button" class="btn btn-danger btn-sm del cancel_module" value="${order.o_no }">주문취소</button>
-	            </td>
-	            <td>
-	                <button type="button" class="btn btn-primary btn-sm tail" data-toggle="modal" data-target="#myModal" onclick="orderDetail('${order.o_no }')">상세보기</button>
+	            <td class="o_state">${order.o_state }</td>
+	            
+	            <c:choose>
+	            	<c:when test="${order.o_state eq '상품 준비중'}">
+			            <td>
+			                <button type="button" class="btn btn-danger btn-sm del" onclick="cancelModule('${order.o_no }')">주문취소</button>
+			            </td>	            	
+	            	</c:when>
+	            	<c:otherwise>
+	            		<td>
+			                <button type="button" class="btn btn-danger btn-sm del" disabled>주문취소</button>	            		
+	            		</td>
+	            	</c:otherwise>
+	            </c:choose>
+	      		
+	      		<td>${order.o_total } 원</td>
+	      		
+	      		<td id="td-detail">
+		            <c:forEach items="${adminOrderList }" var="orderList">
+		            	<c:if test="${order.o_no eq orderList.o_no }">
+				            ${orderList.p_name } / ${orderList.o_stock }개
+				            <button type="button" class="btn btn-primary btn-xs tail" data-toggle="modal" 
+				            data-target="#myModal" onclick="orderDetail('${orderList.o_no }','${orderList.p_no }')">상세보기</button><br>  	
+		            	</c:if>
+		            </c:forEach>
 	            </td>
 	        </tr>
 		</c:forEach>
@@ -166,23 +198,91 @@ $(document).ready(function(){
     $("#myInput3").on("keyup", function() {
     var value = $(this).val().toLowerCase();
         $("#myList tr").filter(function() {
-            $(this).toggle($(this).children(".p_name").text().toLowerCase().indexOf(value) > -1)
+            $(this).toggle($(this).children(".o_date").text().toLowerCase().indexOf(value) > -1)
         });
     });
 });
 
-$(".cancel_module").click(function () {
+// <div style="text-align:left;">
+// <label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk1" onclick="chk()" value="상품 준비중">상품 준비중</label>
+// <label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk2" onclick="chk()" value="배송중">배송중</label>
+// <label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk3" onclick="chk()" value="배송완료">배송완료</label>
+// <label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk4" onclick="chk()" value="취소">취소</label>
+// </div>
+function chk1() {
+	let mychk1 = document.getElementById("mychk1").checked;
+	if (mychk1) {
+		console.log(document.getElementById("mychk1").value);
+		document.getElementById("mychk2").checked = false;
+		document.getElementById("mychk3").checked = false;
+		document.getElementById("mychk4").checked = false;
+		let value = document.getElementById("mychk1").value;
+		$("#myList tr").filter(function() {
+            $(this).toggle($(this).children(".o_state").text().toLowerCase().indexOf(value) > -1)
+        });
+	} else {
+		window.location.reload();
+	}
+}
+function chk2() {
+	let mychk2 = document.getElementById("mychk2").checked;
+	if (mychk2) {
+		console.log(document.getElementById("mychk2").value);
+		document.getElementById("mychk1").checked = false;
+		document.getElementById("mychk3").checked = false;
+		document.getElementById("mychk4").checked = false;
+		let value = document.getElementById("mychk2").value;
+		$("#myList tr").filter(function() {
+            $(this).toggle($(this).children(".o_state").text().toLowerCase().indexOf(value) > -1)
+        });
+	} else {
+		window.location.reload();
+	}
+}
+function chk3() {
+	let mychk3 = document.getElementById("mychk3").checked;
+	if (mychk3) {
+		console.log(document.getElementById("mychk3").value);
+		document.getElementById("mychk1").checked = false;
+		document.getElementById("mychk2").checked = false;
+		document.getElementById("mychk4").checked = false;
+		let value = document.getElementById("mychk3").value;
+		$("#myList tr").filter(function() {
+            $(this).toggle($(this).children(".o_state").text().toLowerCase().indexOf(value) > -1)
+        });
+	} else {
+		window.location.reload();
+	}
+}
+function chk4() {
+	let mychk4 = document.getElementById("mychk4").checked;
+	if (mychk4) {
+		console.log(document.getElementById("mychk4").value);
+		document.getElementById("mychk1").checked = false;
+		document.getElementById("mychk2").checked = false;
+		document.getElementById("mychk3").checked = false;
+		let value = document.getElementById("mychk4").value;
+		$("#myList tr").filter(function() {
+            $(this).toggle($(this).children(".o_state").text().toLowerCase().indexOf(value) > -1)
+        });
+	} else {
+		window.location.reload();
+	}
+}
+
+
+function cancelModule(val){
 	let result = confirm('취소하시겠습니까?');
 	if(result){
 		$.ajax({
 			url : "cancle.ko",
-			data : {"mid": $("#cancel_module").val()},
+			data : {"mid": val},
 			method : "POST",
 			success : function(val){
 				console.log(val);
 				if(val==1){
 					alert("취소 완료");
-					location.href = "myPage.ko";
+					location.href = "adminOrderList.ko";
 				}
 				else alert("취소 실패\n이미 취소되었거나 잘못된 정보입니다.");
 			},
@@ -190,17 +290,21 @@ $(".cancel_module").click(function () {
 				alert("취소가 실패하였습니다.");
 			}
 		});
-	}
-});
+	}	
+}
 
-function orderDetail(ono){
-	let objParams = {o_no : ono};
+function orderDetail(ono,pno){
+	let objParams = {
+		o_no : ono,
+		p_no : pno
+	};
 	$.ajax({
 		type : "GET",
 		url : "adminOrderDetail.ko",
 		data : objParams,
 		cache : false,
 		success : function(val) {
+			let str = "상품 준비중";
 			$("#tail-date").text("");
 			$("#tail-no-name-tel").text("");
 			$("#tail-state").text("");
@@ -211,7 +315,7 @@ function orderDetail(ono){
 			$("#tail-date").append(val.o_date);
 			$("#tail-no-name-tel").append("<p>주문번호 : " + val.o_no + "</p>" + "<div>" + val.u_name + " | " + val.u_tel + "</div>");
 			$("#tail-state").append(val.o_state);
-			$("#tail-prod").append("상품사진,상품명,상품설명,개당가격,수량");
+			$("#tail-prod").append("<tr><td>상품사진</td><td><img src='img/"+ val.p_img +"' width='100px' height='100px'/></td></tr><tr><td>상품명</td><td>"+ val.p_name +"</td></tr><tr><td>수량</td><td>"+ val.o_stock +"</td></tr><tr><td>가격</td><td>"+ val.o_total +"</td></tr>");
 			$("#tail-user").append("<tr><td>받는분</td><td>" + val.u_name + " | " + val.u_tel + "</td></tr><tr><td>주소</td><td>" + val.o_addr + "</td></tr>");
 			$("#tail-pay").append("<tr><th>총 주문 금액</th><th>" + val.o_total + "원</th></tr>");
 		}

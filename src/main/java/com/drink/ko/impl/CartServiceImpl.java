@@ -54,4 +54,9 @@ public class CartServiceImpl implements CartService {
 		return cartDAO.orderNoCreate();
 	}
 
+	@Override
+	public int cartSelectCount(String u_id) {
+		return cartDAO.cartSelectCount(u_id);
+	}
+
 }

@@ -13,7 +13,6 @@ public interface CartService {
 
 	public void updateCart(CartVO vo);
 
-//	public int selectCart(int productno);
 	public CartVO selectCart(int productno);
 	
 	public List<CartVO> selectList(CartVO vo);
@@ -21,4 +20,6 @@ public interface CartService {
 	public CartVO selectOrder(CartVO vo);
 	
 	String orderNoCreate(); //주문번호생성
+	
+	int cartSelectCount(String u_id);
 }

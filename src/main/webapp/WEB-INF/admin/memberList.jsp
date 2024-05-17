@@ -30,7 +30,7 @@ $(function(){
 </head>
 <body>
 <div class="container">
-    <h3>회원 전체 목록</h3>
+<!--     <h3>회원 전체 목록</h3> -->
 	<table class="table">
         <thead>
             <tr> 
@@ -62,11 +62,13 @@ $(function(){
                         <td>${user.u_lev}</td>
 						<td id="userState">
 							<c:choose>
-								<c:when test="${user.u_state == '1'}">활동</c:when>
+								<c:when test="${user.u_state == '1'}">이메일</c:when>
+								<c:when test="${user.u_state == '2'}">카카오</c:when>
+								<c:when test="${user.u_state == '3'}">네이버</c:when>
 								<c:when test="${user.u_state == '0'}">비활성</c:when>
 							</c:choose>
 						</td>
-                        <td><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" onclick="detailMem('${user.u_id}')">회원 상세 보기</button>
+                        <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="detailMem('${user.u_id}')">회원 상세 보기</button>
                     </tr>
                 </c:if>
             </c:forEach>
@@ -88,7 +90,7 @@ $(function(){
 		</c:forEach>
     </select>
     	<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
-    	<button type="submit" onclick="searchMem()">검색</button>
+    	<button type="submit" onclick="searchMem()" class="btn btn-primary btn-sm">검색</button>
     </form>
     </div>
     

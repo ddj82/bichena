@@ -9,6 +9,7 @@ public interface ProdService {
 	List<ProdVO> prodList(ProdVO vo);
 	List<ProdVO> adminProdList(ProdVO vo);
 	int prodTotalCnt(ProdVO vo);// 글 수 조회
+	ProdVO prodStock(int p_no); // 재고조회
 	
 	int getPnoMaxNum();
 	int insertProduct(ProdVO vo);

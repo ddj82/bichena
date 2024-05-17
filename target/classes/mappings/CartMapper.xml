@@ -16,9 +16,9 @@
        SELECT c.*, p.P_IMG FROM BC_CART c JOIN BC_PROD p ON c.P_NO = p.P_NO  WHERE c.U_ID = #{u_id}
     </select>
 
-<!--     <select id="selectCount" resultType="Integer"> -->
-<!--      SELECT COUNT(*) FROM BC_CART WHERE P_NO = #{p_no} -->
-<!--     </select> -->
+    <select id="cartSelectCount" resultType="Integer">
+		SELECT COUNT(*) FROM BC_CART WHERE U_ID = #{u_id}
+    </select>
 
     <select id="selectCount" resultMap="cartMap">
      SELECT C_STOCK, C_TOTAL FROM BC_CART WHERE P_NO = #{p_no}

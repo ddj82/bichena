@@ -35,7 +35,8 @@ $(function() {
 					console.log(data);
 					if (data > 0) {
 						if('${users.u_nick}' == nick) {
-							nickCheckMessage.style.display = 'none';							
+							nickCheckMessage.style.display = 'none';	
+							nickCheck++;
 						} else {
 							nickCheck = 0;
 							nickCheckMessage.style.display = 'block';							
@@ -73,7 +74,8 @@ $(function() {
 				success : function(data) {
 					if (data > 0) {
 						if('${users.u_email}' == email) {
-							emailCheckMessage.style.display = 'none';							
+							emailCheckMessage.style.display = 'none';	
+							emailCheck++;
 						} else {
 							emailCheck = 0;
 							emailCheckMessage.style.display = 'block';
@@ -333,6 +335,7 @@ input.menu_h:hover {
 				입력해주세요.</small></div>
 
 			<button class="send" type="submit">회원정보 수정</button>
+			<button class="send" type="button" onclick="javascript:history.go(-1)">뒤로 가기</button>
 		</form>
 	</div>
 </div>
@@ -400,7 +403,7 @@ function insertchk(){
 	var detail = document.getElementById('detailAddress');
 	
 	var nickPattern = /^[가-힣a-zA-Z]+$/;
-	var emailPattern = /^[a-zA-Z0-9_\-~!#$%^&*()]+@[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)*$/;
+	var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
 	
 	var emailNoneMessage = document.getElementById('emailNoneMessage');
 	var postcodeErrorMessage = document.getElementById('postcodeErrorMessage');
@@ -480,7 +483,7 @@ function emailInput() {
 	email.focus(); // Focus on the input field
 
 	email.addEventListener('input', function() {
-		var emailPattern = /^[a-zA-Z0-9_\-~!#$%^&*()]+@[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)*$/;
+		var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
 		var emailvalue = email.value.trim();
 		if (emailvalue == "") {
 			emailNoneMessage.style.display = 'block';

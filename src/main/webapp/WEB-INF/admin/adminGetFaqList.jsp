@@ -41,9 +41,9 @@ table {
 <body>
 <%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div class="container">
-	<div class="jumbotron">
-		<h1>Faq</h1>
-	</div>
+<!-- 	<div class="jumbotron"> -->
+<!-- 		<h1>Faq</h1> -->
+<!-- 	</div> -->
 	<nav id="searchNav">
 		<form action="getFaqList.ko" method="post">
 			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">

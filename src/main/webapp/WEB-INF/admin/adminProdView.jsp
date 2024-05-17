@@ -75,31 +75,33 @@ input[type="file"]#p_img {
 			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
 			<button type="submit" class="btn btn-primary btn-sm">검색</button>
 		</form>
-		<button type="button" class="btn btn-warning" onclick="location.href='adminProdInsertBtn.ko';">주류등록</button>
+		<button type="button" class="btn btn-success" onclick="location.href='adminProdInsertBtn.ko';">주류등록</button>
 	</nav>
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>상품번호</th>
+				<th id="rnum-th">번호</th>
 				<th>상품사진</th>
 				<th>주류종류</th>
 				<th>상품명</th>
+				<th>상품번호</th>
 				<th>가격</th>
 				<th>재고</th>
 				<th>상세보기</th>
 				<th>수정하기</th>
-<!-- 				<th>삭제하기</th> -->
+				<th>삭제하기</th>
 			</tr>
 		</thead>
 		<tbody id="myList">
 		<c:forEach items="${adminProdList }" var="prodlist">
 			<tr>
-				<td>${prodlist.p_no }</td>
+				<td id="rnum-td">${prodlist.rnum }</td>
 	            <td>
 	            	<img src="img/${prodlist.p_img }" title="img" alt="img" style="width:80px;">
 	            </td>
 	            <td>${prodlist.p_type }</td>
 	            <td>${prodlist.p_name }</td>
+				<td>${prodlist.p_no }</td>
 	            <td>${prodlist.p_price }</td>
 	            <td>${prodlist.p_stock }</td>
 	            <td>
@@ -108,9 +110,9 @@ input[type="file"]#p_img {
 	            <td>
 	                <button type="button" class="btn btn-success btn-sm" onclick="prodUpdate('${prodlist.p_no }')">수정하기</button>
 	            </td>
-<!-- 	            <td> -->
-<%-- 	                <button type="button" class="btn btn-danger btn-sm" onclick="prodDelete('${prodlist.p_no }')">삭제하기</button> --%>
-<!-- 	            </td> -->
+	            <td>
+	                <button type="button" class="btn btn-danger btn-sm" onclick="prodDelete('${prodlist.p_no }')">삭제하기</button>
+	            </td>
 	        </tr>
 		</c:forEach>
 		</tbody>
@@ -124,7 +126,7 @@ input[type="file"]#p_img {
 	    </c:when>
 	    <c:otherwise>
 	        <!-- 이전 페이지로 이동하는 링크 -->
-	        <a href="adminProdList.ko?currPageNo=${pagination.currPageNo - 1}" class="btn btn-primary btn-xs">이전</a>
+	        <a href="adminProdList.ko?currPageNo=${pagination.currPageNo - 1}&searchKeyword=${keyword}&searchCondition=${condition}" class="btn btn-primary btn-xs">이전</a>
 	    </c:otherwise>
 	</c:choose>
 	
@@ -134,7 +136,7 @@ input[type="file"]#p_img {
                    <span>${page}</span>
                </c:when>
                <c:otherwise>
-                   <a href="adminProdList.ko?currPageNo=${page}" class="">${page}</a>
+                   <a href="adminProdList.ko?currPageNo=${page}&searchKeyword=${keyword}&searchCondition=${condition}" class="">${page}</a>
                </c:otherwise>
            </c:choose>
        </c:forEach>
@@ -146,9 +148,10 @@ input[type="file"]#p_img {
 	    </c:when>
 	    <c:otherwise>
 	        <!-- 다음 페이지로 이동하는 링크 -->
-	        <a href="adminProdList.ko?currPageNo=${pagination.currPageNo + 1}" class="btn btn-primary btn-xs">다음</a>
+	        <a href="adminProdList.ko?currPageNo=${pagination.currPageNo + 1}&searchKeyword=${keyword}&searchCondition=${condition}" class="btn btn-primary btn-xs">다음</a>
 	    </c:otherwise>
 	</c:choose>
+</div>
 <script>
 function prodDetail(pno){
 	location.href = 'adminProdDetail.ko?p_no=' + pno;
@@ -162,111 +165,6 @@ function prodDelete(pno){
 		location.href = 'adminProdDelete.ko?p_no=' + pno;
 	}
 }
-</script>
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <table class="table table0" id="table1">
-                </table>
-                <table class="table table0" id="table2">
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-	
-	
-<div class="modal fade" id="myModal2" role="dialog">
-    <div class="modal-dialog">
-		<form action="adminProdInsert.ko" method="post" enctype="multipart/form-data">
-	        <div class="modal-content">
-	            <div class="modal-body">
-	                    <table class="table table0" id="form">
-	                        <tr>
-	                            <td rowspan="5" id="td-rowspan5">
-	                                <img id="preview" src="img/" alt="" style="width: 200px;"></td>
-	                            <td><label for="name">상품 이름</label> <input type="text" id="name" name="p_name"></td>
-	                        </tr>
-	
-	                        <tr><td><label for="desc">상품 설명</label> <textarea id="desc" name="p_desc" rows="3"></textarea></td></tr>
-	
-	                        <tr><td><label for="price">상품 가격</label> <input type="text" id="price" name="p_price"></td></tr>
-	
-	                        <tr><td><label for="made">제조사</label> <input type="text" id="made" name="p_made"></td></tr>
-	
-	                        <tr><td><label for="dgr">도수</label> <input type="text" id="dgr" name="p_dgr"> %</td></tr>
-	
-	                        <tr>
-	                            <td id="td-rowspan2">
-	                                <div id="div-filename"></div>
-	                            </td>
-	                            <td><label for="cap">용량</label> <input type="text" id="cap" name="p_cap"> ml</td>
-	                        </tr>
-	
-	                        <tr>
-	                            <td id="td-rowspan2">
-	                                <button type="button" class="btn btn-default" onclick="fileUploadBtn()">사진등록</button>
-	                                <label for="p_img" class="custom-file-label"></label>
-	                                <input type="file" id="p_img" name="uploadFile">
-	                            </td>
-	                            <td><label for="stock">수량</label> <input type="text" id="stock" name="p_stock"> 개</td>
-	                        </tr>
-	                    </table>
-	
-	                    <table class="table table0" id="form1">
-	                        <tr>
-	                            <th>주류종류</th>
-	                            <td><input type="radio" name="p_type" id="p_type1" value="탁주"> <label for="p_type1">탁주</label></td>
-	                            <td><input type="radio" name="p_type" id="p_type2" value="약·청주"> <label for="p_type2">약·청주</label></td>
-	                            <td><input type="radio" name="p_type" id="p_type3" value="증류주"> <label for="p_type3">증류주</label></td>
-	                            <td><input type="radio" name="p_type" id="p_type4" value="과실주"> <label for="p_type4">과실주</label></td>
-	                            <td><input type="radio" name="p_type" id="p_type5" value="기타"> <label for="p_type5">기타</label></td>
-	                        </tr>
-	                        <tr>
-	                            <th>단맛</th>
-	                            <td><input type="radio" name="p_sw" id="p_sw1" value="강"> <label for="p_sw1">강</label></td>
-	                            <td><input type="radio" name="p_sw" id="p_sw2" value="중"> <label for="p_sw2">중</label></td>
-	                            <td><input type="radio" name="p_sw" id="p_sw3" value="약"> <label for="p_sw3">약</label></td>
-	                        </tr>
-	                        <tr>
-	                            <th>신맛</th>
-	                            <td><input type="radio" name="p_su" id="p_su1" value="강"> <label for="p_su1">강</label></td>
-	                            <td><input type="radio" name="p_su" id="p_su2" value="중"> <label for="p_su2">중</label></td>
-	                            <td><input type="radio" name="p_su" id="p_su3" value="약"> <label for="p_su3">약</label></td>
-	                        </tr>
-	                        <tr>
-	                            <th>탄산</th>
-	                            <td><input type="radio" name="p_sp" id="p_sp1" value="강"> <label for="p_sp1">강</label></td>
-	                            <td><input type="radio" name="p_sp" id="p_sp2" value="중"> <label for="p_sp2">중</label></td>
-	                            <td><input type="radio" name="p_sp" id="p_sp3" value="약"> <label for="p_sp3">약</label></td>
-	                            <td><input type="radio" name="p_sp" id="p_sp4" value="없음"> <label for="p_sp4">없음</label></td>
-	                        </tr>
-	                        <tr>
-	                            <th>원료</th>
-	                            <td><input type="radio" name="p_mat" id="p_mat1" value="과일"> <label for="p_mat1">과일</label></td>
-	                            <td><input type="radio" name="p_mat" id="p_mat2" value="꽃"> <label for="p_mat2">꽃</label></td>
-	                            <td><input type="radio" name="p_mat" id="p_mat3" value="견과"> <label for="p_mat3">견과</label></td>
-	                            <td><input type="radio" name="p_mat" id="p_mat4" value="약재"> <label for="p_mat4">약재</label></td>
-	                            <td><input type="radio" name="p_mat" id="p_mat5" value="기타"> <label for="p_mat5">기타</label></td>
-	                        </tr>
-	                    </table>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="submit" class="btn btn-primary">상품등록</button>
-	                <button type="button" class="btn btn-default" data-dismiss="modal">등록취소</button>
-	            </div>
-	        </div>
-		</form>
-    </div>
-</div>
-	
-	
-</div>
-<script>
 function fileUploadBtn() {
     $(".custom-file-label").click();
 };

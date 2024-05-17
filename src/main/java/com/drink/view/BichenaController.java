@@ -692,15 +692,12 @@ public class BichenaController {
 
 	// 회원계정 삭제
 	@RequestMapping("/delUser.ko")
-	@ResponseBody
 	public String quitMem(HttpSession session) throws Exception {
 		System.out.println("회원 탈퇴 컨트롤러");
-		UsersVO vo = new UsersVO();
-		String id = (String) session.getAttribute("userID");
-		vo.setU_id(id);
-		usersService.deleteUser(vo);
+		String u_id = (String) session.getAttribute("userID");
+		usersService.deleteUser(u_id);
 		session.invalidate();
-		return "success";
+		return "/main.jsp";
 	}
 
 	// 닉네임 중복체크
@@ -1067,7 +1064,12 @@ public class BichenaController {
 	}
 
 	@RequestMapping("/adminLoginPage.ko")
-	public String adminLoginPage() {
+	public String adminLoginPage(HttpSession session) {
+		if (session.getAttribute("userID") != null) {
+			if (session.getAttribute("userID").equals("admin")) {
+				return "redirect:adminOrderList.ko";
+			}
+		}
 		return "/WEB-INF/admin/adminLogin.jsp";
 	}
 
@@ -1105,6 +1107,8 @@ public class BichenaController {
 		if (vo.getQ_title() == null)
 			vo.setQ_title("");
 		model.addAttribute("pagination", vo);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("condition", condition);
 
 		List<QnaVO> qnaList = qnaService.qnaList(vo);
 		model.addAttribute("qnaList", qnaList);
@@ -1113,8 +1117,8 @@ public class BichenaController {
 
 	@RequestMapping("/adminOrderList.ko")
 	public String adminOrderList(OrderVO vo,
-			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
-			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
+		@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
+		@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
 
 		int currPageNo = 0;
 		int range = 0;
@@ -1130,20 +1134,44 @@ public class BichenaController {
 
 		vo.pageInfo(currPageNo, range, totalCnt);
 		model.addAttribute("pagination", vo);
-
+		
 		List<OrderVO> adminOrderList = orderService.adminOrderList(vo);
+		List<OrderVO> adminOrderRepeat = orderService.adminOrderRepeat(vo);
+		
+		for(int i = 0; i < adminOrderRepeat.size(); i++) {
+			int a = 0;
+			for(int j = 0; j < adminOrderList.size(); j++) {
+				int total = adminOrderList.get(j).getO_total();
+				if(adminOrderRepeat.get(i).getO_no().equals(adminOrderList.get(j).getO_no())) {
+					a += total;					
+				}
+			}
+			adminOrderRepeat.get(i).setO_total(a);
+		}
+		
+		model.addAttribute("adminOrderRepeat", adminOrderRepeat);
 		model.addAttribute("adminOrderList", adminOrderList);
 
 		return "/WEB-INF/admin/adminOrderList.jsp";
 	}
 
+//	@GetMapping("/adminOrderDetail.ko")
+//	@ResponseBody
+//	public Object adminOrderDetail(@RequestParam(value = "o_no") String o_no, Model model) {
+//		List<OrderVO> adminOrderDetail = orderService.myOrderDetail(o_no);
+//		model.addAttribute("adminOrderDetail", adminOrderDetail);
+//		return adminOrderDetail;
+//	}
 	@GetMapping("/adminOrderDetail.ko")
-	@ResponseBody
-	public Object adminOrderDetail(@RequestParam(value = "o_no") String o_no, Model model) {
-		List<OrderVO> adminOrderDetail = orderService.myOrderDetail(o_no);
-		model.addAttribute("adminOrderDetail", adminOrderDetail);
-		return adminOrderDetail;
-	}
+	   @ResponseBody
+	   public Object adminOrderDetail(@RequestParam(value = "o_no") String o_no, @RequestParam(value = "p_no") String p_no, Model model) {
+	      OrderVO vo = new OrderVO();
+	      vo.setP_no(p_no);
+	      vo.setO_no(o_no);
+	      vo = orderService.adminOrderDetail(vo);
+	      model.addAttribute("adminOrderDetail", vo);
+	      return vo;
+	   }
 
 	@RequestMapping("/adminQnaView.ko")
 	public String adminQnaView(@RequestParam(value = "q_no") String q_no, Model model) {
@@ -1190,6 +1218,8 @@ public class BichenaController {
 
 		List<ProdVO> adminProdList = prodService.adminProdList(vo);
 		model.addAttribute("pagination", vo);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("condition", condition);
 		model.addAttribute("adminProdList", adminProdList);
 		return "/WEB-INF/admin/adminProdView.jsp";
 	}
@@ -1336,6 +1366,39 @@ public class BichenaController {
 		}
 
 	}
+	
+	@RequestMapping("/adminProdDelete.ko")
+	public String adminProdDelete(@RequestParam("p_no") String p_no) throws IllegalStateException, IOException {
+		// 기존 상품정보
+		ProdVO oldvo = prodService.prodOne(p_no);
+		
+		// 기존 상품 상세페이지jsp파일
+		File oldFile = new File("C:/swork/bichena/src/main/webapp/WEB-INF/product/" + oldvo.getEditfile());
+		// 기존 상품 이미지파일
+		File oldImg = new File("C:/swork/bichena/src/main/webapp/img/" + oldvo.getP_img());
+		
+		if (oldFile.exists()) {
+			oldImg.delete(); // 기존 이미지 있으면 삭제
+			System.out.println("기존 이미지 삭제");
+		}
+		
+		// 기존 상품페이지jsp파일 삭제
+		if (oldFile.exists()) {
+			oldFile.delete(); // 상세페이지jsp 있으면 삭제
+			System.out.println("기존 상세페이지jsp 삭제");
+		}
+		
+		int cnt = prodService.deleteProduct(p_no);
+		
+		if (cnt > 0) {
+			System.out.println("삭제완료");
+			return "redirect:adminProdList.ko";
+		} else {
+			System.out.println("삭제실패");
+			return "redirect:adminProdList.ko";
+		}
+		
+	}
 
 	// 관리자 회원 목록 (+ select option)
 	@RequestMapping("/getUserList.ko")
@@ -1437,6 +1500,8 @@ public class BichenaController {
 
 		vo.pageInfo(currPageNo, range, totalCnt);
 		model.addAttribute("pagination", vo);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("condition", condition);
 
 		List<ProdRevVO> adminRevList = prodRevService.adminRevList(vo);
 		model.addAttribute("adminRevList", adminRevList);
@@ -1452,4 +1517,17 @@ public class BichenaController {
 		conditionMapRev.put("작성자", "unick");
 		return conditionMapRev;
 	}
+	
+	// 마이페이지 -> 탈퇴 안내페이지로 이동
+		@RequestMapping("/delAcc.ko")
+		public String delAcc(UsersVO vo) {
+			return "/WEB-INF/login/delAccountInfo.jsp";
+		}
+		
+		// 탈퇴 안내페이지 -> 비번 확인 페이지로(비번 확인 후 탈퇴)
+		@RequestMapping("/delConfirm.ko")
+		public String delConfirm(UsersVO vo) {
+			return "/WEB-INF/login/delAccount.jsp";
+		}
+	
 }

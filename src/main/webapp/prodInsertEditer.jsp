@@ -82,16 +82,12 @@ table.table#form>tbody>tr>td#td-rowspan2 {
 <body>
 <!-- 20240503_ym 영미 수정 시작 -->
 <div id="se2_sample" style="margin:10px 0;">
-<!-- 	<input type="button" onclick="pasteHTML();" value="본문에 내용 넣기" /> -->
-<!-- 	<input type="button" onclick="showHTML();" value="본문 내용 가져오기" /> -->
-<!-- 	<input type="button" onclick="setDefaultFont();" value="기본 폰트 지정하기 (궁서_24)" /><br><br> -->
-
 	<p>
-		<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal2">상품정보</button>
+		<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2">상품정보</button>
 	</p>
+	<input class="btn btn-primary" type="button" onclick="submitContents();" value="등록" />
+	<input class="btn btn-danger" type="button" onclick="location.href='adminProdList.ko';" value="취소" />
 <!--20240503_ym  에디터에서 수정하면 데이터가 직접 들어오는 장소 시작-->
-<%-- 	<input type="button" onclick="location.href='${pageContext.request.contextPath }/productList.ko';" value="상품목록보기" /> --%>
-<%-- 	<input type="button" onclick="location.href='${pageContext.request.contextPath }/adminProdList.ko';" value="상품목록보기" /> --%>
 	<form action="adminProdInsert.ko" method="post" id="dataTransferForm" enctype="multipart/form-data">
 		<textarea name="edithtml" id="ir1" rows="10" cols="100" style="width:766px; height:412px; display:none;"></textarea>
 		<div class="modal fade" id="myModal2" role="dialog">
@@ -172,7 +168,6 @@ table.table#form>tbody>tr>td#td-rowspan2 {
 		        </div>
 		    </div>
 		</div>
-		<input class="btn btn-primary" type="button" onclick="submitContents();" value="등록" />
 	</form>
 <script>
 function fileUploadBtn() {

@@ -14,6 +14,14 @@ public class QnaVO {
 	private String a_content;
 
 	private MultipartFile uploadFile;
+	
+	private int rnum;
+	public int getRnum() {
+		return rnum;
+	}
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
 
 	// 검색을 위한 변수
 	private String searchCondition;

@@ -42,7 +42,16 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<OrderVO> adminOrderList(OrderVO vo) {
 		return dao.adminOrderList(vo);
+	}
 	
+	@Override
+	public List<OrderVO> adminOrderRepeat(OrderVO vo) {
+		return dao.adminOrderRepeat(vo);
+	}
+	
+	@Override
+	public OrderVO adminOrderDetail(OrderVO vo) {
+		return dao.adminOrderDetail(vo);
 	}
 
 	// 페이징 처리된 글 목록 조회

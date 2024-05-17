@@ -45,7 +45,7 @@
         var output = "";
         for (var i = 0; i < items.length; i++) {
             output += "<tr class='cart-item'><td><input type='checkbox' name='chk' class='item-checkbox' value=" + items[i].p_no + "></td>" + 
-            "<td><img src='img/" + items[i].p_img + "' alt='상품 이미지' class='product-image'></td>" + 
+            "<td><img class='prodimg' src='img/" + items[i].p_img + "' alt='상품 이미지' class='product-image'></td>" + 
             "<td class='product-name'>" + items[i].p_name + "</td>" + 
             "<td class='button-container'><button class='btn' onclick='minus(" + i + ", \"" + items[i].p_no + "\")'>-</button><input type='text' id='qty_" + i + "' value='" + items[i].c_stock + "' readonly><button class='btn' onclick='plus(" + i + ", \"" + items[i].p_no + "\")'>+</button></td>" + 
             "<td class='right-align product-price' id='price_" + i + "'>" + items[i].c_total.toLocaleString() + "원</td></tr>";
@@ -146,6 +146,7 @@
                 success: function(response) {
                     console.log("삭제 성공");
                     listCart();
+                    selectCount();
                 },
                 error: function(xhr, status, error) {
                     alert("삭제 실패: " + error);
@@ -186,6 +187,44 @@
             }
         }
     }
+    
+    function stockchk(p_no) {
+		var p_stock;
+    	$.ajax({
+    		url : "stockcheck.ko",
+    		type : "post",
+    		async : false,
+    		contentType : "application/json",
+    		data : JSON.stringify({p_no : p_no}),
+    		success : function(response) {
+    			console.log(response.p_stock);
+    			p_stock = parseInt(response.p_stock);
+    		},
+    	error : function(err){
+    		alert("에러 발생 !!");
+    	}
+    		
+    	});
+    			return p_stock;
+        	
+	}
+    
+    function selectCount(){
+    	var u_id = '${userID}';
+    	$.ajax({
+    		url : "cartSelectCount.ko",
+    		type : "post",
+    		contentType: "application/json",
+    		data : JSON.stringify({u_id : u_id }),
+    		success : function(data){
+    			$("#cartCount").html(data);
+    			console.log(data);
+    		},
+    		error : function(error) {
+    			alert("에러발생");
+    		}
+    	});
+	}
     
 	var IMP = window.IMP;
 	IMP.init('imp70405420');

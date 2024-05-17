@@ -17,6 +17,8 @@ public class OrderVO {
 	private String p_desc;
 	private String p_price;
 	private String p_img;
+	
+	private int rnum;
 
 	// 페이징 처리를 위한 변수
 	private int currPageNo; // 현재 페이지 번호
@@ -151,6 +153,14 @@ public class OrderVO {
 
 	public void setO_revstate(String o_revstate) {
 		this.o_revstate = o_revstate;
+	}
+	
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
 	}
 
 	@Override

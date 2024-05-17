@@ -45,17 +45,19 @@ table {
 				<th>제목</th>
 				<th>작성자</th>
 				<th>날짜</th>
+				<th>리뷰번호</th>
 				<th>상태</th>
 			</tr>
 	    </thead>
 	    <tbody>
 		<c:forEach items="${qnaList }" var="qna">
 			<tr onclick="location.href = 'adminQnaView.ko?q_no=${qna.q_no }';" style="cursor: pointer">
-				<td>${qna.q_no }</td>
+				<td>${qna.rnum }</td>
 				<td>${qna.q_cate }</td>
 				<td>${qna.q_title }</td>
 				<td>${qna.q_writer }</td>
 				<td>${qna.q_date }</td>
+				<td>${qna.q_no }</td>
 				<td>${qna.q_state }</td>
 			</tr>
 		</c:forEach>
@@ -69,7 +71,7 @@ table {
 	    </c:when>
 	    <c:otherwise>
 	        <!-- 이전 페이지로 이동하는 링크 -->
-	        <a href="adminQnaList.ko?currPageNo=${pagination.currPageNo - 1}" class="btn btn-primary btn-xs">이전</a>
+	        <a href="adminQnaList.ko?currPageNo=${pagination.currPageNo - 1}&searchKeyword=${keyword}&searchCondition=${condition}" class="btn btn-primary btn-xs">이전</a>
 	    </c:otherwise>
 	</c:choose>
 	
@@ -79,7 +81,7 @@ table {
 				<span>${page}</span>
 			</c:when>
 			<c:otherwise>
-				<a href="adminQnaList.ko?currPageNo=${page}" class="">${page}</a>
+				<a href="adminQnaList.ko?currPageNo=${page}&searchKeyword=${keyword}&searchCondition=${condition}" class="">${page}</a>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
@@ -91,7 +93,7 @@ table {
 	    </c:when>
 	    <c:otherwise>
 	        <!-- 다음 페이지로 이동하는 링크 -->
-	        <a href="adminQnaList.ko?currPageNo=${pagination.currPageNo + 1}" class="btn btn-primary btn-xs">다음</a>
+	        <a href="adminQnaList.ko?currPageNo=${pagination.currPageNo + 1}&searchKeyword=${keyword}&searchCondition=${condition}" class="btn btn-primary btn-xs">다음</a>
 	    </c:otherwise>
 	</c:choose>
 </div>

@@ -67,7 +67,9 @@
 					<td>${allTotal}</td>
 				</tr>
 			</table>
-			<button type="button" value="${detail.o_no }" class="btn btn-outline-warning btn-sm cancel_module">결제취소</button>
+			<c:if test="${detail.o_state eq '상품 준비중' }">
+				<button type="button" value="${detail.o_no }" class="btn btn-outline-warning btn-sm cancel_module">결제취소</button>
+			</c:if>
 		</c:forEach>
 </div>
 
@@ -236,13 +238,6 @@ document.getElementById("file").addEventListener('change', function(event){
         reader.readAsDataURL(file);
     }
 });
-
-function revDel(prNo, pNo) {
-	let result = confirm("리뷰를 삭제하시겠습니까?");
-	if (result) {
-		location.href="prodRevDelete.ko?pr_no=" + prNo + "&p_no=" + pNo;
-	}
-}
 </script>
 <script>
 $(".cancel_module").click(function () {

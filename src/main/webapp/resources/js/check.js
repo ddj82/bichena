@@ -16,7 +16,7 @@ function insertchk() {
 		
 		var idPattern = /^[A-Za-z]{1}[A-Za-z0-9]{8,}$/;
 		var pwPattern = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
-		var emailPattern = /^[a-zA-Z0-9_\-~!#$%^&*()]+@[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)*$/;
+		var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
 		var namePattern = /^[가-힣a-zA-Z]+$/;
 		var nickPattern = /^[가-힣a-zA-Z]+$/;
 		
@@ -226,7 +226,7 @@ function insertchk() {
 		email.focus(); // Focus on the input field
 
 		email.addEventListener('input', function() {
-			var emailPattern = /^[a-zA-Z0-9_\-~!#$%^&*()]+@[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)*$/;
+			var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
 			var emailvalue = email.value.trim();
 			if (emailvalue == "") {
 				emailNoneMessage.style.display = 'block';

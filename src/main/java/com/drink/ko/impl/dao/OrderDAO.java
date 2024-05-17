@@ -38,6 +38,14 @@ public class OrderDAO {
 		return mybatis.selectList("OrderDAO.adminOrderList", vo);
 	}
 	
+	public List<OrderVO> adminOrderRepeat(OrderVO vo) {
+		return mybatis.selectList("OrderDAO.adminOrderRepeat", vo);
+	}
+	
+	public OrderVO adminOrderDetail(OrderVO vo) {
+		return mybatis.selectOne("OrderDAO.adminOrderDetail", vo);
+	}
+	
 	public List<OrderVO> myRevIstOrder(int u_no) {
 		return mybatis.selectList("OrderDAO.myRevIstOrder", u_no);
 	}

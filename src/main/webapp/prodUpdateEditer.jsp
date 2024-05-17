@@ -90,8 +90,8 @@ table.table#form>tbody>tr>td#td-rowspan2 {
 	<form action="adminProdUpdate.ko" method="post" id="dataTransferForm" enctype="multipart/form-data">
 		<textarea name="edithtml" id="ir1" rows="10" cols="100" style="display:none;">${prodOne.edithtml }</textarea>
 		<input class="btn btn-primary" type="button" onclick="submitContents();" value="수정" />
-		<input class="btn btn-primary" type="button" onclick="resetContents();" value="되돌리기" />
-		<input class="btn btn-warning" type="button" onclick="location.href='adminProdList.ko';" value="수정취소" />
+		<input class="btn btn-warning" type="button" onclick="resetContents();" value="되돌리기" />
+		<input class="btn btn-danger" type="button" onclick="location.href='adminProdList.ko';" value="수정취소" />
 		<input type="hidden" name="p_no" value="${prodOne.p_no }">
 		<div style="width:60%;">
 			<table class="table table0" id="form">

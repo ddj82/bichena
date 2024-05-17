@@ -11,7 +11,9 @@ public interface OrderService {
 	int orderRevchk(OrderVO vo);
 	int orderRevDelchk(OrderVO vo);
 	List<OrderVO> adminOrderList(OrderVO vo);
+	List<OrderVO> adminOrderRepeat(OrderVO vo);
 	List<OrderVO> myRevIstOrder(int u_no);
+	OrderVO adminOrderDetail(OrderVO vo);
 	int orderTotalCnt(OrderVO vo);// 전체 글 수 조회
 	int orderInsert(OrderVO vo);
 	void orderDelete(String mid);

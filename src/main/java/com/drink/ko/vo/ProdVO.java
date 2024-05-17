@@ -21,6 +21,8 @@ public class ProdVO {
 	private String edithtml; // pdetail // 에디터로 쓴 내용의 html형식 문자열
 	
 	private String o_stock; //개별주문수량
+	
+	private int rnum;
 
 	private MultipartFile uploadFile; // pthumbnailimg
 	
@@ -187,6 +189,14 @@ public class ProdVO {
 
 	public void setO_stock(String o_stock) {
 		this.o_stock = o_stock;
+	}
+	
+	public int getRnum() {
+		return rnum;
+	}
+
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
 	}
 
 	@Override

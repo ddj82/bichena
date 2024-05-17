@@ -10,7 +10,7 @@ public interface UsersService {
 	UsersVO checkEmail(String email);
 	int pwFind(UsersVO vo);
 	void updateUser(UsersVO vo); //정보 수정
-	void deleteUser(UsersVO vo); //회원 삭제
+	void deleteUser(String u_id);  //회원 삭제
 	UsersVO selectOne(String selId); //상세페이지
 	UsersVO checkNick(String nick);
 	UsersVO checkPw(String pw, String id);

@@ -56,5 +56,9 @@ public class CartDAO {
 	public String orderNoCreate() {
 		return mybatis.selectOne("CartDAO.orderNoCreate");
 	}
+	
+	public int cartSelectCount(String u_id) {
+		return mybatis.selectOne("CartDAO.cartSelectCount", u_id);
+	}
 
 }

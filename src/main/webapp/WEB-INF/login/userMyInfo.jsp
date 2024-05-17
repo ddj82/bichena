@@ -35,12 +35,6 @@
 	}
 
 .uMyPage button[type=button] {
-	/* float: right;
-	padding: 5px;
-	background-color: #7C93F5;
-	border: none;
-	border-radius: 5px;
-	color: white; */
 	float: right;
 	padding: 5px;
 	background-color: transparent; 
@@ -50,17 +44,6 @@
 	font-weight: bold;
 	text-decoration: underline;
 	}
-
-/* .uMyPage button#delBtn {
-	float: right;
-	padding: 5px;
-	background-color: transparent; 
-	border: none;
-	border-radius: 5px;
-	color: #7C93F5;
-	font-weight: bold;
-	text-decoration: underline;
-	} */
 	
 .uMyPage button[type=submit] {
 	float: right;
@@ -73,10 +56,6 @@
 	font-weight: bold;
 	text-decoration: underline;
 	}
-
-/* .uMyPage button[type=button]:hover { */
-/* 	background-color: #AAB6F0; */
-/* 	} */
 
 .uMyPage button[type=submit]:hover, button[type=button]:hover  {
 	color: #AAB6F0;
@@ -115,28 +94,14 @@
 }
 </style>
 <script>
-        function delUser() {
-            if (window.confirm("정말로 탈퇴하시겠습니까?")) {
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", "delUser.ko", true);
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4) {
-                        if (xhr.status === 200) {
-                            alert("탈퇴되었습니다.");
-                            window.location.href = "loginPage.ko";
-                        } else {
-                            alert("오류가 발생했습니다. 다시 시도해주세요. 오류 코드: " + xhr.status);
-                        }
-                    }
-                };
-                xhr.send();
-            }
-        }
+function changePw() {
+	window.location.href = "changePwForm.ko";
+}
 
-        function changePw() {
-            window.location.href = "changePwForm.ko";
-        }
-    </script>
+function goDelAcc(){
+	location.href = "delAcc.ko";
+}
+</script>
 </head>
 
 <body>
@@ -173,8 +138,8 @@
                     	<div class="form_item ">${users.u_tel}</div>
                     </div>
                 </div>
-                <div class="infoDel">
-                    <button type="button" id="delBtn" onclick="delUser();">회원 탈퇴</button>
+               <div class="infoDel">
+                    <button type="button" id="delBtn" onclick="goDelAcc()">회원 탈퇴</button>
                 </div>
     		 </div>
         </form>

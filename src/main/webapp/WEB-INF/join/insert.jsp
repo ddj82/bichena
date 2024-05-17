@@ -39,6 +39,7 @@ var emailCheck = 0;
 						console.log('아이디 중복체크 success');
 						if (data > 0) {
 							idCheckMessage.style.display = 'block';
+							cnt = 0;
 						} else {
 							idCheckMessage.style.display = 'none';
 							cnt++;
@@ -72,6 +73,7 @@ var emailCheck = 0;
 					success : function(data) {
 						if (data > 0) {
 							nickCheckMessage.style.display = 'block';
+							nickCheck = 0;
 						} else {
 							nickCheckMessage.style.display = 'none';
 							nickCheck++;
@@ -105,6 +107,7 @@ var emailCheck = 0;
 					success : function(data) {
 						if (data > 0) {
 							emailCheckMessage.style.display = 'block';
+							emailCheck = 0;
 						} else {
 							emailCheckMessage.style.display = 'none';
 							emailCheck++;

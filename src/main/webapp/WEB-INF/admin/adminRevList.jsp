@@ -34,19 +34,20 @@ table {
 	<table class="table">
 		<thead>
 			<tr>
-				<th>리뷰번호</th>
+				<th id="rnum-th">번호</th>
 				<th>작성자</th>
 				<th>상품번호</th>
 				<th>상품이름</th>
 				<th>별점</th>
 				<th>날짜</th>
+				<th>후기번호</th>
 				<th>상세보기</th>
 			</tr>
 		</thead>
 		<tbody id="List">
 		<c:forEach items="${adminRevList }" var="rev">
 			<tr>
-				<td>${rev.pr_no }</td>
+				<td id="rnum-td">${rev.rnum }</td>
 	            <td>${rev.u_nick }</td>
 	            <td>${rev.p_no }</td>
 	            <td>${rev.p_name }</td>
@@ -90,6 +91,7 @@ table {
 	            	</c:choose>
 	            </td>
 	            <td>${rev.pr_date }</td>
+				<td>${rev.pr_no }</td>
 	            <td>
 	                <button type="button" class="btn btn-primary btn-sm tail" 
 	                data-toggle="modal" data-target="#myModal" data-prno="${rev.pr_no }"
@@ -108,7 +110,7 @@ table {
 	    </c:when>
 	    <c:otherwise>
 	        <!-- 이전 페이지로 이동하는 링크 -->
-	        <a href="adminRevList.ko?currPageNo=${pagination.currPageNo - 1}" class="btn btn-primary btn-xs">이전</a>
+	        <a href="adminRevList.ko?currPageNo=${pagination.currPageNo - 1}&searchKeyword=${keyword}&searchCondition=${condition}" class="btn btn-primary btn-xs">이전</a>
 	    </c:otherwise>
 	</c:choose>
 	
@@ -118,7 +120,7 @@ table {
                 <span>${page}</span>
             </c:when>
             <c:otherwise>
-                <a href="adminRevList.ko?currPageNo=${page}" class="">${page}</a>
+                <a href="adminRevList.ko?currPageNo=${page}&searchKeyword=${keyword}&searchCondition=${condition}" class="">${page}</a>
             </c:otherwise>
         </c:choose>
     </c:forEach>
@@ -130,7 +132,7 @@ table {
 	    </c:when>
 	    <c:otherwise>
 	        <!-- 다음 페이지로 이동하는 링크 -->
-	        <a href="adminRevList.ko?currPageNo=${pagination.currPageNo + 1}" class="btn btn-primary btn-xs">다음</a>
+	        <a href="adminRevList.ko?currPageNo=${pagination.currPageNo + 1}&searchKeyword=${keyword}&searchCondition=${condition}" class="btn btn-primary btn-xs">다음</a>
 	    </c:otherwise>
 	</c:choose>
 </div>
@@ -166,11 +168,14 @@ $('#myModal').on('show.bs.modal', function (event) {
 	modal.find('.modal-none').text(prNo);
 });
 function revDel() {
-	let result = confirm("해당 리뷰를 정말 삭제하시겠습니까?");
+	let result = confirm("고객 리뷰를 삭제하시겠습니까?");
 	let delPrNo = document.getElementById("delPrNo").innerText;
 	if (result) {
-		console.log(delPrNo);
-// 		location.href="prodRevDelete.ko?pr_no=" + prNo;
+		let res = confirm("정말 삭제하시겠습니까?");
+		if (res) {
+			console.log(delPrNo);
+//	 		location.href="prodRevDelete.ko?pr_no=" + delPrNo;
+		}
 	}
 }
 </script>

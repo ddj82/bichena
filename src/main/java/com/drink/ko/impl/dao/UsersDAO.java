@@ -29,8 +29,8 @@ public class UsersDAO {
 	}
 
 	// 회원계정 삭제
-	public void deleteUser(UsersVO vo) {
-		mybatis.update("UserDAO.deleteUser", vo);
+	public void deleteUser(String u_id) {
+		mybatis.update("UserDAO.deleteUser", u_id);
 	}
 
 	// 내 정보 상세조회

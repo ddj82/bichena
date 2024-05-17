@@ -23,9 +23,10 @@ public class UsersServiceImpl implements UsersService {
 
 	// 회원계정 삭제
 	@Override
-	public void deleteUser(UsersVO vo) {
+	public void deleteUser(String u_id) {
 		System.out.println("삭제 serviceImple");
-		usersDAO.deleteUser(vo);
+		System.out.println("UsersVO vo 있느냐?? : " + u_id);
+		usersDAO.deleteUser(u_id);
 	}
 
 	// 비밀번호 재확인 후 내 정보 진입

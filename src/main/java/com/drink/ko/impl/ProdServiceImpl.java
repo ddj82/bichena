@@ -61,4 +61,9 @@ public class ProdServiceImpl implements ProdService {
 		return dao.deleteProduct(p_no);
 	}
 
+	@Override
+	public ProdVO prodStock(int p_no) {
+		return dao.prodStock(p_no);
+	}
+
 }

@@ -27,24 +27,16 @@
 		</if>
 	</select>
 	
-<!-- 	<select id="qnaTotalCnt" resultType="int"> -->
-<!-- 		SELECT COUNT(*) FROM BC_QNA WHERE 1=1 -->
-<!-- 		<if test="searchCondition != null"> -->
-<!-- 			<if test="searchCondition == 'q_cate' "> AND Q_CATE LIKE CONCAT('%', #{searchKeyword}, '%') </if> -->
-<!-- 			<if test="searchCondition == 'q_state' "> AND Q_STATE LIKE CONCAT('%', #{searchKeyword}, '%') </if> -->
-<!-- 			<if test="searchCondition == 'q_title' "> AND Q_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') </if> -->
-<!-- 		</if> -->
-<!-- 	</select> -->
-	
 	<select id="qnaList" resultMap="qnalist">
-		SELECT * FROM BC_QNA WHERE 1=1
+<!-- 		SELECT * FROM BC_QNA WHERE 1=1 -->
+		SELECT q.*, ROW_NUMBER() OVER() AS rnum FROM BC_QNA q WHERE 1=1 
 		<if test="searchCondition != null">
 			<if test="searchCondition == 'q_cate' "> AND Q_CATE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'q_state' "> AND Q_STATE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'q_title' "> AND Q_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'q_writer' "> AND Q_WRITER LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 		</if>
-		ORDER BY Q_NO ASC
+		ORDER BY rnum ASC
 		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 	
@@ -59,13 +51,6 @@
 		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 
-<!-- 	<select id="qnaList" resultMap="qnalist"> -->
-<!-- 		SELECT * FROM BC_QNA -->
-<!-- 	</select> -->
-<!-- 	<select id="qnaListMy" resultMap="qnalist"> -->
-<!-- 		SELECT * FROM BC_QNA WHERE Q_WRITER = #{q_writer} -->
-<!-- 	</select> -->
-	
 	<select id="qnaView" resultType="qnaDTO">
 		SELECT * FROM BC_QNA WHERE Q_NO = #{q_no}
 	</select>

@@ -32,7 +32,7 @@ import com.drink.ko.vo.KaKaoVO;
 import com.drink.ko.vo.UsersVO;
 import com.google.gson.Gson;
 
-@SessionAttributes({ "userID", "userNO", "howLogin" })
+@SessionAttributes({ "userID", "userNO", "howLogin", "uLev"})
 @Controller
 public class LoginController {
 
@@ -118,6 +118,7 @@ public class LoginController {
 				model.addAttribute("userID", user.getU_id());
 				model.addAttribute("userNO", user.getU_no());
 				model.addAttribute("howLogin", user.getU_state());
+				model.addAttribute("uLev", user.getU_lev());
 				return "main.ko";
 			} else {
 				return "loginErr.ko";
@@ -143,6 +144,7 @@ public class LoginController {
 						model.addAttribute("userID", user.getU_id());
 						model.addAttribute("userNO", user.getU_no());
 						model.addAttribute("howLogin", user.getU_state());
+						model.addAttribute("uLev", user.getU_lev());
 						return "adminOrderList.ko";
 					} else {
 						return "loginErr.ko";
@@ -292,6 +294,7 @@ public class LoginController {
 				model.addAttribute("userID", user.getU_id());
 				model.addAttribute("userNO", user.getU_no());
 				model.addAttribute("howLogin", user.getU_state());
+				model.addAttribute("uLev", user.getU_lev());
 				return "main.ko";
 			} else if (i <= 0) {
 				System.out.println("카카오 데이터 업데이트 실패");
@@ -303,6 +306,7 @@ public class LoginController {
 				model.addAttribute("userID", user.getU_id());
 				model.addAttribute("userNO", user.getU_no());
 				model.addAttribute("howLogin", user.getU_state());
+				model.addAttribute("uLev", user.getU_lev());
 				return "main.ko";
 			} else {
 				model.addAttribute("userID", user.getU_id());
@@ -337,6 +341,7 @@ public class LoginController {
 				model.addAttribute("userID", user.getU_id());
 				model.addAttribute("userNO", user.getU_no());
 				model.addAttribute("howLogin", user.getU_state());
+				model.addAttribute("uLev", user.getU_lev());
 				return "main.ko";
 			} else {
 				return "logoutProceeding.ko?logout=s3";
@@ -350,6 +355,7 @@ public class LoginController {
 				model.addAttribute("userID", user.getU_id());
 				model.addAttribute("userNO", user.getU_no());
 				model.addAttribute("howLogin", user.getU_state());
+				model.addAttribute("uLev", user.getU_lev());
 				return "main.ko";
 			}
 		}

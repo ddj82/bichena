@@ -10,9 +10,11 @@
 	</select>
 	
 	<select id="adminOrderList" resultType="orderdto">
-		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG
+<!-- 		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG -->
+		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG, row_number() over() as rnum
 		FROM BC_ORDER AS o JOIN BC_PROD as p on o.P_NO = p.P_NO
-		ORDER BY O_NO DESC
+<!-- 		ORDER BY O_NO DESC -->
+		ORDER BY rnum DESC
 		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 
@@ -20,6 +22,19 @@
       SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG
       FROM BC_ORDER AS o JOIN BC_PROD AS p on o.P_NO = p.P_NO where U_NO = #{u_no} GROUP BY O_NO ORDER BY O_DATE DESC
    	</select>
+
+	<select id="adminOrderRepeat" resultType="orderdto">
+		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG, row_number() over() as rnum
+		FROM BC_ORDER AS o JOIN BC_PROD as p on o.P_NO = p.P_NO
+		GROUP BY O_NO
+		ORDER BY rnum DESC
+		LIMIT #{sizePerPage} OFFSET #{startList}
+	</select>
+	
+	<select id="adminOrderDetail" resultType="orderdto">
+		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG
+		FROM BC_ORDER AS o JOIN BC_PROD AS p on o.P_NO = p.P_NO WHERE O_NO = #{o_no} AND O.P_NO = #{p_no}
+	</select>
 	
 	<select id="myOrderConfirm" resultType="orderdto">
 		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG

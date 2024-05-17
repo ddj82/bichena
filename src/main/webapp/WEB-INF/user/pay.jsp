@@ -123,6 +123,7 @@ function AddCartInsert(uid) {
         data: data,
         success: function(response) {
             alert("장바구니에 추가되었습니다.");
+            selectCount();
             console.log("서버 응답:", response);
         },
         error: function(xhr, status, error) {
@@ -160,5 +161,24 @@ function updateCart(stock, total) {
             alert("업데이트 중 에러 발생: " + xhr.responseText);
         }
     });
+}
+function selectCount(){
+	var u_id = '${userID}';
+	$.ajax({
+		url : "cartSelectCount.ko",
+		type : "post",
+		contentType: "application/json",
+		data : JSON.stringify({u_id : u_id }),
+		success : function(data){
+			if (data > 0) {
+				document.getElementById("cartCount").style.display = "inline";
+    			$("#cartCount").html(data);
+			}
+			console.log(data);
+		},
+		error : function(error) {
+			alert("에러발생");
+		}
+	});
 }
 </script>

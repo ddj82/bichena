@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.drink.ko.CartService;
+import com.drink.ko.ProdService;
 import com.drink.ko.UsersService;
 import com.drink.ko.vo.CartVO;
+import com.drink.ko.vo.ProdVO;
 import com.drink.ko.vo.UsersVO;
 
 @Controller
@@ -30,6 +32,8 @@ public class CartController {
 	private CartService cartService;
 	@Autowired
 	private UsersService usersService;
+	@Autowired
+	private ProdService prodService;
 
 	@RequestMapping("/myCartList.ko")
 	public String myCartList() {
@@ -99,7 +103,35 @@ public class CartController {
 		}
 		return "redirect:myCartList.ko";
 	}
-	
+
+	// 상품재고 확인
+	@RequestMapping(value = "/stockcheck.ko", produces = "application/json")
+	@ResponseBody
+	public Map<String, Object> stockchk(@RequestBody Map<String, Integer> request) {
+		System.out.println("재고수량 컨트롤러 진입");
+		int p_no = request.get("p_no");
+		System.out.println("값 확인 : " + p_no);
+		ProdVO product = prodService.prodStock(p_no);
+		System.out.println("상품재고 : " + product.getP_stock());
+		Map<String, Object> response = new HashMap<>();
+		response.put("p_stock", product.getP_stock());
+		return response;
+
+	}
+
+	// navbar 카트이미지 숫자표시
+	@RequestMapping(value = "/cartSelectCount.ko", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<Integer> cartSelectCount(@RequestBody CartVO vo) {
+		String u_id = vo.getU_id();
+		System.out.println("장바구니 목록 조회 u_id = " + u_id);
+		int count = cartService.cartSelectCount(u_id);
+		System.out.println("값 확인 : " + u_id + ", " + count);
+//	      Map<String, Integer> response = new HashMap<>();
+//	      response.put("count", count);
+		return ResponseEntity.ok(count);
+	}
+
 	@RequestMapping("/orderNoCreate.ko")
 	@ResponseBody
 	public String orderNoCreate() {

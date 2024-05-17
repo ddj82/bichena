@@ -54,7 +54,7 @@ pageEncoding="UTF-8"%>
       }
 
       a:hover {
-        color: black;
+/*         color: black; */
       }
 
       .login_signup {
@@ -115,7 +115,21 @@ pageEncoding="UTF-8"%>
       }
 
       .navbar-nav-main a {
-        color: #707070;
+        color: #005930;
+        cursor:pointer;
+      }
+      .navbar-nav-main a:hover,
+      .login_signup a:hover, .CartLogo:hover,
+      a#footer-a:hover  {
+      color:#d4a035;
+      }
+      
+      .login_signup a {
+      text-decoration:none;
+      }
+      .logout {
+      padding-left:10px;
+      padding-right:15px;
       }
 
       .navbar-nav-main .dropdown-toggle::after {
@@ -178,6 +192,22 @@ pageEncoding="UTF-8"%>
         background-color: #f8f9fa;
         /* 드롭다운 메뉴 내 링크에 호버 시 배경색 변경 */
       }
+.CartLogo {
+	position: relative;
+}
+
+#cartCount {
+    position: absolute;
+    top: -7px;
+    right: -5px;
+    background-color: red; 
+    color: white; 
+    border-radius: 50%;
+    padding: 1px 6px;
+    font-size: 12px;
+    border-radius : 15px;
+}
+
 
       @media (max-width: 575px) {
         .side-menu {
@@ -325,8 +355,6 @@ pageEncoding="UTF-8"%>
 
       /* footer */
       nav.navbar.navbar-expand-sm#nav-footer {
-        /* nav.navbar#nav-footer { */
-        height: 30vh;
         background-color: #ffffff;
         border-top: 1px solid #e0e0e0;
       }
@@ -336,11 +364,13 @@ pageEncoding="UTF-8"%>
         font-optical-sizing: auto;
         font-style: normal;
       }
-      div.container#div-container {
+      #div-container {
         display: block;
         flex-direction: column;
         align-items: start !important;
         line-height: 1.2;
+        margin-top: 20px;
+    margin-bottom: 20px;
       }
       div.prjtnm#div-prjtnm {
         font-size: 20px;
@@ -392,7 +422,9 @@ $(document).ready(function () {
           <!-- 로고와 검색창이 있는곳-->
           <div class="logo_search">
             <div class="navbar_logo" onclick="location.href='main.ko';">
-              <img src="${pageContext.request.contextPath}/img/navbar/bichena.png" style="width: 100px; margin: 15px 0"
+              <img
+                src="${pageContext.request.contextPath}/img/navbar/bichena.png"
+                style="width: 100px; margin: 15px 0"
               />
             </div>
             <form class="form-inline">
@@ -425,10 +457,39 @@ $(document).ready(function () {
               </c:when>
               <c:otherwise>
                 <a class="login" href="myPage.ko">${userID }님 </a>&nbsp;환영합니다.&nbsp;
-                <span>
-	                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="20" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
-					  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-					</svg>
+                <a class="logout" href="logout.ko">로그아웃</a>
+                <span class="CartLogo" onclick="CartList()" style="cursor : pointer">
+	                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+		              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+		            </svg>
+		            <span id="cartCount"></span>
+		            <c:if test="${userID ne null}">
+		            <script>
+		            (function (){
+		            	selectCount();
+		            })();
+		            
+		            function selectCount(){
+		            	var u_id = '${userID}';
+		            	$.ajax({
+		            		url : "cartSelectCount.ko",
+		            		type : "post",
+		            		contentType: "application/json",
+		            		data : JSON.stringify({u_id : u_id }),
+		            		success : function(data){
+		            			$("#cartCount").html(data);
+		            			console.log(data);
+		            		},
+		            		error : function(error) {
+		            			alert("에러발생");
+		            		}
+		            	});
+		            }
+		            function CartList() {
+		            	location.href="myCartList.ko";
+		            }
+		            </script>
+		            </c:if>
                 </span>
               </c:otherwise>
             </c:choose>
@@ -524,7 +585,7 @@ $(document).ready(function () {
           </ul>
         </div>
       </div>
-      <!-- 	<div class="bottom-line"></div> -->
+      <!--    <div class="bottom-line"></div> -->
     </nav>
 
     <div class="side-menu" id="sideMenu">
@@ -613,9 +674,9 @@ $(document).ready(function () {
                 상품
               </a>
             </div>
-		 
-		 
-		 
+       
+       
+       
             <div
               id="collapseOne"
               class="collapse"

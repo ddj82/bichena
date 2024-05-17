@@ -52,4 +52,8 @@ public class ProdDAO {
 		return mybatis.delete("ProdDAO.deleteProduct", p_no);
 	}
 	
+	public ProdVO prodStock(int p_no) {
+		return mybatis.selectOne("ProdDAO.prodStock", p_no);
+	}
+	
 }
