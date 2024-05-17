@@ -58,6 +58,10 @@ input[type="file"]#p_img {
 .custom-file-label {
     cursor: pointer;
 }
+#footer {
+    text-align: right;
+    padding-right: 15px;
+}
 </style>
 <script>
 </script>
@@ -65,18 +69,18 @@ input[type="file"]#p_img {
 <body>
 <%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div class="container">
-	<nav id="searchNav">
-		<form action="adminProdList.ko" method="post">
-			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
-				<option value="${conditionMapProd['상품명']}">상품명</option>
-				<option value="${conditionMapProd['상품번호']}">상품번호</option>
-				<option value="${conditionMapProd['주종']}">주종</option>
-			</select>
-			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
-			<button type="submit" class="btn btn-primary btn-sm">검색</button>
-		</form>
+	<div id="footer">
+<!-- 		<form action="adminProdList.ko" method="post"> -->
+<!-- 			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;"> -->
+<%-- 				<option value="${conditionMapProd['상품명']}">상품명</option> --%>
+<%-- 				<option value="${conditionMapProd['상품번호']}">상품번호</option> --%>
+<%-- 				<option value="${conditionMapProd['주종']}">주종</option> --%>
+<!-- 			</select> -->
+<!-- 			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요."> -->
+<!-- 			<button type="submit" class="btn btn-primary btn-sm">검색</button> -->
+<!-- 		</form> -->
 		<button type="button" class="btn btn-success" onclick="location.href='adminProdInsertBtn.ko';">주류등록</button>
-	</nav>
+	</div>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -117,6 +121,17 @@ input[type="file"]#p_img {
 		</c:forEach>
 		</tbody>
 	</table>
+	<div style="text-align: center;">
+		<form action="adminProdList.ko" method="post">
+			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
+				<option value="${conditionMapProd['상품명']}">상품명</option>
+				<option value="${conditionMapProd['상품번호']}">상품번호</option>
+				<option value="${conditionMapProd['주종']}">주종</option>
+			</select>
+			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+			<button type="submit" class="btn btn-primary btn-sm">검색</button>
+		</form>
+	</div>
 	
 	<!-- 페이징 처리 -->
 	<c:choose>

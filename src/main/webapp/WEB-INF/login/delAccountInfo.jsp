@@ -56,13 +56,24 @@
 탈퇴 후에는 해당 아이디로 다시 가입하실 수 없으며 아이디와 데이터는 복구할 수 없습니다.
 웹서비스에 남아 있는 게시글은 탈퇴 후 삭제하실 수 없습니다.
 
-탈퇴하시겠습니까?
+
 </p>
-			<button type="submit" id="delBtn">회원 탈퇴</button>
+<!-- 			<label for="delChk"><span>탈퇴하시겠습니까?</span></label> -->
+			<input type="checkbox" id="delChk-box" onclick="delChkOK();">
+			<span>탈퇴하시겠습니까?</span>
+			<button type="submit" id="delBtn" style="display:none;">회원 탈퇴</button>
          </div>
     </form>
     </div>
 </div>
+<script>
+function delChkOK() {
+	let delChk = document.getElementById("delChk-box").checked;
+	if (delChk) {
+		document.getElementById("delBtn").style.display = "inline";
+		document.getElementById("delChk-box").style.display = "none";
+	}
+}
+</script>
 </body>
-
 </html>

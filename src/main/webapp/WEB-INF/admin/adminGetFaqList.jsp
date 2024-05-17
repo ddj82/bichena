@@ -45,33 +45,33 @@ table {
 <!-- 		<h1>Faq</h1> -->
 <!-- 	</div> -->
 	<nav id="searchNav">
-		<form action="getFaqList.ko" method="post">
-			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
-			    <c:choose>
-			        <c:when test="${condition == 'TITLE'}">
-			            <option value="${conditionMap['제목']}">제목</option>
-			            <option value="${conditionMap['내용']}">내용</option>
-			        </c:when>
-			        <c:when test="${condition == 'CONTENT'}">
-			            <option value="${conditionMap['내용']}">내용</option>
-			            <option value="${conditionMap['제목']}">제목</option>
-			        </c:when>
-			        <c:otherwise>
-			            <option value="${conditionMap['제목']}">제목</option>
-			            <option value="${conditionMap['내용']}">내용</option>
-			        </c:otherwise>
-			    </c:choose>
-			</select>
-			<c:choose>
-				<c:when test="${keyword == ''}">
-					<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
-				</c:when>
-				<c:otherwise>
-					<input type="text" name="searchKeyword" value="${keyword}">
-				</c:otherwise>
-			</c:choose>
-			<button type="submit" class="btn btn-primary btn-sm">검색</button>
-		</form>
+<!-- 		<form action="getFaqList.ko" method="post"> -->
+<!-- 			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;"> -->
+<%-- 			    <c:choose> --%>
+<%-- 			        <c:when test="${condition == 'TITLE'}"> --%>
+<%-- 			            <option value="${conditionMap['제목']}">제목</option> --%>
+<%-- 			            <option value="${conditionMap['내용']}">내용</option> --%>
+<%-- 			        </c:when> --%>
+<%-- 			        <c:when test="${condition == 'CONTENT'}"> --%>
+<%-- 			            <option value="${conditionMap['내용']}">내용</option> --%>
+<%-- 			            <option value="${conditionMap['제목']}">제목</option> --%>
+<%-- 			        </c:when> --%>
+<%-- 			        <c:otherwise> --%>
+<%-- 			            <option value="${conditionMap['제목']}">제목</option> --%>
+<%-- 			            <option value="${conditionMap['내용']}">내용</option> --%>
+<%-- 			        </c:otherwise> --%>
+<%-- 			    </c:choose> --%>
+<!-- 			</select> -->
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${keyword == ''}"> --%>
+<!-- 					<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요."> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
+<%-- 					<input type="text" name="searchKeyword" value="${keyword}"> --%>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
+<!-- 			<button type="submit" class="btn btn-primary btn-sm">검색</button> -->
+<!-- 		</form> -->
 	</nav>
 	<div>
 		<table class="table table">
@@ -94,6 +94,36 @@ table {
 		<div id="footer">
 			<button type="button" class="btn btn-primary btn-sm conWrite">글쓰기</button>
 		</div>	
+		
+		<div style="text-align: center;">
+			<form action="getFaqList.ko" method="post">
+				<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
+				    <c:choose>
+				        <c:when test="${condition == 'TITLE'}">
+				            <option value="${conditionMap['제목']}">제목</option>
+				            <option value="${conditionMap['내용']}">내용</option>
+				        </c:when>
+				        <c:when test="${condition == 'CONTENT'}">
+				            <option value="${conditionMap['내용']}">내용</option>
+				            <option value="${conditionMap['제목']}">제목</option>
+				        </c:when>
+				        <c:otherwise>
+				            <option value="${conditionMap['제목']}">제목</option>
+				            <option value="${conditionMap['내용']}">내용</option>
+				        </c:otherwise>
+				    </c:choose>
+				</select>
+				<c:choose>
+					<c:when test="${keyword == ''}">
+						<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+					</c:when>
+					<c:otherwise>
+						<input type="text" name="searchKeyword" value="${keyword}">
+					</c:otherwise>
+				</c:choose>
+				<button type="submit" class="btn btn-primary btn-sm">검색</button>
+			</form>
+		</div>
 		
 		<!-- 페이징 처리 -->
 		<c:choose>

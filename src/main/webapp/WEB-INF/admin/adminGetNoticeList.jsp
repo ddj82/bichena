@@ -44,35 +44,35 @@ table {
 <!-- 	<div class="jumbotron"> -->
 <!-- 		<h1>공지 사항</h1> -->
 <!-- 	</div> -->
-	<nav id="searchNav">
-		<form action="getNoticeList.ko" method="post">
-			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
-			    <c:choose>
-			        <c:when test="${condition == 'TITLE'}">
-			            <option value="${conditionMap['제목']}">제목</option>
-			            <option value="${conditionMap['내용']}">내용</option>
-			        </c:when>
-			        <c:when test="${condition == 'CONTENT'}">
-			            <option value="${conditionMap['내용']}">내용</option>
-			            <option value="${conditionMap['제목']}">제목</option>
-			        </c:when>
-			        <c:otherwise>
-			            <option value="${conditionMap['제목']}">제목</option>
-			            <option value="${conditionMap['내용']}">내용</option>
-			        </c:otherwise>
-			    </c:choose>
-			</select>
-			<c:choose>
-				<c:when test="${keyword == ''}">
-					<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
-				</c:when>
-				<c:otherwise>
-					<input type="text" name="searchKeyword" value="${keyword}">
-				</c:otherwise>
-			</c:choose>
-			<button type="submit" class="btn btn-primary btn-sm">검색</button>
-		</form>
-	</nav>
+<!-- 	<nav id="searchNav"> -->
+<!-- 		<form action="getNoticeList.ko" method="post"> -->
+<!-- 			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;"> -->
+<%-- 			    <c:choose> --%>
+<%-- 			        <c:when test="${condition == 'TITLE'}"> --%>
+<%-- 			            <option value="${conditionMap['제목']}">제목</option> --%>
+<%-- 			            <option value="${conditionMap['내용']}">내용</option> --%>
+<%-- 			        </c:when> --%>
+<%-- 			        <c:when test="${condition == 'CONTENT'}"> --%>
+<%-- 			            <option value="${conditionMap['내용']}">내용</option> --%>
+<%-- 			            <option value="${conditionMap['제목']}">제목</option> --%>
+<%-- 			        </c:when> --%>
+<%-- 			        <c:otherwise> --%>
+<%-- 			            <option value="${conditionMap['제목']}">제목</option> --%>
+<%-- 			            <option value="${conditionMap['내용']}">내용</option> --%>
+<%-- 			        </c:otherwise> --%>
+<%-- 			    </c:choose> --%>
+<!-- 			</select> -->
+<%-- 			<c:choose> --%>
+<%-- 				<c:when test="${keyword == ''}"> --%>
+<!-- 					<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요."> -->
+<%-- 				</c:when> --%>
+<%-- 				<c:otherwise> --%>
+<%-- 					<input type="text" name="searchKeyword" value="${keyword}"> --%>
+<%-- 				</c:otherwise> --%>
+<%-- 			</c:choose> --%>
+<!-- 			<button type="submit" class="btn btn-primary btn-sm">검색</button> -->
+<!-- 		</form> -->
+<!-- 	</nav> -->
 	<div>
 		<table class="table table">
 			<thead>
@@ -97,24 +97,35 @@ table {
 			<button type="button" id="conWrite" class="btn btn-primary btn-sm">글쓰기</button>
 		</div>
 		
-<!-- 		<div style="text-align: center;"> -->
-<!-- 	    <form action="getUserList.ko" class="searchUser" id="searchUser" method="post"> -->
-<!-- 	    <select id="selOp" name="searchVoca"> -->
-<%-- 	    	<c:forEach items="${conditionMapMem}" var="option"> --%>
-<%-- 	    	<c:choose> --%>
-<%-- 				<c:when test="${option.key == 'ID'}"> --%>
-<%-- 	    			<option value="${option.value}" selected>${option.key}</option> --%>
-<%-- 	    		</c:when> --%>
-<%-- 	    		<c:otherwise> --%>
-<%-- 	    			<option value="${option.value}">${option.key}</option> --%>
-<%-- 	    		</c:otherwise> --%>
-<%-- 	    		</c:choose> --%>
-<%-- 			</c:forEach> --%>
-<!-- 	    </select> -->
-<!-- 	    	<input type="text" name="searchWord" placeholder="검색어를 입력해주세요"> -->
-<!-- 	    	<button type="submit" onclick="searchMem()" class="btn btn-primary btn-sm">검색</button> -->
-<!-- 	    </form> -->
-<!-- 	    </div> -->
+		<div style="text-align: center;">
+		    <form action="getNoticeList.ko" method="post">
+				<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
+				    <c:choose>
+				        <c:when test="${condition == 'TITLE'}">
+				            <option value="${conditionMap['제목']}">제목</option>
+				            <option value="${conditionMap['내용']}">내용</option>
+				        </c:when>
+				        <c:when test="${condition == 'CONTENT'}">
+				            <option value="${conditionMap['내용']}">내용</option>
+				            <option value="${conditionMap['제목']}">제목</option>
+				        </c:when>
+				        <c:otherwise>
+				            <option value="${conditionMap['제목']}">제목</option>
+				            <option value="${conditionMap['내용']}">내용</option>
+				        </c:otherwise>
+				    </c:choose>
+				</select>
+				<c:choose>
+					<c:when test="${keyword == ''}">
+						<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+					</c:when>
+					<c:otherwise>
+						<input type="text" name="searchKeyword" value="${keyword}">
+					</c:otherwise>
+				</c:choose>
+				<button type="submit" class="btn btn-primary btn-sm">검색</button>
+			</form>
+	    </div>
 
 		<!-- 페이징 처리 -->
 

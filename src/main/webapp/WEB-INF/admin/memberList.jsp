@@ -76,22 +76,22 @@ $(function(){
     </table>
 	<!-- 검색 -->
     <div style="text-align: center;">
-    <form action="getUserList.ko" class="searchUser" id="searchUser" method="post">
-    <select id="selOp" name="searchVoca">
-    	<c:forEach items="${conditionMapMem}" var="option">
-    	<c:choose>
-			<c:when test="${option.key == 'ID'}">
-    			<option value="${option.value}" selected>${option.key}</option>
-    		</c:when>
-    		<c:otherwise>
-    			<option value="${option.value}">${option.key}</option>
-    		</c:otherwise>
-    		</c:choose>
-		</c:forEach>
-    </select>
-    	<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
-    	<button type="submit" onclick="searchMem()" class="btn btn-primary btn-sm">검색</button>
-    </form>
+	    <form action="getUserList.ko" class="searchUser" id="searchUser" method="post">
+	    <select id="selOp" name="searchVoca" style="margin-right: 10px;">
+	    	<c:forEach items="${conditionMapMem}" var="option">
+	    	<c:choose>
+				<c:when test="${option.key == 'ID'}">
+	    			<option value="${option.value}" selected>${option.key}</option>
+	    		</c:when>
+	    		<c:otherwise>
+	    			<option value="${option.value}">${option.key}</option>
+	    		</c:otherwise>
+	    		</c:choose>
+			</c:forEach>
+	    </select>
+	    	<input type="text" name="searchWord" placeholder="검색어를 입력해주세요">
+	    	<button type="submit" onclick="searchMem()" class="btn btn-primary btn-sm">검색</button>
+	    </form>
     </div>
     
     
@@ -172,6 +172,10 @@ $(function(){
 				$("#user-state").append("회원상태 : ");
 				if(val.u_state == 1){
 					$("#user-state").append("활동 중");
+				} else if(val.u_state == 2){
+					$("#user-state").append("카카오");
+				} else if(val.u_state == 3){
+					$("#user-state").append("네이버");
 				} else if(val.u_state == 0){
 					$("#user-state").append("비활성화");
 				}

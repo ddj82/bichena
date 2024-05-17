@@ -26,16 +26,16 @@ table {
 <%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div class="container">
 	<nav id="searchNav">
-		<form action="adminQnaList.ko" method="post">
-			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
-				<option value="${conditionMapQNA['카테고리']}">카테고리</option>
-				<option value="${conditionMapQNA['상태']}">상태</option>
-				<option value="${conditionMapQNA['제목']}">제목</option>
-				<option value="${conditionMapQNA['작성자']}">작성자</option>
-			</select> 
-			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
-			<button type="submit" class="btn btn-primary btn-sm">검색</button>
-		</form>
+<!-- 		<form action="adminQnaList.ko" method="post"> -->
+<!-- 			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;"> -->
+<%-- 				<option value="${conditionMapQNA['카테고리']}">카테고리</option> --%>
+<%-- 				<option value="${conditionMapQNA['상태']}">상태</option> --%>
+<%-- 				<option value="${conditionMapQNA['제목']}">제목</option> --%>
+<%-- 				<option value="${conditionMapQNA['작성자']}">작성자</option> --%>
+<!-- 			</select>  -->
+<!-- 			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요."> -->
+<!-- 			<button type="submit" class="btn btn-primary btn-sm">검색</button> -->
+<!-- 		</form> -->
 	</nav>
 	<table class="table table-hover">
 		<thead>
@@ -63,6 +63,20 @@ table {
 		</c:forEach>
 	    </tbody>
 	</table>
+	
+	<div style="text-align: center;">
+		<form action="adminQnaList.ko" method="post">
+			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
+				<option value="${conditionMapQNA['카테고리']}">카테고리</option>
+				<option value="${conditionMapQNA['상태']}">상태</option>
+				<option value="${conditionMapQNA['제목']}">제목</option>
+				<option value="${conditionMapQNA['작성자']}">작성자</option>
+			</select> 
+			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+			<button type="submit" class="btn btn-primary btn-sm">검색</button>
+		</form>
+	</div>
+	
 	<!-- 페이징 처리 -->
 	<c:choose>
 	    <c:when test="${pagination.currPageNo == 1}">

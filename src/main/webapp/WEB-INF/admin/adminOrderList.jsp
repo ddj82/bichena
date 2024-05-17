@@ -119,7 +119,7 @@ button.btn.btn-danger.btn-sm.del[disabled] {
 	            	</c:when>
 	            	<c:otherwise>
 	            		<td>
-			                <button type="button" class="btn btn-danger btn-sm del" disabled>주문취소</button>	            		
+			                <button type="button" class="btn btn-default btn-sm del" disabled>주문취소</button>	            		
 	            		</td>
 	            	</c:otherwise>
 	            </c:choose>
