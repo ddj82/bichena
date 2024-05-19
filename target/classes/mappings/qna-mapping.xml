@@ -40,13 +40,12 @@
 		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 	
+	<select id="qnaMyTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM BC_QNA WHERE Q_WRITER = #{q_writer};
+	</select>
+	
 	<select id="qnaListMy" resultMap="qnalist">
 		SELECT * FROM BC_QNA WHERE Q_WRITER = #{q_writer}
-		<if test="searchCondition != null">
-			<if test="searchCondition == '123' "> AND 123 LIKE CONCAT('%', #{searchKeyword}, '%') </if>
-			<if test="searchCondition == '123' "> AND 123 LIKE CONCAT('%', #{searchKeyword}, '%') </if>
-			<if test="searchCondition == '123' "> AND 123 LIKE CONCAT('%', #{searchKeyword}, '%') </if>
-		</if>
 		ORDER BY Q_NO ASC
 		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>

@@ -7,7 +7,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>회원 정보 수정</title>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <script>
 var nickCheck = 0;
 var emailCheck = 0;
@@ -119,8 +118,8 @@ $(function() {
 }
 
 .inner {
-	width: 400px;
-  margin: 0 auto;
+	width: 300px;
+	margin: 0 auto;
 }
 
 .inner-title{
@@ -212,12 +211,12 @@ input.menu_h:hover {
 }
 .send {
 	margin-top: 40px;
-	width: 322px;
+	width: 300px;
   padding: 5px;
 }
 .send {
 	margin-top: 40px;
-	width: 322px;
+	width: 300px;
     padding: 5px;
     height: 40px;
     background-color: rgb(0, 150, 243);
@@ -256,6 +255,8 @@ input.menu_h:hover {
 </style>
 </head>
 <body>
+<%@ include file="../../common/navbar.jsp" %>
+<%@ include file="../user/myPageHeader.jsp" %>
   <div class="container-con">
     <div class="inner-title"><h3>회원정보 수정</h3></div>
 	<div class="inner">
@@ -278,7 +279,7 @@ input.menu_h:hover {
 
 			<div class="item_name">성별</div>
 			<div class="form_item">
-				<div class="gender_item" id="gen" name="gen">
+				<div class="gender_item" id="gen" name="gen" style="width: 300px;">
 					<input type="radio" id="male" name="u_gen" value="남자" <c:if test="${users.u_gen eq '남자'}">checked</c:if> />
 					<label for="male">남자</label>
 					<input type="radio" id="female" name="u_gen" value="여자" <c:if test="${users.u_gen eq '여자'}">checked</c:if> />

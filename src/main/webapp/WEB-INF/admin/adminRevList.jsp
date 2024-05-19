@@ -20,17 +20,6 @@ table {
 <body>
 <%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div class="container">
-	<nav id="searchNav">
-<!-- 		<form action="adminRevList.ko" method="post"> -->
-<!-- 			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;"> -->
-<%-- 				<option value="${conditionMapRev['상품명']}">상품명</option> --%>
-<%-- 				<option value="${conditionMapRev['상품번호']}">상품번호</option> --%>
-<%-- 				<option value="${conditionMapRev['작성자']}">작성자</option> --%>
-<!-- 			</select> -->
-<!-- 			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요."> -->
-<!-- 			<button type="submit" class="btn btn-primary btn-sm">검색</button> -->
-<!-- 		</form> -->
-	</nav>
 	<table class="table">
 		<thead>
 			<tr>

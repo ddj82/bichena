@@ -28,6 +28,11 @@ public class QnaServiceImpl implements QnaService{
 	public int qnaTotalCnt(QnaVO vo) {
 		return dao.qnaTotalCnt(vo);
 	}
+	
+	@Override
+	public int qnaMyTotalCnt(QnaVO vo) {
+		return dao.qnaMyTotalCnt(vo);
+	}
 
 	@Override
 	public QnaVO qnaView(String q_no) {

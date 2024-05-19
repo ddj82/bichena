@@ -24,6 +24,10 @@ public class QnaDAO {
 	public int qnaTotalCnt(QnaVO vo) {
 		return mybatis.selectOne("QnaDAO.qnaTotalCnt", vo);
 	}
+	
+	public int qnaMyTotalCnt(QnaVO vo) {
+		return mybatis.selectOne("QnaDAO.qnaMyTotalCnt", vo);
+	}
 
 	public QnaVO qnaView(String q_no) {
 		return mybatis.selectOne("QnaDAO.qnaView", q_no);

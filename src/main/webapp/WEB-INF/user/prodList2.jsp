@@ -10,11 +10,8 @@
 <meta http-equiv="Expires" content="0" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
-	rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css" />
 <title>상품 리스트</title>
 <style>
 div.prod img {
@@ -441,12 +438,12 @@ $(document).ready(function () {
     $('.form-check-input').change(function (e) {
         let selectedFilterType;
         if ($(this).closest('.dropdown').length) {
-            selectedFilterType = $(this).closest('.dropdown').find('button').attr('data-filter-type');
+            selectedFilterType = $(this).closest('.dropdown').find('button').attr('data-filter-type'); //체크박스 타입
         } else if ($(this).closest('.list-card-body').length) {
             selectedFilterType = $(this).closest('.list-card-body').attr('data-filter-type');
         }
         
-        let selectedFilter = $(this).val();
+        let selectedFilter = $(this).val(); //체크박스 값
         let currentUrl = window.location.href;
         let searchParams = new URLSearchParams(currentUrl.split('?')[1] || '');
         
@@ -507,6 +504,10 @@ $(document).ready(function () {
         }
     });
 });
+
+
+
+
  // 페이지 이동 함수
     function goToPage(pageNo) {
         // 현재 페이지의 URL 가져오기
@@ -527,7 +528,7 @@ $(document).ready(function () {
 		<div class="jumbotron">
 			<div class="row jumbotron-grid">
 				<div class="jumbotron-left col-6">
-					<p class="jumbotron-title">전체보기</p>
+					<p class="jumbotron-title">아작스로 바꾸는중</p>
 					<p class="jumbotron-subtitle">비채나만의 특별한 전통주를 지금 만나보세요.</p>
 				</div>
 				<div class="jumbotron-right col-6">
@@ -756,138 +757,11 @@ $(document).ready(function () {
 			</div>
 			
 		</div>
-		
-		<div class="total">총 ${totalCnt}건의 결과가 있어요.</div>
-		
-		<div class="row">
-			<c:choose>
-				<c:when test="${prodFilteredList eq null }">
-					<c:forEach items="${prodList}" var="list">
-						<div class="col-sm-6 col-md-4 col-lg-3">
-							<div class="prod" onclick="location.href = 'prodOne.ko?p_no=${list.p_no}';">
-								<div class="list-image-wrapper">
-									<span class="list-image-span1"> 
-										<span class="list-image-span2"> 
-											<img class="float" src="img/${list.p_img}" title="productimg" alt="productimg" />
-										</span>
-									</span>
-									<div class="product-desc">
-										<div class="product-title">
-											<div>${list.p_name}</div>
-										</div>
-										<div>
-											<span class="product-price">${list.p_price}</span>원
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<c:forEach items="${prodFilteredList}" var="list">
-						<div class="col-sm-6 col-md-4 col-lg-3">
-							<div class="prod" onclick="location.href = 'prodOne.ko?p_no=${list.p_no}';">
-								<div class="list-image-wrapper">
-									<span class="list-image-span1"> 
-										<span class="list-image-span2"> 
-											<img class="float" src="img/${list.p_img}" title="productimg" alt="productimg" />
-										</span>
-									</span>
-									<div class="product-desc">
-										<div class="product-title">
-											<div>${list.p_name}</div>
-										</div>
-										<div>
-											<span class="product-price">${list.p_price}</span>원
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-				</c:otherwise>
-			</c:choose>
-		</div>
-		
-	</div>
-	<!-- 페이징 처리 -->
-	<ul class="pagination list-pagination">
-		<c:choose>
-			<c:when test="${pagination.currPageNo == 1}">
-				<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
-				<span>이전</span>
-			</c:when>
-			<c:otherwise>
-				<!-- 이전 페이지로 이동하는 링크 -->
-				<a href="#" onclick="goToPage(${pagination.currPageNo - 1})"
-					class="btn btn-primary btn-xs">이전</a>
-			</c:otherwise>
-		</c:choose>
-		<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
-			<c:choose>
-				<c:when test="${page eq pagination.currPageNo}">
-					<span>${page}</span>
-				</c:when>
-				<c:otherwise>
-					<a href="#" onclick="goToPage(${page})" class="">${page}</a>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
 
-		<c:choose>
-			<c:when test="${pagination.currPageNo == pagination.pageCnt}">
-				<!-- 현재 페이지가 마지막 페이지인 경우 -->
-				<span>다음</span>
-			</c:when>
-			<c:otherwise>
-				<!-- 다음 페이지로 이동하는 링크 -->
-				<a href="#" onclick="goToPage(${pagination.currPageNo + 1})" class="btn btn-primary btn-xs">다음</a>
-			</c:otherwise>
-		</c:choose>
-	</ul>
-	
-	<div class="list-side-menu" id="list-sideMenu">
-		<div class="list-sidemenu-logo-imagewrapper">
-			<span class="list-sidemenu-image-span1"> 
-				<span class="list-sidemenu-image-span2"> 
-					<img class="list-sidemenu-image" src="img/imgProdlist/비채나 상품페이지.png" />
-				</span>
-			</span>
-		</div>
-		<!-- ul 태그 시작 -->
-		<ul class="pagination list-pagination">
-			<c:choose>
-				<c:when test="${pagination.currPageNo == 1}">
-					<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
-					<span>이전</span>
-				</c:when>
-				<c:otherwise>
-					<!-- 이전 페이지로 이동하는 링크 -->
-					<a href="#" onclick="goToPage(${pagination.currPageNo - 1})" class="btn btn-primary btn-xs">이전</a>
-				</c:otherwise>
-			</c:choose>
-			<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
-				<c:choose>
-					<c:when test="${page eq pagination.currPageNo}">
-						<span>${page}</span>
-					</c:when>
-					<c:otherwise>
-						<a href="#" onclick="goToPage(${page})" class="">${page}</a>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-			<c:choose>
-				<c:when test="${pagination.currPageNo == pagination.pageCnt}">
-					<!-- 현재 페이지가 마지막 페이지인 경우 -->
-					<span>다음</span>
-				</c:when>
-				<c:otherwise>
-					<!-- 다음 페이지로 이동하는 링크 -->
-					<a href="#" onclick="goToPage(${pagination.currPageNo + 1})" class="btn btn-primary btn-xs">다음</a>
-				</c:otherwise>
-			</c:choose>
-		</ul>
+
+<%@ include file="prodFilter.jsp" %>
+		
+
 		<!-- ul 부분 -->
 		<div class="list-side-menu" id="list-sideMenu">
 			<div class="list-sidemenu-logo-imagewrapper">

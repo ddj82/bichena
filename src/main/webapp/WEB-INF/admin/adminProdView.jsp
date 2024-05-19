@@ -70,15 +70,6 @@ input[type="file"]#p_img {
 <%@ include file="/WEB-INF/admin/adminMain.jsp" %>
 <div class="container">
 	<div id="footer">
-<!-- 		<form action="adminProdList.ko" method="post"> -->
-<!-- 			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;"> -->
-<%-- 				<option value="${conditionMapProd['상품명']}">상품명</option> --%>
-<%-- 				<option value="${conditionMapProd['상품번호']}">상품번호</option> --%>
-<%-- 				<option value="${conditionMapProd['주종']}">주종</option> --%>
-<!-- 			</select> -->
-<!-- 			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요."> -->
-<!-- 			<button type="submit" class="btn btn-primary btn-sm">검색</button> -->
-<!-- 		</form> -->
 		<button type="button" class="btn btn-success" onclick="location.href='adminProdInsertBtn.ko';">주류등록</button>
 	</div>
 	<table class="table table-striped">

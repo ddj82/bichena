@@ -45,6 +45,19 @@ table.table.table-order>tbody#myList>tr>td#td-detail {
 button.btn.btn-danger.btn-sm.del[disabled] {
 	opacity: 1;
 }
+div#myModal>div.modal-dialog>div.modal-content tr.tr.detail-tr>td,
+div#myModal>div.modal-dialog>div.modal-content tr.tr.detail-tr>th {
+	text-align: left;
+	padding: 7px;
+}
+div#myModal>div.modal-dialog>div.modal-content table,
+div#myModal>div.modal-dialog>div.modal-content tr.tr.detail-tr {
+	width: 100%;
+}
+/* 디테일모달>컬럼td,th */
+div#myModal>div.modal-dialog>div.modal-content tr>.td.col-td {
+	width: 20%;
+}
 </style>
 </head>
 <body>
@@ -203,12 +216,6 @@ $(document).ready(function(){
     });
 });
 
-// <div style="text-align:left;">
-// <label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk1" onclick="chk()" value="상품 준비중">상품 준비중</label>
-// <label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk2" onclick="chk()" value="배송중">배송중</label>
-// <label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk3" onclick="chk()" value="배송완료">배송완료</label>
-// <label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk4" onclick="chk()" value="취소">취소</label>
-// </div>
 function chk1() {
 	let mychk1 = document.getElementById("mychk1").checked;
 	if (mychk1) {
@@ -315,9 +322,13 @@ function orderDetail(ono,pno){
 			$("#tail-date").append(val.o_date);
 			$("#tail-no-name-tel").append("<p>주문번호 : " + val.o_no + "</p>" + "<div>" + val.u_name + " | " + val.u_tel + "</div>");
 			$("#tail-state").append(val.o_state);
-			$("#tail-prod").append("<tr><td>상품사진</td><td><img src='img/"+ val.p_img +"' width='100px' height='100px'/></td></tr><tr><td>상품명</td><td>"+ val.p_name +"</td></tr><tr><td>수량</td><td>"+ val.o_stock +"</td></tr><tr><td>가격</td><td>"+ val.o_total +"</td></tr>");
-			$("#tail-user").append("<tr><td>받는분</td><td>" + val.u_name + " | " + val.u_tel + "</td></tr><tr><td>주소</td><td>" + val.o_addr + "</td></tr>");
-			$("#tail-pay").append("<tr><th>총 주문 금액</th><th>" + val.o_total + "원</th></tr>");
+			$("#tail-prod").append("<tr class='tr detail-tr'><td class='td col-td'>상품사진 : </td><td><img src='img/"+ val.p_img +"' width='100px' height='100px'/></td></tr><tr class='tr detail-tr'><td class='td col-td'>상품명 : </td><td>"+ val.p_name +"</td></tr><tr class='tr detail-tr'><td class='td col-td'>수량 : </td><td>"+ val.o_stock +"개</td></tr><tr class='tr detail-tr'><td class='td col-td'>가격 : </td><td>"+ val.p_price +"원</td></tr>");
+			
+			
+			$("#tail-user").append("<tr class='tr detail-tr'><td class='td col-td'>받는분 : </td><td> " + val.u_name + " | " + val.u_tel + "</td></tr><tr class='tr detail-tr'><td class='td col-td'>주소 : </td><td>" + val.o_addr + "</td></tr>");
+			
+			
+			$("#tail-pay").append("<tr class='tr detail-tr'><th class='td col-td'>금액 : &nbsp;</th><th>" + val.o_total + "원</th></tr>");
 		}
 	});	
 }
@@ -325,37 +336,33 @@ function orderDetail(ono,pno){
 
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h3 class="modal-title" id="tail-date"></h3>
-                   <br>
-                <div id="tail-no-name-tel">
-                </div>
+                <br>
+                <div id="tail-no-name-tel"></div>
             </div>
                <br>
             <div class="modal-header">
                 <h4 class="modal-title" id="tail-state"></h4>
             </div>
             <div class="modal-header">
-                <div id="tail-prod"></div>
+                <table id="tail-prod"></table>
             </div>
                <br>
             <div class="modal-header">
                 <h4 class="modal-title">받는 분 정보</h4>
             </div>
             <div class="modal-body">
-                <table id="tail-user">
-                </table>
+                <table id="tail-user"></table>
             </div>
             <div class="modal-header">
                 <br>
                 <h4 class="modal-title">계산서</h4>
             </div>
             <div class="modal-body">
-                <table id="tail-pay">
-                </table>
+                <table id="tail-pay"></table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>

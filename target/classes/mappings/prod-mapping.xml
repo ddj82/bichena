@@ -23,42 +23,43 @@
 	<!-- 페이징 -->
 	<select id="prodTotalCnt" resultType="int">
 		SELECT COUNT(*) FROM BC_PROD WHERE 1=1
-		<if test="searchCondition != null">
-			<if test="searchCondition == 'pname' "> AND P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') </if>
-			<if test="searchCondition == 'pno' "> AND P_NO LIKE CONCAT('%', #{searchKeyword}, '%') </if>
-			<if test="searchCondition == 'ptype' "> AND P_TYPE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		<if test="searchKeyword != null and searchKeyword != ''">
+			AND (
+			P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			P_DESC LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			P_MADE LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			P_TYPE LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			P_MAT LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
+		<if test="type != null"> AND P_TYPE = #{type}</if>
+		<if test="sweet != null"> AND P_SW = #{sweet}</if>
+		<if test="acidity != null"> AND P_SU = #{acidity}</if>
+		<if test="carbonic != null"> AND P_SP = #{carbonic}</if>
+		<if test="ingredient != null"> AND P_MAT = #{ingredient}</if>
+		ORDER BY P_NO DESC LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 	
-	<select id="adminProdList" resultType="prodDTO">
-<!-- 		SELECT * FROM BC_PROD WHERE 1=1 -->
-		SELECT p.*, ROW_NUMBER() OVER() AS rnum FROM BC_PROD p WHERE 1=1 
-		<if test="searchCondition != null">
-			<if test="searchCondition == 'pname' "> AND P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') </if>
-			<if test="searchCondition == 'pno' "> AND P_NO LIKE CONCAT('%', #{searchKeyword}, '%') </if>
-			<if test="searchCondition == 'ptype' "> AND P_TYPE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
-		</if>
-<!-- 		ORDER BY P_NO DESC -->
-		ORDER BY rnum ASC
-		LIMIT #{sizePerPage} OFFSET #{startList}
-	</select>
-	
-	<select id="prodFilteredList" resultMap="prodList">
-		SELECT * FROM BC_PROD WHERE 
-		<if test="selectedFilterType != null">
-			<if test="selectedFilterType == '주종'"> P_TYPE = #{selectedFilter}</if>
-			<if test="selectedFilterType == '단맛'"> P_SW = #{selectedFilter}</if>
-			<if test="selectedFilterType == '신맛'"> P_SU = #{selectedFilter}</if>
-			<if test="selectedFilterType == '탄산'"> P_SP = #{selectedFilter}</if>
-			<if test="selectedFilterType == '원료'"> P_MAT = #{selectedFilter}</if>
-		</if>
-		ORDER BY P_NO DESC
-		LIMIT #{sizePerPage} OFFSET #{startList}
-	</select>
-	
+	<!-- 필터링 된 페이지들 가져오기(실페 jsp에서 보이는 내용들) -->
 	<select id="prodList" resultMap="prodList">
-		SELECT * FROM BC_PROD
-		ORDER BY P_NO DESC
+<!-- 		SELECT * FROM BC_PROD WHERE 1=1 -->
+		SELECT p.*, ROW_NUMBER() OVER() AS rnum FROM BC_PROD p WHERE 1=1
+		<if test="searchKeyword != null and searchKeyword != ''">
+			AND (
+			P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			P_DESC LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			P_MADE LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			P_TYPE LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			P_MAT LIKE CONCAT('%', #{searchKeyword}, '%') OR
+			EDITHTML LIKE CONCAT('%', #{searchKeyword}, '%')
+			)
+		</if>
+		<if test="type != null"> AND P_TYPE = #{type}</if>
+		<if test="sweet != null"> AND P_SW = #{sweet}</if>
+		<if test="acidity != null"> AND P_SU = #{acidity}</if>
+		<if test="carbonic != null"> AND P_SP = #{carbonic}</if>
+		<if test="ingredient != null"> AND P_MAT = #{ingredient}</if>
+<!-- 		ORDER BY P_NO DESC  -->
+		ORDER BY rnum ASC
 		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 	

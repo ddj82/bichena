@@ -26,10 +26,6 @@ public class ProdVO {
 
 	private MultipartFile uploadFile; // pthumbnailimg
 	
-	// 검색을 위한 변수
-	private String searchCondition;
-	private String searchKeyword;
-
 	// 페이징 처리를 위한 변수
 	private int currPageNo; // 현재 페이지 번호
 	private int sizePerPage = 16; // 한 페이지당 보여질 리스트 개수
@@ -43,9 +39,15 @@ public class ProdVO {
 	private boolean prev; // 이전 페이지 여부
 	private boolean next; // 다음 페이지 여부
 	
+	// 필터처리한 변수들
+	private String type;
+	private String sweet;
+	private String acidity;
+	private String carbonic;
+	private String ingredient;
 	
-	private String selectedFilterType;
-	private String selectedFilter;
+	// 검색을 위한 변수
+	private String searchKeyword;
 
 	public int getP_no() {
 		return p_no;
@@ -207,13 +209,6 @@ public class ProdVO {
 				+ ", p_cap=" + p_cap + ", p_stock=" + p_stock + ", uploadFile=" + uploadFile + "]";
 	}
 
-	public String getSearchCondition() {
-		return searchCondition;
-	}
-
-	public void setSearchCondition(String searchCondition) {
-		this.searchCondition = searchCondition;
-	}
 
 	public String getSearchKeyword() {
 		return searchKeyword;
@@ -310,19 +305,6 @@ public class ProdVO {
 	public void setNext(boolean next) {
 		this.next = next;
 	}
-	
-	public String getSelectedFilterType() {
-		return selectedFilterType;
-	}
-	public void setSelectedFilterType(String selectedFilterType) {
-		this.selectedFilterType = selectedFilterType;
-	}
-	public String getSelectedFilter() {
-		return selectedFilter;
-	}
-	public void setSelectedFilter(String selectedFilter) {
-		this.selectedFilter = selectedFilter;
-	}
 
 	// 페이지 정보 설정 메서드
 	public void pageInfo(int currPageNo, int range, int totalCnt) { // 2, 1, 52
@@ -351,4 +333,46 @@ public class ProdVO {
 			this.next = false;
 		}
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public String getSweet() {
+		return sweet;
+	}
+
+	public void setSweet(String sweet) {
+		this.sweet = sweet;
+	}
+
+	public String getAcidity() {
+		return acidity;
+	}
+
+	public void setAcidity(String acidity) {
+		this.acidity = acidity;
+	}
+
+	public String getCarbonic() {
+		return carbonic;
+	}
+
+	public void setCarbonic(String carbonic) {
+		this.carbonic = carbonic;
+	}
+
+	public String getIngredient() {
+		return ingredient;
+	}
+
+	public void setIngredient(String ingredient) {
+		this.ingredient = ingredient;
+	}
+	
+	
 }

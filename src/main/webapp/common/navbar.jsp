@@ -53,10 +53,6 @@ pageEncoding="UTF-8"%>
         color: black;
       }
 
-      a:hover {
-/*         color: black; */
-      }
-
       .login_signup {
         display: flex;
         justify-content: end;
@@ -207,6 +203,61 @@ pageEncoding="UTF-8"%>
     font-size: 12px;
     border-radius : 15px;
 }
+
+      /* 부트스트랩 btn-primary */
+      .btn-primary {
+	    color: #fff;
+	    background-color: #005930;
+	    border-color: #005930;
+	  }
+	  .btn-primary:hover,
+	  .btn-primary:focus,
+	  .btn-primary:active,
+	  .btn-primary.active.focus,
+	  .btn-primary.active:focus,
+	  .btn-primary.active:hover,
+	  .btn-primary:active.focus,
+	  .btn-primary:active:focus,
+	  .btn-primary:active:hover,
+	  .open>.dropdown-toggle.btn-primary.focus,
+	  .open>.dropdown-toggle.btn-primary:focus,
+	  .open>.dropdown-toggle.btn-primary:hover,
+	  .btn-primary:not(:disabled):not(.disabled):active  {
+	    color: #fff;
+	    background-color:  #2d4739;
+	    border-color:  #2d4739;
+	  }
+	  .btn-primary:not(:disabled):not(.disabled):active:focus,
+	  .btn-primary:focus {
+	  	box-shadow: 0 0 0 .2rem #01710080;
+	  }
+	  
+      .btn-outline-primary {
+	    color: #005930;
+/* 	    background-color: #005930; */
+	    border-color: #005930;
+	  }
+	  .btn-outline-primary:hover,
+	  .btn-outline-primary:focus,
+	  .btn-outline-primary:active,
+	  .btn-outline-primary.active.focus,
+	  .btn-outline-primary.active:focus,
+	  .btn-outline-primary.active:hover,
+	  .btn-outline-primary:active.focus,
+	  .btn-outline-primary:active:focus,
+	  .btn-outline-primary:active:hover,
+	  .open>.dropdown-toggle.btn-primary.focus,
+	  .open>.dropdown-toggle.btn-primary:focus,
+	  .open>.dropdown-toggle.btn-primary:hover,
+	  .btn-outline-primary:not(:disabled):not(.disabled):active  {
+	    color: #fff;
+	    background-color:  #2d4739;
+	    border-color:  #2d4739;
+	  }
+	  .btn-outline-primary:not(:disabled):not(.disabled):active:focus,
+	  .btn-outline-primary:focus {
+	  	box-shadow: 0 0 0 .2rem #01710080;
+	  }
 
 
       @media (max-width: 575px) {
@@ -427,28 +478,29 @@ $(document).ready(function () {
                 style="width: 100px; margin: 15px 0"
               />
             </div>
-            <form class="form-inline">
-              <div class="search-container">
-                <svg
-                  clip-rule="evenodd"
-                  fill-rule="evenodd"
-                  stroke-linejoin="round"
-                  stroke-miterlimit="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="m15.97 17.031c-1.479 1.238-3.384 1.985-5.461 1.985-4.697 0-8.509-3.812-8.509-8.508s3.812-8.508 8.509-8.508c4.695 0 8.508 3.812 8.508 8.508 0 2.078-.747 3.984-1.985 5.461l4.749 4.75c.146.146.219.338.219.531 0 .587-.537.75-.75.75-.192 0-.384-.073-.531-.22zm-5.461-13.53c-3.868 0-7.007 3.14-7.007 7.007s3.139 7.007 7.007 7.007c3.866 0 7.007-3.14 7.007-7.007s-3.141-7.007-7.007-7.007z"
-                    fill-rule="nonzero"
-                  />
-                </svg>
-                <input
-                  type="search"
-                  aria-label="Search"
-                  placeholder="무엇을 찾고 계신가요?"
-                />
-              </div>
-            </form>
+			<form class="form-inline" action="prodList.ko" method="GET">
+			    <div class="search-container">
+			        <svg
+			            clip-rule="evenodd"
+			            fill-rule="evenodd"
+			            stroke-linejoin="round"
+			            stroke-miterlimit="2"
+			            viewBox="0 0 24 24"
+			            xmlns="http://www.w3.org/2000/svg"
+			        >
+			            <path
+			                d="m15.97 17.031c-1.479 1.238-3.384 1.985-5.461 1.985-4.697 0-8.509-3.812-8.509-8.508s3.812-8.508 8.509-8.508c4.695 0 8.508 3.812 8.508 8.508 0 2.078-.747 3.984-1.985 5.461l4.749 4.75c.146.146.219.338.219.531 0 .587-.537.75-.75.75-.192 0-.384-.073-.531-.22zm-5.461-13.53c-3.868 0-7.007 3.14-7.007 7.007s3.139 7.007 7.007 7.007c3.866 0 7.007-3.14 7.007-7.007s-3.141-7.007-7.007-7.007z"
+			                fill-rule="nonzero"
+			            />
+			        </svg>
+			        <input
+			            type="search"
+			            name="searchKeyword"
+			            aria-label="Search"
+			            placeholder="무엇을 찾고 계신가요?"
+			        />
+			    </div>
+			</form>
           </div>
           <div class="login_signup">
             <c:choose>

@@ -173,7 +173,7 @@ public class BichenaController {
 		}
 
 		noticeService.insertNotice(vo);
-		return "/getNoticeList.ko";
+		return "redirect:/getNoticeList.ko";
 	}
 
 	// 공지 수정
@@ -229,7 +229,7 @@ public class BichenaController {
 		System.out.println("공지 업데이트 확인부분 : " + vo);
 		noticeService.updateNotice(vo);
 		System.out.println("공지 업데이트 확인부분2 : " + vo);
-		return "getNoticeList.ko";
+		return "redirect:/getNoticeList.ko";
 	}
 
 	// 공지 삭제
@@ -336,7 +336,7 @@ public class BichenaController {
 		vo.setFaq_no(faq_no);
 		System.out.println("Faq 업로드 : " + vo);
 		faqService.insertFaq(vo);
-		return "/getFaqList.ko";
+		return "redirect:/getFaqList.ko";
 	}
 
 	// Faq 수정
@@ -364,7 +364,7 @@ public class BichenaController {
 		faqService.deleteFaq(vo);
 		faqService.updateFaq_no1(vo);
 		faqService.updateFaq_no2(vo);
-		return "getFaqList.ko";
+		return "redirect:/getFaqList.ko";
 	}
 
 	// Faq 목록
@@ -740,72 +740,55 @@ public class BichenaController {
 	}
 
 	@GetMapping("/prodList.ko")
-	public String prodList(ProdVO vo, Model model,
-			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String currPageNo,
-			@RequestParam(value = "range", required = false, defaultValue = "1") String range, HttpSession session) {
-
+	public ModelAndView prodListAndFilteredProducts(ProdVO vo, ModelAndView mav,
+			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String prodCurrPageNo,
+			@RequestParam(value = "range", required = false, defaultValue = "1") String prodRange,
+			@RequestParam(value = "type", required = false) String type,
+			@RequestParam(value = "sweet", required = false) String sweet,
+			@RequestParam(value = "acidity", required = false) String acidity,
+			@RequestParam(value = "carbonic", required = false) String carbonic,
+			@RequestParam(value = "ingredient", required = false) String ingredient,
+			@RequestParam(value = "searchKeyword", required = false) String searchKeyword, HttpSession session) {
+		int currPageNo = 0;
+		int range = 0;
 		int totalCnt = prodService.prodTotalCnt(vo);
-		System.out.printf("currPageNo: %s /range: %s / totalCnt : %d ", currPageNo, range, totalCnt);
-		System.out.println();
-		vo.pageInfo(Integer.parseInt(currPageNo), Integer.parseInt(range), totalCnt);
 
-		List<ProdVO> prodList = prodService.prodList(vo);
-		model.addAttribute("totalCnt", totalCnt);
-		model.addAttribute("pagination", vo);
-		model.addAttribute("prodList", prodList);
-
-		return "/WEB-INF/user/prodList.jsp";
-	}
-
-	// productFiltered 목록
-	@GetMapping("/getFilteredProducts.ko")
-	public String getFilteredProducts(ProdVO vo, Model mav,
-			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String currPageNo,
-			@RequestParam(value = "range", required = false, defaultValue = "1") String range,
-			@RequestParam(value = "selectedFilterType") String selectedFilterType,
-			@RequestParam(value = "selectedFilter") String selectedFilter, HttpSession session) {
-
-		List<ProdVO> filteredProducts = null;
-
-		if (selectedFilterType.equals("주종")) {
-			vo = new ProdVO();
-			vo.setSelectedFilterType(selectedFilterType);
-			vo.setSelectedFilter(selectedFilter);
-			filteredProducts = prodService.prodFilteredList(vo);
-		} else if (selectedFilterType.equals("단맛")) {
-			vo = new ProdVO();
-			vo.setSelectedFilterType(selectedFilterType);
-			vo.setSelectedFilter(selectedFilter);
-			filteredProducts = prodService.prodFilteredList(vo);
-		} else if (selectedFilterType.equals("신맛")) {
-			vo = new ProdVO();
-			vo.setSelectedFilterType(selectedFilterType);
-			vo.setSelectedFilter(selectedFilter);
-			filteredProducts = prodService.prodFilteredList(vo);
-		} else if (selectedFilterType.equals("탄산")) {
-			vo = new ProdVO();
-			vo.setSelectedFilterType(selectedFilterType);
-			vo.setSelectedFilter(selectedFilter);
-			filteredProducts = prodService.prodFilteredList(vo);
-		} else if (selectedFilterType.equals("원료")) {
-			vo = new ProdVO();
-			vo.setSelectedFilterType(selectedFilterType);
-			vo.setSelectedFilter(selectedFilter);
-			filteredProducts = prodService.prodFilteredList(vo);
+		try {
+			currPageNo = Integer.parseInt(prodCurrPageNo);
+			range = Integer.parseInt(prodRange);
+		} catch (NumberFormatException e) {
+			currPageNo = 1;
+			range = 1;
 		}
 
-		int totalCnt = filteredProducts.size();
-		System.out.println("currPageNo: " + currPageNo + ", range:  " + range + ", totalCnt :  " + totalCnt);
-		vo.pageInfo(Integer.parseInt(currPageNo), Integer.parseInt(range), totalCnt);
+		vo.pageInfo(currPageNo, range, totalCnt);
+		if (type != null) {
+			mav.addObject("type", type);
+		}
+		if (sweet != null) {
+			mav.addObject("sweet", sweet);
+		}
+		if (acidity != null) {
+			mav.addObject("acidity", acidity);
+		}
+		if (carbonic != null) {
+			mav.addObject("carbonic", carbonic);
+		}
+		if (ingredient != null) {
+			mav.addObject("ingredient", ingredient);
+		}
+		if (searchKeyword != null && !searchKeyword.isEmpty()) {
+			mav.addObject("searchKeyword", searchKeyword);
+			vo.setSearchKeyword(searchKeyword); // ProdVO에 검색어 필드를 추가하고 setter를 사용
+		}
 
-		mav.addAttribute("totalCnt", totalCnt);
-		mav.addAttribute("pagination", vo);
-		mav.addAttribute("prodFilteredList", filteredProducts); // parameter로 때온 값들을 보내준다.
+		mav.addObject("totalCnt", totalCnt);
+		mav.addObject("pagination", vo);
+		mav.addObject("prodList", prodService.prodList(vo));
+//		mav.setViewName("WEB-INF/user/prodList.jsp"); 원래대로
+		mav.setViewName("WEB-INF/user/prodList2.jsp");
 
-		System.out.println(selectedFilterType);
-		System.out.println(selectedFilter);
-
-		return "WEB-INF/user/prodList.jsp";
+		return mav;
 	}
 
 	@RequestMapping("/prodOne.ko")
@@ -936,8 +919,6 @@ public class BichenaController {
 
 	@RequestMapping("/qnaListMy.ko")
 	public String qnaListMy(HttpSession session, QnaVO vo,
-//		@RequestParam(value = "searchCondition", defaultValue = "TITLE", required = false) String condition,
-//		@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String keyword,
 			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
 			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
 
@@ -945,7 +926,7 @@ public class BichenaController {
 		vo.setQ_writer(q_writer);
 		int currPageNo = 0;
 		int range = 0;
-		int totalCnt = qnaService.qnaTotalCnt(vo);
+		int totalCnt = qnaService.qnaMyTotalCnt(vo);
 
 		try {
 			currPageNo = Integer.parseInt(NotcurrPageNo);
@@ -956,36 +937,12 @@ public class BichenaController {
 		}
 
 		vo.pageInfo(currPageNo, range, totalCnt);
-//		if (vo.getFaq_title() == null)
-//		vo.setFaq_title("");
-		model.addAttribute("pagination", vo);
+		model.addAttribute("paginationMy", vo);
 
 		List<QnaVO> qnaList = qnaService.qnaListMy(vo);
 		model.addAttribute("qnaList", qnaList);
 		return "/WEB-INF/user/qnaList.jsp";
 	}
-//		
-//		int currPageNo = 0;
-//		int range = 0;
-//		int totalCnt = qnaService.qnaTotalCnt(vo);
-//		
-//		try {
-//			currPageNo = Integer.parseInt(NotcurrPageNo);
-//			range = Integer.parseInt(Notrange);
-//		} catch (NumberFormatException e) {
-//			currPageNo = 1;
-//			range = 1;
-//		}
-//		
-//		vo.pageInfo(currPageNo, range, totalCnt);
-////		if (vo.getFaq_title() == null)
-////		vo.setFaq_title("");
-//		model.addAttribute("pagination", vo);
-//		
-//		List<QnaVO> qnaList = qnaService.qnaList(vo);
-//		model.addAttribute("qnaList", qnaList);
-//		return "/WEB-INF/user/qnaList.jsp";
-//	}
 
 	@GetMapping("/qnaView.ko")
 	public String qnaView(@RequestParam(value = "q_no") String q_no, Model model) {
@@ -1117,8 +1074,8 @@ public class BichenaController {
 
 	@RequestMapping("/adminOrderList.ko")
 	public String adminOrderList(OrderVO vo,
-		@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
-		@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
+			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
+			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
 
 		int currPageNo = 0;
 		int range = 0;
@@ -1134,44 +1091,38 @@ public class BichenaController {
 
 		vo.pageInfo(currPageNo, range, totalCnt);
 		model.addAttribute("pagination", vo);
-		
+
 		List<OrderVO> adminOrderList = orderService.adminOrderList(vo);
 		List<OrderVO> adminOrderRepeat = orderService.adminOrderRepeat(vo);
-		
-		for(int i = 0; i < adminOrderRepeat.size(); i++) {
+
+		for (int i = 0; i < adminOrderRepeat.size(); i++) {
 			int a = 0;
-			for(int j = 0; j < adminOrderList.size(); j++) {
+			for (int j = 0; j < adminOrderList.size(); j++) {
 				int total = adminOrderList.get(j).getO_total();
-				if(adminOrderRepeat.get(i).getO_no().equals(adminOrderList.get(j).getO_no())) {
-					a += total;					
+				if (adminOrderRepeat.get(i).getO_no().equals(adminOrderList.get(j).getO_no())) {
+					a += total;
 				}
 			}
 			adminOrderRepeat.get(i).setO_total(a);
 		}
-		
+
 		model.addAttribute("adminOrderRepeat", adminOrderRepeat);
 		model.addAttribute("adminOrderList", adminOrderList);
 
 		return "/WEB-INF/admin/adminOrderList.jsp";
 	}
 
-//	@GetMapping("/adminOrderDetail.ko")
-//	@ResponseBody
-//	public Object adminOrderDetail(@RequestParam(value = "o_no") String o_no, Model model) {
-//		List<OrderVO> adminOrderDetail = orderService.myOrderDetail(o_no);
-//		model.addAttribute("adminOrderDetail", adminOrderDetail);
-//		return adminOrderDetail;
-//	}
 	@GetMapping("/adminOrderDetail.ko")
-	   @ResponseBody
-	   public Object adminOrderDetail(@RequestParam(value = "o_no") String o_no, @RequestParam(value = "p_no") String p_no, Model model) {
-	      OrderVO vo = new OrderVO();
-	      vo.setP_no(p_no);
-	      vo.setO_no(o_no);
-	      vo = orderService.adminOrderDetail(vo);
-	      model.addAttribute("adminOrderDetail", vo);
-	      return vo;
-	   }
+	@ResponseBody
+	public Object adminOrderDetail(@RequestParam(value = "o_no") String o_no, @RequestParam(value = "p_no") String p_no,
+			Model model) {
+		OrderVO vo = new OrderVO();
+		vo.setP_no(p_no);
+		vo.setO_no(o_no);
+		vo = orderService.adminOrderDetail(vo);
+		model.addAttribute("adminOrderDetail", vo);
+		return vo;
+	}
 
 	@RequestMapping("/adminQnaView.ko")
 	public String adminQnaView(@RequestParam(value = "q_no") String q_no, Model model) {
@@ -1193,11 +1144,10 @@ public class BichenaController {
 	}
 
 	@RequestMapping("/adminProdList.ko")
-	public String adminProdList(ProdVO vo,
-			@RequestParam(value = "searchCondition", defaultValue = "pname", required = false) String condition,
-			@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String keyword,
+	public String adminProdList(ProdVO vo, Model model,
+			@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String searchKeyword,
 			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
-			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
+			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange) {
 
 		int currPageNo = 0;
 		int range = 0;
@@ -1215,12 +1165,15 @@ public class BichenaController {
 		if (vo.getP_name() == null) {
 			vo.setP_name("");
 		}
+		if (searchKeyword != null && !searchKeyword.isEmpty()) {
+			model.addAttribute("searchKeyword", searchKeyword);
+			vo.setSearchKeyword(searchKeyword);
+		}
 
-		List<ProdVO> adminProdList = prodService.adminProdList(vo);
+		List<ProdVO> adminProdList = prodService.prodList(vo);
 		model.addAttribute("pagination", vo);
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("condition", condition);
 		model.addAttribute("adminProdList", adminProdList);
+		System.out.println(adminProdList);
 		return "/WEB-INF/admin/adminProdView.jsp";
 	}
 
@@ -1366,30 +1319,30 @@ public class BichenaController {
 		}
 
 	}
-	
+
 	@RequestMapping("/adminProdDelete.ko")
 	public String adminProdDelete(@RequestParam("p_no") String p_no) throws IllegalStateException, IOException {
 		// 기존 상품정보
 		ProdVO oldvo = prodService.prodOne(p_no);
-		
+
 		// 기존 상품 상세페이지jsp파일
 		File oldFile = new File("C:/swork/bichena/src/main/webapp/WEB-INF/product/" + oldvo.getEditfile());
 		// 기존 상품 이미지파일
 		File oldImg = new File("C:/swork/bichena/src/main/webapp/img/" + oldvo.getP_img());
-		
+
 		if (oldFile.exists()) {
 			oldImg.delete(); // 기존 이미지 있으면 삭제
 			System.out.println("기존 이미지 삭제");
 		}
-		
+
 		// 기존 상품페이지jsp파일 삭제
 		if (oldFile.exists()) {
 			oldFile.delete(); // 상세페이지jsp 있으면 삭제
 			System.out.println("기존 상세페이지jsp 삭제");
 		}
-		
+
 		int cnt = prodService.deleteProduct(p_no);
-		
+
 		if (cnt > 0) {
 			System.out.println("삭제완료");
 			return "redirect:adminProdList.ko";
@@ -1397,7 +1350,7 @@ public class BichenaController {
 			System.out.println("삭제실패");
 			return "redirect:adminProdList.ko";
 		}
-		
+
 	}
 
 	// 관리자 회원 목록 (+ select option)
@@ -1517,17 +1470,17 @@ public class BichenaController {
 		conditionMapRev.put("작성자", "unick");
 		return conditionMapRev;
 	}
-	
+
 	// 마이페이지 -> 탈퇴 안내페이지로 이동
-		@RequestMapping("/delAcc.ko")
-		public String delAcc(UsersVO vo) {
-			return "/WEB-INF/login/delAccountInfo.jsp";
-		}
-		
-		// 탈퇴 안내페이지 -> 비번 확인 페이지로(비번 확인 후 탈퇴)
-		@RequestMapping("/delConfirm.ko")
-		public String delConfirm(UsersVO vo) {
-			return "/WEB-INF/login/delAccount.jsp";
-		}
-	
+	@RequestMapping("/delAcc.ko")
+	public String delAcc(UsersVO vo) {
+		return "/WEB-INF/login/delAccountInfo.jsp";
+	}
+
+	// 탈퇴 안내페이지 -> 비번 확인 페이지로(비번 확인 후 탈퇴)
+	@RequestMapping("/delConfirm.ko")
+	public String delConfirm(UsersVO vo) {
+		return "/WEB-INF/login/delAccount.jsp";
+	}
+
 }

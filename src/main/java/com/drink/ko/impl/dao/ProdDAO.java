@@ -22,15 +22,9 @@ public class ProdDAO {
 		return mybatis.selectList("ProdDAO.prodList", vo);
 	}
 	
-	public List<ProdVO> adminProdList(ProdVO vo) {
-		return mybatis.selectList("ProdDAO.adminProdList", vo);
-	}
-	
 	public int prodTotalCnt(ProdVO vo) {
 		return mybatis.selectOne("ProdDAO.prodTotalCnt", vo);
 	}
-	
-	
 	
 	public int getPnoMaxNum() {
 		return mybatis.selectOne("ProdDAO.getPnoMaxNum");
@@ -41,11 +35,6 @@ public class ProdDAO {
 	}
 	public int updateProduct(ProdVO vo) { //셀렉트 치고 수정버튼 누르면 올 것
 		return mybatis.update("ProdDAO.updateProduct", vo);
-	}
-	
-	
-	public List<ProdVO> prodFilteredList(ProdVO vo) {
-		return mybatis.selectList("ProdDAO.prodFilteredList", vo);
 	}
 	
 	public int deleteProduct(String p_no) {
