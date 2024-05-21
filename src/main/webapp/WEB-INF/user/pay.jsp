@@ -7,23 +7,34 @@
 		<!-- 상품 이름 -->
 		<input type="hidden" id="productname" name="productname" value="${prodOne.p_name}" readonly>
 	</div>
-	<div>
-		<label for="stock">수량 :</label> <br>
-		<button onclick="stockMinus();"> - </button>
-		<input type="number" id="stock" name="stock" placeholder="개수를 입력하세요." value="1">
-		<button onclick="stockPlus();"> + </button>
-<%-- 		<button type="button" onclick="Total(${prodOne.p_price})">확인</button> --%>
+	
+	<div style="margin-top:10px;"><small>수량</small></div>
+	<div style="text-align:center;margin-top:5px;">
+		<div class="btn-group" style="width:100%;height: 35px;">
+			<button class="btn btn-primary btn-sm" onclick="stockMinus();" style="width:30%;vertical-align: top;"> - </button>
+			<input type="number" id="stock" name="stock" placeholder="개수를 입력하세요." value="1" style="width:50%;text-align:center;">
+			<button class="btn btn-primary btn-sm" onclick="stockPlus();" style="width:30%;vertical-align: top;"> + </button>
+		</div>
 	</div>
-	<div>
-		<label for="total">총 가격 :</label> <br>
-		<input type="text" id="total" name="total" value="${prodOne.p_price}">
+	
+	<div style="margin-top:10px;"><small>가격</small></div>
+	<div style="text-align:center;margin-top:5px;">
+		<input type="text" id="total" name="total" value="${prodOne.p_price}" style="text-align:center;width:100%;height: 35px;" readonly>
 		<span id="defaultPrice" style="display:none;">${prodOne.p_price}</span>
 	</div>
-	<div>
-		<button type="button" onclick="addCart('${userID}')">장바구니 담기</button>
-		<button type="button" onclick="showCart()">내 장바구니 보기</button>
+	<div style="text-align:center; margin-top:15px;">
+		<button class="btn btn-primary btn-sm" type="button" onclick="addCart('${userID}')" style="text-align:center;width:100%;height: 40px;font-weight: bolder;">장바구니 담기</button>
 	</div>
 </div>
+
+
+
+
+
+
+
+
+
 <script>
 
 // 입력 내용이 변경될 때마다 호출되는 이벤트 핸들러를 추가합니다.

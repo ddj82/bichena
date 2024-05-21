@@ -14,6 +14,7 @@ location.href="main.ko";
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/adminpage.css"/>
 <title>Insert title here</title>
 <style>
 table th {
@@ -62,7 +63,9 @@ div#myModal>div.modal-dialog>div.modal-content tr>.td.col-td {
 </head>
 <body>
 <%@ include file="/WEB-INF/admin/adminMain.jsp" %>
-<div class="container">
+<div class="container" id="container-MemList">
+	<h2 style="margin-bottom:20px; font-weight:bold; font-size: 24px;">전체 주문 목록</h2>
+	<div class="divTable">
 	<table class="table table-bordered">
 		<thead>
 			<tr>
@@ -153,40 +156,45 @@ div#myModal>div.modal-dialog>div.modal-content tr>.td.col-td {
 		</tbody>
 	</table>
 	<!-- 페이징 처리 -->
-	<c:choose>
-	    <c:when test="${pagination.currPageNo == 1}">
-	        <!-- 현재 페이지가 첫 번째 페이지인 경우 -->
-	        <span>이전</span>
-	    </c:when>
-	    <c:otherwise>
-	        <!-- 이전 페이지로 이동하는 링크 -->
-	        <a href="adminOrderList.ko?currPageNo=${pagination.currPageNo - 1}" class="btn btn-primary btn-xs">이전</a>
-	    </c:otherwise>
-	</c:choose>
-	
-       <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
-           <c:choose>
-               <c:when test="${page eq pagination.currPageNo}">
-                   <span>${page}</span>
-               </c:when>
-               <c:otherwise>
-                   <a href="adminOrderList.ko?currPageNo=${page}" class="">${page}</a>
-               </c:otherwise>
-           </c:choose>
-       </c:forEach>
+	<ul class="pagination list-pagination">
+		<c:choose>
+			<c:when test="${pagination.currPageNo == 1}">
+				<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
+				<li class="page-item"><a class="page-link">이전</a></li>
+			</c:when>
+			<c:otherwise>
+				<li class="page-item">
+           			 <a class="page-link" href="adminOrderList.ko?currPageNo=${pagination.currPageNo - 1}">이전</a>
+         		</li>
+			</c:otherwise>
+		</c:choose>
+		<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
+			<c:choose>
+				<c:when test="${page eq pagination.currPageNo}">
+					<li class="page-item active"><a class="page-link">${page}</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item">
+           			 	<a class="page-link" href="adminOrderList.ko?currPageNo=${page}">${page}</a>
+         			</li>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
 
-	<c:choose>
-	    <c:when test="${pagination.currPageNo == pagination.pageCnt}">
-	        <!-- 현재 페이지가 마지막 페이지인 경우 -->
-	        <span>다음</span>
-	    </c:when>
-	    <c:otherwise>
-	        <!-- 다음 페이지로 이동하는 링크 -->
-	        <a href="adminOrderList.ko?currPageNo=${pagination.currPageNo + 1}" class="btn btn-primary btn-xs">다음</a>
-	    </c:otherwise>
-	</c:choose>
-	<br>
-	<br>
+		<c:choose>
+			<c:when test="${pagination.currPageNo == pagination.pageCnt}">
+				<!-- 현재 페이지가 마지막 페이지인 경우 -->
+				<li class="page-item"><a class="page-link">다음</a></li>
+			</c:when>
+			<c:otherwise>
+				<!-- 다음 페이지로 이동하는 링크 -->
+					<li class="page-item">
+           			 	<a class="page-link" href="adminOrderList.ko?currPageNo=${pagination.currPageNo + 1}">다음</a>
+         			</li>
+			</c:otherwise>
+		</c:choose>
+	</ul>
+	</div>
 </div>
 <script>
 $(document).ready(function(){

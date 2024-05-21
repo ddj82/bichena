@@ -26,7 +26,7 @@
 	margin-top: 10px;
 	width: 300px;
 	padding: 5px;
-	background-color: rgb(0, 150, 243);
+	background-color: #005930;
 	color: rgb(255, 255, 255);
 	border-radius: 5px;
 	border: none;
@@ -114,7 +114,6 @@ input[type="checkbox"]:checked {
 }
 
 span.must {
-	color: #1890ff;
 	text-decoration-line: none;
 }
 
@@ -123,14 +122,21 @@ a {
 }
 
 a:visited {
-	color: #1890ff;
+	text-decoration-line: none;
 }
 
 span.all {
 	font-weight: bold;
 }
 #clauseAll {
+	accent-color: #005930;
 	margin-right: 10px;
+}
+#clause1 {
+	accent-color: #005930;
+}
+#clause2 {
+	accent-color: #005930;
 }
 .arrow {
 	margin-bottom: 5px;
@@ -190,7 +196,7 @@ span.all {
 					<label>
 						<a href="serviceTerms.ko">
 							[필수]서비스 이용약관 
-							<img src="img/imguser/arrow-right.png" class="arrow" alt="약관 페이지" width="10px" height="10px">
+							<img src="img/imgUser/arrow-right.png" class="arrow" alt="약관 페이지" width="10px" height="10px">
 						</a>
 					</label>
 				</span><br><br> 
@@ -200,7 +206,7 @@ span.all {
 					<label>
 						<a href="personalTerms.ko">
 							[필수]개인정보 수집 및 이용 
-							<img src="img/imguser/arrow-right.png" class="arrow" alt="약관 페이지" width="10px" height="10px">
+							<img src="img/imgUser/arrow-right.png" class="arrow" alt="약관 페이지" width="10px" height="10px">
 						</a>
 					</label>
 				</span><br><br>

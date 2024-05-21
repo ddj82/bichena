@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<nav class="navbar navbar-expand-sm fixed-bottom" id="nav-footer">
+<nav class="navbar navbar-expand-sm" id="nav-footer">
 	<div class="container" id="div-container">
 		<div class="prjtnm" id="div-prjtnm">비채나</div>
 		<p id="ptag" style="font-size:14px;"><a href="adminLoginPage.ko" id="footer-a">관리자페이지</a></p>

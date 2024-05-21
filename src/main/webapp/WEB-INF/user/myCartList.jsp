@@ -44,11 +44,23 @@
     function CartItems(items) {
         var output = "";
         for (var i = 0; i < items.length; i++) {
-            output += "<tr class='cart-item'><td><input type='checkbox' name='chk' class='item-checkbox' value=" + items[i].p_no + "></td>" + 
-            "<td><img class='prodimg' src='img/" + items[i].p_img + "' alt='상품 이미지' class='product-image'></td>" + 
-            "<td class='product-name'>" + items[i].p_name + "</td>" + 
-            "<td class='button-container'><button class='btn' onclick='minus(" + i + ", \"" + items[i].p_no + "\")'>-</button><input type='text' id='qty_" + i + "' value='" + items[i].c_stock + "' readonly><button class='btn' onclick='plus(" + i + ", \"" + items[i].p_no + "\")'>+</button></td>" + 
-            "<td class='right-align product-price' id='price_" + i + "'>" + items[i].c_total.toLocaleString() + "원</td></tr>";
+            output += "<tr class='cart-item'>" +
+                "<td class='checkbox_td'><input type='checkbox' name='chk' class='item-checkbox' value='" + items[i].p_no + "'></td>" +
+                "<td class='imgclass'><img class='prodimg' src='img/" + items[i].p_img + "' alt='상품 이미지'></td>" +
+                "<td class='product-details'>" +
+                    "<div class='product-info'>" +
+                        "<div class='product-name'>" + items[i].p_name + "</div>" +
+                        "<div class='qty-container'>" +
+                            "<button class='btn' onclick='minus(" + i + ", \"" + items[i].p_no + "\")'>-</button>" +
+                            "<input type='text' id='qty_" + i + "' value='" + items[i].c_stock + "' readonly>" +
+                            "<button class='btn' onclick='plus(" + i + ", \"" + items[i].p_no + "\")'>+</button>" +
+                        "</div>" +
+                        "<div class='price-container'>" +
+                            "<span class='right-align product-price' id='price_" + i + "'>" + items[i].c_total.toLocaleString() + "원</span>" +
+                        "</div>" +
+                    "</div>" +
+                "</td>" +
+            "</tr>";
         }
         $("#MycartList").html(output);
     }
@@ -66,49 +78,89 @@
 
         var newQty = currentQty + 1;
         var updatedTotal = currentPrice * newQty;
-
-        $.ajax({
-            url: "cartupdate.ko",
-            type: "post",
-            contentType: "application/json",
-            data: JSON.stringify({ p_no: p_no, c_stock: newQty, c_total: updatedTotal }),
-            success: function(response) {
-                stock.value = newQty;  
-                price.innerText = updatedTotal.toLocaleString() + "원";
-                updateTotal();
-            },
-            error: function(xhr, status, error) {
-                alert("업데이트 실패: " + error);
-            }
-        });
-    }
-
-    function minus(index, p_no) {
-        var stock = document.getElementById('qty_' + index);
-        var price = document.getElementById('price_' + index);
-        var currentQty = parseInt(stock.value); 
-        var currentTotal = parseInt(price.innerText.replace('원', '').replace(/,/g, ''));
-        var currentPrice = currentTotal / currentQty;
-
-        if (currentQty > 1) {
-            var newQty = currentQty - 1;
-            var updatedTotal = currentPrice * newQty;
-
-            $.ajax({
+        var p_stock = stockchk(p_no);
+        console.log("plus함수 안 재고수량" + p_stock);
+        
+        if(p_stock < newQty) {
+           var updatedTotal1 = currentPrice * p_stock;
+           alert("해당상품은 현재 최대 " + p_stock + "개 까지만 구매 가능합니다.");
+           $.ajax({
                 url: "cartupdate.ko",
                 type: "post",
                 contentType: "application/json",
-                data: JSON.stringify({ p_no: p_no, c_stock: newQty, c_total: updatedTotal }),
+                data: JSON.stringify({ p_no: p_no, c_stock: p_stock, c_total: updatedTotal1 }),
                 success: function(response) {
-                    stock.value = newQty;  
-                    price.innerText = updatedTotal.toLocaleString() + "원";
+                    stock.value = p_stock;  
+                    price.innerText = updatedTotal1.toLocaleString() + "원";
                     updateTotal();
                 },
                 error: function(xhr, status, error) {
                     alert("업데이트 실패: " + error);
                 }
             });
+        } else {
+            $.ajax({
+                 url: "cartupdate.ko",
+                 type: "post",
+                 contentType: "application/json",
+                 data: JSON.stringify({ p_no: p_no, c_stock: newQty, c_total: updatedTotal }),
+                 success: function(response) {
+                     stock.value = newQty;  
+                     price.innerText = updatedTotal.toLocaleString() + "원";
+                     updateTotal();
+                 },
+                 error: function(xhr, status, error) {
+                     alert("업데이트 실패: " + error);
+                 }
+             });
         }
+    }
+    function minus(index, p_no) {
+        var stock = document.getElementById('qty_' + index);
+        var price = document.getElementById('price_' + index);
+        var currentQty = parseInt(stock.value); 
+        var currentTotal = parseInt(price.innerText.replace('원', '').replace(/,/g, ''));
+        var currentPrice = currentTotal / currentQty;
+        var p_stock = stockchk(p_no);
+        
+        if (currentQty > 1) {
+            var newQty = currentQty - 1;
+            var updatedTotal = currentPrice * newQty;
+	        if(p_stock < currentQty) {
+	           alert("해당상품은 현재 최대 " + p_stock + "개 까지만 구매 가능합니다.");
+	           var updatedTotal1 = currentPrice * p_stock;
+	           $.ajax({
+	                url: "cartupdate.ko",
+	                type: "post",
+	                contentType: "application/json",
+	                data: JSON.stringify({ p_no: p_no, c_stock: p_stock, c_total: updatedTotal1 }),
+	                success: function(response) {
+	                    stock.value = p_stock;  
+	                    price.innerText = updatedTotal1.toLocaleString() + "원";
+	                    updateTotal();
+	                },
+	                error: function(xhr, status, error) {
+	                    alert("업데이트 실패: " + error);
+	                }
+	            });
+	        } else {
+				$.ajax({
+	                url: "cartupdate.ko",
+	                type: "post",
+	                contentType: "application/json",
+	                data: JSON.stringify({ p_no: p_no, c_stock: newQty, c_total: updatedTotal }),
+	                success: function(response) {
+	                    stock.value = newQty;  
+	                    price.innerText = updatedTotal.toLocaleString() + "원";
+	                    updateTotal();
+	                },
+	                error: function(xhr, status, error) {
+	                    alert("업데이트 실패: " + error);
+	                }
+	            });
+	        } 
+        
+    	}
     }
 
     function updateTotal() {
@@ -341,14 +393,13 @@
 </head>
 <body>
 <div class="bichena">
-<nav class="box navbar">
-
-</nav>
 <div class="box1 container">
     <div class="first-box">
-        <div class="container header-container" >
+        <div class="container header-container">
         <div id="dddd">
+        <div>
             <input type="checkbox" id="All" onclick="Allsel()"><label for="All"></label>
+        </div>
         <span><a class="deletechk" onclick="deletecart()" style="cursor:pointer;">선택삭제</a></span>
         </div>
             <div class="header">장바구니</div>
@@ -360,6 +411,7 @@
                 </div>
                 <table id="MycartList"></table>
                 <div id="item">
+                <hr class="hrhrhrhr">
                     <div class="item-price">
                         <span>상품금액</span>
                         <span id="protot"></span>
@@ -382,10 +434,10 @@
 
     <div class="summary">
         <div>계산서</div><hr>
-        <div class="totalprice">총상품 금액: <span></span></div>
-        <div class="totalprice">총 배송비: <span>무료배송</span></div>
+        <div class="totalprice">총상품 금액 <span></span></div>
+        <div class="totalprice">총 배송비 <span>무료배송</span></div>
         <hr>
-        <div class="tot">총 결제 예상금액: <span id="alltot"></span></div>
+        <div class="tot">총 결제 예상금액 <span id="alltot"></span></div>
         <button class="button" onclick="order()">구매하기</button>
     </div>
 </div>

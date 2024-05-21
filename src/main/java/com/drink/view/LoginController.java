@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpResponse;
@@ -32,7 +34,7 @@ import com.drink.ko.vo.KaKaoVO;
 import com.drink.ko.vo.UsersVO;
 import com.google.gson.Gson;
 
-@SessionAttributes({ "userID", "userNO", "howLogin", "uLev"})
+@SessionAttributes({ "userID", "userNO", "howLogin", "uLev" })
 @Controller
 public class LoginController {
 
@@ -52,7 +54,7 @@ public class LoginController {
 
 	@RequestMapping("/loginErr.ko")
 	public String loginErr() {
-		return "/WEB-INF/login/login.jsp?error=1";
+		return "redirect:/WEB-INF/login/login.jsp?error=1";
 	}
 
 	@RequestMapping("/loginPage.ko")
@@ -107,7 +109,9 @@ public class LoginController {
 
 	@RequestMapping("/login.ko")
 	@ResponseBody
-	public String login(UsersVO vo, Model model) {
+	public String login(UsersVO vo, Model model, HttpServletResponse response,
+			@RequestParam(value = "rememberPW", defaultValue = "", required = false) String rememberPW,
+			@RequestParam(value = "remember", defaultValue = "", required = false) String remember) {
 
 		String pw = vo.getU_pw();
 		UsersVO user = usersService.loginSelectOne(vo);
@@ -119,6 +123,29 @@ public class LoginController {
 				model.addAttribute("userNO", user.getU_no());
 				model.addAttribute("howLogin", user.getU_state());
 				model.addAttribute("uLev", user.getU_lev());
+				if (remember != null && !(remember.equals(""))) {
+					Cookie rcookie = new Cookie("remember", user.getU_id());
+					rcookie.setMaxAge(60 * 60);
+					response.addCookie(rcookie);
+					System.out.println("id 쿠키 생성완료");
+				} else {
+					Cookie noCookie = new Cookie("remember", "");
+					noCookie.setMaxAge(0);
+					response.addCookie(noCookie);
+					System.out.println("id 쿠키 삭제완료");
+				}
+
+				if (rememberPW != null && !(rememberPW.equals(""))) {
+					Cookie pcookie = new Cookie("rememberPW", pw);
+					pcookie.setMaxAge(60 * 60);
+					response.addCookie(pcookie);
+					System.out.println("pw 쿠키 생성완료");
+				} else {
+					Cookie noPwCookie = new Cookie("rememberPW", "");
+					noPwCookie.setMaxAge(0);
+					response.addCookie(noPwCookie);
+					System.out.println("pw 쿠키 삭제완료");
+				}
 				return "main.ko";
 			} else {
 				return "loginErr.ko";
@@ -147,19 +174,23 @@ public class LoginController {
 						model.addAttribute("uLev", user.getU_lev());
 						return "adminOrderList.ko";
 					} else {
-						return "loginErr.ko";
+						return "loginErr3.ko";
 					}
 				}
 			} else {
 				return "loginErr2.ko";
 			}
 		}
-		return "loginErr.ko";
+		return "loginErr2.ko";
 	}
 
-	@RequestMapping("loginErr2.ko")
+	@RequestMapping("/loginErr2.ko")
 	public String loginErr2() {
-		return "/main.jsp?err=1";
+		return "redirect:main.ko?err=1";
+	}
+	@RequestMapping("/loginErr3.ko")
+	public String loginErr3() {
+		return "redirect:adminLoginPage.ko?err=3";
 	}
 	// 0510 끝
 
@@ -337,7 +368,7 @@ public class LoginController {
 		UsersVO user = usersService.naverLogin(vo);
 		if (user != null) {
 			System.out.println("이미 가입한 사용자입니다.");
-			if (user.getU_state() == 3) {
+			if (user.getU_state() == 1) {
 				model.addAttribute("userID", user.getU_id());
 				model.addAttribute("userNO", user.getU_no());
 				model.addAttribute("howLogin", user.getU_state());

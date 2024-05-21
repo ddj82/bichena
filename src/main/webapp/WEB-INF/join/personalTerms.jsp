@@ -11,11 +11,31 @@
 	width: 700px;
 	margin: 0 auto;
 }
+.submit {
+	margin-top: 40px;
+	margin-botoom: 40px;
+	width: 300px;
+    padding: 5px;
+    height: 40px;
+    background-color: #005930;
+	color: rgb(255, 255, 255);
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	font-size: 15px;
+	font-weight: bold;
+}
+.btn-div {
+	padding: 0 200px;
+}
 /* extra small */
 @media screen and (max-width:540px) {
 	.personal {
 		width: 300px;
 		margin: 0 auto;
+	}
+	.btn-div {
+		padding: 0;
 	}
 }
 /* small */
@@ -23,6 +43,9 @@
 	.personal {
 		width: 400px;
 		margin: 0 auto;
+	}
+	.btn-div {
+		padding: 0 50px;
 	}
 }
 /* medium */
@@ -54,6 +77,9 @@
 <p>- 신청자는 개인정보 수집·이용에 동의를 거부할 권리가 있습니다.</p>
 <p>- 필수 항목의 수집·이용을 동의하지 않는 경우 비체나의 웹 회원가입이 불가합니다.</p>
 <p>- 선택 항목의 수집·이용을 동의하지 않는 경우 비체나의 홍보자료를 수신하실 수 없습니다.</p>
+<div class="btn-div">
+	<input type="button" value="이전" id="submit" class="submit" onclick="history.back()">
+</div>
 </div>
 </body>
 </html>

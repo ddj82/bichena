@@ -48,4 +48,9 @@ public class ProdRevServiceImpl implements ProdRevService {
 	public ProdRevVO revDelSelect(ProdRevVO vo) {
 		return dao.revDelSelect(vo);
 	}
+
+	@Override
+	public List<ProdRevVO> mainRevList(ProdRevVO vo) {
+		return dao.mainRevList(vo);
+	}
 }

@@ -12,11 +12,31 @@
 	width: 700px;
 	margin: 0 auto;
 }
+.submit {
+	margin-top: 40px;
+	margin-bottom: 40px;
+	width: 300px;
+    padding: 5px;
+    height: 40px;
+    background-color: #005930;
+	color: rgb(255, 255, 255);
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	font-size: 15px;
+	font-weight: bold;
+}
+.btn-div {
+	padding:0 200px;
+}
 /* extra small */
 @media screen and (max-width:540px) {
 	.service {
 		width: 300px;
 		margin: 0 auto;
+	}
+	.btn-div {
+		padding: 0;
 	}
 }
 /* small */
@@ -24,6 +44,9 @@
 	.service {
 		width: 400px;
 		margin: 0 auto;
+	}
+	.btn-div {
+		padding:0 50px;
 	}
 }
 </style>
@@ -238,6 +261,9 @@
 <p>① "쇼핑몰"과 이용자간에 발생한 전자거래 분쟁에 관한 소송은 민사소송법상의 관할법원에 제기합니다.</p>
 
 <p>② "쇼핑몰"과 이용자간에 제기된 전자거래 소송에는 한국법을 적용합니다.</p>
+<div class="btn-div">
+	<input type="button" value="이전" id="submit" class="submit" onclick="history.back()">
+</div>
 </div>
 </body>
 </html>

@@ -1,3 +1,4 @@
+
 body {
     background-color: #f7f7f7;
     margin: 0;
@@ -5,57 +6,57 @@ body {
     display: flex;
     justify-content: center;
     align-items: start;
-/*     min-height: 100vh; */
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
 }
 
 button {
     cursor: pointer;
 }
 
-/* a { */
-/*     text-decoration: none; */
-/*     cursor: pointer; */
-/*     color: rgb(0, 150, 243); */
-/*     margin-left : 250px; */
-/* } */
-#deletechk {
-    text-decoration: none;
-    cursor: pointer;
-    color: rgb(0, 150, 243);
-    margin-left : 250px;
-}
 .bichena {
-	width : 100% !important;
-	display : flex;
-	flex-direction : column;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%; 
 }
+
 .box1 {
     display: flex;
     gap: 20px;
     width: 100%;
-    margin-bottom: 20px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
     justify-content: center;
-	padding-right : 0 !important;
-	padding-left : 0 !important;
-	margin-top : 110px;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    margin-top: 110px;
 }
 
 .header-container {
     position: relative;
     width: 100%;
-    padding : 0!important;
-    margin-top : 110px;
+    justify-content: space-between;
+    padding: 0 !important;
+    margin-top: 110px;
 }
+
 #All {
-	margin-left : 27px;
+    margin-left: 27px;
+    accent-color: #09814a; /* 체크박스 색상 변경 */
 }
+
+.item-checkbox {
+    accent-color: #09814a;
+}
+
 .header {
-    background-color: #004BFF;
+    background-color: #225e46;
     color: white;
     padding: 10px;
     font-weight: bold;
-/*     width: 500px; */
     width: 100%;
     position: relative;
 }
@@ -63,13 +64,11 @@ button {
 .summary {
     background: white;
     padding: 20px;
-/*     border: 0.5px solid #ddd; */
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     position: relative;
-/*     width: 300px; */
     width: 100%;
-    flex: 0 0 300px;
+    flex: 0 0 300px; 
     height: 350px;
     margin-top: 140px;
 }
@@ -79,7 +78,6 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     position: relative;
-/*     width: 500px; */
     width: 100%;
 }
 
@@ -100,12 +98,13 @@ input[type="text"], input[type="number"] {
     height: 25px;
 }
 
-input[type=checkbox] {
+input[type="checkbox"] {
     transform: scale(1.5);
     outline: none;
 }
+
 label[for="All"] {
-	margin-left : 10px;
+    margin-left: 10px;
 }
 
 .right-align {
@@ -116,17 +115,20 @@ label[for="All"] {
     width: 260px;
     padding: 5px 10px;
     color: white;
-    background-color: #007bff;
+    background-color: #09814A;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
+.btn:focus {
+    outline: none;
+}
+
 .btn {
     color: gray;
     background-color: white;
-/*     border: none; */
-border : 0.1px solid gray;
+    border: none !important;
     width: auto;
 }
 
@@ -144,25 +146,30 @@ border : 0.1px solid gray;
 }
 
 #totalP {
-    color: rgb(0, 150, 243);
+    color: #09814A;
 }
 
 .tot {
     display: flex;
     justify-content: space-between;
-    margin-top: 120px;
+    margin-top: 110px;
     margin-bottom: 10px;
 }
 
 #alltot {
-    color: rgb(0, 150, 243);
+    color: #09814A;
+}
+#dddd {
+	display : flex;
+	justify-content : space-between;
 }
 
 .deletechk {
     width: 100%;
-    color: rgb(0, 150, 243);
-    text-decoration : none;
-    margin-left : 250px;
+    color: #09814A !important;
+    text-decoration: none !important;
+    margin-right : 30px;
+    cursor: pointer;
 }
 
 .roll {
@@ -172,16 +179,19 @@ border : 0.1px solid gray;
     border-radius: 10px;
 }
 
-img.prodimg {
-    width: 80px;
-    height: 80px;
+/* img.prodimg { */
+/*     width: 80px; */
+/*     height: 80px; */
+/* } */
+.prodimg {
+    width: 80px; /* 이미지 크기는 예시로 80px 설정 */
+    height: 80px; /* 이미지 높이도 예시로 80px 설정 */
+    margin-right: 5px; /* 이미지와 상품명 사이의 간격을 5px로 설정 */
 }
- #dddd {
- width : 500px;
- }
+
 
 .showpping {
-    width: 390px;
+    width: 480px;
     height: 35px;
     padding: 5px;
     border: 1.5px solid gray;
@@ -192,107 +202,221 @@ img.prodimg {
 }
 
 .box {
-    justify-content : center;
-    box-sizing : border-box;
-}
-.navbar {
-	width : 100%;
-    top: 0;
-    left: 0;
-    margin : 0 auto;
-	position: fixed !important;
-    z-index: 1000;
+    justify-content: center;
+    box-sizing: border-box;
 }
 
+.imgclass {
+	width : 100px;
+}
+.checkbox_td {
+	width : 60px;
+}
+
+.navbar {
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed !important;
+    z-index: 1000;
+}
 
 #Xcart {
     width: 450px;
     height: 100px;
     background-color: rgb(201, 201, 201);
     text-align: center;
-    margin-top: 20px;
     margin: auto;
     line-height: 100px;
 }
 
 .first-box {
-	width : 500px;
-/* 	width : 100%; */
+    width: 580px;
     display: flex;
     flex-direction: column;
 }
+
 #protot, #free, .totalP {
-	padding-right : 8px;
+    padding-right: 8px;
 }
 
-@media (max-width: 500px) {
+
+/* ========================================================== 추가, 수정사항 =============================================================== */
+
+.product-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.product-info {
+    display: flex;
+    flex-direction : column;
+    justify-content: space-between;
+/*     align-items: center; */
+    width: 100%;
+}
+
+.product-name, .qty-container, .price-container {
+    flex: 1;
+    text-align: left;
+}
+
+.price-container {
+    text-align: right;
+}
+
+.hrhrhrhr {
+	margin-top : 20px;
+}
+.qty-container, .price-container {
+        width: 100%;
+        margin-top: 3px;
+        padding-top: 5px;
+        border-top: 1px solid #e7e3e3;
+        margin-top: : 5px !important;
+    }
+    .product-name {
+         margin-top: 8px;
+         }
+
+@media (max-width: 580px) {
     .box1 {
         flex-direction: column;
         align-items: flex-start;
-        width: 100% ;
-    }
-    .container {
-    position : relative;
-    margin-top : 0;
-    }
-    .cart {
-/*         width: 500px; */
         width: 100%;
     }
+    .header-container {
+        margin-top: 130px !important;
+    }
+    .container {
+        position: relative;
+        margin-top: 0;
+    }
     .summary {
-        width: 500px;
-        margin-top: 20px;
+        margin-top: 0;
+    }
+    .cart, .summary {
+        width: 100%;
+    }
+    .roll {
+    padding : 1px 15px;
     }
     .button {
         width: 100%;
     }
-    #dddd {
-    margin-top : 140px;
-    }
-    .box {
-    width : 500px;
-    }
-}
-@media (max-width : 900px) and (min-width : 500px) {
-    .first-box {width : 899px !important;}
-    .box1 {
+   .product-info {
         flex-direction: column;
-        align-items: flex-start;
-        width: 100%!important ;
-        margin : 0 !important;
-        padding : 0 !important;
+        align-items: normal;
     }
-    #dddd {
-    margin-top : 90px;
+    .first-box, .summary, .box, #dddd, .deletechk, .showpping, .button, #Xcart {
+        width: 100%;
     }
-    .summary {
-        width: 899px;
-        margin-top: 20px;
+/*   	    .qty-container, .price-container { */
+/*         width: 100%; */
+/*         margin-top: 3px; */
+/*         padding-top: 5px; */
+/*         border-top: 1px solid #e7e3e3; */
+/*         margin-top: : 5px !important; */
+/*     } */
+/*     .product-name { */
+/*          margin-top: 8px; */
+/*          } */
+
+    .price-container {
+        text-align: right; 
     }
-    .box {
-    width : 899px !important;
-    }
-    .deletechk {
-    margin-left : 650px;
-    }
-    .button-container {
-    padding-left : 100px !important;}
-    .showpping {width : calc(100% - 40px);}
-    .button {width : 100%;}
-    #dddd {width : 899px;}
-    #Xcart {width : 100%;}
-    c:otherwise {
-    display : none;}
-	
 }
 
-@media (min-width: 576px) {
-    .container, .container-sm {
-        max-width: 100%!important;
+@media (min-width: 580px) and (max-width: 768px) {
+	.box1 {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
     }
+     .header-container {
+        margin-top: 165px;
+    }
+    .product-info {
+    flex-direction: row;
+    }
+    
+    .box1, .first-box, .summary, .box, #dddd, .deletechk, .showpping, .button, #Xcart {
+        width: 100%;
+        padding: 0;
+        margin: 0 auto;
+    }
+    .deletechk {
+    margin-right : 30px;
+    }
+    .container, .navbar, .header-container, .bichena {
+        width: 100%;
+    }
+        .summary {
+    padding : 20px;
+    }
+    .button {
+    height : 30px; 
+    }
+     .price-container {
+    display: block; 
+    text-align: right; 
+    width: 100%; 
+    margin-top: 5px;
+}
+.qty-container, .price-container {
+    border : none;
+    }    
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+	.box1 {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+    .product-info {
+    flex-direction: row;
+    }
+    .qty-container, .price-container {
+    border : none;
+    }
+    .header-container {
+    margin-top : 170px;
+    }
+    .box1, .first-box, .summary, .box, #dddd, .deletechk, .showpping, .button, #Xcart {
+        width: 100%; 
+        padding: 0; 
+        margin: 0 auto;
+    }
+     .deletechk {
+    margin-right : 30px;
+    }
+    .summary {
+    padding : 20px;
+    }
+    .button {
+    height : 35px; 
+    }
+    .container, .navbar, .header-container, .bichena {
+        width: 100%;
+    }
+       .price-container {
+    display: block; 
+    text-align: right; 
+    width: 100%; 
+    margin-top: 5px;
+}
 }
 
 @media (min-width: 768px) {
     .container, .container-md, .container-sm {
-        max-width: 100%!important ;
+        max-width: 100% !important;
     }
+}
+@media (min-width: 576px) {
+    .container, .container-sm {
+        max-width: 100% !important;
+    }
+}
+

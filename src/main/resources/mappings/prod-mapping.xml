@@ -31,6 +31,12 @@
 			P_TYPE LIKE CONCAT('%', #{searchKeyword}, '%') OR
 			P_MAT LIKE CONCAT('%', #{searchKeyword}, '%'))
 		</if>
+		<if test="searchCondition != null and searchCondition != ''">
+		   <if test="searchCondition == 'pname' "> AND P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		   <if test="searchCondition == 'pmade' "> AND P_MADE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		   <if test="searchCondition == 'pno' "> AND P_NO LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		   <if test="searchCondition == 'ptype' "> AND P_TYPE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		</if>		
 		<if test="type != null"> AND P_TYPE = #{type}</if>
 		<if test="sweet != null"> AND P_SW = #{sweet}</if>
 		<if test="acidity != null"> AND P_SU = #{acidity}</if>
@@ -53,6 +59,12 @@
 			EDITHTML LIKE CONCAT('%', #{searchKeyword}, '%')
 			)
 		</if>
+		<if test="searchCondition != null and searchCondition != ''">
+		   <if test="searchCondition == 'pname' "> AND P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		   <if test="searchCondition == 'pmade' "> AND P_MADE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		   <if test="searchCondition == 'pno' "> AND P_NO LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		   <if test="searchCondition == 'ptype' "> AND P_TYPE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
+		</if>
 		<if test="type != null"> AND P_TYPE = #{type}</if>
 		<if test="sweet != null"> AND P_SW = #{sweet}</if>
 		<if test="acidity != null"> AND P_SU = #{acidity}</if>
@@ -74,9 +86,9 @@
 	
 	<insert id="insertProduct">
 		INSERT INTO BC_PROD
-		(P_NAME, P_PRICE, EDITFILE, P_IMG, EDITHTML, P_DESC, P_MADE, P_TYPE, P_DGR, P_SW, P_SU, P_SP, P_MAT, P_CAP, P_STOCK)
+		(P_NO, P_NAME, P_PRICE, EDITFILE, P_IMG, EDITHTML, P_DESC, P_MADE, P_TYPE, P_DGR, P_SW, P_SU, P_SP, P_MAT, P_CAP, P_STOCK)
 		VALUES 
-		(#{p_name}, #{p_price}, #{editfile}, #{p_img}, #{edithtml}, #{p_desc}, #{p_made}, #{p_type}, #{p_dgr}, #{p_sw}, #{p_su}, #{p_sp}, #{p_mat}, #{p_cap}, #{p_stock})
+		(#{p_no}, #{p_name}, #{p_price}, #{editfile}, #{p_img}, #{edithtml}, #{p_desc}, #{p_made}, #{p_type}, #{p_dgr}, #{p_sw}, #{p_su}, #{p_sp}, #{p_mat}, #{p_cap}, #{p_stock})
 	</insert>
 	
 	<delete id="deleteProduct">
@@ -93,5 +105,30 @@
 
 	<select id="prodStock" resultMap="prodList">
 		SELECT P_STOCK FROM BC_PROD WHERE P_NO = #{p_no}
+	</select>
+	
+	
+   <select id="mainPageSlideListTakju" resultMap="prodList">
+		SELECT * FROM BC_PROD
+		WHERE 1=1 and  P_TYPE='탁주'
+		ORDER BY P_NO DESC
+   </select>
+   
+	<select id="mainPageSlideListGwasilju" resultMap="prodList">
+		SELECT * FROM BC_PROD
+		WHERE 1=1 and  P_TYPE='과실주'
+		ORDER BY P_NO DESC
+	</select>
+   
+	<select id="mainPageSlideListChunju" resultMap="prodList">
+		SELECT * FROM BC_PROD
+		WHERE 1=1 and  P_TYPE='약·청주'
+		ORDER BY P_NO DESC
+	</select>
+   
+	<select id="mainPageSlideListJeungryuju" resultMap="prodList">
+		SELECT * FROM BC_PROD
+		WHERE 1=1 and P_TYPE='증류주'
+		ORDER BY P_NO DESC
 	</select>
 </mapper>

@@ -19,6 +19,16 @@ public class OrderVO {
 	private String p_img;
 	
 	private int rnum;
+	
+	private int allTotal;
+
+	public int getAllTotal() {
+		return allTotal;
+	}
+
+	public void setAllTotal(int allTotal) {
+		this.allTotal = allTotal;
+	}
 
 	// 페이징 처리를 위한 변수
 	private int currPageNo; // 현재 페이지 번호

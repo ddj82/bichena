@@ -59,10 +59,32 @@ a.a_class {
 a.a_class:visited {
 	color: black;
 }
+
+/*             img 추가(양예진)  */
+ .LevelImgNavMypage {
+    width: 40px;
+    height: 40px;
+    margin-top: 10px;
+}
+
 </style>
 <body>
 	<div id='boxFlex' class="all">
 		<div id='name' class="all">
+		
+		<!--              img 추가(양예진) -->
+		<c:choose>
+			<c:when test="${uLev eq '실버'}">
+				<img class="LevelImgNavMypage" src="img/login/S_Level.png" alt="실버 레벨 아이콘"/>
+			</c:when>
+			<c:when test="${uLev eq '골드'}">
+				<img class="LevelImgNavMypage" src="img/login/G_Level.png" alt="골드 레벨 아이콘"/>
+			</c:when>
+			<c:when test="${uLev eq '다이아'}">
+				<img class="LevelImgNavMypage" src="img/login/D_Level.png" alt="다이아 레벨 아이콘"/>
+			</c:when>
+		</c:choose>
+              
 			<p style="font-weight: bold; vertical-align: middle; margin:1rem 0;">${userID }</p>
 			<p style="vertical-align: middle; margin:1rem 0.5rem;">님</p>
 		</div>

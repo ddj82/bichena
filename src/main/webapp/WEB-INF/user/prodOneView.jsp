@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>주류상세페이지</title>
-<link href="${pageContext.request.contextPath}/resources/css/prodOne.css" rel="stylesheet" />
+<%-- <link href="${pageContext.request.contextPath}/resources/css/prodOne.css" rel="stylesheet" /> --%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <script>
 $(function(){
@@ -35,12 +35,14 @@ $(function(){
 });
 </script>
 <style>
+/*
 div.pay {
 	top: 160px;
 	border: 1px solid lightgray;
 	border-radius: 5px;
 	padding: 10px;
 }
+*/
 /* Chrome, Safari, Edge 등에서 화살표를 숨기기 */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -52,79 +54,108 @@ input[type=number]::-webkit-outer-spin-button {
 input[type=number] {
     -moz-appearance: textfield;
 }
+th, td {
+	width:50%;
+}
+.product_desc{
+display:flex;
+align-items:center;
+min-height:42px
+
+}
 </style>
 </head>
 <body>
 <%@ include file="../../common/navbar.jsp" %>
-<div class="container">
-<%@ include file="pay.jsp" %>
-	<div class="div1" style="width:60%;">
-		<img class="float" src="img/${prodOne.p_img }" title="img" alt="img" style="padding:10px;">
-		<div class="clear">
-			<p><span class="span1"><small>${prodOne.p_desc}</small></span></p>
-			<p><span class="span2"><strong>${prodOne.p_name}</strong></span></p>
-			<p class="p1"><span class="span3"><small>판매가격</small></span></p>
-			<p class="p2"><span class="span2"><strong>${prodOne.p_price}원</strong></span></p>
-		</div>
+<div style="width: 700px;margin: 0 auto;">
+
+	<div class="div1" style="margin: 0 auto;text-align: left;display: flex;justify-content: center;height: 350px;max-width:700px;">
+	<!-- 	<div class="div1" style="width:60%;"> -->
+	
+							<div style="text-align: center; width:370px;">
+												<img class="float" src="img/${prodOne.p_img }" title="img" alt="img" style="padding:10px;width:100%;">
+										<%-- 		<img class="float" src="img/${prodOne.p_img }" title="img" alt="img" style="padding:10px;"> --%>
+										
+										
+							</div>
+	
+							<div style="text-align: left;padding: 10px; width:350px;">
+												<div class="clear">
+													<div class="product_desc"><small>${prodOne.p_desc}</small></div>
+													<div style="margin-top:10px;font-weight: bolder;font-size:20px;">${prodOne.p_name}</div>
+													<div style="margin-top:10px;"><small>판매가격</small></div>
+													<div style="margin-top:5px;font-weight: bolder;">${prodOne.p_price}원</div>
+												</div>
+												
+											<%@ include file="pay.jsp" %>
+							</div>
+	
 	</div>
-	<div class="dtable" style="width:30%;">
-		<table style="width:100%;">
-			<tr>
-				<th>주류종류</th><td>${prodOne.p_type}</td>
-			</tr>
-			<tr>
-				<th>도수</th><td>${prodOne.p_dgr}%</td>
-			</tr>
-			<tr>
-				<th>용량</th><td>${prodOne.p_cap}ml</td>
-			</tr>
-		</table>
+	<div style="border: 1px solid lightgray;border-radius: 10px;width: 700px;margin: 0 auto;margin-top: 30px;display:flex;">
+									<div class="dtable" style="width:100%;">
+								<!-- 	<div class="dtable" style="width:30%;"> -->
+										<table style="width:100%;text-align: center;">
+											<tr>
+												<th>주류종류</th><td>${prodOne.p_type}</td>
+											</tr>
+											<tr>
+												<th>도수</th><td>${prodOne.p_dgr}%</td>
+											</tr>
+											<tr>
+												<th>용량</th><td>${prodOne.p_cap}ml</td>
+											</tr>											
+											<tr>
+												<th>재고</th><td>${prodOne.p_stock}</td>
+											</tr>
+											<tr>
+												<th>제조사</th><td>${prodOne.p_made}</td>
+											</tr>
+										</table>
+									</div>
+									<br><br><br> 
+									<div class="dtable" style="width:100%;">
+										<table style="width:100%;text-align: center;">
+											<tr>
+												<th>단맛</th>
+												<td>${prodOne.p_sw}</td>
+											</tr>
+											<tr>
+												<th>신맛</th>
+												<td>${prodOne.p_su}</td>
+											</tr>
+											<tr>
+												<th>탄산</th>
+												<td>${prodOne.p_sp}</td>
+											</tr>
+											<tr>
+												<th>원료</th><td>${prodOne.p_mat}</td>
+											</tr>
+										</table>
+									</div>
 	</div>
-	<br><br><br> 
-	<div class="dtable" style="display:inline-block; width:30%">
-		<table style="width:100%;">
-			<tr>
-				<th>단맛</th>
-				<td>${prodOne.p_sw}</td>
-			</tr>
-			<tr>
-				<th>신맛</th>
-				<td>${prodOne.p_su}</td>
-			</tr>
-			<tr>
-				<th>탄산</th>
-				<td>${prodOne.p_sp}</td>
-			</tr>
-		</table>
-	</div>
-	<div class="dtable" style="display:inline-block; width:30%">
-		<table style="width:100%;">
-			<tr>
-				<th>원료</th><td>${prodOne.p_mat}</td>
-			</tr>
-			<tr>
-				<th>재고</th><td>${prodOne.p_stock}</td>
-			</tr>
-		</table>
-	</div>
-	<div id="detail2" style="width:60%;">${pageContext.request.contextPath }/WEB-INF/product/${prodOne.editfile }</div>
-	<br>
-	<br>
-	<br> 
-	<br>
-	<br>
-	<br> 
-	<br>
-	<br>
-	<br> 
-	<br>
-	<br>
-	<br> 
-	<br>
-	<br>
-	<br> 
-	<div id="revTB"></div>
+
+
+
 </div>
+
+<div id="detail2" style="width: 700px;margin: 0 auto;">${pageContext.request.contextPath }/WEB-INF/product/${prodOne.editfile }</div>
+
+<br>
+<br>
+<br> 
+<br>
+<br>
+<br> 
+<br>
+<br>
+<br> 
+<br>
+<br>
+<br> 
+<br>
+<br>
+<br> 
+<div id="revTB"></div>
 <br>
 <br>
 <br> 

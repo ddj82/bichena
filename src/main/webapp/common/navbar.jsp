@@ -224,8 +224,8 @@ pageEncoding="UTF-8"%>
 	  .open>.dropdown-toggle.btn-primary:hover,
 	  .btn-primary:not(:disabled):not(.disabled):active  {
 	    color: #fff;
-	    background-color:  #2d4739;
-	    border-color:  #2d4739;
+	    background-color:  #005930;
+	    border-color:  #005930;
 	  }
 	  .btn-primary:not(:disabled):not(.disabled):active:focus,
 	  .btn-primary:focus {
@@ -251,8 +251,8 @@ pageEncoding="UTF-8"%>
 	  .open>.dropdown-toggle.btn-primary:hover,
 	  .btn-outline-primary:not(:disabled):not(.disabled):active  {
 	    color: #fff;
-	    background-color:  #2d4739;
-	    border-color:  #2d4739;
+	    background-color:  #005930;
+	    border-color:  #005930;
 	  }
 	  .btn-outline-primary:not(:disabled):not(.disabled):active:focus,
 	  .btn-outline-primary:focus {
@@ -429,6 +429,26 @@ pageEncoding="UTF-8"%>
         color: #3e3e3e;
         margin-bottom: 10px;
       }
+      
+      
+      /*       img 추가(양예진) */
+      .LevelImgNav{
+      	width: 40px;
+      	margin-top: 5px;
+      	display:none;
+      }
+      
+        .LevelImgNav1{
+      	width: 40px;
+    	display: block;
+    	margin-left: -6px;
+      }
+      
+      .LevelImgNavSpan1 {
+    display: flex;
+    align-items: center;
+}
+   
     </style>
   <script>
 $(document).ready(function () {
@@ -462,6 +482,30 @@ $(document).ready(function () {
         }
     });
 });
+
+
+<!--              img 추가(양예진) -->
+
+$(document).ready(function(){
+	if($(window).width() > 575){
+		$(".LevelImgNav").css("display", "block");
+	}
+	
+	if($(window).width() <= 575){
+		$(".LevelImgNav").css("display", "none");
+	}
+	
+});
+
+$(window).resize(function() {
+	if ($(window).width() < 575) { 	
+		$(".LevelImgNav").css("display", "none");
+	} else {
+		$(".LevelImgNav").css("display", "block");
+	}
+});
+
+
 </script>
 
   </head>
@@ -506,10 +550,41 @@ $(document).ready(function () {
             <c:choose>
               <c:when test="${userID eq null }">
                 <a class="login" href="loginPage.ko">로그인 / 회원가입 > </a>
+                <span class="CartLogo" onclick="location.href='myCartList.ko';" style="cursor : pointer">
+	                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+		              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+		            </svg>
+		        </span>
               </c:when>
               <c:otherwise>
+              
+              <!--              img 추가(양예진) -->
+				<c:choose>
+					<c:when test="${uLev eq '실버'}">
+						<img class="LevelImgNav" src="img/login/S_Level.png" alt="실버 레벨 아이콘"/>
+					</c:when>
+					<c:when test="${uLev eq '골드'}">
+						<img class="LevelImgNav" src="img/login/G_Level.png" alt="골드 레벨 아이콘"/>
+					</c:when>
+					<c:when test="${uLev eq '다이아'}">
+						<img class="LevelImgNav" src="img/login/D_Level.png" alt="다이아 레벨 아이콘"/>
+					</c:when>
+				</c:choose>
+              
                 <a class="login" href="myPage.ko">${userID }님 </a>&nbsp;환영합니다.&nbsp;
-                <a class="logout" href="logout.ko">로그아웃</a>
+                
+				<c:choose>
+					<c:when test="${howLogin eq 3}">
+						<a id="howLogin" href="logout.ko">로그아웃</a>
+					</c:when>
+					<c:when test="${howLogin eq 2}">
+						<a id="howLogin" href="javascript:kakaoLogout()">로그아웃</a>
+					</c:when>
+					<c:when test="${howLogin eq 1}">
+						<a id="howLogin" href="javascript:naverLogout()">로그아웃</a>
+					</c:when>
+				</c:choose>
+
                 <span class="CartLogo" onclick="CartList()" style="cursor : pointer">
 	                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
 		              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
@@ -658,6 +733,20 @@ $(document).ready(function () {
           <div class="profile">
             <div class="card side-card">
               <div class="card-header side-card-header">
+              
+               <!--              img 추가(양예진) -->
+				<c:choose>
+					<c:when test="${uLev eq '실버'}">
+						<div class="LevelImgNavSpan1"><img class="LevelImgNav1" src="img/login/S_Level.png" alt="실버 레벨 아이콘"/>Silver</div>
+					</c:when>
+					<c:when test="${uLev eq '골드'}">
+						<div class="LevelImgNavSpan1"><img class="LevelImgNav1" src="img/login/G_Level.png" alt="골드 레벨 아이콘"/>Gold</div>
+					</c:when>
+					<c:when test="${uLev eq '다이아'}">
+						<div class="LevelImgNavSpan1"><img class="LevelImgNav1" src="img/login/D_Level.png" alt="다이아 레벨 아이콘"/>Diamond</div>
+					</c:when>
+				</c:choose>
+              
                 <a class="collapsed card-link" href="myPage.ko">${userID }님</a>
               </div>
             </div>
@@ -672,7 +761,17 @@ $(document).ready(function () {
                     width="100"
                     height="100"
                   />
-                  <p>로그아웃</p>
+                  <c:choose>
+					<c:when test="${howLogin eq 3}">
+						<a id="howLogin" href="logout.ko">로그아웃</a>
+					</c:when>
+					<c:when test="${howLogin eq 2}">
+						<a id="howLogin" href="javascript:kakaoLogout()">로그아웃</a>
+					</c:when>
+					<c:when test="${howLogin eq 1}">
+						<a id="howLogin" href="javascript:naverLogout()">로그아웃</a>
+					</c:when>
+				  </c:choose>
                 </div>
               </div>
               <div class="quick-group">

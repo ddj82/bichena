@@ -51,16 +51,12 @@
 	</insert>
 
 
-<!-- 05/15 -->
+	<!-- 05/15 -->
 	<delete id="prodRevDelete">
 		DELETE FROM BC_PRODREV WHERE PR_NO = #{pr_no};
 	</delete>
-	
-	<select id="revDelSelect" resultMap="prodRevList">
-<!-- 		SELECT pr.*, o.O_NO  -->
-<!-- 		FROM BC_PRODREV AS pr  -->
-<!-- 		JOIN BC_ORDER AS o on pr.U_NO = #{u_no}  -->
-<!-- 		WHERE o.U_NO = #{u_no} and o.P_NO = #{p_no} and PR_NO = #{pr_no} and O_REVSTATE = '1' AND o.O_NO = #{o_no} -->
+	<!--  05/17 메인화면 리뷰 슬라이드 -->
+	<select id="mainRevList" resultType="prodRevDTO">
+		SELECT * FROM BC_PRODREV ORDER BY PR_NO
 	</select>
-
 </mapper>

@@ -7,7 +7,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비채나</title>
 <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 <!-- <link rel="stylesheet" -->
 <!-- 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
@@ -38,23 +38,31 @@
 
 h4{
 	margin-bottom:20px;
+	
+	font-weight: bolder;
+    color: #2d4739;
 }
 
-label.control-label.col-sm-2 {
+.control-label-email {
 	width: 100px;
 	font-weight: bold;
-}
-
-label.control-label.col-sm-2.email {
 	display: flex;
 	padding: 0px;
 	margin-bottom: 15px;
 	margin-top: 10px;
+	color:#2d4739;
 }
 
-label.control-label.col-sm-2.number {
+label.control-label.sm-2.number {
 	padding: 0px;
-	margin-bottom: 15px;
+	
+	width: 100px;
+    font-weight: bold;
+    display: flex;
+    padding: 0px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    color: #2d4739;
 }
 
 .pwFindSubBox {
@@ -64,7 +72,7 @@ label.control-label.col-sm-2.number {
     width: 334.91px;
 }
 
-.col-sm-10 {
+.sm-10 {
 	width: 100%;
 	padding: 0;
 }
@@ -74,33 +82,74 @@ label.control-label.col-sm-2.number {
 	width: 100%;
 }
 
-.col-sm-offset-2.col-sm-10 {
+sm-offset-2.email {
 	text-align: center;
 	margin: 0;
 }
 
 button.pwFindMybutton {
 	width: 100%;
-	height: 55px;
-	color: white;
-	background-color: #d5d5d5;
+	height: 52px;
 	font-size: 18px;
-	border: 0px;
-	border-radius: 5px;
 	margin-top: 30px;
+	display: flex;
+	margin-bottom: 10px;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	background-color:#005930;
+	outline: none;
+    box-sizing: border-box;
+    border: 1px solid transparent;
+    padding: 10px 16px;
+    line-height: 1.3333333;
+    border-radius: 6px;
 }
 
-input#u_email {
-	height: 55px;
-	margin-bottom: 15px;
+.pwFindMybutton:active,.pwFindMybutton:hover { 
+ 	color: #fff; 
+ 	background-color: #2d4739;
+    border-color: #2d4739;
+ 	outline: none; 
+ } 
+
+input#pwFind_email {
+	width: 100%;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #2d4739;
+    border-radius: 4px;
+    display: inline;
+    height: 52px;
+    margin-bottom: 10px;
+}
+
+#pwFind_email:hover,#pwFind_email:focus{
+    border: 2px solid #2d4739;
 }
 
 input#number {
-	height: 55px;
-	margin-bottom: 15px;
+	width: 100%;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #2d4739;
+    border-radius: 4px;
+    display: inline;
+    height: 52px;
+    margin-bottom: 10px;
 }
 
-
+#number:hover,#number:focus{
+    border: 2px solid #2d4739;
+}
 .alert {
 	width: 334.91px;
 	margin-top:20px;
@@ -142,6 +191,38 @@ div#timebox {
     justify-content: space-between;
 }
 
+@media ( max-width: 575px) {
+	button.pwFindMybutton {
+    margin-top: 0;
+}
+
+.pwFindSubBox {
+    width: 280px;
+}
+
+label.control-label-email{
+    margin-bottom: 0px;
+}
+
+label.control-label.sm-2.number {
+    margin-top: 0px;
+    margin-bottom: -10px;
+}
+
+input#pwFind_email {
+    margin-bottom: 0px;
+}
+
+.pwFindMainBox {
+    margin-top: 50px;
+}
+
+h4 {
+    font-size: 22px;
+}
+
+}
+
 </style>
 </head>
 
@@ -153,25 +234,25 @@ div#timebox {
 			<h4>비밀번호 찾기</h4>
 
 			<div class="form-group">
-				<label class="control-label col-sm-2 email" for="u_email">이메일</label>
-				<div class="col-sm-10">
-					<input type="email" class="form-control" id="u_email" placeholder="이메일을 입력해 주세요" name="u_email">
+				<label class="control-label-email" for="u_email">이메일</label>
+				<div class="sm-10">
+					<input type="email" class="formControl" id="pwFind_email" placeholder="이메일을 입력해 주세요" name="u_email">
 				</div>
 			</div>
 			<div class='alert alert-danger' style="display: none;" id="danger1"></div>
 			<div class="form-group" style="display: none;">
-				<label class="control-label col-sm-2 number" for="number">인증번호</label>
+				<label class="control-label sm-2 number" for="number">인증번호</label>
 				<div id="timebox">
-				<div class="time" style="display:inline;"></div>
-				<a class="emailAgain" onclick="e_again()" style="display:none;">재전송</a>
+				<div class="time" style="display:inline; ; color:#2d4739;"></div>
+				<a class="emailAgain" onclick="e_again()" style="display:none; color:#2d4739;">재전송</a>
 				</div>
-				<div class="col-sm-10">
-					<input type="password" class="form-control" id="number" placeholder="인증번호를 입력해 주세요" name="number">
+				<div class="sm-10">
+					<input type="password" class="formControl" id="number" placeholder="인증번호를 입력해 주세요" name="number">
 				</div>
 			</div>
-			<div class='alert alert-danger my' style="display: none;" id="danger2"></div>
+			<div class='alert alert-danger my' style="display:none;" id="danger2"></div>
 			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
+				<div class="sm-offset-2 email">
 					<button type="button" class="pwFindMybutton" onclick="test()">본인 인증하기</button>
 				</div>
 			</div>
@@ -190,7 +271,7 @@ div#timebox {
 		function e_again(){
 			alert("해당 이메일로 인증번호를 재전송했습니다.");
 			$(".emailAgain").attr("onclick","");
-			const email = $("#u_email").val() // 이메일 주소값 얻어오기!
+			const email = $("#pwFind_email").val() // 이메일 주소값 얻어오기!
 
 			var formData = {
 				email : email
@@ -216,7 +297,7 @@ div#timebox {
 		
 		function test() {
 			const emailPattern = /[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]$/i;
-			let email = $("#u_email").val();
+			let email = $("#pwFind_email").val();
 			if (emailPattern.test(email)) {
 				pwFind();
 			} else {
@@ -250,7 +331,7 @@ div#timebox {
 
 		function pwFind() {
 			var formData = {
-				u_email : $("#u_email").val()
+				u_email : $("#pwFind_email").val()
 			};
 
 			$.ajax({
@@ -279,8 +360,9 @@ div#timebox {
 			if(count == 0){
 				count = 1;
 				alert("해당 이메일로 인증번호를 전송했습니다.");
-				const email = $("#u_email").val() // 이메일 주소값 얻어오기!
-
+				const email = $("#pwFind_email").val() // 이메일 주소값 얻어오기!
+				$("#pwFind_email").attr("disabled", true);
+				
 				var formData = {
 					email : email
 				};
@@ -310,7 +392,7 @@ div#timebox {
 			if (inputCode === code) {
 				$(".alert-danger").css("display", "none");
 				clearInterval(timer);
-				let email = $('#u_email').val();
+				let email = $('#pwFind_email').val();
 // 				경로 바꾸기
 				location.href="pwFindShow.ko?email="+email;
 			} else {
@@ -325,7 +407,7 @@ div#timebox {
 		//엔터 키가 눌렸을 때 기본 이벤트(폼 제출)막고 대신 test()함수 호출
 		document.addEventListener('DOMContentLoaded', function() {
 			// 특정 입력 필드 가져오기
-			var inputField1 = document.getElementById("u_email");
+			var inputField1 = document.getElementById("pwFind_email");
 			var inputField2 = document.getElementById("number");
 
 			// 입력 필드에 포커스될 때 엔터 키 이벤트 처리
@@ -355,4 +437,5 @@ div#timebox {
 		
 	</script>
 </body>
+<%-- <%@ include file="../../common/footer.jsp" %> --%>
 </html>

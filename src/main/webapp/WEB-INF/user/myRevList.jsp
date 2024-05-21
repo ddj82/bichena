@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+/*
 table {
 width: 80%;
 border: 1px solid black;
@@ -30,6 +31,67 @@ padding: 10px;
 table#revContentTB {
 width: 100%;
 }
+*/
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+.rev-table {
+    border-collapse: collapse;
+    width: 100%;
+    padding : 0;
+    background-color: #ffffff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+.container, #revContentTB {
+	margin-top : 20px;
+	width : 1070px !important;
+}
+.revOrder {
+	text-align : center;
+}
+
+img {
+    width: 100px;
+    height: auto;
+    border-radius: 10px;
+}
+
+textarea { 
+    border: 2px solid #ccc; 
+    border-radius: 10px; 
+    padding: 10px; 
+    width: 100%; 
+    box-sizing: border-box; 
+} 
+
+button {
+    background-color: #007bff;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+th, td {
+    padding: 12px 15px;
+    border-bottom: 2px solid #f1f1f1;
+}
+
+th {
+	width : 200px;
+	text-align : center !important;
+    background-color: #f0f0f0;
+}
 </style>
 </head>
 <body>
@@ -45,7 +107,7 @@ width: 100%;
 		</c:when>
 		<c:otherwise>
 			<c:forEach items="${myRevList }" var="rev">
-				<table>
+				<table class="rev-table">
 					<tr>
 						<th class="my-rev-th">상품이름</th>
 						<td class="my-rev-td">${rev.p_name }</td>

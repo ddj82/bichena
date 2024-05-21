@@ -7,59 +7,140 @@
 <title>회원 마이페이지 메인</title>
 <style>
 .none {
-display: none;
+	display: none;
 }
-table {
-width: 50%;
-border: 1px solid black;
-margin: 20px 0;
-padding: 0 20px;
+.whole-div {
+	width: 1050px;
+	margin: 0 auto;
+	border: 1px solid rgb(238, 238, 238);
+	border-radius: 10px;
+	margin-top: 40px;
+	margin-bottom: 50px;
+	padding: 0 15px;
+}
+.title {
+	border-bottom: 1px solid rgb(238, 238, 238);
+	margin-top: 20px;
+	align-items: center;
+	padding-bottom: 15px;
+	font-weight: bold;
+}
+.list-count {
+	border: 1px solid rgb(238, 238, 238);
+	border-radius: 10px;
+	width: 300px;
+	display: flex;
+    justify-content: space-around;
+    margin: 0 auto;
+    margin-top: 30px;
+    padding: 15px;
+}
+.status {
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.current {
+	
+}
+.orderTable {
+	border: 1px solid rgb(238, 238, 238);
+	border-radius: 10px;
+	margin: 10px;
+	padding: 10px;
+}
+.content {
+	border-top: 1px solid rgb(238, 238, 238);
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.odlist {
+	display: flex;
+	border-top: 1px solid rgb(238, 238, 238);
+	margin-top: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.each-content {
+	display: flex;
+}
+.each-content div {
+	width: 100px;
+	margin-right: 70px;
 }
 form textarea {
-width: 100%;
+	width: 100%;
 }
 table#revContentTB {
-width: 100%;
+	width: 100%;
+}
+.detail {
+	display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    color: #005930;
 }
 </style>
 </head>
 <body>
 <%@ include file="../../common/navbar.jsp" %>
 <%@ include file="myPageHeader.jsp" %>
-<div class="container">
-		<c:forEach items="${myOrderList }" var="myorder">
-			<table>
-				<c:if test="${myorder.o_state ne '취소' }">
-					<tr>
-						<td>
-							${myorder.o_state }
-						</td>
-					</tr>
-					<tr>
-						<td>${myorder.o_date } <button type="button" class='btn btn-outline-primary btn-sm' onclick="location.href='myOrderDetail.ko?o_no=${myorder.o_no }';">주문 상세보기</button></td>
-					</tr>
-					<tr>
-						<td>${myorder.u_name } | ${myorder.u_tel }</td>
-					</tr>
-					<c:forEach items="${myOrderConfirm }" var="myconfirm">
-						<c:if test="${myorder.o_no eq myconfirm.o_no}">
-							<tr>
-								<td><img alt="img" title="img" src="img/${myconfirm.p_img }" style="width:50px"></td>
-							</tr>
-							<tr>
-								<td>${myconfirm.p_name }</td>
-							</tr>
-							<tr>
-								<td>${myconfirm.p_desc }</td>
-							</tr>
-							<tr>
-								<td>${myconfirm.p_price }원 / 수량 ${myconfirm.o_stock }개</td>
-							</tr>					
-						</c:if>					
-					</c:forEach>
-				</c:if>
-			</table>
-		</c:forEach>
+<div class="whole-div">
+	<div class="title">주문 내역</div>
+	<div class="list-count">
+		<div class="status">
+			<span class="count">${ready }</span>
+			<span class="current"><small>배송 준비중</small></span>			
+		</div>
+		<div class="status">
+			<span class="count">${porter }</span>			
+			<span class="current"><small>배송중</small></span>
+		</div>
+		<div class="status">
+			<span class="count">${complete }</span>
+			<span class="current"><small>배송완료</small></span>
+		</div>
+	</div>
+	<c:forEach items="${myOrderList }" var="myorder">
+		<div class="orderTable">
+			<c:if test="${myorder.o_state ne '취소' }">
+				<div>
+					<div class="detail">${myorder.o_state } <button type="button" class='btn btn-outline-primary btn-sm' onclick="location.href='myOrderDetail.ko?o_no=${myorder.o_no }';">주문 상세보기</button></div>
+				</div>
+				<div>
+					<div>${myorder.o_date }</div>
+				</div>
+				<div>
+					<div>${myorder.u_name } | ${myorder.u_tel }</div>
+				</div>
+				<div class="odlist">
+					<div style="margin-right: 80px;">상품 이름</div>
+					<div style="margin-right: 120px;">개별 가격</div>
+					<div>주문 개수</div>
+				</div>
+				<c:forEach items="${myOrderConfirm }" var="myconfirm">
+					<c:if test="${myorder.o_no eq myconfirm.o_no}">
+						<div class="content">
+							<div>
+								<div class="each-content">
+									<div>${myconfirm.p_name }</div>
+									<div>${myconfirm.p_price }원</div>
+									<div>수량 ${myconfirm.o_stock }개</div>
+								</div>
+							</div>
+							<div><img alt="img" title="img" src="img/${myconfirm.p_img }" style="width:60px; height:60px;"></div>					
+						</div>
+					</c:if>					
+				</c:forEach>
+				<div style="border-top: 1px solid rgb(238, 238, 238);">
+					<div>총 결제 금액 : ${myorder.allTotal }원</div>
+				</div>	
+			</c:if>
+		</div>
+	</c:forEach>
 </div>
 
 <div class="modal" id="myModal">

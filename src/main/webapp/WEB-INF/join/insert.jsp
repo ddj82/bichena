@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>비채나</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
-<script src="resources/js/check.js?ver=1"></script>
+<script src="resources/js/check.js?ver=2"></script>
 <script>
 var cnt = 0;
 var nickCheck = 0;
@@ -146,7 +146,7 @@ var emailCheck = 0;
 .form_item input {
 	outline: none;
 	padding: 10px;
-	border: 1px solid rgb(224, 224, 224);
+	border: 1px solid rgb(174,174,174);
 	border-radius: 5px;
 	color: rgb(62, 62, 62);
 	font-size: 15px;
@@ -158,10 +158,12 @@ input.postcode {
 	border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
+    border-bottom: none;
 }
 input.detailAddress {
 	border-top-right-radius: 0px;
     border-top-left-radius: 0px;
+    border-top: none;
 }
 input.address {
 	border-radius: 0px;
@@ -170,12 +172,14 @@ input.menu_h {
 	width: 80px;
 	font-size: 10px;
 	padding: 5px;
-	height: 44px;
-	background-color: rgb(0, 150, 243);
+	height: 43px;
+	background-color: #005930;
     color: rgb(255, 255, 255);
 	border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     border-bottom-right-radius: 0px;
+    border-left: none;
+    border-bottom: none;
 }
 input#male+label{
 	border-top-right-radius: 0px;
@@ -186,14 +190,9 @@ input#female+label{
 	border-bottom-left-radius: 0px;
 }
 input.menu_h:hover {
-	background: rgb(178, 178, 178); 
+	background: #2d4739; 
 	cursor: pointer;
 }
-input.nick_h:hover {
-	background: rgb(178, 178, 178); 
-	cursor: pointer;
-}
-
 .gender_item {
 	display: flex;
 	width: 300px;
@@ -219,12 +218,13 @@ input.nick_h:hover {
     border: none;
 }
 .gender_item input[type=radio]:checked+label{
-    background-color: rgb(0, 150, 243);
+    background-color: #005930;
     color: rgb(255, 255, 255);
     border: none;
 }
 
 .item_name {
+	font-weight: bold;
 	margin-bottom: 8px;
 	margin-top: 8px;
 }
@@ -233,13 +233,16 @@ input.nick_h:hover {
 	width: 300px;
     padding: 5px;
     height: 40px;
-    background-color: rgb(0, 150, 243);
+    background-color: #005930;
 	color: rgb(255, 255, 255);
 	border-radius: 5px;
 	border: none;
 	cursor: pointer;
 	font-size: 15px;
 	font-weight: bold;
+}
+.send:hover {
+	background-color: #2d4739;
 }
 /* extra small */
 @media screen and (max-width:540px) {
@@ -314,7 +317,7 @@ input.nick_h:hover {
 			<div class="item_name">닉네임</div>
 			<div class="form_item">
 				<div onclick="nickInput()">
-					<input type="text" id="nick" name="u_nick" class="nick" placeholder="특수문자,띄어쓰기 불가" minlength="1">
+					<input type="text" id="nick" name="u_nick" class="nick" placeholder="특수문자,숫자,띄어쓰기 불가" minlength="1">
 				</div>
 			</div>
 			<div id="nickCheckMessage" style="display: none; color: red;"><small>* 이미 존재하는 닉네임입니다.</small></div>

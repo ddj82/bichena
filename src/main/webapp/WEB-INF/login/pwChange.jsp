@@ -8,22 +8,120 @@
 <title>비밀번호 수정</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <style>
+body {
+    margin: 0;
+    padding: 0;
+}
+
 .container#container-pwChan {
-	display: flex;
-	justify-content: center;
-	width: 1000px;
-	margin: 50px auto;
-	padding: 50px 20px;
-	border: 1px solid rgb(224, 224, 224);
-	border-radius: 10px;
-	}
-	
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 50px 20px;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 10px;
+}
+
 .info-box#info-box {
-	width: 50%;
- 	margin: 0 auto; 
-	height: 300px;
-	}
-	
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.chanMypw h4.conPwTitle {
+    /*     text-align: center; */
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.chanMypw p {
+    /*     text-align: center; */
+    color: #666;
+    margin-bottom: 35px;
+}
+
+.item_name {
+    margin-bottom: 5px;
+    color: #000;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.pwdForm {
+    margin-top: 20px;
+}
+
+.form_item input[type=password] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+.pwBtn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.pwBtn button {
+    background-color: #005930;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.pwBtn button:hover {
+    background-color: #D4A035;
+}
+
+.pwBtn button[type="button"] {
+    background-color: #88958e;
+    color: #fff;
+    font-weight: bold;
+}
+
+.pwBtn button[type="button"]:hover {
+    background-color: #bbb;
+}
+
+#pwErrorMessage,
+#pw1ErrorMessage {
+    display: none;
+    margin-bottom: 30px;
+}
+
+ @media (max-width: 600px) {
+.container#container-pwChan {
+    width: 100%;
+    padding: 20px;
+    margin: 20px auto;
+}
+
+.chanMypw h4.conPwTitle {
+    font-size: 1.2em;
+}
+
+.form_item input[type=password] {
+    padding: 8px;
+    font-size: 0.9em;
+}
+
+.pwBtn button {
+    padding: 8px 16px;
+    font-size: 0.9em;
+}
 </style>
 <script>
 function insertchk(){
@@ -95,28 +193,34 @@ function pw1Input() {
 <div class="container" id="container-pwChan">
 	<div class="info-box" id="info-box">
 	<form class="chanMypw" name="pwChan" id="pwChan" action="updatePw.ko" method="post" onSubmit="return insertchk()">
-	<h2>비밀번호 변경</h2>
-		<p>영문 대소문자,특수문자,숫자 포함 8~15자로 입력하세요.</p>
-		<div class="item_name">비밀번호</div>
-		<div class="form_item">
-			<div onclick="pwInput()">
-				<input type="password" id="pw" name="u_pw" placeholder="비밀번호를 입력해 주세요.">
+	<h4 class="conPwTitle">비밀번호 변경</h4>
+      	<p>※&nbsp;영문 대소문자,특수문자,숫자 포함 8~15자로 입력하세요.</p>
+      	<div class="pwdForm">
+			<div class="item_name">비밀번호</div>
+			<div class="form_item">
+				<div onclick="pwInput()">
+					<input type="password" id="pw" name="u_pw" placeholder="비밀번호를 입력해 주세요.">
+				</div>
 			</div>
-		</div>
-		<div id="pwErrorMessage" style="display: none; color: red;">
-			<small>* 비밀번호를 올바른 형식으로 입력해주세요.</small>
-		</div>
-		<div class="item_name">비밀번호 확인</div>
-		<div class="form_item">
-			<div onclick="pw1Input()">
-				<input type="password" id="pw1" name="pw1" placeholder="비밀번호 확인">
+			<div id="pwErrorMessage" style="display: none; color: red;">
+				<small>* 비밀번호를 올바른 형식으로 입력해주세요.</small>
+			</div>
+			<div class="pwdForm">
+				<div class="item_name">비밀번호 확인</div>
+				<div class="form_item">
+					<div onclick="pw1Input()">
+						<input type="password" id="pw1" name="pw1" placeholder="비밀번호 확인">
+					</div>
+				</div>
 			</div>
 		</div>
 		<div id="pw1ErrorMessage" style="display: none; color: red;">
 			<small>* 위 비밀번호와 일치시켜 주세요.</small>
 		</div>
-		<button type="button" onclick="javascript:history.go(-1)">뒤로 가기</button>
-		<button type="submit">변경하기</button>
+		<div class="pwBtn">
+			<button class="btn btn-primary" type="button" onclick="javascript:history.go(-1)">취소</button>
+			<button class="btn btn-primary" type="submit">변경하기</button>
+		</div>
 	</form>
 	</div>
 </div>

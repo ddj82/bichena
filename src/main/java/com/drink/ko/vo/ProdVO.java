@@ -48,6 +48,7 @@ public class ProdVO {
 	
 	// 검색을 위한 변수
 	private String searchKeyword;
+	private String searchCondition;
 
 	public int getP_no() {
 		return p_no;
@@ -216,6 +217,14 @@ public class ProdVO {
 
 	public void setSearchKeyword(String searchKeyword) {
 		this.searchKeyword = searchKeyword;
+	}
+
+	public String getSearchCondition() {
+		return searchCondition;
+	}
+
+	public void setSearchCondition(String searchCondition) {
+		this.searchCondition = searchCondition;
 	}
 
 	public int getCurrPageNo() {

@@ -34,11 +34,11 @@
 	</select>
 
 	<select id="pwFindId" resultType="java.lang.String">
-		SELECT U_EMAIL FROM BC_USERS WHERE U_EMAIL = #{u_email} AND U_STATE = 1
+		SELECT U_EMAIL FROM BC_USERS WHERE U_EMAIL = #{u_email} AND U_STATE = 3
 	</select>
 
 	<update id="pwFindStart">
-		UPDATE BC_USERS SET U_PW = #{n_pw} WHERE U_EMAIL = #{u_email} AND U_STATE = 1
+		UPDATE BC_USERS SET U_PW = #{n_pw} WHERE U_EMAIL = #{u_email} AND U_STATE = 3
 	</update>
 
 	<select id="selectPW" resultMap="user">
@@ -58,7 +58,7 @@
 	<insert id="naverLoginFirst">
 		INSERT INTO BC_USERS
 		(U_ID,U_PW,U_NAME,U_BIRTH,U_TEL,ADDR1,ADDR2,ADDR3,U_EMAIL,U_NICK,U_GEN,U_STATE)
-		VALUES(#{u_email},'naver',#{u_name},#{u_birth},#{u_tel},#{addr1},#{addr2},#{addr3},#{u_email},#{u_nick},#{u_gen},3)
+		VALUES(#{u_email},'naver',#{u_name},#{u_birth},#{u_tel},#{addr1},#{addr2},#{addr3},#{u_email},#{u_nick},#{u_gen},1)
 	</insert>
 
 	<select id="naverLogin" resultMap="user">

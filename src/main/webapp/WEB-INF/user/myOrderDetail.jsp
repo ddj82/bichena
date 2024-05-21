@@ -6,72 +6,129 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+.detail-prod {
+	width: 1050px;
+	margin: 0 auto;
+	border: 1px solid rgb(238, 238, 238);
+	border-radius: 10px;
+	margin-top: 40px;
+	padding: 15px;
+}
+.title {
+	border-bottom: 1px solid rgb(238, 238, 238);
+	margin-top: 20px;
+	align-items: center;
+	padding-bottom: 15px;
+	font-weight: bold;
+}
+.content {
+	
+}
+.detail-content {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(238, 238, 238);
+}
+.text-content {
+	display: flex;
+}
+.text-content div {
+	width: 140px;
+}
+.dtlist {
+	display: flex;
+	border-bottom: 1px solid rgb(238, 238, 238);
+	padding-top: 5px;
+	padding-bottom: 5px;
+	justify-content: end;
+}
+.dtlist div {
+	margin-right: 100px;
+}
+.prod-img {
+	cursor: pointer;
+}
+</style>
 <body>
 <%@ include file="../../common/navbar.jsp" %>
 <%@ include file="myPageHeader.jsp" %>
-<div class="container">
+<div class="detail-prod">
+	<div class="title">주문 상세내역</div>
+	<div class="content">
+		<div class="dtlist">
+			<div>상품명</div>
+			<div>상품설명</div>
+			<div>상품가격</div>
+			<div>구매수량</div>
+			<div>금액</div>
+		</div>
 		<c:forEach items="${myOrderDetail }" var="detail">
-			<table>
-				<tr>
-					<td>${detail.o_date }</td>
-				</tr>
-				<tr>
-					<td>${detail.o_no }</td>
-				</tr>
-				<tr>
-					<td>${detail.u_name } | ${detail.u_tel }</td>
-				</tr>
-				<tr>
-					<td>${detail.o_state }</td>
-				</tr>
-				<tr>
-					<td><img alt="img" title="img" src="img/${detail.p_img }" style="width:50px"></td>
-				</tr>
-				<tr>
-					<td>${detail.p_name } / 수량 ${detail.o_stock }개 / ${detail.o_total }원</td>
-				</tr>
-				<tr>
-					<td>
-						<c:if test="${detail.o_state eq '배송완료' }">
-							<c:if test="${detail.o_revstate eq '0' }">
-								<button type='button' class='btn btn-outline-primary btn-sm' data-toggle='modal' data-target='#myModal' 
-								data-pno="${detail.p_no }" data-ono="${detail.o_no }">리뷰작성</button>
-							</c:if>
-						</c:if>
-					</td>
-				</tr>
-			</table>
-			<br><br>
+			<div class="detail-content">
+				<div>
+					<div class="prod-img" onclick="location.href='prodOne.ko?p_no=${detail.p_no}';"><img title="img" src="img/${detail.p_img }" style="width:100px; height:100px;"></div>
+				</div>
+				<div class="text-content">
+					<div style="margin-right:8px;">${detail.p_name }</div>
+					<div style="margin-right:27px;">${detail.p_desc }</div>
+					<div style="margin-right:45px;">${detail.p_price }원</div>
+					<div>수량 ${detail.o_stock }개</div>				
+					<div>${detail.o_total }원</div>				
+				</div>
+			</div>
+			<div>
+				<c:if test="${detail.o_state eq '배송완료' }">
+					<c:if test="${detail.o_revstate eq '0' }">
+						<button type='button' class='btn btn-outline-primary btn-sm' data-toggle='modal' data-target='#myModal' 
+						data-pno="${detail.p_no }" data-ono="${detail.o_no }">리뷰작성</button>
+					</c:if>
+				</c:if>
+			
+			</div>
 		</c:forEach>
 		<c:forEach items="${myOrderDetail }" var="detail" begin="0" end="0">
-			<table>
-				<tr>
-					<td colspan="2">받는 분 정보</td>
-				</tr>
-				<tr>
-					<td>받는분</td>
-					<td>${detail.u_name } | ${detail.u_tel }</td>
-				</tr>
-				<tr>
-					<td>주소</td>
-					<td>${detail.o_addr }</td>
-				</tr>
-			</table>
+			<div>
+				<div>
+					<div colspan="2">받는 분 정보</div>
+				</div>
+				<div>
+					<div>받는분</div>
+					<div>${detail.u_name } | ${detail.u_tel }</div>
+				</div>
+				<div>
+					<div>주소</div>
+					<div>${detail.o_addr }</div>
+				</div>
+			</div>
 			
-			<table>
-				<tr>
-					<td colspan="2">계산서</td>
-				</tr>
-				<tr>
-					<td>총 결제 금액</td>
-					<td>${allTotal}</td>
-				</tr>
-			</table>
-			<c:if test="${detail.o_state eq '상품 준비중' }">
-				<button type="button" value="${detail.o_no }" class="btn btn-outline-warning btn-sm cancel_module">결제취소</button>
+			<div>
+				<div>
+					<div colspan="2">계산서</div>
+				</div>
+				<div>
+					<div>총 결제 금액</div>
+					<div>${allTotal}</div>
+				</div>
+			</div>
+			<c:if test="${detail.o_state eq '상품 준비중'}">
+				<button type="button" value="${detail.o_no }" class="btn btn-outline-warning btn-sm cancel_module">결제취소</button>		
 			</c:if>
 		</c:forEach>
+	</div>
 </div>
+
+
+
+
+
+
+
+
+
+
 
 
 <div class="modal" id="myModal">

@@ -94,7 +94,32 @@ public class BichenaController {
 	public final String IMPORT_ID = "imp70405420";
 
 	@RequestMapping("/main.ko")
-	public String main() {
+	public String main(Model model) {
+		ProdVO vo1 = new ProdVO();
+		List<ProdVO> mainPageSlideListTakju = prodService.mainPageSlideListTakju(vo1);
+		model.addAttribute("mainPageSlideListTakju", mainPageSlideListTakju);
+		System.out.println(mainPageSlideListTakju);
+
+		ProdVO vo2 = new ProdVO();
+		List<ProdVO> mainPageSlideListGwasilju = prodService.mainPageSlideListGwasilju(vo2);
+		model.addAttribute("mainPageSlideListGwasilju", mainPageSlideListGwasilju);
+		System.out.println("과실주 슬라이드" + mainPageSlideListGwasilju);
+
+		ProdVO vo3 = new ProdVO();
+		List<ProdVO> mainPageSlideListChunju = prodService.mainPageSlideListChunju(vo3);
+		model.addAttribute("mainPageSlideListChunju", mainPageSlideListChunju);
+		System.out.println("청주 슬라이드" + mainPageSlideListChunju);
+
+		ProdVO vo4 = new ProdVO();
+		List<ProdVO> mainPageSlideListJeungryuju = prodService.mainPageSlideListJeungryuju(vo4);
+		model.addAttribute("mainPageSlideListJeungryuju", mainPageSlideListJeungryuju);
+		System.out.println("증류주 슬라이드" + mainPageSlideListJeungryuju);
+
+		ProdRevVO revo = new ProdRevVO();
+		List<ProdRevVO> mainRevList = prodRevService.mainRevList(revo);
+		model.addAttribute("mainRevList", mainRevList);
+		System.out.println("리뷰 슬라이드" + mainRevList);
+
 		return "/main.jsp";
 	}
 
@@ -719,10 +744,39 @@ public class BichenaController {
 	public String myPage(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		int u_no = (int) session.getAttribute("userNO");
+		int ready = 0;
+		int porter = 0;
+		int complete = 0;
 		List<OrderVO> myOrderList = orderService.myOrderList(u_no);
 		List<OrderVO> myOrderConfirm = orderService.myOrderConfirm(u_no);
+
+		for (int i = 0; i < myOrderList.size(); i++) {
+			int a = 0;
+			for (int j = 0; j < myOrderConfirm.size(); j++) {
+				int total = myOrderConfirm.get(j).getO_total();
+				if (myOrderList.get(i).getO_no().equals(myOrderConfirm.get(j).getO_no())) {
+					a += total;
+				}
+			}
+			myOrderList.get(i).setAllTotal(a);
+		}
+
+		for (OrderVO count : myOrderList) {
+			String state = count.getO_state();
+			if (state.equals("상품 준비중")) {
+				ready++;
+			} else if (state.equals("배송중")) {
+				porter++;
+			} else if (state.equals("배송완료")) {
+				complete++;
+			}
+		}
 		model.addAttribute("myOrderConfirm", myOrderConfirm);
 		model.addAttribute("myOrderList", myOrderList);
+		model.addAttribute("ready", ready);
+		model.addAttribute("porter", porter);
+		model.addAttribute("complete", complete);
+
 		return "/WEB-INF/user/myPageMain.jsp";
 	}
 
@@ -785,8 +839,8 @@ public class BichenaController {
 		mav.addObject("totalCnt", totalCnt);
 		mav.addObject("pagination", vo);
 		mav.addObject("prodList", prodService.prodList(vo));
-//		mav.setViewName("WEB-INF/user/prodList.jsp"); 원래대로
-		mav.setViewName("WEB-INF/user/prodList2.jsp");
+		mav.setViewName("WEB-INF/user/prodList.jsp"); //원래대로
+//		mav.setViewName("WEB-INF/user/prodList2.jsp");
 
 		return mav;
 	}
@@ -1114,8 +1168,7 @@ public class BichenaController {
 
 	@GetMapping("/adminOrderDetail.ko")
 	@ResponseBody
-	public Object adminOrderDetail(@RequestParam(value = "o_no") String o_no, @RequestParam(value = "p_no") String p_no,
-			Model model) {
+	public Object adminOrderDetail(@RequestParam(value = "o_no") String o_no, @RequestParam(value = "p_no") String p_no, Model model) {
 		OrderVO vo = new OrderVO();
 		vo.setP_no(p_no);
 		vo.setO_no(o_no);
@@ -1138,6 +1191,7 @@ public class BichenaController {
 	public Map<String, String> searchConditionMapProd() {
 		Map<String, String> conditionMapProd = new HashMap<String, String>();
 		conditionMapProd.put("상품명", "pname");
+		conditionMapProd.put("제조사", "pmade");
 		conditionMapProd.put("상품번호", "pno");
 		conditionMapProd.put("주종", "ptype");
 		return conditionMapProd;
@@ -1145,6 +1199,7 @@ public class BichenaController {
 
 	@RequestMapping("/adminProdList.ko")
 	public String adminProdList(ProdVO vo, Model model,
+			@RequestParam(value = "searchCondition",  required = false) String searchCondition,
 			@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String searchKeyword,
 			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
 			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange) {
@@ -1168,8 +1223,15 @@ public class BichenaController {
 		if (searchKeyword != null && !searchKeyword.isEmpty()) {
 			model.addAttribute("searchKeyword", searchKeyword);
 			vo.setSearchKeyword(searchKeyword);
+			System.out.println("searchKeyword : " + searchKeyword);
 		}
-
+		
+		if (searchCondition != null && !searchCondition.isEmpty()) {
+			model.addAttribute("searchCondition", searchCondition);
+			vo.setSearchCondition(searchCondition);
+			System.out.println("searchCondition : " + searchCondition);
+		}
+		
 		List<ProdVO> adminProdList = prodService.prodList(vo);
 		model.addAttribute("pagination", vo);
 		model.addAttribute("adminProdList", adminProdList);
@@ -1216,6 +1278,7 @@ public class BichenaController {
 
 		int pno = prodService.getPnoMaxNum();
 		String editFilename = "pno" + pno + ".jsp";
+		vo.setP_no(pno);
 		vo.setEditfile(editFilename);
 
 		File file = new File("C:/swork/bichena/src/main/webapp/WEB-INF/product");
@@ -1408,7 +1471,7 @@ public class BichenaController {
 		mav.addObject("state", selectedStateValue);
 		mav.addObject("voca", searchVoca);
 		mav.addObject("word", searchWord);
-		mav.setViewName("WEB-INF/admin/memberList.jsp");
+		mav.setViewName("WEB-INF/admin/adminMemberList.jsp");
 		return mav;
 
 	}

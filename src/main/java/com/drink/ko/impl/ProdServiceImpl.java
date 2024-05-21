@@ -18,7 +18,7 @@ public class ProdServiceImpl implements ProdService {
 	public ProdVO prodOne(String p_no) {
 		return dao.prodOne(p_no);
 	}
-	
+
 	@Override
 	public List<ProdVO> prodList(ProdVO vo) {
 		return dao.prodList(vo);
@@ -28,7 +28,7 @@ public class ProdServiceImpl implements ProdService {
 	public int prodTotalCnt(ProdVO vo) {
 		return dao.prodTotalCnt(vo);
 	}
-	
+
 	@Override
 	public int getPnoMaxNum() {
 		return dao.getPnoMaxNum();
@@ -52,6 +52,26 @@ public class ProdServiceImpl implements ProdService {
 	@Override
 	public ProdVO prodStock(int p_no) {
 		return dao.prodStock(p_no);
+	}
+
+	@Override
+	public List<ProdVO> mainPageSlideListTakju(ProdVO vo) {
+		return dao.mainPageSlideListTakju(vo);
+	}
+
+	@Override
+	public List<ProdVO> mainPageSlideListGwasilju(ProdVO vo) {
+		return dao.mainPageSlideListGwasilju(vo);
+	}
+
+	@Override
+	public List<ProdVO> mainPageSlideListChunju(ProdVO vo) {
+		return dao.mainPageSlideListChunju(vo);
+	}
+
+	@Override
+	public List<ProdVO> mainPageSlideListJeungryuju(ProdVO vo) {
+		return dao.mainPageSlideListJeungryuju(vo);
 	}
 
 }

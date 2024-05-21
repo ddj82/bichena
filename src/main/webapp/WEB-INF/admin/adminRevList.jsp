@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/adminpage.css"/>
 <title>Insert title here</title>
 <style>
 table th {
@@ -19,7 +20,9 @@ table {
 </head>
 <body>
 <%@ include file="/WEB-INF/admin/adminMain.jsp" %>
-<div class="container">
+<div class="container" id="container-MemList">
+	<h2 style="margin-bottom:20px; font-weight:bold; font-size: 24px;">후기 목록</h2>
+	<div class="divTable">
 	<table class="table">
 		<thead>
 			<tr>
@@ -90,53 +93,92 @@ table {
 		</c:forEach>
 		</tbody>
 	</table>
-	
-	<div style="text-align: center;">
-		<form action="adminRevList.ko" method="post">
-			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
-				<option value="${conditionMapRev['상품명']}">상품명</option>
-				<option value="${conditionMapRev['상품번호']}">상품번호</option>
-				<option value="${conditionMapRev['작성자']}">작성자</option>
-			</select>
-			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+	<div class="searchDiv">
+		<form class="searchForm" action="adminRevList.ko" method="post">
+	        <select id="sel1" name="searchCondition">
+	            <c:choose>
+					<c:when test="${condition == 'pname'}">
+						<option value="${conditionMapRev['상품명']}">상품명</option>
+						<option value="${conditionMapRev['상품번호']}">상품번호</option>
+						<option value="${conditionMapRev['작성자']}">작성자</option>
+	                </c:when>
+					<c:when test="${condition == 'pno'}">
+						<option value="${conditionMapRev['상품번호']}">상품번호</option>
+						<option value="${conditionMapRev['상품명']}">상품명</option>
+						<option value="${conditionMapRev['작성자']}">작성자</option>
+					</c:when>
+					<c:when test="${condition == 'unick'}">
+						<option value="${conditionMapRev['작성자']}">작성자</option>
+						<option value="${conditionMapRev['상품번호']}">상품번호</option>
+						<option value="${conditionMapRev['상품명']}">상품명</option>
+					</c:when>
+					<c:otherwise>
+						<option value="${conditionMapRev['상품명']}">상품명</option>
+						<option value="${conditionMapRev['상품번호']}">상품번호</option>
+						<option value="${conditionMapRev['작성자']}">작성자</option>
+					</c:otherwise>
+	            </c:choose>
+	        </select>
+			<c:choose>
+				<c:when test="${keyword == ''}">
+					<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+				</c:when>
+				<c:otherwise>
+					<input type="text" name="searchKeyword" value ="${keyword}">
+				</c:otherwise>
+	        </c:choose>
 			<button type="submit" class="btn btn-primary btn-sm">검색</button>
 		</form>
 	</div>
 	
-	<!-- 페이징 처리 -->
-	<c:choose>
-	    <c:when test="${pagination.currPageNo == 1}">
-	        <!-- 현재 페이지가 첫 번째 페이지인 경우 -->
-	        <span>이전</span>
-	    </c:when>
-	    <c:otherwise>
-	        <!-- 이전 페이지로 이동하는 링크 -->
-	        <a href="adminRevList.ko?currPageNo=${pagination.currPageNo - 1}&searchKeyword=${keyword}&searchCondition=${condition}" class="btn btn-primary btn-xs">이전</a>
-	    </c:otherwise>
-	</c:choose>
 	
-    <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
-        <c:choose>
-            <c:when test="${page eq pagination.currPageNo}">
-                <span>${page}</span>
-            </c:when>
-            <c:otherwise>
-                <a href="adminRevList.ko?currPageNo=${page}&searchKeyword=${keyword}&searchCondition=${condition}" class="">${page}</a>
-            </c:otherwise>
-        </c:choose>
-    </c:forEach>
+	
+	<!-- 페이징 처리 -->
+	<ul class="pagination list-pagination">
+		<c:choose>
+			<c:when test="${pagination.currPageNo == 1}">
+				<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
+				<li class="page-item"><a class="page-link">이전</a></li>
+			</c:when>
+			<c:otherwise>
+				<li class="page-item">
+           			 <a class="page-link" href="adminRevList.ko?currPageNo=${pagination.currPageNo - 1}&searchKeyword=${keyword}&searchCondition=${condition}">이전</a>
+         		</li>
+			</c:otherwise>
+		</c:choose>
+		<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
+			<c:choose>
+				<c:when test="${page eq pagination.currPageNo}">
+					<li class="page-item active"><a class="page-link">${page}</a></li>
+				</c:when>
+				<c:otherwise>
+					<li class="page-item">
+           			 	<a class="page-link" href="adminRevList.ko?currPageNo=${page}&searchKeyword=${keyword}&searchCondition=${condition}">${page}</a>
+         			</li>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
 
-	<c:choose>
-	    <c:when test="${pagination.currPageNo == pagination.pageCnt}">
-	        <!-- 현재 페이지가 마지막 페이지인 경우 -->
-	        <span>다음</span>
-	    </c:when>
-	    <c:otherwise>
-	        <!-- 다음 페이지로 이동하는 링크 -->
-	        <a href="adminRevList.ko?currPageNo=${pagination.currPageNo + 1}&searchKeyword=${keyword}&searchCondition=${condition}" class="btn btn-primary btn-xs">다음</a>
-	    </c:otherwise>
-	</c:choose>
+		<c:choose>
+			<c:when test="${pagination.currPageNo == pagination.pageCnt}">
+				<!-- 현재 페이지가 마지막 페이지인 경우 -->
+				<li class="page-item"><a class="page-link">다음</a></li>
+			</c:when>
+			<c:otherwise>
+				<!-- 다음 페이지로 이동하는 링크 -->
+					<li class="page-item">
+           			 	<a class="page-link" href="adminRevList.ko?currPageNo=${pagination.currPageNo + 1}&searchKeyword=${keyword}&searchCondition=${condition}">다음</a>
+         			</li>
+			</c:otherwise>
+		</c:choose>
+	</ul>
+	</div>
 </div>
+
+
+
+
+
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">

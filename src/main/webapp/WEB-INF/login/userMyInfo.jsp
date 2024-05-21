@@ -9,13 +9,17 @@
 <title>내 정보</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <style>
+body {
+    margin: 0;
+    padding: 0;
+}
 .container#container-Info {
 	display: flex;
 	justify-content: center;
-	width: 1000px;
+	width: 1040px;
 	margin: 50px auto;
 	padding: 50px 20px;
-	border: 1px solid rgb(224, 224, 224);
+	border: 1px solid #e0e0e0;
 	border-radius: 10px;
 	}
 
@@ -29,68 +33,171 @@
 }
         
 .box-top{
-	border-bottom: 1px solid black;
+	border-bottom: 2px solid #e0e0e0;
 	vertical-align: middle;
-	padding: 10px 0;
+	padding: 10px 5px;
 	}
 
-.uMyPage button[type=button] {
+.uMyPage button[type=button], button[type=submit] {
 	float: right;
-	padding: 5px;
-	background-color: transparent; 
-	border: none;
-	border-radius: 5px;
-	color: #7C93F5;
-	font-weight: bold;
-	text-decoration: underline;
+    padding: 5px 10px;
+    background-color: #005930;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
 	}
 	
-.uMyPage button[type=submit] {
-	float: right;
-	width: 8%;
-	padding: 5px;
-	background-color: transparent; 
-	border: none;
-	border-radius: 5px;
-	color: #7C93F5;
-	font-weight: bold;
-	text-decoration: underline;
-	}
+.uMyPage button[type=button]#delBtn{
+    background-color: transparent;
+    border: none;
+	color: black;
+	font-weight: normal;
+	margin-top: 20px;
+	float: left;
+	text-decoration: none;
+	
+}
 
 .uMyPage button[type=submit]:hover, button[type=button]:hover  {
-	color: #AAB6F0;
+	background-color: #e6e5d58c;
+	color:  #4a4a4a;
 	font-weight: bold;
 	}
 	
 .uMyPage button#delBtn:hover{
-	color: #AAB6F0;
+	color: #4a4a4a;
 	font-weight: bold;
 	}
 	
-#delBtn {
-	margin-top: 20px;
-	}
-
 .item_box{
     display: flex;
     justify-content: space-between;	
     margin: 10px 20px;
 	padding: 10px;
 	font-size: 18px;
+	align-items: center;
+	color: #4a4a4a;
 	}
 
 .item_name {
-	color: gray;
+	color: #4a4a4a;
+	display: inline-block;
+    vertical-align: middle;
+    font-weight: bold;
 	}
 
-.item_name, .form_item {
+.form_item {
     display: inline-block;
     vertical-align: middle;
     font-weight: bold;
+    font-size:
 }
 
 .infoDel {
-	border-top: 1px solid black;
+	border-top: 2px solid #e0e0e0;
+}
+
+/* extra small */
+@media screen and (max-width:540px) {
+    .container#container-Info {
+    	width: 100%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+    .info-box#info-box {
+        width: 100%;
+    }
+    .item_box {
+        flex-direction: column;
+        align-items: center;
+        font-size: 16px;
+    }
+    
+    .item_name, .form_item {
+        width: 100%;
+        text-align: center;
+    }
+    .uMyPage button[type=button], button[type=submit] {
+        width: 100%;
+        margin-top: 10px;
+        float: none;
+    }
+    .uMyPage button[type=button]#delBtn {
+     	width: 100%;
+        text-align: left;
+    }
+}
+
+/* small */
+@media screen and (min-width:541px) and (max-width:720px) {
+    .container#container-Info {
+        width: 100%;
+        margin: 30px auto;
+        padding: 30px;
+    }
+    .info-box#info-box {
+        width: 100%;
+    }
+    .item_box {
+        align-items: flex-start;
+        font-size: 16px;
+    }
+    .uMyPage button[type=button], button[type=submit] {
+        width: auto;
+        margin-top: 10px;
+    }
+    .uMyPage button[type=button]#delBtn {
+        float: none;
+    }
+}
+
+/* medium */
+@media screen and (min-width:721px) and (max-width:960px) {
+    .container#container-Info {
+        width: 100%;
+        margin: 40px auto;
+        padding: 40px;
+    }
+    .info-box#info-box {
+        width: 100%;
+    }
+    .item_box {
+        align-items: flex-start;
+        font-size: 17px;
+    }
+    .uMyPage button[type=button], button[type=submit] {
+        width: auto;
+        margin-top: 10px;
+    }
+    .uMyPage button[type=button]#delBtn {
+        float: none;
+    }
+}
+
+/* large */
+@media screen and (min-width:961px) and (max-width:1140px) {
+    .container#container-Info {
+        width: 100%;
+        margin: 50px auto;
+        padding: 50px 20px;
+    }
+    .info-box#info-box {
+        width: 100%;
+    }
+    .item_box {
+        flex-direction: row;
+        align-items: center;
+        font-size: 18px;
+    }
+    .uMyPage button[type=button], button[type=submit] {
+        width: auto;
+        margin-top: 0;
+    }
+    .uMyPage button[type=button]#delBtn {
+        float: left;
+    }
 }
 </style>
 <script>
@@ -114,7 +221,7 @@ function goDelAcc(){
             <div class="infoFormbox" id="infoFormbox">
                 <div class="box-top">
                     <button type="submit">수정</button>
-                    <h3>${users.u_nick}님 회원정보</h3>
+                    <h3 style="font-weight: bold;">${users.u_nick}님 회원정보</h3>
                 </div>
                 <div class="infoContent">
                 	<div class="item_box">
@@ -139,7 +246,7 @@ function goDelAcc(){
                     </div>
                 </div>
                <div class="infoDel">
-                    <button type="button" id="delBtn" onclick="goDelAcc()">회원 탈퇴</button>
+                    <button type="button" id="delBtn" onclick="goDelAcc()">회원 탈퇴&nbsp;&gt;</button>
                 </div>
     		 </div>
         </form>

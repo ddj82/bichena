@@ -22,7 +22,7 @@
 	width: 322px;
 	padding: 5px;
 	height: 40px;
-	background-color: rgb(0, 150, 243);
+	background-color: #005930;
 	color: rgb(255, 255, 255);
 	border-radius: 5px;
 	border: none;
@@ -31,9 +31,13 @@
 	font-weight: bold;
 	margin-left: 47px;
 }
+.do:hover {
+	background-color: #2d4739;
+}
 p {
 	text-align: center;
 }
+
 /* extra small */
 @media screen and (max-width:540px) {
 	.success {
@@ -50,22 +54,31 @@ p {
 /* small */
 @media screen and (min-width:541px) and (max-width:720px) {
 	.success {
-		width: 325px;
+		width: 400px;
+	}
+	.do {
+		margin-left: 35px;
 	}
 }
 /* medium */
 @media screen and (min-width:721px) and (max-width:960px) {
 	.success {
-		width: 325px;
+		width: 395px;
+	}
+	.do {
+		margin-left: 35px;
 	}
 }
 /* large */
 @media screen and (min-width:961px) and (max-width:1140px) {
 	.success {
-		width: 325px;
+		width: 380px;
 	}
 	.done {
 		width: 300px;
+	}
+	.do {
+		margin-left: 25px;
 	}
 }
 

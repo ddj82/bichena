@@ -5,42 +5,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>계정 탈퇴</title>
+<title>비채나</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <style>
+body {
+    margin: 0;
+    padding: 0;
+}
+
 .container#containerPw{
 	display: flex;
-	justify-content: center;
-	width: 1000px;
-	margin: 50px auto;
-	padding: 50px 20px;
-	border: 1px solid rgb(224, 224, 224);
-	border-radius: 10px;
+    justify-content: center;
+    width: 100%;
+    max-width: 1000px;    
+    margin: 50px auto;
+    padding: 50px 20px;
+    border: 1px solid #e0e0e0; 
+    border-radius: 10px;
  	}
 
-.conPwForm#conForm {
+.delAccForm#delAccForm {
 	width: 40%;
-	height: 300px;
+    margin: 20px 0 20px 0;
 	}
 	
-.conPwForm h4.conPwTitle {
-	color: #333;
-	text-align: center;
-	margin-bottom: 20px;
+.conPwTitle {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+	margin-bottom: 13px;
+}
+
+p.del-conPw {
+	font-size: 15px;
+    line-height: 10px;
+    font-weight: 700;
+	text-align: center;	
+    color: #333;
+    padding: 10px 0; 
 }
 
  .confirmPw {
 	margin-top: 10px;
 } 
 
-.confirmPw p small {
-    font-weight: 700;
-    text-align: center;
-    color: #333;
-    padding: 20px 0; 
+.pwBtn {
+    display: flex;
+    justify-content: space-between;
 }
 
-.confirmPw input[type=password] {
+.delAccCon input[type=password] {
 	width: 100%;
 	padding: 10px;
 	margin-bottom: 20px;
@@ -48,36 +64,52 @@
 	border-radius: 5px;
 }
 
-.confirmPw input[type=submit] {
-	width: 100%;
-	padding: 10px;
-	background-color: #17884a;
-	border: none;
-	border-radius: 5px;
-	color: #fff;
-	cursor: pointer;
+.pwBtn input {
+    background-color: #88958e;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    width: 80px;
+    padding: 5px 10px;
 }
 
-.confirmPw input[type=submit]:hover {
-	background-color: #27DB77;
+.pwBtn input:hover {
+    background-color: #bbb;
 }
+
+.pwBtn input[type="button"] {
+    background-color: #005930;
+    color: #fff;
+    font-weight: bold;
+}
+
+.pwBtn input[type="button"]:hover {
+    background-color: #D4A035;
+}
+
 </style>
 </head>
 <body>
-<jsp:include page="../../common/navbar.jsp"/>
+<%@ include file="../../common/navbar.jsp" %>
+<%-- <%@ include file="../user/myPageHeader.jsp" %> --%>
 	
-	<div class="container" id="containerPw">
-		<div class="delAccForm" id="delAccForm">
-				<form action="main.ko" class="delAccCon" id="delAccCon" method="post">
-					<h4 class="conPwTitle">비밀번호 재확인</h4>
-					<p style="text-align:center;"><small>계정 삭제를 위해 비밀번호를 다시 한 번 입력해주세요.</small></p>
-					<div class="form_item">${users.u_nick}</div>
-					<input type="password" id="upw" name="u_pw" placeholder="비밀번호를 입력해주세요." maxlength="16" pattern="[a-zA-Z0-9_\-~!@#$%^&*()]+">
-					<input type="button" id="confirmDel" onclick="passChk()" value="탈퇴 확인">
-					<input type="submit" id="cancleDel" value="탈퇴 취소"> <!-- 홈으로 가도록 -->
-				</form>
-		</div>
+<div class="container" id="containerPw">
+	<div class="delAccForm" id="delAccForm">
+		<form action="main.ko" class="delAccCon" id="delAccCon" method="post">
+			<h2 class="conPwTitle">비밀번호 재확인</h2>
+				<p class="del-conPw">계정 탈퇴를 위해 비밀번호를 입력해주세요.</p>
+				<input type="password" id="upw" name="u_pw" placeholder="비밀번호를 입력해주세요.">
+            <div class="pwBtn">
+				<input type="submit" id="cancleDel" value="취소"> <!-- 홈으로 가도록 -->
+				<input type="button" id="confirmDel" onclick="passChk()" value="확인">
+			</div>
+			</form>
 	</div>
+</div>
 <%-- <jsp:include page="../common/footer.jsp"/> --%>
 </body>
 <script>
@@ -116,6 +148,7 @@ function passChk() {
 					location.href = 'delUser.ko';
 				} else {
 					console.log('');
+					alert("비밀번호를 다시 확인해주세요.");
 				}
 			},
 			error : function(err) {
@@ -126,8 +159,5 @@ function passChk() {
 	}
 	console.log(upw);
 }
-
-
-
 </script>
 </html>

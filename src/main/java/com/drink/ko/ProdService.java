@@ -14,4 +14,9 @@ public interface ProdService {
 	int insertProduct(ProdVO vo);
 	int updateProduct(ProdVO vo);
 	int deleteProduct(String p_no);
+	
+	List<ProdVO> mainPageSlideListTakju(ProdVO vo);
+	List<ProdVO> mainPageSlideListGwasilju(ProdVO vo);
+	List<ProdVO> mainPageSlideListChunju(ProdVO vo);
+	List<ProdVO> mainPageSlideListJeungryuju(ProdVO vo);
 }

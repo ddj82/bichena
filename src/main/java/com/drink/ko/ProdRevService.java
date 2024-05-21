@@ -12,4 +12,6 @@ public interface ProdRevService {
 	int revTotalCnt(ProdRevVO vo);// 전체 글 수 조회
 	int prodRevDelete(ProdRevVO vo);
 	ProdRevVO revDelSelect(ProdRevVO vo);
+	
+	List<ProdRevVO> mainRevList(ProdRevVO vo);
 }

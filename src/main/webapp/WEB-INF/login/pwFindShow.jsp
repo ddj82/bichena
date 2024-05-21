@@ -1,22 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../../common/navbar.jsp" %>
 <%
-if (request.getParameter("email") == null || request.getParameter("email").equals("")) {
-	response.sendRedirect("loginPage.ko");
-}
+if (request.getParameter("email") == null || request.getParameter("email").equals("")) {%>
+	<script>location.href="loginPage.ko";</script>
+<!-- response.sendRedirect("loginPage.ko"); -->
+<%}
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>비채나</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 
 <style>
 
 .idFindSearchSubBox {
-    border: 1px solid black;
+    border: 3px solid #2d4739;
     width: 700px;
     height: 350px;
     display: flex;
@@ -26,6 +28,7 @@ if (request.getParameter("email") == null || request.getParameter("email").equal
 }
 
 .idFindSearchMainBox {
+	margin-top: 70px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,14 +36,18 @@ if (request.getParameter("email") == null || request.getParameter("email").equal
 
 div#box1 {
     text-align: center;
+    color: #2d4739;
+    font-weight: bolder;
+    font-size: 20px;
+    position: relative;
+    top: 50px;
 }
 
 a.loginbutton {
-    background-color: #d5d5d5;
+    background-color: #005930;
     color: white;
     text-decoration: none;
     width: 150px;
-    heigth: 100px;
     display: inline-block;
     height: 40px;
     border-radius: 5px;
@@ -48,14 +55,12 @@ a.loginbutton {
     line-height: 40px;
 }
 
-div#button {
-}
-
 div#finallyPW {
     font-size: 20px;
+    color: #2d4739;
 }
 
-@media ( max-width : 768px) {
+@media (max-width: 575px) {
 	.idFindSearchSubBox {
 		width: 324.91px;
 	}
@@ -70,6 +75,16 @@ div#finallyPW {
 	}
 	
 }
+
+span {
+    color: #e5c687;
+    font-weight: bolder;
+}
+
+a.loginbutton:hover{
+	background-color:#2d4739;
+}
+
 </style>
 <script>
 
@@ -120,12 +135,15 @@ $(window).resize(function() {
 			success : function(data) {
 				console.log("data : " + data);
 				code = data;
-				$('#finallyPW').html("<b>회원님의 임시 비밀번호는</b> "+" <span style='color:#1890ff;'>"+data+"</span> <b>입니다.</b>");
+				$('#finallyPW').html("<b>회원님의 임시 비밀번호는</b> "+" <span>"+data+"</span> <b>입니다.</b>");
 			}
 		});
 		
 		
-		history.replaceState({},null,location.pathname);
+		window.onload = function(){
+			history.replaceState({}, null, location.pathname);
+			}
 </script>
 </body>
+<%@ include file="../../common/footer.jsp" %>
 </html>
