@@ -289,7 +289,7 @@ th {
 					<br><br>
 					<textarea rows="8" name="pr_content"></textarea>
 					<br><br>
-					<div><img id="preview" src="" alt="" style=""></div>
+					<div><img id="preview" src="" alt="" style="display:none;"></div>
 					<label for="file" class="btn btn-outline-secondary btn-sm">첨부파일</label>
 					<input type="file" id="file" name="uploadFile" class="btn btn-outline-secondary btn-sm" style="display:none;">
 					<br>
@@ -447,7 +447,7 @@ document.getElementById("file").addEventListener('change', function(event){
 
             // FileReader가 읽은 데이터를 img 요소의 src 속성에 설정하여 이미지 표시
             imgElement.src = event.target.result;
-            imgElement.style = "width:200px;";
+            imgElement.style = "display:inline; width:200px;";
         };
 
         // 파일을 읽기

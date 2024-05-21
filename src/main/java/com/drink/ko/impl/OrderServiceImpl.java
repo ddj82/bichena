@@ -28,6 +28,16 @@ public class OrderServiceImpl implements OrderService {
 	public List<OrderVO> myOrderDetail(String o_no) {
 		return dao.myOrderDetail(o_no);
 	}
+	
+	@Override
+	public List<OrderVO> myCancleList(int u_no) {
+		return dao.myCancleList(u_no);
+	}
+	
+	@Override
+	public List<OrderVO> myCancleConfirm(int u_no) {
+		return dao.myCancleConfirm(u_no);
+	}
 
 	@Override
 	public int orderRevchk(OrderVO vo) {

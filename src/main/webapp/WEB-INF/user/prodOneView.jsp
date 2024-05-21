@@ -63,82 +63,130 @@ align-items:center;
 min-height:42px
 
 }
+
+/* 썸네일,리모콘,설명 (상세jsp 위) */
+div.div-wid-mar {
+	width: 700px;
+	margin: 0 auto;
+}
+div.div-flex {
+	margin: 0 auto;
+	text-align: left;
+	display: flex;
+	justify-content: center;
+	max-width: 700px;
+}
+div.div-img {
+	text-align: center;
+	width: 370px;
+}
+img.img-main {
+	padding: 10px;
+	width: 100%;
+}
+div.div-cart {
+	text-align: left;
+	padding: 10px;
+	width: 350px;
+}
+div.div-col {
+	border: 1px solid lightgray;
+	border-radius: 10px;
+	margin-top: 30px;
+	display: flex;
+}
+div.tableDiv {
+	width: 100%;
+}
+table.tableDiv-tb {
+	width: 100%;
+	text-align: center;
+}
+div.div-flex-mobile {
+	display:none;
+}
+
+
+@media (max-width: 720px) {
+	div.div-wid-mar, #detail2 * {
+		width: 500px!important;
+	}
+	div.div-flex, div.div-img, div.div-cart {
+		display:block;
+		margin: 0 auto;
+		width: 500px;
+	}
+}
+
+@media (min-width: 721px) {
+	div.div-flex {
+		height: 350px;
+	}
+}
 </style>
 </head>
 <body>
 <%@ include file="../../common/navbar.jsp" %>
-<div style="width: 700px;margin: 0 auto;">
-
-	<div class="div1" style="margin: 0 auto;text-align: left;display: flex;justify-content: center;height: 350px;max-width:700px;">
-	<!-- 	<div class="div1" style="width:60%;"> -->
-	
-							<div style="text-align: center; width:370px;">
-												<img class="float" src="img/${prodOne.p_img }" title="img" alt="img" style="padding:10px;width:100%;">
-										<%-- 		<img class="float" src="img/${prodOne.p_img }" title="img" alt="img" style="padding:10px;"> --%>
-										
-										
-							</div>
-	
-							<div style="text-align: left;padding: 10px; width:350px;">
-												<div class="clear">
-													<div class="product_desc"><small>${prodOne.p_desc}</small></div>
-													<div style="margin-top:10px;font-weight: bolder;font-size:20px;">${prodOne.p_name}</div>
-													<div style="margin-top:10px;"><small>판매가격</small></div>
-													<div style="margin-top:5px;font-weight: bolder;">${prodOne.p_price}원</div>
-												</div>
-												
-											<%@ include file="pay.jsp" %>
-							</div>
-	
+<div class="div-wid-mar">
+	<div class="div-flex">
+		<div class="div-img">
+			<img class="img-main" src="img/${prodOne.p_img }" title="img" alt="img">
+		</div>
+		<div class="div-cart">
+			<div class="clear">
+				<div class="product_desc"><small>${prodOne.p_desc}</small></div>
+				<div style="margin-top:10px;font-weight: bolder;font-size:20px;">${prodOne.p_name}</div>
+				<div style="margin-top:10px;"><small>판매가격</small></div>
+				<div style="margin-top:5px;font-weight: bolder;">${prodOne.p_price}원</div>
+			</div>
+			<%@ include file="pay.jsp" %>
+		</div>
 	</div>
-	<div style="border: 1px solid lightgray;border-radius: 10px;width: 700px;margin: 0 auto;margin-top: 30px;display:flex;">
-									<div class="dtable" style="width:100%;">
-								<!-- 	<div class="dtable" style="width:30%;"> -->
-										<table style="width:100%;text-align: center;">
-											<tr>
-												<th>주류종류</th><td>${prodOne.p_type}</td>
-											</tr>
-											<tr>
-												<th>도수</th><td>${prodOne.p_dgr}%</td>
-											</tr>
-											<tr>
-												<th>용량</th><td>${prodOne.p_cap}ml</td>
-											</tr>											
-											<tr>
-												<th>재고</th><td>${prodOne.p_stock}</td>
-											</tr>
-											<tr>
-												<th>제조사</th><td>${prodOne.p_made}</td>
-											</tr>
-										</table>
-									</div>
-									<br><br><br> 
-									<div class="dtable" style="width:100%;">
-										<table style="width:100%;text-align: center;">
-											<tr>
-												<th>단맛</th>
-												<td>${prodOne.p_sw}</td>
-											</tr>
-											<tr>
-												<th>신맛</th>
-												<td>${prodOne.p_su}</td>
-											</tr>
-											<tr>
-												<th>탄산</th>
-												<td>${prodOne.p_sp}</td>
-											</tr>
-											<tr>
-												<th>원료</th><td>${prodOne.p_mat}</td>
-											</tr>
-										</table>
-									</div>
+	
+	<div class="div-wid-mar div-col">
+		<div class="tableDiv">
+			<table class="tableDiv-tb">
+				<tr>
+					<th>주류종류</th><td>${prodOne.p_type}</td>
+				</tr>
+				<tr>
+					<th>도수</th><td>${prodOne.p_dgr}%</td>
+				</tr>
+				<tr>
+					<th>용량</th><td>${prodOne.p_cap}ml</td>
+				</tr>											
+				<tr>
+					<th>재고</th><td>${prodOne.p_stock}</td>
+				</tr>
+				<tr>
+					<th>제조사</th><td>${prodOne.p_made}</td>
+				</tr>
+			</table>
+		</div>
+		<br><br><br> 
+		<div class="tableDiv">
+			<table class="tableDiv-tb">
+				<tr>
+					<th>단맛</th>
+					<td>${prodOne.p_sw}</td>
+				</tr>
+				<tr>
+					<th>신맛</th>
+					<td>${prodOne.p_su}</td>
+				</tr>
+				<tr>
+					<th>탄산</th>
+					<td>${prodOne.p_sp}</td>
+				</tr>
+				<tr>
+					<th>원료</th><td>${prodOne.p_mat}</td>
+				</tr>
+			</table>
+		</div>
 	</div>
-
-
-
 </div>
 
-<div id="detail2" style="width: 700px;margin: 0 auto;">${pageContext.request.contextPath }/WEB-INF/product/${prodOne.editfile }</div>
+<div class="div-wid-mar" id="detail2">${pageContext.request.contextPath }/WEB-INF/product/${prodOne.editfile }</div>
 
 <br>
 <br>

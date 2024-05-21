@@ -8,6 +8,8 @@ public interface OrderService {
 	List<OrderVO> myOrderList(int u_no);
 	List<OrderVO> myOrderConfirm(int u_no);
 	List<OrderVO> myOrderDetail(String o_no);
+	List<OrderVO> myCancleList(int u_no);
+	List<OrderVO> myCancleConfirm(int u_no);
 	int orderRevchk(OrderVO vo);
 	int orderRevDelchk(OrderVO vo);
 	List<OrderVO> adminOrderList(OrderVO vo);

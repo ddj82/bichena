@@ -37,7 +37,6 @@
 p {
 	text-align: center;
 }
-
 /* extra small */
 @media screen and (max-width:540px) {
 	.success {

@@ -9,19 +9,29 @@
 .success {
 	width: 500px;
 	margin: 0 auto;
+	text-align: center;
 }
 
 .do {
 	width: 322px;
 	padding: 5px;
 	height: 40px;
-	background-color: rgb(0, 150, 243);
+	background-color: #005930;
 	color: rgb(255, 255, 255);
 	border-radius: 5px;
 	border: none;
 	cursor: pointer;
 	font-size: 15px;
 	font-weight: bold;
+}
+.do:hover {
+	background-color: #2d4739;
+}
+.message {
+	font-weight: bold;
+	font-size: 30px;
+	padding: 15px;
+	margin-top: 40px;
 }
 
 /* extra small */
@@ -57,7 +67,7 @@
 <body>
 	<%@include file="/common/navbar.jsp" %>
 	<div class="success">		
-		<h1>결제가 완료되었습니다.</h1>
+		<div class="message">결제가 완료되었습니다.</div>
 		<form action="myPage.ko" class="done">
 			<input class="do" type="submit" value="주문내역 확인하기">
 		</form>			

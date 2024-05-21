@@ -46,6 +46,16 @@
 		FROM BC_ORDER AS o JOIN BC_PROD AS p on o.P_NO = p.P_NO where O_NO = #{o_no}
 	</select>
 	
+	<select id="myCancleList" resultType="orderdto">
+		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG
+		FROM BC_ORDER AS o JOIN BC_PROD AS p on o.P_NO = p.P_NO where U_NO = #{u_no} AND O_STATE = '취소' GROUP BY O_NO ORDER BY O_DATE DESC
+	</select>
+	
+	<select id="myCancleConfirm" resultType="orderdto">
+		SELECT o.*, p.P_DESC, p.P_PRICE, p.P_IMG
+		FROM BC_ORDER AS o JOIN BC_PROD AS p on o.P_NO = p.P_NO where U_NO = #{u_no} AND O_STATE = '취소' ORDER BY O_DATE DESC
+	</select>
+	
 	<select id="myRevIstOrder" resultType="orderdto">
 		SELECT * FROM BC_ORDER WHERE U_NO = #{u_no} AND O_REVSTATE = 0 AND O_STATE = '배송완료'
 	</select>

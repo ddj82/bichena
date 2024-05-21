@@ -30,6 +30,25 @@ public class OrderVO {
 		this.allTotal = allTotal;
 	}
 
+	private String str_total;
+	private String str_allTotal;
+	
+	public String getStr_total() {
+		return str_total;
+	}
+
+	public void setStr_total(String str_total) {
+		this.str_total = str_total;
+	}
+
+	public String getStr_allTotal() {
+		return str_allTotal;
+	}
+
+	public void setStr_allTotal(String str_allTotal) {
+		this.str_allTotal = str_allTotal;
+	}
+
 	// 페이징 처리를 위한 변수
 	private int currPageNo; // 현재 페이지 번호
 	private int sizePerPage = 10; // 한 페이지당 보여질 리스트 개수

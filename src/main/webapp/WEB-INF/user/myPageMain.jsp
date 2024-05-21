@@ -3,11 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>회원 마이페이지 메인</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <style>
 .none {
-	display: none;
+display: none;
 }
 .whole-div {
 	width: 1050px;
@@ -19,7 +21,7 @@
 	padding: 0 15px;
 }
 .title {
-	border-bottom: 1px solid rgb(238, 238, 238);
+	border-bottom: 2px solid #deffdd;
 	margin-top: 20px;
 	align-items: center;
 	padding-bottom: 15px;
@@ -34,20 +36,33 @@
     margin: 0 auto;
     margin-top: 30px;
     padding: 15px;
+    font-weight:bold;
+    color:rgb(174, 174, 174);
 }
 .status {
 	display: flex;
     flex-direction: column;
     align-items: center;
 }
-.current {
-	
+.list-order {
+/* 	display: flex; */
+/* 	justify-content: space-around; */
+/* 	flex-wrap: wrap; */
 }
 .orderTable {
 	border: 1px solid rgb(238, 238, 238);
 	border-radius: 10px;
-	margin: 10px;
 	padding: 10px;
+	width:50%;
+/* 	height: 400px; */
+	margin: 30px auto;
+	display: flex;
+    flex-direction: column;
+}
+.name-tel {
+/* 	background-color: #deffdd; */
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 .content {
 	border-top: 1px solid rgb(238, 238, 238);
@@ -57,19 +72,12 @@
     padding-top: 5px;
     padding-bottom: 5px;
 }
-.odlist {
-	display: flex;
-	border-top: 1px solid rgb(238, 238, 238);
-	margin-top: 20px;
-	padding-top: 10px;
-	padding-bottom: 10px;
-}
 .each-content {
 	display: flex;
+    flex-direction: column;
 }
 .each-content div {
-	width: 100px;
-	margin-right: 70px;
+	width: 200px;
 }
 form textarea {
 	width: 100%;
@@ -81,9 +89,123 @@ table#revContentTB {
 	display: flex;
     justify-content: space-between;
     font-weight: bold;
-    color: #005930;
+}
+.total {
+	border-top: 1px solid rgb(238, 238, 238);
+	padding-top: 5px;
+	margin-top: auto;
+	display: flex;
+	justify-content: space-between;
+	font-weight: bold;
+}
+.orderEmpty {
+	margin: 100px 359px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.submit {
+	width: 300px;
+    padding: 5px;
+    height: 40px;
+    background-color: #005930;
+	color: rgb(255, 255, 255);
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	font-size: 15px;
+	font-weight: bold;
+}
+.btn-div {
+	
+}
+.text-p {
+	width: 65%;
+    margin: 0 auto;
+}
+/* extra small */
+@media screen and (max-width:540px) {
+	.whole-div {
+		width: 90%;
+	}
+	.orderTable {
+		width: 100%;
+	}
+	.orderEmpty {
+		margin: 100px 13%;
+	    font-size: 15px;
+	    font-weight: bold;
+	}
+	.submit {
+		width: 100%;
+	}
+	.list-count {
+		width: 100%;
+	}
+}
+/* small */
+@media screen and (min-width:541px) and (max-width:720px) {
+	.whole-div {
+		width: 90%;
+	}
+	.orderTable {
+		width: 80%;
+	}
+	.orderEmpty {
+		margin: 100px 21%;
+	}
+	.submit {
+		width: 100%;
+	}
+	.list-count {
+		width: 50%;
+	}
+}
+/* medium */
+@media screen and (min-width:721px) and (max-width:960px) {
+	.whole-div {
+		width: 90%;
+	}
+	.orderTable {
+		width: 70%;
+	}
+	.orderEmpty {
+		margin: 100px 35%;
+	}
+	.submit {
+		width: 100%;
+	}
+	.list-count {
+		width: 50%;
+	}
+}
+/* large */
+@media screen and (min-width:961px) and (max-width:1140px) {
+	.whole-div {
+		width: 90%;
+	}
+	.orderTable {
+		width: 60%;
+	}
+	.orderEmpty {
+		margin: 100px 32%;
+	}
+	.list-count {
+		width: 40%;
+	}
 }
 </style>
+<script>
+$(document).ready(function(){
+    var orderEmpty = document.getElementById('orderEmpty');
+    if (orderEmpty) {
+        if (${myOrderList.size()} === 0) {
+        	orderEmpty.style.display = "block";
+        } else {
+        	orderEmpty.style.display = "none";
+        }
+    }
+});
+</script>
 </head>
 <body>
 <%@ include file="../../common/navbar.jsp" %>
@@ -93,54 +215,59 @@ table#revContentTB {
 	<div class="list-count">
 		<div class="status">
 			<span class="count">${ready }</span>
-			<span class="current"><small>배송 준비중</small></span>			
+			<span class="current"><small style="font-weight:bold; color:rgb(174, 174, 174)">상품 준비중</small></span>			
 		</div>
 		<div class="status">
 			<span class="count">${porter }</span>			
-			<span class="current"><small>배송중</small></span>
+			<span class="current"><small style="font-weight:bold; color:rgb(174, 174, 174)">배송중</small></span>
 		</div>
 		<div class="status">
 			<span class="count">${complete }</span>
-			<span class="current"><small>배송완료</small></span>
+			<span class="current"><small style="font-weight:bold; color:rgb(174, 174, 174)">배송완료</small></span>
 		</div>
 	</div>
-	<c:forEach items="${myOrderList }" var="myorder">
-		<div class="orderTable">
+	<div class="list-order">
+		<c:forEach items="${myOrderList }" var="myorder">
 			<c:if test="${myorder.o_state ne '취소' }">
-				<div>
-					<div class="detail">${myorder.o_state } <button type="button" class='btn btn-outline-primary btn-sm' onclick="location.href='myOrderDetail.ko?o_no=${myorder.o_no }';">주문 상세보기</button></div>
-				</div>
-				<div>
-					<div>${myorder.o_date }</div>
-				</div>
-				<div>
-					<div>${myorder.u_name } | ${myorder.u_tel }</div>
-				</div>
-				<div class="odlist">
-					<div style="margin-right: 80px;">상품 이름</div>
-					<div style="margin-right: 120px;">개별 가격</div>
-					<div>주문 개수</div>
-				</div>
-				<c:forEach items="${myOrderConfirm }" var="myconfirm">
-					<c:if test="${myorder.o_no eq myconfirm.o_no}">
-						<div class="content">
+				<div class="orderTable">
+						<div class="inner-info">
 							<div>
-								<div class="each-content">
-									<div>${myconfirm.p_name }</div>
-									<div>${myconfirm.p_price }원</div>
-									<div>수량 ${myconfirm.o_stock }개</div>
-								</div>
+								<div class="detail">${myorder.o_state } <button type="button" class='btn btn-outline-primary btn-sm' onclick="location.href='myOrderDetail.ko?o_no=${myorder.o_no }';">주문 상세보기</button></div>
 							</div>
-							<div><img alt="img" title="img" src="img/${myconfirm.p_img }" style="width:60px; height:60px;"></div>					
+							<div>
+								<div>${myorder.o_date }</div>
+							</div>
+							<div class="name-tel">
+								<div>${myorder.u_name } | ${myorder.u_tel }</div>
+							</div>
+							<c:forEach items="${myOrderConfirm }" var="myconfirm">
+								<c:if test="${myorder.o_no eq myconfirm.o_no}">
+									<div class="content">
+										<div><img alt="img" title="img" src="img/${myconfirm.p_img }" style="width:60px; height:60px;"></div>					
+										<div>
+											<div class="each-content">
+												<div>${myconfirm.p_name }</div>
+												<div style="margin-top: auto;"><small>${myconfirm.p_price }원 / 수량 ${myconfirm.o_stock }개</small></div>
+											</div>
+										</div>
+									</div>
+								</c:if>					
+							</c:forEach>
 						</div>
-					</c:if>					
-				</c:forEach>
-				<div style="border-top: 1px solid rgb(238, 238, 238);">
-					<div>총 결제 금액 : ${myorder.allTotal }원</div>
-				</div>	
+						<div class="total">
+							<div>총 결제 금액</div>
+							<div>${myorder.str_allTotal }원</div>
+						</div>	
+				</div>
 			</c:if>
+		</c:forEach>
+	</div>
+	<div id="orderEmpty" class="orderEmpty">
+		<p class="text-p">주문내역이 없습니다.</p>
+		<div class="btn-div">
+			<input type="button" value="주문하러 가기" id="submit" class="submit" onclick="history.back()">
 		</div>
-	</c:forEach>
+	</div>
 </div>
 
 <div class="modal" id="myModal">

@@ -26,6 +26,14 @@ public class OrderDAO {
 		return mybatis.selectList("OrderDAO.myOrderDetail", o_no);
 	}
 	
+	public List<OrderVO> myCancleList(int u_no) {
+		return mybatis.selectList("OrderDAO.myCancleList", u_no);
+	}
+	
+	public List<OrderVO> myCancleConfirm(int u_no) {
+		return mybatis.selectList("OrderDAO.myCancleConfirm", u_no);
+	}
+	
 	public int orderRevchk(OrderVO vo) {
 		return mybatis.update("OrderDAO.orderRevchk", vo);
 	}

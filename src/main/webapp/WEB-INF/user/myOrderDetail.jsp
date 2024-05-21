@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -14,6 +15,7 @@
 	border-radius: 10px;
 	margin-top: 40px;
 	padding: 15px;
+	margin-bottom: 40px;
 }
 .title {
 	border-bottom: 1px solid rgb(238, 238, 238);
@@ -21,9 +23,6 @@
 	align-items: center;
 	padding-bottom: 15px;
 	font-weight: bold;
-}
-.content {
-	
 }
 .detail-content {
 	display: flex;
@@ -45,12 +44,226 @@
 	padding-top: 5px;
 	padding-bottom: 5px;
 	justify-content: end;
+	font-weight: bold;
 }
 .dtlist div {
 	margin-right: 100px;
 }
 .prod-img {
 	cursor: pointer;
+}
+.info {
+	display: flex;
+	justify-content: space-around;
+}
+.customer {
+	border: 1px solid rgb(238, 238, 238);
+	border-radius: 10px;
+	width: 700px;
+	margin-top: 10px;
+	padding: 10px;
+	display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+.porter {
+	border: 1px solid rgb(238, 238, 238);
+	border-radius: 10px;
+	width: 300px;
+	margin-top: 10px;
+	padding: 5px;
+}
+.porter-info {
+	display: flex;
+	justify-content: space-between;
+	padding: 5px;
+}
+.info-title {
+	border-bottom: 1px solid rgb(238, 238, 238);
+	padding: 5px;
+	font-weight: bold;
+}
+.porter-title {
+	border-bottom: 1px solid rgb(238, 238, 238);
+	padding: 5px;
+	font-weight: bold;
+}
+.customer-info {
+	display: flex;
+	padding: 5px;
+}
+.cus-tt {
+	width: 100px;
+}
+.porter-total {
+	display: flex;
+	justify-content: space-between;
+	border-top: 1px solid rgb(238, 238, 238);
+	padding: 5px;
+	font-weight: bold;
+}
+.wrap {
+	width: 100%;
+}
+.img-size {
+	margin-left: 50px;
+}
+.app-info {
+	display: none;
+}
+.btn-div {
+	margin: 0 36.15%;
+}
+.submit {
+	margin-bottom: 40px;
+	width: 300px;
+    padding: 5px;
+    height: 40px;
+    background-color: #005930;
+	color: rgb(255, 255, 255);
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	font-size: 15px;
+	font-weight: bold;
+}
+/* extra small */
+@media screen and (max-width:540px) {
+	.detail-prod {
+		width: 90%;
+	}
+	.dtlist {
+		display: none;
+	}
+	.img-size {
+		margin-left: 0px;
+	}
+	.text-content {
+		display: block;
+	}
+	.info {
+		display: block;
+	}
+	.customer {
+		width: 100%;
+	}
+	.cus-tt {
+		width: 40%;
+	}
+	.porter {
+		width: 100%;
+	}
+	.app-info {
+		display: block;
+	}
+	.text-content {
+		display: none;
+	}
+	.customer-info {
+		justify-content: space-between;
+	}
+	.addr-info {
+		width: 150px;
+	}
+}
+/* small */
+@media screen and (min-width:541px) and (max-width:720px) {
+	.detail-prod {
+		width: 70%;
+	}
+	.dtlist {
+		display: none;
+	}
+	.img-size {
+		margin-left: 0px;
+	}
+	.text-content {
+		display: block;
+	}
+	.info {
+		display: block;
+	}
+	.customer {
+		width: 100%;
+	}
+	.cus-tt {
+		width: 40%;
+	}
+	.porter {
+		width: 100%;
+	}
+	.app-info {
+		display: block;
+	}
+	.text-content {
+		display: none;
+	}
+	.customer-info {
+		justify-content: space-between;
+	}
+	.addr-info {
+		width: 200px;
+	}
+}
+/* medium */
+@media screen and (min-width:721px) and (max-width:960px) {
+	.detail-prod {
+		width: 80%;
+	}
+	.dtlist {
+		display: none;
+	}
+	.img-size {
+		margin-left: 0px;
+	}
+	.text-content {
+		display: block;
+	}
+	.info {
+		display: block;
+	}
+	.customer {
+		width: 100%;
+	}
+	.cus-tt {
+		width: 30%;
+	}
+	.porter {
+		width: 100%;
+	}
+	.app-info {
+		display: block;
+	}
+	.text-content {
+		display: none;
+	}
+	.customer-info {
+		justify-content: space-between;
+	}
+}
+/* large */
+@media screen and (min-width:961px) and (max-width:1140px) {
+	.detail-prod {
+		width: 95%;
+	}
+	.customer {
+		width: 100%;
+	}
+	.img-size {
+		margin-left: 0px;
+	}
+	.cus-tt {
+		width: 30%;
+	}
+	.porter {
+		width: 100%;
+	}
+	.customer-info {
+		justify-content: space-between;
+	}
+	.addr-info {
+		width: 200px;
+	}
 }
 </style>
 <body>
@@ -62,74 +275,104 @@
 		<div class="dtlist">
 			<div>상품명</div>
 			<div>상품설명</div>
-			<div>상품가격</div>
+			<div>개별가격</div>
 			<div>구매수량</div>
-			<div>금액</div>
+			<div>총 금액</div>
+<!-- 			<div>리뷰</div> -->
 		</div>
 		<c:forEach items="${myOrderDetail }" var="detail">
 			<div class="detail-content">
-				<div>
-					<div class="prod-img" onclick="location.href='prodOne.ko?p_no=${detail.p_no}';"><img title="img" src="img/${detail.p_img }" style="width:100px; height:100px;"></div>
+				<div class="img-size">
+					<div class="prod-img" onclick="location.href = 'prodOne.ko?p_no=${detail.p_no}';"><img title="img" src="img/${detail.p_img }" style="width:100px; height:100px;"></div>
 				</div>
 				<div class="text-content">
 					<div style="margin-right:8px;">${detail.p_name }</div>
-					<div style="margin-right:27px;">${detail.p_desc }</div>
-					<div style="margin-right:45px;">${detail.p_price }원</div>
-					<div>수량 ${detail.o_stock }개</div>				
-					<div>${detail.o_total }원</div>				
+					<div style="margin-right:25px;">${detail.p_desc }</div>
+					<div style="margin-right:24px;">${detail.p_price }원</div>
+					<div style="margin-right:35px;">수량 ${detail.o_stock }개</div>				
+					<div>${detail.str_total }원</div>
+						<c:if test="${detail.o_state eq '배송완료' }">
+							<c:if test="${detail.o_revstate eq '0' }">
+								<div>
+									<button type='button' class='btn btn-outline-primary btn-sm' data-toggle='modal' data-target='#myModal' 
+									data-pno="${detail.p_no }" data-ono="${detail.o_no }">리뷰작성</button>
+								</div>
+							</c:if>
+						</c:if>
 				</div>
-			</div>
-			<div>
-				<c:if test="${detail.o_state eq '배송완료' }">
-					<c:if test="${detail.o_revstate eq '0' }">
-						<button type='button' class='btn btn-outline-primary btn-sm' data-toggle='modal' data-target='#myModal' 
-						data-pno="${detail.p_no }" data-ono="${detail.o_no }">리뷰작성</button>
-					</c:if>
-				</c:if>
-			
+				<div class="app-info">
+					<div class="application">${detail.p_name }</div>
+					<div class="application"><small>${detail.p_price }원 / 수량 ${detail.o_stock }개 / 총 ${detail.str_total }원</small></div>				
+				</div>
 			</div>
 		</c:forEach>
 		<c:forEach items="${myOrderDetail }" var="detail" begin="0" end="0">
-			<div>
-				<div>
-					<div colspan="2">받는 분 정보</div>
+		<div class="info">
+			<div class="customer">
+				<div class="wrap">
+					<div class="info-title">
+						<div>받는 분 정보</div>
+					</div>
+					<div class="customer-info">
+						<div class="cus-tt">받는 분</div>
+						<div>${detail.u_name } / ${detail.u_tel }</div>
+					</div>
+					<div class="customer-info">
+						<div class="cus-tt">주소</div>
+						<div class="addr-info">${detail.o_addr }</div>
+					</div>
+					<div class="customer-info">
+						<div class="cus-tt">주문번호</div>
+						<div>${detail.o_no }</div>
+					</div>
 				</div>
-				<div>
-					<div>받는분</div>
-					<div>${detail.u_name } | ${detail.u_tel }</div>
-				</div>
-				<div>
-					<div>주소</div>
-					<div>${detail.o_addr }</div>
-				</div>
+				<c:if test="${detail.o_state eq '상품 준비중'}">
+					<div>
+						<button type="button" value="${detail.o_no }" class="btn btn-outline-warning btn-sm cancel_module">결제취소</button>		
+					</div>
+				</c:if>				
 			</div>
 			
-			<div>
-				<div>
-					<div colspan="2">계산서</div>
+			<div class="porter">
+				<div class="porter-title">
+					<div>계산서</div>
 				</div>
-				<div>
-					<div>총 결제 금액</div>
-					<div>${allTotal}</div>
+				<div class="porter-info" style="font-weight:bold;">
+					<div class="cus-tt">총 주문 금액</div>
+					<div>${allTotal}원</div>
+				</div>
+				<div class="porter-info">
+					<div class="cus-tt">상품 금액</div>
+					<div>${allTotal}원</div>
+				</div>
+				<div class="porter-info">
+					<div class="cus-tt">배송비</div>
+					<div>0원</div>				
+				</div>
+				<div class="porter-info" style="font-weight:bold; border-top:1px solid rgb(238, 238, 238);">
+					<div class="cus-tt">총 할인 금액</div>
+					<div>0원</div>
+				</div>
+				<div class="porter-info">
+					<div class="cus-tt">상품 할인</div>
+					<div>0원</div>				
+				</div>
+				<div class="porter-info">
+					<div class="cus-tt">쿠폰 할인</div>
+					<div>0원</div>				
+				</div>
+				<div class="porter-total">
+					<div class="cus-tt">총 결제 금액</div>
+					<div>${allTotal}원</div>
 				</div>
 			</div>
-			<c:if test="${detail.o_state eq '상품 준비중'}">
-				<button type="button" value="${detail.o_no }" class="btn btn-outline-warning btn-sm cancel_module">결제취소</button>		
-			</c:if>
+		</div>
 		</c:forEach>
 	</div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
+<div class="btn-div">
+	<input type="button" value="이전" id="submit" class="submit btn-primary" onclick="history.back()">
+</div>
 
 <div class="modal" id="myModal">
 	<div class="modal-dialog">
@@ -307,7 +550,7 @@ $(".cancel_module").click(function () {
 			success : function(val){
 				console.log(val);
 				if(val==1){
-					alert("취소 완료");
+					alert("결제가 취소되었습니다.");
 					location.href = "myPage.ko";
 				}
 				else alert("취소 실패\n이미 취소되었거나 잘못된 정보입니다.");

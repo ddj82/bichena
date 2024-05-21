@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -16,10 +17,23 @@ div#boxFlex {
 	border: 1px solid rgb(224, 224, 224);
 	border-radius: 10px;
 }
+div#appFlex {
+	display: none;
+	width: 1000px;
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid rgb(224, 224, 224);
+	border-radius: 10px;
+}
 div.all {
 	box-sizing: initial;
 	display: flex;
 	justify-content: center;
+}
+.LevelImgNavMypage {
+    width: 40px;
+    height: 40px;
+    margin-top: 10px;
 }
 div#name {
 	padding: 0 200px 0 0;
@@ -59,32 +73,143 @@ a.a_class {
 a.a_class:visited {
 	color: black;
 }
-
-/*             img 추가(양예진)  */
- .LevelImgNavMypage {
-    width: 40px;
-    height: 40px;
-    margin-top: 10px;
+.clickList {
+	display: none;
+	width: 90%;
+	margin: 0 auto;
+	padding: 15px;
+	border: 1px solid rgb(224, 224, 224);
+	border-radius: 10px;
 }
-
+/* extra small */
+@media screen and (max-width:540px) {
+	.clickList {
+		display: block;
+	}
+	div#boxFlex {
+		display: none;
+	}
+	div#appFlex {
+		display: block;
+		width: 90%;
+		padding: 0px;
+	}
+	div.all-app {
+		display: flex;
+		justify-content: space-around;
+		height: 50px;
+		align-items: center;
+        font-weight: bold;
+        font-size: 14px;
+	}
+	div.list {
+		flex-wrap: wrap;
+	}
+	a.app_class {
+		padding-top: 5px;
+		padding-bottom: 5px;
+		text-decoration-line: none;
+		color: black;
+		border-right: 1px solid rgb(224, 224, 224);
+		padding-right: 15px;
+	}
+	a.app_class:visited {
+		color: black;
+	}
+}
+/* small */
+@media screen and (min-width:541px) and (max-width:720px) {
+	.clickList {
+		display: block;
+	}
+	div#boxFlex {
+		display: none;
+	}
+	div#appFlex {
+		display: block;
+		width: 90%;
+		padding: 0px;
+	}
+	div.all-app {
+		display: flex;
+		justify-content: space-around;
+		height: 50px;
+		align-items: center;
+        font-weight: bold;
+	}
+	div.list {
+		flex-wrap: wrap;
+	}
+	a.app_class {
+		padding-top: 5px;
+		padding-bottom: 5px;
+		text-decoration-line: none;
+		color: black;
+		border-right: 1px solid rgb(224, 224, 224);
+		padding-right: 35px;
+	}
+	a.app_class:visited {
+		color: black;
+	}
+}
+/* medium */
+@media screen and (min-width:721px) and (max-width:960px) {
+	.clickList {
+		display: block;
+	}
+	div#boxFlex {
+		display: none;
+	}
+	div#appFlex {
+		display: block;
+		width: 90%;
+		padding: 0px;
+	}
+	div.all-app {
+		display: flex;
+		justify-content: space-around;
+		height: 50px;
+		align-items: center;
+        font-weight: bold;
+	}
+	div.list {
+		flex-wrap: wrap;
+	}
+	a.app_class {
+		padding-top: 5px;
+		padding-bottom: 5px;
+		text-decoration-line: none;
+		color: black;
+		border-right: 1px solid rgb(224, 224, 224);
+		padding-right: 35px;
+	}
+	a.app_class:visited {
+		color: black;
+	}
+}
+/* large */
+@media screen and (min-width:961px) and (max-width:1140px) {
+	div#boxFlex {
+		width: 90%;
+		margin-top: 30px;
+	}
+}
 </style>
 <body>
 	<div id='boxFlex' class="all">
+			<!--              img 추가(양예진) -->
+            <c:choose>
+	            <c:when test="${uLev eq '실버'}">
+	            	<img class="LevelImgNavMypage" src="img/login/S_Level.png" alt="실버 레벨 아이콘"/>
+	            </c:when>
+	            <c:when test="${uLev eq '골드'}">
+	            	<img class="LevelImgNavMypage" src="img/login/G_Level.png" alt="골드 레벨 아이콘"/>
+	            </c:when>
+	            <c:when test="${uLev eq '다이아'}">
+	            	<img class="LevelImgNavMypage" src="img/login/D_Level.png" alt="다이아 레벨 아이콘"/>
+	            </c:when>
+            </c:choose>
 		<div id='name' class="all">
-		
-		<!--              img 추가(양예진) -->
-		<c:choose>
-			<c:when test="${uLev eq '실버'}">
-				<img class="LevelImgNavMypage" src="img/login/S_Level.png" alt="실버 레벨 아이콘"/>
-			</c:when>
-			<c:when test="${uLev eq '골드'}">
-				<img class="LevelImgNavMypage" src="img/login/G_Level.png" alt="골드 레벨 아이콘"/>
-			</c:when>
-			<c:when test="${uLev eq '다이아'}">
-				<img class="LevelImgNavMypage" src="img/login/D_Level.png" alt="다이아 레벨 아이콘"/>
-			</c:when>
-		</c:choose>
-              
 			<p style="font-weight: bold; vertical-align: middle; margin:1rem 0;">${userID }</p>
 			<p style="vertical-align: middle; margin:1rem 0.5rem;">님</p>
 		</div>
@@ -95,8 +220,8 @@ a.a_class:visited {
 				<!-- myPageMain,myOrderDetail -->
 				<img class="borrowImg b" id="order" src='img/imgUser/order.png'>
 			</a>
-			<a href='' class="a_class">
-				<div id="boxP2" class="all">취소 / 환불내역</div> 
+			<a href='orderCancleList.ko' class="a_class">
+				<div id="boxP2" class="all">취소/환불내역</div> 
 				<!-- 아직 -->
 				<img class="borrowImg b" id="recall" src='img/imgUser/recall.png'>
 			</a>
@@ -110,6 +235,22 @@ a.a_class:visited {
 				<!-- userMyPassConfirm.jsp 비번확인, userMyInfo.jsp 회원정보 -->
 				<!-- myInfoModi.jsp 포함인데 아롬 수정중 -->
 				<img class="borrowImg b" id="card" src='img/imgUser/card.png'>
+			</a>
+		</div>
+	</div>
+	<div id="appFlex" class="appli">
+		<div id='drop' class="all-app">
+			<a href='myPage.ko' class="app_class" style="padding-left:15px;">
+				<div id="dropP1" class="list">주문 내역</div> 
+			</a>
+			<a href='orderCancleList.ko' class="app_class">
+				<div id="dropP2" class="list">취소/환불내역</div> 
+			</a>
+			<a href='myRevList.ko' class="app_class">
+				<div id="dropP3" class="list">리뷰</div> 
+			</a>
+			<a href='confirm.ko' class="app_class" style="border-right:0px;">
+				<div id="dropP4" class="list">회원정보</div> 
 			</a>
 		</div>
 	</div>

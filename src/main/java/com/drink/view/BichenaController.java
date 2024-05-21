@@ -636,16 +636,6 @@ public class BichenaController {
 		}
 	}
 
-	@RequestMapping("/orderCancelList.ko")
-	public String orderCancleList(HttpServletRequest request, Model model) {
-		HttpSession session = request.getSession();
-		int u_no = (int) session.getAttribute("userNO");
-		List<OrderVO> myOrderList = orderService.myOrderList(u_no);
-		System.out.println(myOrderList);
-		model.addAttribute("myOrderList", myOrderList);
-		return "/WEB-INF/user/orderCancelList.jsp";
-	}
-
 	@RequestMapping("/orderComple.ko")
 	public String orderComplete(OrderVO vo) {
 		return "/WEB-INF/user/orderComple.jsp";
@@ -682,9 +672,7 @@ public class BichenaController {
 	@RequestMapping("/infoForm.ko")
 	public String infoForm(HttpSession session, Model model) {
 		String selId = (String) session.getAttribute("userID");
-		System.out.println("userID: " + selId);
 		model.addAttribute("users", usersService.selectOne(selId));
-		System.out.println("정보->수정폼 탔냐. 네~");
 		return "WEB-INF/login/myInfoModi.jsp";
 	}
 
@@ -749,25 +737,37 @@ public class BichenaController {
 		int complete = 0;
 		List<OrderVO> myOrderList = orderService.myOrderList(u_no);
 		List<OrderVO> myOrderConfirm = orderService.myOrderConfirm(u_no);
-
-		for (int i = 0; i < myOrderList.size(); i++) {
+		
+		for(int i = 0; i < myOrderConfirm.size(); i++) {
+			String price = String.format("%,d", Integer.parseInt(myOrderConfirm.get(i).getP_price()));
+			String tt = String.format("%,d", myOrderConfirm.get(i).getO_total());
+			myOrderConfirm.get(i).setP_price(price);
+			myOrderConfirm.get(i).setStr_total(tt);
+		}
+		
+		for(int i = 0; i < myOrderList.size(); i++) {
 			int a = 0;
-			for (int j = 0; j < myOrderConfirm.size(); j++) {
+			for(int j = 0; j < myOrderConfirm.size(); j++) {
 				int total = myOrderConfirm.get(j).getO_total();
-				if (myOrderList.get(i).getO_no().equals(myOrderConfirm.get(j).getO_no())) {
-					a += total;
+				if(myOrderList.get(i).getO_no().equals(myOrderConfirm.get(j).getO_no())) {
+					a += total;					
 				}
 			}
 			myOrderList.get(i).setAllTotal(a);
 		}
-
-		for (OrderVO count : myOrderList) {
+		
+		for(int i = 0; i < myOrderList.size(); i++) {
+			String price = String.format("%,d", myOrderList.get(i).getAllTotal());
+			myOrderList.get(i).setStr_allTotal(price);
+		}
+		
+		for(OrderVO count : myOrderList) {
 			String state = count.getO_state();
-			if (state.equals("상품 준비중")) {
+			if(state.equals("상품 준비중")) {
 				ready++;
-			} else if (state.equals("배송중")) {
+			} else if(state.equals("배송중")) {
 				porter++;
-			} else if (state.equals("배송완료")) {
+			} else if(state.equals("배송완료")) {
 				complete++;
 			}
 		}
@@ -776,7 +776,7 @@ public class BichenaController {
 		model.addAttribute("ready", ready);
 		model.addAttribute("porter", porter);
 		model.addAttribute("complete", complete);
-
+		
 		return "/WEB-INF/user/myPageMain.jsp";
 	}
 
@@ -787,10 +787,67 @@ public class BichenaController {
 		for (OrderVO detail : myOrderDetail) {
 			total += detail.getO_total();
 		}
+		
+		for(int i = 0; i < myOrderDetail.size(); i++) {
+			String price = String.format("%,d", Integer.parseInt(myOrderDetail.get(i).getP_price()));
+			String tt = String.format("%,d", myOrderDetail.get(i).getO_total());
+			myOrderDetail.get(i).setP_price(price);
+			myOrderDetail.get(i).setStr_total(tt);
+		}
+		
+		String allTotal = String.format("%,d", total);
+		
 		model.addAttribute("myOrderDetail", myOrderDetail);
-		model.addAttribute("allTotal", total);
+		model.addAttribute("allTotal", allTotal);
 
 		return "/WEB-INF/user/myOrderDetail.jsp";
+	}
+	
+	@RequestMapping("/orderCancleList.ko")
+	public String orderCancleList(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		int u_no = (int) session.getAttribute("userNO");
+		int cancle = 0;
+		int recall = 0;
+		List<OrderVO> myOrderList = orderService.myCancleList(u_no);
+		List<OrderVO> myOrderConfirm = orderService.myCancleConfirm(u_no);
+		
+		for(int i = 0; i < myOrderConfirm.size(); i++) {
+			String price = String.format("%,d", Integer.parseInt(myOrderConfirm.get(i).getP_price()));
+			String tt = String.format("%,d", myOrderConfirm.get(i).getO_total());
+			myOrderConfirm.get(i).setP_price(price);
+			myOrderConfirm.get(i).setStr_total(tt);
+		}
+		
+		for(int i = 0; i < myOrderList.size(); i++) {
+			int a = 0;
+			for(int j = 0; j < myOrderConfirm.size(); j++) {
+				int total = myOrderConfirm.get(j).getO_total();
+				if(myOrderList.get(i).getO_no().equals(myOrderConfirm.get(j).getO_no())) {
+					a += total;					
+				}
+			}
+			myOrderList.get(i).setAllTotal(a);
+		}
+		
+		for(int i = 0; i < myOrderList.size(); i++) {
+			String price = String.format("%,d", myOrderList.get(i).getAllTotal());
+			myOrderList.get(i).setStr_allTotal(price);
+		}
+		
+		for(OrderVO count : myOrderList) {
+			String state = count.getO_state();
+			if(state.equals("취소")) {
+				cancle++;
+			} else if(state.equals("환불")) {
+				recall++;
+			}
+		}
+		model.addAttribute("myOrderConfirm", myOrderConfirm);
+		model.addAttribute("myOrderList", myOrderList);
+		model.addAttribute("cancle", cancle);
+		model.addAttribute("recall", recall);
+		return "/WEB-INF/user/orderCancleList.jsp";
 	}
 
 	@GetMapping("/prodList.ko")

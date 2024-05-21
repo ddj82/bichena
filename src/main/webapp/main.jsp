@@ -208,12 +208,8 @@ pointer
 }
 
 .slide-box {
-	/*             display: grid; */
-	/*             grid-template-columns: auto 1fr auto; */
-	/* 			display:flex; */
-	/*             align-items: center; */
 	position: relative;
-	    max-width: 1240px;
+	max-width: 1240px;
 }
 
 
@@ -234,7 +230,6 @@ pointer
 
 .section-title1 {
 	max-width: 1440px;
-/*     padding-left: 60px; */
     margin: 0;
 	line-height: 0.5;
 	display: flex;
@@ -243,8 +238,7 @@ pointer
 .moreproduct-box{
 	display:flex;
 	align-items:center;
-   
-        cursor:pointer;
+	cursor:pointer;
 }
 
 .moreproduct{
@@ -312,7 +306,6 @@ pointer
 .types {
 	display: flex;
 	justify-content: flex-start;
-	/* flex-direction: column;  */
 }
 
 .sw, .su, .sp, .dgr {
@@ -341,11 +334,6 @@ pointer
 	margin-right: 5px;
 }
 
-/* .sw,
-        .su,
-        .sp p {
-            padding: 10px 0;
-        } */
 [class*="slidebutton-prev"],
 [class*="slidebutton-next"]  {
 	position: absolute;
@@ -358,13 +346,13 @@ pointer
 	right: -60;
 }
 .swiper-reviewtext{
-display:flex;
-flex-direction:column;
-align-items: center;
+	display:flex;
+	flex-direction:column;
+	align-items: center;
 }
 .swiper-productscore{
-margin-top:30px;
-color:DarkOrange;
+	margin-top:30px;
+	color:DarkOrange;
 }
 .swiper-productrecontent{
 	font-size:12px;
@@ -374,7 +362,7 @@ color:DarkOrange;
     font-size: 14px;
 }
 .swiper-reuser{
-color: dimgray;
+	color: dimgray;
     margin-top: 30px;
     font-size: 16px;
 }
@@ -382,67 +370,64 @@ color: dimgray;
     display: flex;
     justify-content: center;
     text-align: center;
-    }
+}
 
 
-      [class*="main-slider"] {
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-        margin:0 auto;
-      }
+[class*="main-slider"] {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	margin:0 auto;
+}
 
-      .main-slider div {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-      }
+.main-slider div {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
 
-      .main-slider img {
-     	width: 100%;
-/*         max-width: 100%; */
-        display:block;
-/*         cursor: pointer; */
-        min-width: 100%;
-    max-width: 100%;
-    min-height: 100%;
-    max-height: 100%;
-    object-fit: cover;
-      }
-      
-	 .main-prev,.main-next{
-		width:100px;
-		height: 100px;
-	    position: absolute;
-	    cursor: pointer;
-	    border: none;
-	    outline: none;
-	    display: block;
-	    z-index: 999;
-	    opacity:0.8
-	    
-    }
-    
-        .main-bannerbox-pc , .main-bannerbox-mo{
-      position:relative;
-      margin-bottom:60px
-      }
-      
-    
-    .main-prev{	
+.main-slider img {
+	width: 100%;
+	display:block;
+	min-width: 100%;
+	max-width: 100%;
+	min-height: 100%;
+	max-height: 100%;
+	object-fit: cover;
+}
+     
+.main-prev,.main-next{
+	width:100px;
+	height: 100px;
+    position: absolute;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    display: block;
+    z-index: 999;
+    opacity:0.8
+}
+   
+.main-bannerbox-pc , .main-bannerbox-mo{
+	position:relative;
+	margin-bottom:60px
+}
+     
+   
+.main-prev{	
 	top: 60%;
-    left: 10%;
-    transform: translate(20%, -50%);
-    }
-    
-    .main-next{
-    	top: 60%;
-    right: 10%;
-    transform: translate(20%, -50%);
-    }
-    
-    
-    .main-bannerbox-mo {
+	left: 10%;
+	transform: translate(20%, -50%);
+}
+   
+.main-next{
+	top: 60%;
+	right: 10%;
+	transform: translate(20%, -50%);
+}
+   
+   
+.main-bannerbox-mo {
     display: none; /* 기본적으로 숨김 */
 }
 
