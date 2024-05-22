@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>주류상세페이지</title>
-<%-- <link href="${pageContext.request.contextPath}/resources/css/prodOne.css" rel="stylesheet" /> --%>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <script>
 $(function(){
@@ -22,9 +21,9 @@ $(function(){
 				values = res.prodOneRev; //java에서 정의한 ArrayList명을 적어준다.
 				console.log("배열 : ", values);
 				$.each(values, function(i, o){
-					$("#revTB").append("<table class='dtable'><tr><td>" + o.u_nick + "</td><td>" + o.p_name + "</td><td>" + o.pr_date + "</td></tr>"
-							+ "<tr><td>" + o.pr_content + "</td><td>"
-							+ "<tr><td>" + "<img alt='' src='img/imgRev/" + o.pr_img  + "' style='width:100px;'>" + "</td><td></table>");
+					$("#revTB").append("<table class='dtable'><tr class='revTitle'><td id='revTd1'>" + o.u_nick + "</td><td id='revTd2'>" + o.p_name + "</td><td id='revTd3'>" + o.pr_date + "</td></tr>"
+							+ "<tr class='revPad'><td>" + o.pr_content + "</td></tr>"
+							+ "<tr class='revPad'><td>" + "<img alt='' src='img/imgRev/" + o.pr_img  + "' style='width:100px;'>" + "</td><tr></table>");
 				});
 				console.log("성공");
 			} else {
@@ -35,14 +34,6 @@ $(function(){
 });
 </script>
 <style>
-/*
-div.pay {
-	top: 160px;
-	border: 1px solid lightgray;
-	border-radius: 5px;
-	padding: 10px;
-}
-*/
 /* Chrome, Safari, Edge 등에서 화살표를 숨기기 */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -58,10 +49,9 @@ th, td {
 	width:50%;
 }
 .product_desc{
-display:flex;
-align-items:center;
-min-height:42px
-
+	display:flex;
+	align-items:center;
+	min-height:42px
 }
 
 /* 썸네일,리모콘,설명 (상세jsp 위) */
@@ -102,14 +92,40 @@ table.tableDiv-tb {
 	width: 100%;
 	text-align: center;
 }
-div.div-flex-mobile {
-	display:none;
+
+
+
+
+table.dtable {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 30px;
+}
+tr.revTitle {
+    background-color: lightgray;
+}
+tr.revTitle td, tr.revPad td, tr.revPad td {
+    padding: 10px;
+}
+td#revTd2, td#revTd3 {
+    text-align: right;
+}
+td#revTd1 {
+    border-radius: 10px 0 0 10px;
+}
+td#revTd2 {
+    width: 30%;
+}
+td#revTd3 {
+	width: 30%;
+    border-radius: 0 10px 10px 0;
 }
 
 
 @media (max-width: 720px) {
 	div.div-wid-mar, #detail2 * {
 		width: 500px!important;
+/* 		max-width: 100%; */
 	}
 	div.div-flex, div.div-img, div.div-cart {
 		display:block;
@@ -203,7 +219,7 @@ div.div-flex-mobile {
 <br>
 <br>
 <br> 
-<div id="revTB"></div>
+<div id="revTB" class="div-wid-mar"></div>
 <br>
 <br>
 <br> 

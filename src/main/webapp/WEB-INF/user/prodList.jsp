@@ -1,4 +1,4 @@
-<%@ include file="../../common/navbar.jsp"%>
+<%@ include file="/common/navbar.jsp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,11 +10,8 @@
 <meta http-equiv="Expires" content="0" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap"
-	rel="stylesheet" />
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css" />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css" />
 <title>상품 리스트</title>
 <style>
 div.prod img {
@@ -196,7 +193,7 @@ input[class="form-check-input"] {
 	margin-top: 60px;
 	max-height: 150px;
 	padding: 10px;
-	background-color: #bef5be;
+	background-color: #ffeebc;
 	display: block;
 	align-items: center;
 }
@@ -217,7 +214,7 @@ input[class="form-check-input"] {
 }
 
 .jumbotron img {
-	width: 120px;
+	width: 100px;
 	height: 100%;
 }
 
@@ -349,14 +346,13 @@ a:hover {
 	}
 	.list-card-body {
 		background-color: ghostwhite;
-		border-top: 1px solide rgba(0.5);
-		cursor: pointer;
-		padding: 1rem;
-		font-size: 15px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: #707070;
+        border-top: 1px solide rgba(0.5);
+        cursor: pointer;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        color: #707070;
+       padding: 0px 0px 0px 120px;
 	}
 	.list-card-body img {
 		width: 32px;
@@ -531,7 +527,7 @@ $(document).ready(function () {
 					<p class="jumbotron-subtitle">비채나만의 특별한 전통주를 지금 만나보세요.</p>
 				</div>
 				<div class="jumbotron-right col-6">
-					<img src="img/imgProdlist/비채나 상품페이지.png" />
+					<img src="img/imgProdlist/비채나 로고 검은색 배경투명 resize.png" />
 				</div>
 			</div>
 		</div>
@@ -583,7 +579,7 @@ $(document).ready(function () {
 								</label>
 							</div>
 							<div class="form-check col-6">
-								<label class="form-check-label"> <input type="checkbox" data-filter-type="type"ㄴ class="form-check-input" value="기타" />
+								<label class="form-check-label"> <input type="checkbox" data-filter-type="type" class="form-check-input" value="기타" />
 									<p>기타</p>
 								</label>
 							</div>
@@ -836,7 +832,7 @@ $(document).ready(function () {
 		</c:forEach>
 
 		<c:choose>
-			<c:when test="${pagination.currPageNo == pagination.pageCnt}">
+			<c:when test="${pagination.currPageNo == pagination.pageCnt or pagination.pageCnt <= 1}">
 				<!-- 현재 페이지가 마지막 페이지인 경우 -->
 				<span>다음</span>
 			</c:when>
@@ -890,13 +886,6 @@ $(document).ready(function () {
 		</ul>
 		<!-- ul 부분 -->
 		<div class="list-side-menu" id="list-sideMenu">
-			<div class="list-sidemenu-logo-imagewrapper">
-				<span class="list-sidemenu-image-span1"> 
-					<span class="list-sidemenu-image-span2"> 
-						<img class="list-sidemenu-image" src="img/imgProdlist/비채나 상품페이지.png" />
-					</span>
-				</span>
-			</div>
 			<ul id="accordion" class="navbar-nav list-navbar-nav-side">
 				<div>
 					<div class="card list-card">
@@ -904,36 +893,55 @@ $(document).ready(function () {
 							<a class="card-link collapsed" data-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne"> 주 종 </a>
 						</div>
 						<div id="collapseOne" class="collapse" data-parent="#accordion">
+						
 							<div class="card-body list-card-body" data-filter-type="type">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="type" value="전체보기"/> 전체보기
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="type" value="전체보기"/> <p>전체보기</p>
+									</label>
+								</div>
 							</div>
+							
 							<div class="card-body list-card-body" data-filter-type="type">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="type" value="탁주"/> 탁주
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="type" value="탁주"/> <p>탁주</p>
+									</label>
+								</div>
 							</div>
+							
 							<div class="card-body list-card-body" data-filter-type="type">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="type" value="과실주"/> 과실주
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="type" value="과실주"/> <p>과실주</p>
+									</label>
+								</div>
 							</div>
-							<div class="card-body list-card-body"data-filter-value="약·청주">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="type" value="약·청주"/> 약·청주
-								</label>
-							</div>
+							
 							<div class="card-body list-card-body" data-filter-type="type">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="type" value="증류주"/> 증류주
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="type" value="약·청주"/> <p>약·청주</p>
+									</label>
+								</div>
 							</div>
+							
 							<div class="card-body list-card-body" data-filter-type="type">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="type" value="기타"/> 기타
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="type" value="증류주"/> <p>증류주</p>
+									</label>
+								</div>
 							</div>
+							
+							<div class="card-body list-card-body" data-filter-type="type">
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="type" value="기타"/> <p>기타</p>
+									</label>
+								</div>
+							</div>
+							
 						</div>
 					</div>
 					<!-- 단 맛 필터 그룹 -->
@@ -943,19 +951,25 @@ $(document).ready(function () {
 						</div>
 						<div id="collapseTwo" class="collapse" data-parent="#accordion">
 							<div class="card-body list-card-body" data-filter-type="sweet">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="sweet" value="강"/>강
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="sweet" value="강"/><p>강</p>
+									</label>
+								</div>
 							</div>
 							<div class="card-body list-card-body" data-filter-type="sweet">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="sweet" value="중"/>중
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="sweet" value="중"/><p>중</p>
+									</label>
+								</div>
 							</div>
 							<div class="card-body list-card-body" data-filter-type="sweet">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="sweet" value="약"/>약
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="sweet" value="약"/><p>약</p>
+									</label>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -966,19 +980,25 @@ $(document).ready(function () {
 						</div>
 						<div id="collapseThree" class="collapse" data-parent="#accordion">
 							<div class="card-body list-card-body" data-filter-type="acidity">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="acidity" value="강"/>강
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="acidity" value="강"/><p>강</p>
+									</label>
+								</div>
 							</div>
 							<div class="card-body list-card-body" data-filter-type="acidity">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="acidity" value="중"/>중
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="acidity" value="중"/><p>중</p>
+									</label>
+								</div>
 							</div>
 							<div class="card-body list-card-body" data-filter-type="acidity">
-								<label class="form-check-label">
-									<input type="checkbox" class="form-check-input" data-filter-type="acidity" value="약"/>약
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label">
+										<input type="checkbox" class="form-check-input" data-filter-type="acidity" value="약"/><p>약</p>
+									</label>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -989,19 +1009,25 @@ $(document).ready(function () {
 						</div>
 						<div id="collapseFour" class="collapse" data-parent="#accordion">
 							<div class="card-body list-card-body" data-filter-type="carbonic">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="carbonic" value="강"/>강
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="carbonic" value="강"/><p>강</p>
+									</label>
+								</div>
 							</div>
 							<div class="card-body list-card-body" data-filter-type="carbonic">
-								<label class="form-check-label">
-									<input type="checkbox" class="form-check-input" data-filter-type="carbonic" value="중"/>중
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label">
+										<input type="checkbox" class="form-check-input" data-filter-type="carbonic" value="중"/><p>중</p>
+									</label>
+								</div>
 							</div>
 							<div class="card-body list-card-body" data-filter-type="carbonic">
-								<label class="form-check-label">
-									<input type="checkbox" class="form-check-input" data-filter-type="carbonic" value="약"/>약
-								</label>
+								<div class="form-filter-box">
+									<label class="form-check-label">
+										<input type="checkbox" class="form-check-input" data-filter-type="carbonic" value="약"/><p>약</p>
+									</label>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1011,30 +1037,42 @@ $(document).ready(function () {
 							<a class="collapsed card-link" data-toggle="collapse" href="#collapseFive"> 원 료 </a>
 						</div>
 						<div id="collapseFive" class="collapse" data-parent="#accordion">
+							
 							<div class="card-body list-card-body" data-filter-type="ingredient">
+								<div class="form-filter-box">
 								<label class="form-check-label">
-									<input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="과일"/>과일
+									<input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="과일"/><p>과일</p>
 								</label>
+								</div>
+							</div>
+							
+							<div class="card-body list-card-body" data-filter-type="ingredient">
+								<div class="form-filter-box">
+									<label class="form-check-label"> 
+										<input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="꽃"/><p>꽃</p>
+									</label>
+								</div>
 							</div>
 							<div class="card-body list-card-body" data-filter-type="ingredient">
+								<div class="form-filter-box">
 								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="꽃"/>꽃
+									<input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="견과"/><p>견과</p>
 								</label>
+								</div>
 							</div>
 							<div class="card-body list-card-body" data-filter-type="ingredient">
+								<div class="form-filter-box">
 								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="견과"/>견과
+									<input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="약재"/><p>약재</p>
 								</label>
+								</div>
 							</div>
 							<div class="card-body list-card-body" data-filter-type="ingredient">
+								<div class="form-filter-box">
 								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="약재"/>약재
+									<input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="기타"/><p>기타</p>
 								</label>
-							</div>
-							<div class="card-body list-card-body" data-filter-type="ingredient">
-								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="기타"/>기타
-								</label>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -1044,5 +1082,6 @@ $(document).ready(function () {
 	</div>
 		<!-- 기타 메뉴 항목 추가 -->
 	<div class="list-side-menu-overlay"></div>
+<%@ include file="/common/footer.jsp"%>
 </body>
 </html>

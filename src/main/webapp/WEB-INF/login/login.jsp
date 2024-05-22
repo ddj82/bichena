@@ -47,6 +47,7 @@ Kakao.init('f8801431aadfbf2a0016165e1408e997'); // 사용하려는 앱의 JavaSc
 a.loginH2{
 	color: #2d4739;
 	font-weight:bolder;
+	text-decoration:none;
 }
 
 h2 {
@@ -256,6 +257,18 @@ a.nav-item {
 
 }
 
+#u_pw {
+    margin-bottom: 3px;
+}
+
+button.loginBtn {
+    margin-top: 3px;
+}
+
+input#remember {
+    margin-left: 15px;
+    margin-right: 10px;
+}
 </style>
 </head>
 <% 
@@ -272,11 +285,6 @@ if(cookie != null){
 			System.out.println(userid);
 		}
 		
-		if(cookie[i].getName().equals("rememberPW")){
-			chekPW ="checked";
-			userpw = cookie[i].getValue();
-			System.out.println(userpw);
-		}
 	}
 }
 %>
@@ -288,21 +296,13 @@ if(cookie != null){
 					<h2>LOGIN</h2>
 					<form id="form-signin">
 						<input type="text" class="control login" id="u_id" placeholder="ID" name="u_id" value=<%=userid %>> 
+						<input type="password" class="control login" id="u_pw" placeholder="password" name="u_pw" maxlength="20" value=<%=userpw %>>
 <!-- 						추가 -->
-						<div class="rememberDiv"><input type="checkbox" id="remember" name="remember" value="chk" <%=chek %>>아이디 기억하기</div>
+						<div class="rememberDiv"><input type="checkbox" id="remember" name="remember" value="chk" <%=chek %>>아이디 저장</div>
 						<script>
 						$("#remember").on('click',function(){
 							if(!($('input[id=remember]').is(':checked'))){
 								$("#u_id").attr("value","");
-							}
-						});
-						</script>
-						<input type="password" class="control login" id="u_pw" placeholder="password" name="u_pw" value=<%=userpw %>>
-						<div class="rememberDiv"><input type="checkbox" id="rememberPW" name="rememberPW" value="chkPW" <%=chekPW %>>비밀번호 기억하기</div>
-						<script>
-						$("#rememberPW").on('click',function(){
-							if(!($('input[id=rememberPW]').is(':checked'))){
-								$("#u_pw").attr("value","");
 							}
 						});
 						</script>
@@ -356,7 +356,7 @@ function loginWithKakao() {
 		});
 	}else{
 	Kakao.Auth.authorize({
-		redirectUri : "http://bichena1.kro.kr/ko/kakao.ko?version=2"
+		redirectUri : "http://bichena.kro.kr/ko/kakao.ko?version=2"
 	});
 	}
 }
@@ -381,7 +381,7 @@ function showLoginPopup() {
 	}else if(url.indexOf('localhost:14192') > 0){
 		r_u = 'http://localhost:8090/ko/NaverLoginCallback.ko';
 	}else{
-		r_u = 'http://bichena1.kro.kr/ko/NaverLoginCallback.ko';
+		r_u = 'http://bichena.kro.kr/ko/NaverLoginCallback.ko';
 	}
 	let uri = 'https://nid.naver.com/oauth2.0/authorize?'
 			+ 'response_type=code' + // 인증과정에 대한 내부 구분값 code 로 전공 (고정값)
@@ -441,12 +441,12 @@ function btn() {
 	
 }
 
-window.onpageshow = function(event){
-	if(event.persisted || (window.performance && window.performance.navigation.type == 2)){
-		console.log("뒤로가기");
-		location.reload();
-	}
-}
+// window.onpageshow = function(event){
+// 	if(event.persisted || (window.performance && window.performance.navigation.type == 2)){
+// 		console.log("뒤로가기");
+// 		location.reload();
+// 	}
+// }
 
 
 </script>

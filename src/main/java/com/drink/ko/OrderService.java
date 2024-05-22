@@ -19,4 +19,7 @@ public interface OrderService {
 	int orderTotalCnt(OrderVO vo);// 전체 글 수 조회
 	int orderInsert(OrderVO vo);
 	void orderDelete(String mid);
+	List<OrderVO> delOrderSelect(String mid);
+	List<OrderVO> chartResult(int limit);
+	int adminOrderRepeatCount(OrderVO vo);
 }

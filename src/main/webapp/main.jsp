@@ -1016,34 +1016,16 @@ display:none;
 	
 
 	
-	<script
-		src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 	<script src="resources/js/slide.js"></script>
 </div>
-	<%@ include file="common/footer.jsp"%>
-	<script>
-window.onpageshow = function(event){
-   if(event.persisted || (window.performance && window.performance.navigation.type == 2)){
-      location.reload();
-   }
-}
-
-function kakaoLogout(){
-   location.href="logoutProceeding.ko?logout=2";
-}
-
-function naverLogout(){
-   location.href="logoutProceeding.ko?logout=3";
-}
-
+<%@ include file="common/footer.jsp"%>
+	
+<script>
 window.onload = function(){ //쿼리스트링 지워주는 친구
    history.replaceState({}, null, location.pathname);
 };
 </script>
 </body>
-</html>
-</body>
-
 </html>

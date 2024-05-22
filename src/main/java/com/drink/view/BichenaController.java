@@ -594,7 +594,15 @@ public class BichenaController {
 			count += orderService.orderInsert(orderVO);
 
 			cartVO.setP_no(prodVO.getP_no());
+			cartVO.setU_id(userVO.getU_id());
 			cartService.deleteCart(cartVO);
+
+			// 구매수 만큼 재고수 (-)업데이트 처리
+			int stockUpdate = prodVO.getP_stock() - Integer.parseInt(stock[i]);
+			ProdVO prodVOstock = new ProdVO();
+			prodVOstock.setP_no(prodVO.getP_no());
+			prodVOstock.setP_stock(stockUpdate);
+			prodService.stockUpdate(prodVOstock);
 		}
 
 		if (count > stock.length - 1) {
@@ -631,6 +639,25 @@ public class BichenaController {
 			return -1;
 		} else {
 			orderService.orderDelete(mid);
+
+			// 취소시 구매수 만큼 재고수 (+)업데이트 처리
+			List<OrderVO> delOrder = orderService.delOrderSelect(mid);
+			for (int i = 0; i < delOrder.size(); i++) {
+				OrderVO vo = new OrderVO();
+				ProdVO prodVO = new ProdVO();
+				vo = delOrder.get(i);
+
+				// 취소된 주문의 상품 하나씩
+				prodVO = prodService.prodOne(vo.getP_no());
+				// 상품 하나의 재고 + 취소수량
+				int stockUpdate = prodVO.getP_stock() + Integer.parseInt(vo.getO_stock());
+
+				ProdVO prodVOstock = new ProdVO();
+				prodVOstock.setP_no(prodVO.getP_no());
+				prodVOstock.setP_stock(stockUpdate);
+				prodService.stockUpdate(prodVOstock);
+			}
+
 			System.out.println("환불성공");
 			return 1;
 		}
@@ -737,37 +764,37 @@ public class BichenaController {
 		int complete = 0;
 		List<OrderVO> myOrderList = orderService.myOrderList(u_no);
 		List<OrderVO> myOrderConfirm = orderService.myOrderConfirm(u_no);
-		
-		for(int i = 0; i < myOrderConfirm.size(); i++) {
+
+		for (int i = 0; i < myOrderConfirm.size(); i++) {
 			String price = String.format("%,d", Integer.parseInt(myOrderConfirm.get(i).getP_price()));
 			String tt = String.format("%,d", myOrderConfirm.get(i).getO_total());
 			myOrderConfirm.get(i).setP_price(price);
 			myOrderConfirm.get(i).setStr_total(tt);
 		}
-		
-		for(int i = 0; i < myOrderList.size(); i++) {
+
+		for (int i = 0; i < myOrderList.size(); i++) {
 			int a = 0;
-			for(int j = 0; j < myOrderConfirm.size(); j++) {
+			for (int j = 0; j < myOrderConfirm.size(); j++) {
 				int total = myOrderConfirm.get(j).getO_total();
-				if(myOrderList.get(i).getO_no().equals(myOrderConfirm.get(j).getO_no())) {
-					a += total;					
+				if (myOrderList.get(i).getO_no().equals(myOrderConfirm.get(j).getO_no())) {
+					a += total;
 				}
 			}
 			myOrderList.get(i).setAllTotal(a);
 		}
-		
-		for(int i = 0; i < myOrderList.size(); i++) {
+
+		for (int i = 0; i < myOrderList.size(); i++) {
 			String price = String.format("%,d", myOrderList.get(i).getAllTotal());
 			myOrderList.get(i).setStr_allTotal(price);
 		}
-		
-		for(OrderVO count : myOrderList) {
+
+		for (OrderVO count : myOrderList) {
 			String state = count.getO_state();
-			if(state.equals("상품 준비중")) {
+			if (state.equals("상품 준비중")) {
 				ready++;
-			} else if(state.equals("배송중")) {
+			} else if (state.equals("배송중")) {
 				porter++;
-			} else if(state.equals("배송완료")) {
+			} else if (state.equals("배송완료")) {
 				complete++;
 			}
 		}
@@ -776,7 +803,7 @@ public class BichenaController {
 		model.addAttribute("ready", ready);
 		model.addAttribute("porter", porter);
 		model.addAttribute("complete", complete);
-		
+
 		return "/WEB-INF/user/myPageMain.jsp";
 	}
 
@@ -787,22 +814,22 @@ public class BichenaController {
 		for (OrderVO detail : myOrderDetail) {
 			total += detail.getO_total();
 		}
-		
-		for(int i = 0; i < myOrderDetail.size(); i++) {
+
+		for (int i = 0; i < myOrderDetail.size(); i++) {
 			String price = String.format("%,d", Integer.parseInt(myOrderDetail.get(i).getP_price()));
 			String tt = String.format("%,d", myOrderDetail.get(i).getO_total());
 			myOrderDetail.get(i).setP_price(price);
 			myOrderDetail.get(i).setStr_total(tt);
 		}
-		
+
 		String allTotal = String.format("%,d", total);
-		
+
 		model.addAttribute("myOrderDetail", myOrderDetail);
 		model.addAttribute("allTotal", allTotal);
 
 		return "/WEB-INF/user/myOrderDetail.jsp";
 	}
-	
+
 	@RequestMapping("/orderCancleList.ko")
 	public String orderCancleList(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
@@ -811,35 +838,35 @@ public class BichenaController {
 		int recall = 0;
 		List<OrderVO> myOrderList = orderService.myCancleList(u_no);
 		List<OrderVO> myOrderConfirm = orderService.myCancleConfirm(u_no);
-		
-		for(int i = 0; i < myOrderConfirm.size(); i++) {
+
+		for (int i = 0; i < myOrderConfirm.size(); i++) {
 			String price = String.format("%,d", Integer.parseInt(myOrderConfirm.get(i).getP_price()));
 			String tt = String.format("%,d", myOrderConfirm.get(i).getO_total());
 			myOrderConfirm.get(i).setP_price(price);
 			myOrderConfirm.get(i).setStr_total(tt);
 		}
-		
-		for(int i = 0; i < myOrderList.size(); i++) {
+
+		for (int i = 0; i < myOrderList.size(); i++) {
 			int a = 0;
-			for(int j = 0; j < myOrderConfirm.size(); j++) {
+			for (int j = 0; j < myOrderConfirm.size(); j++) {
 				int total = myOrderConfirm.get(j).getO_total();
-				if(myOrderList.get(i).getO_no().equals(myOrderConfirm.get(j).getO_no())) {
-					a += total;					
+				if (myOrderList.get(i).getO_no().equals(myOrderConfirm.get(j).getO_no())) {
+					a += total;
 				}
 			}
 			myOrderList.get(i).setAllTotal(a);
 		}
-		
-		for(int i = 0; i < myOrderList.size(); i++) {
+
+		for (int i = 0; i < myOrderList.size(); i++) {
 			String price = String.format("%,d", myOrderList.get(i).getAllTotal());
 			myOrderList.get(i).setStr_allTotal(price);
 		}
-		
-		for(OrderVO count : myOrderList) {
+
+		for (OrderVO count : myOrderList) {
 			String state = count.getO_state();
-			if(state.equals("취소")) {
+			if (state.equals("취소")) {
 				cancle++;
-			} else if(state.equals("환불")) {
+			} else if (state.equals("환불")) {
 				recall++;
 			}
 		}
@@ -896,7 +923,7 @@ public class BichenaController {
 		mav.addObject("totalCnt", totalCnt);
 		mav.addObject("pagination", vo);
 		mav.addObject("prodList", prodService.prodList(vo));
-		mav.setViewName("WEB-INF/user/prodList.jsp"); //원래대로
+		mav.setViewName("WEB-INF/user/prodList.jsp"); // 원래대로
 //		mav.setViewName("WEB-INF/user/prodList2.jsp");
 
 		return mav;
@@ -1190,7 +1217,8 @@ public class BichenaController {
 
 		int currPageNo = 0;
 		int range = 0;
-		int totalCnt = orderService.orderTotalCnt(vo);
+//		int totalCnt = orderService.orderTotalCnt(vo);
+		int totalCnt = orderService.adminOrderRepeatCount(vo);
 
 		try {
 			currPageNo = Integer.parseInt(NotcurrPageNo);
@@ -1225,7 +1253,8 @@ public class BichenaController {
 
 	@GetMapping("/adminOrderDetail.ko")
 	@ResponseBody
-	public Object adminOrderDetail(@RequestParam(value = "o_no") String o_no, @RequestParam(value = "p_no") String p_no, Model model) {
+	public Object adminOrderDetail(@RequestParam(value = "o_no") String o_no, @RequestParam(value = "p_no") String p_no,
+			Model model) {
 		OrderVO vo = new OrderVO();
 		vo.setP_no(p_no);
 		vo.setO_no(o_no);
@@ -1256,7 +1285,7 @@ public class BichenaController {
 
 	@RequestMapping("/adminProdList.ko")
 	public String adminProdList(ProdVO vo, Model model,
-			@RequestParam(value = "searchCondition",  required = false) String searchCondition,
+			@RequestParam(value = "searchCondition", required = false) String searchCondition,
 			@RequestParam(value = "searchKeyword", defaultValue = "", required = false) String searchKeyword,
 			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
 			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange) {
@@ -1282,13 +1311,13 @@ public class BichenaController {
 			vo.setSearchKeyword(searchKeyword);
 			System.out.println("searchKeyword : " + searchKeyword);
 		}
-		
+
 		if (searchCondition != null && !searchCondition.isEmpty()) {
 			model.addAttribute("searchCondition", searchCondition);
 			vo.setSearchCondition(searchCondition);
 			System.out.println("searchCondition : " + searchCondition);
 		}
-		
+
 		List<ProdVO> adminProdList = prodService.prodList(vo);
 		model.addAttribute("pagination", vo);
 		model.addAttribute("adminProdList", adminProdList);
@@ -1488,6 +1517,16 @@ public class BichenaController {
 
 		int currPageNo = 0;
 		int range = 0;
+		System.out.println("searchVoca: " + searchVoca);
+		System.out.println("searchWord: " + searchWord);
+		
+		if (searchWord != null && !searchWord.isEmpty()) {
+			vo.setSearchWord(searchWord);
+		}
+		if (searchVoca != null && !searchVoca.isEmpty()) {
+			vo.setSearchVoca(searchVoca);
+		}
+		
 		int totalCnt = usersService.userTotalCnt(vo);
 
 		try {
@@ -1521,6 +1560,8 @@ public class BichenaController {
 		}
 		vo.setOrderBy(orderBy);
 		System.out.println("orderBy3: " + orderBy);
+		System.out.println("토탈카운트: " + totalCnt);
+		System.out.println("페이징: " + vo);
 
 		List<UsersVO> userList = usersService.getUserList(vo);
 		mav.addObject("pagination", vo);
@@ -1601,6 +1642,21 @@ public class BichenaController {
 	@RequestMapping("/delConfirm.ko")
 	public String delConfirm(UsersVO vo) {
 		return "/WEB-INF/login/delAccount.jsp";
+	}
+
+	@GetMapping("/adminChartData.ko")
+	@ResponseBody
+	public List<OrderVO> getChartData() {
+		System.out.println("요청받음");
+		int limit = 5;
+		List<OrderVO> chartResult = orderService.chartResult(limit);
+		System.out.println(chartResult);
+		return chartResult;
+	}
+
+	@RequestMapping("/adminChart.ko")
+	public String adminChart() {
+		return "WEB-INF/admin/adminChart.jsp";
 	}
 
 }

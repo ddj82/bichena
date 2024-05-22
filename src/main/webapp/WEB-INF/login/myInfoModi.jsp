@@ -9,7 +9,6 @@
 <meta charset="UTF-8">
 <title>회원 정보 수정</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
-<script src="resources/js/check.js"></script>
 <script>
 var nickCheck = 0;
 var emailCheck = 0;
@@ -56,42 +55,44 @@ $(function() {
 
     //email 중복체크
     $("#email").change(function() {
-        var emailCheckMessage = document.getElementById('emailCheckMessage');
-        let email = document.myPage.email.value;
-        let emailval = {
-            "u_email": email
-        };
-        console.log(email);
-        if (email == '') {
-            emailCheckMessage.style.display = 'none';
-        } else {
-            $.ajax({
-                url: "checkEmail.ko",
-                type: "post",
-                data: emailval,
-                dataType: "json",
-                cache: false,
-                async: false,
-                success: function(data) {
-                    if (data > 0) {
-                        if ('${users.u_email}' == email) {
-                            emailCheckMessage.style.display = 'none';
-                        } else {
-                            emailCheck = 0;
-                            emailCheckMessage.style.display = 'block';
-                        }
-                    } else {
-                        emailCheckMessage.style.display = 'none';
-                        emailCheck++;
-                    }
-                },
-                error: function(err) {
-                    console.log('error객체 : ', err);
-                }
-            });
-        }
-    });
+		var emailCheckMessage = document.getElementById('emailCheckMessage');
+		let email = document.myPage.email.value;
+		let emailval = {
+			"u_email" : email
+		};
+		console.log(email);
+		if (email == '') {
+			emailCheckMessage.style.display = 'none';
+		} else {
+			$.ajax({
+				url : "checkEmail.ko",
+				type : "post",
+				data : emailval,
+				dataType : "json",
+				cache : false,
+				async : false,
+				success : function(data) {
+					if (data > 0) {
+						if('${users.u_email}' == email) {
+							emailCheckMessage.style.display = 'none';	
+							emailCheck++;
+						} else {
+							emailCheck = 0;
+							emailCheckMessage.style.display = 'block';
+						}
+					} else {
+						emailCheckMessage.style.display = 'none';
+						emailCheck++;
+					}
+				},
+				error : function(err) {
+					console.log('error객체 : ', err);
+				}
+			});
+		}
+	});
 });
+
 </script>
 <style>
 body {
@@ -101,17 +102,17 @@ body {
 
 .container#containerModi {
     display: flex;
-    justify-content: center;
-    width:100%;
-    max-width: 1000px;
-    margin: 50px auto;
-    padding: 50px 20px;
-    border: 1px solid rgb(224, 224, 224);
-    border-radius: 10px;
+	justify-content: center;
+	width: 1040px;
+	margin: 50px auto;
+	padding: 50px 20px;
+	border: 1px solid #e0e0e0;
+	border-radius: 10px;
 }
 
 .container-inner#inner {
-    width: 80%;
+    width: 800px;
+ 	display: inline;  
 }
 
 .uMyPage {
@@ -120,19 +121,22 @@ body {
     flex-direction: column;
 }
 
-h3 {
+h2 {
 	font-weight: bold;
     padding-bottom: 20px;
-    border-bottom: 3px solid black;
+    border-bottom: 2px solid black;
+}
+
+.myPage-Title{
+	font-size: 24px;
+	font-weight: bolder;
 }
 
 .modiConBox {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin: 10px 20px 10px 20px;
-    padding: 10px;
     font-size: 16px;
-    border-bottom: 1px solid black;
 }
 
 .modiConbox#modiAddr{
@@ -146,8 +150,6 @@ h3 {
     position: relative;
     box-sizing: border-box;
     max-width: 100%;
-    padding: 0 10px 0 0px;
-    /* 	min-height: 50px; */
 }
 
 
@@ -164,13 +166,9 @@ h3 {
     border: 1px solid rgb(224, 224, 224);
     border-radius: 5px;
     color: rgb(62, 62, 62);
-    font-size: 15px;
+    font-size: 17px;
     line-height: 22px;
     width: 300px;
-}
-
-#id, #birth{
-	border: none;
 }
 
 input.postcode,
@@ -186,9 +184,10 @@ input.postcode {
     border-bottom-left-radius: 0px;
 }
 
-input.detailAddress {
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
+input#detailAddress {
+/*     border-top-right-radius: 0px; */
+/*     border-top-left-radius: 0px; */
+	margin: 0.3px 0px 10px 0px;
 }
 
 input.address {
@@ -196,16 +195,14 @@ input.address {
 }
 
 input.menu_h {
-    width: 80px;
-    font-size: 10px;
+    width: 100px;
+    font-size: 13px;
+    font-weight: bold;
     padding: 5px;
-    height: 44px;
-    background-color: #17884a;
+    height: 45px;
+    background-color: #005930;
     color: #fff;
     cursor: pointer;
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px; 
 }
 
 input#male+label {
@@ -220,7 +217,7 @@ input#female+label {
 
 input.menu_h:hover {
     cursor: pointer;
-    background: #D4A035;
+    background: #2d4739;
 }
 
 .gender_item {
@@ -235,7 +232,7 @@ input.menu_h:hover {
     display: inline-block;
     cursor: pointer;
     height: 40px;
-    width: 159px;
+    width: 150px;
     border: 1px solid #333;
     border-radius: 5px;
     line-height: 40px;
@@ -252,7 +249,7 @@ input.menu_h:hover {
 }
 
 .gender_item input[type=radio]:checked+label {
-    background-color: #0d522ce0;
+    background-color: #005930;
     color: #fff;
     border: none;
 }
@@ -260,18 +257,23 @@ input.menu_h:hover {
 .error-message{
     color: red;
     font-size: 15px;
-    margin-right: 10px;
-/*     margin-top: 5px; */
+    margin-top: 5px; 
 }
 
 .item_name {
     margin: 8px 0 8px 0;
     width: 100px;
     text-align: center;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+#item_addr{
+    line-height: 7;
 }
 
 .send {
-    background-color: #88958e;
+    background-color: #aeb7b2;
     border: none;
     border-radius: 5px;
     color: #fff;
@@ -279,86 +281,152 @@ input.menu_h:hover {
     cursor: pointer;
     font-size: 15px;
     font-weight: bold;
-    width: 80px;
-    margin-top: 30px;
-}
-
-input.input-outL:focus {
-    outline: 2.5px solid black;
+    width: 130px;
+	height: 45px;
+    margin: 5px;
 }
 
 .modiBtn{
  	display: flex;
-    justify-content: space-between;
+    justify-content: center;
     border-top: 3px solid black;
 }
 
 .modiBtn button[type="submit"] {
-    background-color: #17884a;
+    background-color: #005930;
     color: #fff;
     font-weight: bold;
+    width: 130px;
+	height: 45px;
 }
 
 .modiBtn button[type="submit"]:hover {
-    background-color: #D4A035;
+    background-color: #2d4739;
 }
 
 .modiBtn button[type="button"]:hover {
     background-color: #bbb;
 }
  
- #email, #nick, #phone, #address {
-    width: 300px;
+ #email, #nick, #postcode, #address, #detailAddress {
+    /* width: 300px; */
     padding: 10px;
-    border: 1px solid rgb(224, 224, 224);
-    border-radius: 5px;
-    color: rgb(62, 62, 62);
-    font-size: 15px;
+    border: 1.5px solid black;
+    color: black;
+    font-size: 17px;
     line-height: 22px;
 }
 
-#email:focus, #nick:focus, #address:focus {
-    outline: 2.5px solid black;
+.form_item#addForm1{
+	vertical-align: middle;
 }
+
+#postcode{
+	width: 200px;
+}
+
+ #email:focus, #nick:focus, #address:focus, #detailAddress:focus  { 
+     outline: 2.5px solid black; 
+ } 
+
+.search-addr {
+	display: flex;
+}
+
 
 /* extra small */
 @media screen and (max-width:540px) {
-    .inner {
+    .container#containerModi  {
         width: 90%;
+        margin: 20px auto;
+        padding: 30px 20px;
     }
+    .container-inner#inner {
+	    width: 100%;
+	    display: inline;
+	}
+    
+    h2.myPage-Title {
+	    font-size: 20px;
+	}
+	
+	.item_name, .form_item input, #email, #nick, #postcode, #address, #detailAddress {
+	    font-size: 14px;
+	}
+	
+	.form_item input {
+	    width: auto;
+	}
+	.gender_item input[type=radio]+label {
+	    width: 93px;
+	}
+	#postcode {
+        width: 100px;
+        border-radius: 5px;
+    }
+   	div.search-addr div>input[type="button"].menu_h {
+	    width: 80px;
+	    font-size: 11px;
+	}
+	    
 }
+
 
 /* small */
 @media screen and (min-width:541px) and (max-width:720px) {
+    .container#containerModi {
+        width: 100%;
+        margin: 30px auto;
+        padding: 40px;
+    }
+    
     .inner {
-        width: 60%;
+        width: 100%;
     }
 }
 
 /* medium */
 @media screen and (min-width:721px) and (max-width:960px) {
+    .container#containerModi{
+		width: 100%;
+        margin: 50px auto;
+        padding: 60px 100px;
+	}
+    
     .inner {
-        width: 70%;
+        width: 100%;
     }
 }
 
 /* large */
 @media screen and (min-width:961px) and (max-width:1140px) {
-    .inner {
-        width: 100%;
-    }
+    .container#containerModi{
+		width: 80%;
+        margin: 50px auto;
+        padding: 60px 100px;
+	}
+	
+	.inner{
+		width: 100%;
+	}
+    
+    .modiBtn button[type="submit"] {
+	    width: 130px;
+		height: 45px;
+	}
+
 }
 </style>
 </head>
 
 <body>
-<%@ include file="../../common/navbar.jsp" %>
-<%@ include file="../user/myPageHeader.jsp" %>
+<jsp:include page="../../common/navbar.jsp" />
+<jsp:include page="/WEB-INF/user/myPageHeader.jsp" />
 
 <div class="container" id="containerModi">
     <div class="container-inner" id="inner">
-        <form class="uMyPage" name="myPage" id="myPage" action="upInfo.ko" method="post">
-            <h3 style="font-weight:bold;">회원정보 수정</h3>
+        <form class="uMyPage" name="myPage" id="myPage" action="upInfo.ko" method="post" onsubmit="return insertchk()">
+            <h2 class="myPage-Title">회원정보 수정</h2>
             <div class="modiConBox">
                 <div class="item_name">아이디</div>
                 <div class="form_item">
@@ -368,10 +436,12 @@ input.input-outL:focus {
             <div class="modiConBox">
                 <div class="item_name">닉네임</div>
                 <div class="form_item">
+                <div class="modi-nick">
 <!--                <small style="color: gray">※ 공백, 특수문자를 제외한 2~10자로 입력하세요.</small> -->
+                    <input class="input-outL" type="text" id="nick" name="u_nick" value="${users.u_nick}">
                     <div class="error-message" id="nickCheckMessage" style="display: none; color: red;"><small>* 이미 존재하는 닉네임입니다.</small></div>
                     <div class="error-message" id="nickErrorMessage" style="display: none; color: red;"><small>* 닉네임을 올바른 형식으로 입력해주세요.</small></div>
-                    <input class="input-outL" type="text" id="nick" name="u_nick" value="${users.u_nick}" minlength="2">
+                </div>
                 </div>
             </div>
 
@@ -396,50 +466,58 @@ input.input-outL:focus {
             </div>
             <div class="modiConBox">
                 <div class="item_name">이메일</div>
-                <div class="error-message" id="emailNoneMessage" style="display: none; color: red;"><small>* 이메일을 입력해주세요.</small></div>
-                <div class="error-message" id="emailErrorMessage" style="display: none; color: red;"><small>* 이메일을 올바른 형식으로 입력해주세요.</small></div>
-                <div class="error-message" id="emailCheckMessage" style="display: none; color: red;"><small>* 이미 존재하는 이메일입니다.</small></div>
                 <div class="form_item">
+                <div class="modi-email">
                     <div onclick="emailInput()">
                         <input class="input-outL" type="text" id="email" name="u_email" value="${users.u_email}">
                     </div>
+                <div class="error-message" id="emailNoneMessage" style="display: none; color: red;"><small>* 이메일을 입력해주세요.</small></div>
+                <div class="error-message" id="emailErrorMessage" style="display: none; color: red;"><small>* 이메일을 올바른 형식으로 입력해주세요.</small></div>
+                <div class="error-message" id="emailCheckMessage" style="display: none; color: red;"><small>* 이미 존재하는 이메일입니다.</small></div>
                 </div>
+            </div>
             </div>
             <div class="modiConBox">
                 <div class="item_name">휴대전화</div>
                 <div class="form_item">
                     <div onclick="telInput()">
-                        <input class="input-outL" type="tel" id="tel" name="u_tel" value="${users.u_tel}" required><br>
+                        <input class="input-outL" type="tel" id="tel" name="u_tel" value="${users.u_tel}" readonly><br>
                     </div>
                 </div>
             </div>
             <div class="modiConBox" style="text-align: -webkit-match-parent;">
-                <div class="item_name">주소</div>
-                <div class="form_item" id="addForm1">
-                    <div onclick="postcodeInput()">
-                        <input type="text" id="postcode" name="addr1" class="postcode" placeholder="우편번호" value="${users.addr1}">
-                        <input type="button" class="menu_h" onclick="execDaumPostcode()" value="우편번호 찾기">
-                    </div>
-                </div>
-                <div id="postcodeErrorMessage" style="display: none; color: red;"><small>* 우편번호를
-                        입력해주세요.</small></div>
-                <div class="form_item" id="addForm2">
-                    <div onclick="addressInput()">
-                        <input class="input-outL"  type="text" class="address" id="address" name="addr2" value="${users.addr2}"><br>
-                    </div>
-                </div>
-                <div id="addressErrorMessage" style="display: none; color: red;"><small>* 주소를 입력해주세요.</small></div>
-                <div class="form_item" id="addForm2">
-                    <div onclick="detailInput()">
-                        <input class="input-outL"  type="text" class="detailAddress" id="detailAddress" name="addr3" value="${users.addr3}">
-                    </div>
-                </div>
-                <div id="detailErrorMessage" style="display: none; color: red;"><small>* 상세주소를
-                        입력해주세요.</small></div>
+                <div class="item_name" id="item_addr">주소</div>
+                <div class="modi-addr">
+	                <div class="form_item" id="addForm1">
+	                    <div onclick="postcodeInput()" class="search-addr">
+	                        <div><input type="text" id="postcode" name="addr1" class="postcode" placeholder="우편번호" value="${users.addr1}" style="border-radius: 5px;"></div>
+	                        <div><input type="button" class="menu_h" onclick="execDaumPostcode()" value="우편번호 찾기"></div>
+	                    </div>
+	                </div>
+	                <div class="form_item" id="addForm2">
+	                    <div onclick="addressInput()">
+	                        <input class="input-outL"  type="text" class="address" id="address" name="addr2" value="${users.addr2}"><br>
+	                    </div>
+	                </div>
+	                <div class="form_item" id="addForm3">
+	                    <div onclick="detailInput()">
+	                        <input class="input-outL"  type="text" class="detailAddress" id="detailAddress" name="addr3" value="${users.addr3}">
+	                    </div>
+	                </div>
+	                <div id="postcodeErrorMessage" style="display: none; color: red;">
+	                	<small>* 우편번호를 입력해주세요.</small>
+	                </div>
+	                <div id="addressErrorMessage" style="display: none; color: red;">
+	                	<small>* 주소를 입력해주세요.</small>
+	                </div>
+	                <div id="detailErrorMessage" style="display: none; color: red;">
+	                	<small>* 상세주소를 입력해주세요.</small>
+	                </div>
+            	</div>
             </div>
             <div class="modiBtn">
-                <button class="send" type="button" onclick="javascript:history.go(-1)">취소</button>
                 <button class="send" type="submit">수정</button>
+                <button class="send" type="button" onclick="javascript:history.go(-1)">취소</button>
             </div>
         </form>
     </div>
@@ -499,110 +577,114 @@ function execDaumPostcode() {
 }
 </script>
 <script>
-function insertchk() {
-    var istrue = true;
-
-    var nick = document.getElementById('nick');
-    var email = document.getElementById('email');
-    var postcode = document.getElementById('postcode');
-    var address = document.getElementById('address');
-    var detail = document.getElementById('detailAddress');
-
-    var nickPattern = /^[가-힣a-zA-Z]+$/;
-    var emailPattern = /^[a-zA-Z0-9_\-~!#$%^&*()]+@[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)*$/;
-
-    var emailNoneMessage = document.getElementById('emailNoneMessage');
-    var postcodeErrorMessage = document.getElementById('postcodeErrorMessage');
-    var addressErrorMessage = document.getElementById('addressErrorMessage');
-    var detailErrorMessage = document.getElementById('detailErrorMessage');
-    var nickErrorMessage = document.getElementById('nickErrorMessage');
-
-    if (!nickPattern.test(nick.value)) {
-        nick.focus();
-        nickErrorMessage.style.display = 'block';
-        istrue = false;
-    }
-    if (email.value == '' || email.value == null || !emailPattern.test(email.value)) {
-        email.focus();
-        emailErrorMessage.style.display = 'block'
-        istrue = false;
-    }
-    if (postcode.value == '' || postcode.value == null) {
-        postcode.focus();
-        postcodeErrorMessage.style.display = 'block';
-        istrue = false;
-    }
-    if (address.value == '' || address.value == null) {
-        address.focus();
-        addressErrorMessage.style.display = 'block';
-        istrue = false;
-    }
-    if (detail.value == '' || detail.value == null) {
-        detail.focus();
-        detailErrorMessage.style.display = 'block';
-        istrue = false;
-    }
-
-    if (nickCheck == 0) {
-        if ('${users.u_nick}' == nick.value) {
-            nickErrorMessage.style.display = 'none';
-        } else {
-            alert('닉네임 중복체크를 해주세요');
-            istrue = false;
-        }
-    }
-    if (emailCheck == 0) {
-        if ('${users.u_email}' == email.value) {
-            emailErrorMessage.style.display = 'none';
-        } else {
-            alert('이메일 중복체크를 해주세요');
-            istrue = false;
-        }
-    }
-    console.log(istrue);
-    return istrue;
-
+function insertchk(){
+	var istrue = true;
+	
+	var nick = document.getElementById('nick');
+	var email = document.getElementById('email');
+	var postcode = document.getElementById('postcode');
+	var address = document.getElementById('address');
+	var detail = document.getElementById('detailAddress');
+	
+	var nickPattern = /^[가-힣a-zA-Z]+$/;
+	var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+	
+	var emailNoneMessage = document.getElementById('emailNoneMessage');
+	var postcodeErrorMessage = document.getElementById('postcodeErrorMessage');
+	var addressErrorMessage = document.getElementById('addressErrorMessage');
+	var detailErrorMessage = document.getElementById('detailErrorMessage');
+	var nickErrorMessage = document.getElementById('nickErrorMessage');
+	
+	if(!nickPattern.test(nick.value)) {
+		nick.focus();
+		nickErrorMessage.style.display = 'block';
+		istrue = false;
+	}
+	if(email.value == '' || email.value == null || !emailPattern.test(email.value)) {
+		email.focus();
+		emailErrorMessage.style.display = 'block'
+		istrue = false;
+	}
+	if(postcode.value == '' || postcode.value == null) {
+		postcode.focus();
+		postcodeErrorMessage.style.display = 'block';
+		istrue = false;
+	}
+	if(address.value == '' || address.value == null) {
+		address.focus();
+		addressErrorMessage.style.display = 'block';
+		istrue = false;
+	}
+	if(detail.value == '' || detail.value == null) {
+		detail.focus();
+		detailErrorMessage.style.display = 'block';
+		istrue = false;
+	}
+	
+	if(nickCheck == 0) {
+		if('${users.u_nick}' == nick.value){
+			nickCheckMessage.style.display = 'none';
+		} else {
+			alert('닉네임 중복체크를 해주세요');
+			istrue = false;			
+		}
+	}
+	if(emailCheck == 0) {
+		if('${users.u_email}' == email.value){
+			emailErrorMessage.style.display = 'none';
+		} else {
+			alert('이메일 중복체크를 해주세요');
+			istrue = false;			
+		}
+	}
+	if(!istrue) {
+		alert('입력한 정보를 다시 확인해주세요.');
+	}
+	console.log(istrue);
+	return istrue;
+	
 }
 
 function nickInput() {
-    var nick = document.getElementById('nick');
-    var nickErrorMessage = document.getElementById('nickErrorMessage');
+	var nick = document.getElementById('nick');
+	var nickErrorMessage = document.getElementById('nickErrorMessage');
 
-    nick.focus(); // Focus on the input field
+	nick.focus(); // Focus on the input field
 
-    nick.addEventListener('input', function() {
-        var pattern = /^[가-힣a-zA-Z]+$/; // 정규 표현식 패턴
-        var nickvalue = nick.value.trim();
-        if (!pattern.test(nickvalue)) {
-            nickErrorMessage.style.display = 'block'; // Display error message				
-        } else {
-            nickErrorMessage.style.display = 'none'; // Hide error message
-        }
-    });
+	nick.addEventListener('input', function() {
+		var pattern = /^[가-힣a-zA-Z]+$/; // 정규 표현식 패턴
+		var nickvalue = nick.value.trim();
+		if(!pattern.test(nickvalue)) {
+			nickErrorMessage.style.display = 'block'; // Display error message				
+		} else {
+			nickErrorMessage.style.display = 'none'; // Hide error message
+		}
+	});
 }
 
 function emailInput() {
-    var email = document.getElementById('email');
-    var emailErrorMessage = document.getElementById('emailErrorMessage');
-    var emailNoneMessage = document.getElementById('emailNoneMessage');
+	var email = document.getElementById('email');
+	var emailErrorMessage = document.getElementById('emailErrorMessage');
+	var emailNoneMessage = document.getElementById('emailNoneMessage');		
 
-    email.focus(); // Focus on the input field
+	email.focus(); // Focus on the input field
 
-    email.addEventListener('input', function() {
-        var emailPattern = /^[a-zA-Z0-9_\-~!#$%^&*()]+@[a-zA-Z0-9_\-]+(\.[a-zA-Z0-9_\-]+)*$/;
-        var emailvalue = email.value.trim();
-        if (emailvalue == "") {
-            emailNoneMessage.style.display = 'block';
-            emailErrorMessage.style.display = 'none';
-        } else if (!emailPattern.test(emailvalue)) {
-            emailErrorMessage.style.display = 'block';
-            emailNoneMessage.style.display = 'none';
-        } else {
-            emailErrorMessage.style.display = 'none';
-            emailNoneMessage.style.display = 'none';
-        }
-    });
+	email.addEventListener('input', function() {
+		var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+		var emailvalue = email.value.trim();
+		if (emailvalue == "") {
+			emailNoneMessage.style.display = 'block';
+			emailErrorMessage.style.display = 'none';						
+		} else if (!emailPattern.test(emailvalue)){
+			emailErrorMessage.style.display = 'block';						
+			emailNoneMessage.style.display = 'none';
+		} else {
+			emailErrorMessage.style.display = 'none';
+			emailNoneMessage.style.display = 'none';
+		}
+	});
 }
+
 
 function postcodeInput() {
     var postcode = document.getElementById('postcode');

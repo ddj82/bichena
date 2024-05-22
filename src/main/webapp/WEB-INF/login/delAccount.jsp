@@ -82,15 +82,158 @@ p.del-conPw {
 }
 
 .pwBtn input[type="button"] {
-    background-color: #005930;
+    background-color: #0a6633e5;
     color: #fff;
     font-weight: bold;
 }
 
 .pwBtn input[type="button"]:hover {
-    background-color: #D4A035;
+    background-color: #2d4739;
 }
 
+
+.pwBtn input[type="button"] {
+    width: 150px;
+}
+
+input#cancleDel {
+    width: 150px;
+}
+
+</style>
+
+<style>
+
+/* extra small */
+@media screen and (max-width:540px) {
+.delAccForm#delAccForm {
+    width: 300px;
+}
+
+form#delAccCon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+	.container#containerPw {
+    width: 350px;
+}
+
+p.del-conPw {
+    line-height: 23px;
+}
+
+.delAccCon input[type=password] {
+    margin-bottom: 10px;
+}
+
+h2.conPwTitle {
+    line-height: 36px;
+}
+
+
+p.del-conPw {
+    width: 197px;
+    font-size: 14px;
+}
+
+h2.conPwTitle {
+    width: 176px;
+}
+
+input#upw {
+    width: 211px;
+    font-size: 14px;
+}
+
+.pwBtn {
+    width: 211px;
+}
+
+input#cancleDel {
+    width: 90px;
+}
+
+.pwBtn input[type="button"] {
+    width: 90px;
+}
+
+}
+
+
+/* small */
+@media screen and (min-width:541px) and (max-width:720px) {
+
+.delAccForm#delAccForm {
+    width: 283px;
+}
+
+.container#containerPw {
+   width: 525px;
+}
+
+p.del-conPw {
+    font-size: 14px;
+}
+
+input#cancleDel {
+    width: 110px;
+}
+
+.pwBtn input[type="button"] {
+    width: 110px;
+}
+
+
+}
+
+
+/* medium */
+@media screen and (min-width:721px) and (max-width:960px) {
+
+.delAccForm#delAccForm {
+    width: 283px;
+}
+
+.container#containerPw {
+	width: 662px;
+}
+
+p.del-conPw {
+    font-size: 14px;
+}
+
+input#cancleDel {
+    width: 110px;
+}
+
+.pwBtn input[type="button"] {
+    width: 110px;
+}
+
+}
+
+
+/* large */
+@media screen and (min-width:961px) and (max-width:1140px) {
+.container#containerPw {
+    width: 750px;
+}
+
+p.del-conPw {
+    font-size: 14px;
+}
+
+input#cancleDel {
+    width: 110px;
+}
+
+.pwBtn input[type="button"] {
+    width: 110px;
+}
+
+}
 </style>
 </head>
 <body>
@@ -107,7 +250,7 @@ p.del-conPw {
 				<input type="submit" id="cancleDel" value="취소"> <!-- 홈으로 가도록 -->
 				<input type="button" id="confirmDel" onclick="passChk()" value="확인">
 			</div>
-			</form>
+		</form>
 	</div>
 </div>
 <%-- <jsp:include page="../common/footer.jsp"/> --%>

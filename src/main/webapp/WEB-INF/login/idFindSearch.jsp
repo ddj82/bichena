@@ -24,6 +24,8 @@ if (request.getParameter("u_name") == null || request.getParameter("u_name").equ
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	margin-bottom: 100px;
+	
 }
 
 div#box1 {
@@ -104,7 +106,7 @@ a.pwFindbutton {
     text-decoration: none;
 }
 
-a.joinInsertButton{
+a.joinInsertButton {
 	width: 150px;
     height: 40px;
 	display: flex;
@@ -171,57 +173,63 @@ a.pwFindbutton:hover,a.joinInsertButton:hover,a.loginbutton:hover {
 
 
 @media (max-width: 575px) {
-
-       .idFindSearchSubBox {
+	.idFindSearchSubBox {
 		width: 324.91px;
 	}
 	
 	div#box2 {
-    text-align: center;
-    margin-top: 50px;
-    font-size: 18px;
-    color: #2d4739;
-    font-weight: bolder;
+	    text-align: center;
+	    margin-top: 50px;
+	    font-size: 18px;
+	    color: #2d4739;
+	    font-weight: bolder;
+	}
+
+	.bichenaBox,.kakaoBox,.naverBox {
+	    width: 300px;
+	    display: flex;
+	    margin-bottom: 15px;
+	    font-weight: bold;
+	    justify-content: center;
+	}
+	
+	.bichenaBox,.kakaoBox,.naverBox {
+	    width: 300px;
+	    display: flex;
+	    margin-bottom: 15px;
+	    font-weight: bold;
+	    justify-content: center;
+	}
+	
+	a.loginbutton{
+	    margin-right: 13px;
+	}
+	
+	a.loginbutton,a.pwFindbutton {
+	    width: 100px;
+	    font-size: 14px;
+	}
+	
+	.noneList,div#box1 {
+	    font-size: 18px;
+	    text-align: center;	
+	}
+	
+	div#idUser,div#idNaver,div#idKakao {
+	    font-size: 15px;
+	}
+	
+	img {
+	    width: 30px;
+	}
+
 }
 
-.bichenaBox,.kakaoBox,.naverBox {
-    width: 300px;
-    display: flex;
-    margin-bottom: 15px;
-    font-weight: bold;
-    justify-content: center;
+@media (min-width: 576px) and (max-width: 890px) {
+	.idFindSearchSubBox {
+		width: 500px;
+	}
 }
-
-.bichenaBox,.kakaoBox,.naverBox {
-    width: 300px;
-    display: flex;
-    margin-bottom: 15px;
-    font-weight: bold;
-    justify-content: center;
-}
-
-a.loginbutton{
-    margin-right: 13px;
-}
-
-a.loginbutton,a.pwFindbutton {
-    width: 120px;
-}
-
-.noneList,div#box1 {
-    font-size: 18px;
-    text-align: center;	
-}
-
-div#idUser,div#idNaver,div#idKakao {
-    font-size: 15px;
-}
-
-img {
-    width: 30px;
-}
-
-      }
 
 </style>
 <script>

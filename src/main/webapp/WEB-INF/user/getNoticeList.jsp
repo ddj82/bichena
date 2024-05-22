@@ -10,12 +10,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>공지사항</title>
 <style>
-#searchNav {
-    -webkit-justify-content: flex-end;
-    justify-content: flex-end;
+.searchForm {
+	text-align: center;
 }
 table.table>tbody>tr>td, table.table>tbody>tr>th, table th {
-    text-align: center;
     vertical-align: middle;
 }
 table {
@@ -26,97 +24,260 @@ table {
     padding-right: 15px;
     display:none;
 }
+/* 유저 페이징처리 스타일 통일사항 */
+.list-pagination {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 60px;
+	margin-top: 20px;
+}
+page-link:hover {
+    z-index: 2;
+    color: #005930!important!important;
+    text-decoration: none!important;
+    background-color: #e9ecef!important;
+    border-color: #dee2e6!important;
+    border-radios: 5px!important;
+}
+.page-link:focus {
+    box-shadow: 0 0 0 .2rem rgb(23 147 9 / 25%)!important;
+    color: #005930!important;
+    border-radius: 5px!important;
+}
+
+.page-link {
+    padding: .5rem .75rem!important;
+    margin-left: -1px;
+    line-height: 1.25!important;
+    color: #005930!important;
+    background-color: #fff!important;
+    border: none!important;
+}
+
+.page-item.active .page-link {
+    background-color: #005930!important;
+    border-color: #005930!important;
+    border-radius: 5px!important;
+    color:white!important;
+}
+.findMem{
+	text-align: center;
+	margin-top: 30px;
+	display: right;
+}	
+
+/* 검색바통일사항 */
+.searchForm {
+    margin-bottom: 20px;
+    text-align: center;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.searchForm select,
+.searchForm input[type="text"],
+.searchForm button {
+    height: 40px;
+    border: 1px solid #000;
+    border-radius: 4px;
+    margin: 10px 5px;;
+}
+
+.searchForm select {
+    width: 60px;
+}
+
+.searchForm input[type="text"] {
+    width: 230px;
+}
+
+.searchForm button {
+    background-color: #005930;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.searchForm button:hover {
+    background-color: #B8B388;
+}
+
+/* 테이블구조 CSS */
+table.table {
+    width: 100%;
+    margin-bottom: 16px;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+ table.table th { 
+     padding: 12px; 
+     text-align: center; 
+     border-bottom: 1.5px solid #000;
+} 
+
+.table>tbody>tr>td{
+    padding: 15px 10px 15px 20px!important;
+    vertical-align: middle;
+    border-top: 1px solid #ddd;
+}
+
+ table.table tbody { 
+     border-top: 2px solid #dee2e6; 
+ } 
+ 
+ .table>tbody>tr>td {
+    padding: 15px 8px;
+    line-height: 1.4;
+    }
+ 
+.responsiveTd {
+	text-align: center;
+	
+}
+
+.responsiveSpan {
+	justify-content: right;
+	display:none;
+	font-size: 12px;
+	color: gray;
+}
+
+.table_title {
+	text-align: left;
+	padding-left:30px;
+}
+
+.divTable{
+   margin-top: 30px;
+}
+#footer {
+    text-align: right;
+    padding-right: 15px;
+	display: none;
+}
+/* 반응형 할때 */
+@media screen and (max-width: 720px) {
+	.responsiveTd {
+		display: none;
+	}
+	.responsiveSpan {
+		display: flex!important;
+		justify-content: right;
+	}
+	table.table thead {
+		display: none;
+	}
+	.searchForm input[type="text"] {
+    	width: 200px;
+	}
+}
+
+
+
 </style>
 </head>
 <body>
 <%@ include file="../../common/navbar.jsp" %>
 <div class="container">
-	<div class="jumbotron">
-		<h1>공지 사항</h1>
-	</div>
-	<nav id="searchNav">
-		<form action="getNoticeList.ko" method="post">
-	        <select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
-	            <c:choose>
-	                <c:when test="${condition == 'TITLE'}">
-	                    <option value="${conditionMap['제목']}">제목</option>
-	                    <option value="${conditionMap['내용']}">내용</option>
-	                </c:when>
-	                <c:when test="${condition == 'CONTENT'}">
-	                    <option value="${conditionMap['내용']}">내용</option>
-	                    <option value="${conditionMap['제목']}">제목</option>
-	                </c:when>
-	                <c:otherwise>
-	                    <option value="${conditionMap['제목']}">제목</option>
-	                    <option value="${conditionMap['내용']}">내용</option>
-	                </c:otherwise>
-	            </c:choose>
-	        </select>
-	        <c:choose>
-	           <c:when test="${keyword == ''}">
-	              <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
-	           </c:when>
-	           <c:otherwise>
-	              <input type="text" name="searchKeyword" value ="${keyword}">
-	           </c:otherwise>
-	        </c:choose>
-			<button type="submit" class="btn btn-primary btn-sm">검색</button>
-		</form>
-	</nav>
-	<div>
-		<table class="table table">
+	<h2 style="margin-top:30px; font-weight:bold; font-size: 24px;">공지사항</h2>
+	<div class="divTable" >
+		<table class="table">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th class="responsiveTd" style="width: 15%;">번호</th>
 					<th>제목</th>
-					<th>등록일</th>
+					<th class="responsiveTd" style="width: 20%;">작성일자</th>
 				</tr>
 			</thead>
 			<tbody>
 				<c:forEach items="${noticeList}" var="notice">
-					<tr onclick="selTr(${notice.not_no})" style="cursor: pointer;">
-						<td>${notice.not_no}</td>
-						<td>${notice.not_title}</td>
-						<td>${notice.not_date}</td>
+					<tr onclick="selTr(${notice.not_no})" style="cursor: pointer; padding: 10px;">
+						<td class="responsiveTd">${notice.not_no}</td>
+						<td class="table_title">${notice.not_title}<br>
+							<span class="responsiveSpan">
+								<img src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/sub_date_new.png" alt="시간">${notice.not_date}
+							</span>
+						</td>
+						<td class="responsiveTd">${notice.not_date}</td>
 					</tr>
 				</c:forEach>
 			</tbody>
 		</table>
 
-		<!-- 페이징 처리 -->
-		<c:choose>
-			<c:when test="${pagination.currPageNo == 1}">
-				<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
-				<span>이전</span>
-			</c:when>
-			<c:otherwise>
-				<!-- 이전 페이지로 이동하는 링크 -->
-				<a href="getNoticeList.ko?currPageNo=${pagination.currPageNo - 1}&searchKeyword=${keyword}&searchCondition=${condition}" class="btn btn-primary btn-sm">이전</a>
-			</c:otherwise>
-		</c:choose>
-		
-		<c:forEach begin="${pagination.startPage}"
-			end="${pagination.endPage}" var="page">
-			<c:choose>
-				<c:when test="${page eq pagination.currPageNo}">
-					<span>${page}</span>
-				</c:when>
-				<c:otherwise>
-					<a href="getNoticeList.ko?currPageNo=${page}&searchKeyword=${keyword}&searchCondition=${condition}" class="">${page}</a>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
+		<!-- 검색 -->
+	    <div class="searchDiv">
+		    <form class="searchForm" action="getNoticeList.ko" method="post">
+		        <select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
+		            <c:choose>
+		                <c:when test="${condition == 'TITLE'}">
+		                    <option value="${conditionMap['제목']}">제목</option>
+		                    <option value="${conditionMap['내용']}">내용</option>
+		                </c:when>
+		                <c:when test="${condition == 'CONTENT'}">
+		                    <option value="${conditionMap['내용']}">내용</option>
+		                    <option value="${conditionMap['제목']}">제목</option>
+		                </c:when>
+		                <c:otherwise>
+		                    <option value="${conditionMap['제목']}">제목</option>
+		                    <option value="${conditionMap['내용']}">내용</option>
+		                </c:otherwise>
+		            </c:choose>
+		        </select>
+		        <c:choose>
+		           <c:when test="${keyword == ''}">
+		              <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+		           </c:when>
+		           <c:otherwise>
+		              <input type="text" name="searchKeyword" value ="${keyword}">
+		           </c:otherwise>
+		        </c:choose>
+				<button type="submit" class="btn btn-primary btn-sm">검색</button>
+			</form>
+	    </div>
 
-		<c:choose>
-			<c:when test="${pagination.currPageNo == pagination.pageCnt}">
-				<!-- 현재 페이지가 마지막 페이지인 경우 -->
-				<span>다음</span>
-			</c:when>
-			<c:otherwise>
-				<!-- 다음 페이지로 이동하는 링크 -->
-				<a href="getNoticeList.ko?currPageNo=${pagination.currPageNo + 1}&searchKeyword=${keyword}&searchCondition=${condition}" class="btn btn-primary btn-sm">다음</a>
-			</c:otherwise>
-		</c:choose>
+		<!-- 페이징 처리 -->
+			<ul class="pagination list-pagination">
+				<c:choose>
+					<c:when test="${pagination.currPageNo == 1}">
+						<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
+						<li class="page-item"><a class="page-link">이전</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item">
+		           			 <a class="page-link" href="getNoticeList.ko?currPageNo=${pagination.currPageNo - 1}&searchKeyword=${keyword}&searchCondition=${condition}">이전</a>
+		         		</li>
+					</c:otherwise>
+				</c:choose>
+				<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
+					<c:choose>
+						<c:when test="${page eq pagination.currPageNo}">
+							<li class="page-item active"><a class="page-link">${page}</a></li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item">
+		           			 	<a class="page-link" href="getNoticeList.ko?currPageNo=${page}&searchKeyword=${keyword}&searchCondition=${condition}">${page}</a>
+		         			</li>
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+		
+				<c:choose>
+					<c:when test="${pagination.currPageNo == pagination.pageCnt or pagination.pageCnt <= 1}">
+						<!-- 현재 페이지가 마지막 페이지인 경우 -->
+						<li class="page-item"><a class="page-link">다음</a></li>
+					</c:when>
+					<c:otherwise>
+						<!-- 다음 페이지로 이동하는 링크 -->
+							<li class="page-item">
+		           			 	<a class="page-link" href="getNoticeList.ko?currPageNo=${pagination.currPageNo + 1}&searchKeyword=${keyword}&searchCondition=${condition}">다음</a>
+		         			</li>
+					</c:otherwise>
+				</c:choose>
+			</ul>
+
+
 		<br> <br>
 	</div>
 </div>

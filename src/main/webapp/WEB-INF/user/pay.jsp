@@ -13,7 +13,7 @@
 		<div class="btn-group" style="width:100%;height: 35px;">
 			<button class="btn btn-primary btn-sm" onclick="stockMinus();" style="width:30%;vertical-align: top;"> - </button>
 			<input type="number" id="stock" name="stock" placeholder="개수를 입력하세요." value="1" style="width:50%;text-align:center;">
-			<button class="btn btn-primary btn-sm" onclick="stockPlus();" style="width:30%;vertical-align: top;"> + </button>
+			<button class="btn btn-primary btn-sm" onclick="stockPlus('${prodOne.p_no}', '${prodOne.p_price}');" style="width:30%;vertical-align: top;"> + </button>
 		</div>
 	</div>
 	
@@ -62,7 +62,7 @@ function stockMinus() {
     	document.getElementById("total").value = total;
     }
 }
-function stockPlus() {
+function stockPlus(p_no, p_price) {
 	let numberInput = document.getElementById("stock");
 	numberInput.value = parseInt(document.getElementById("stock").value) + 1;
 	if (parseInt(numberInput.value) <= 0 || numberInput.value == "") {
@@ -75,6 +75,14 @@ function stockPlus() {
     	let total = tot * price;
     	document.getElementById("total").value = total;
     }
+	var maxPstock = stockchk(p_no); //현재 재고
+	let nowStock = document.getElementById('stock').value;
+	if (maxPstock < nowStock) {
+		alert("해당상품은 현재 최대 " + maxPstock + "개 까지만 구매 가능합니다.");
+		document.getElementById('stock').value = maxPstock;
+		document.getElementById("total").value = maxPstock * p_price;
+		return;
+	}
 }
 
 
@@ -86,6 +94,7 @@ function Total(p_price) {
 }
 
 function addCart(uid) {
+	var u_id = uid;
 	if (uid == "") {
 		alert("로그인창으로 보내기");
 	} else {
@@ -93,7 +102,7 @@ function addCart(uid) {
 	        url: "selectcount.ko",
 	        type: "POST",
 	        contentType: "application/json",
-	        data: JSON.stringify({ p_no: $('#productno').val() }),
+	        data: JSON.stringify({ p_no: $('#productno').val(), u_id : u_id }),
 	        success: function(response) {
 	            if (response.code === "no") {
 	                updateCart(response.c_stock, response.c_total);
@@ -186,5 +195,27 @@ function selectCount(){
 			alert("에러발생");
 		}
 	});
+}
+
+function stockchk(p_no) {
+	var p_stock;
+	$.ajax({
+		url : "stockcheck.ko",
+		type : "post",
+		async : false,
+		contentType : "application/json",
+		data : JSON.stringify({p_no : p_no}),
+		success : function(response) {
+			console.log(response.p_stock);
+			p_stock = parseInt(response.p_stock);
+		},
+	error : function(err){
+		alert("에러 발생 !!");
+	}
+		
+	});
+	
+	return p_stock;
+    	
 }
 </script>

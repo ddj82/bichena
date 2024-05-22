@@ -13,22 +13,30 @@ pageEncoding="UTF-8"%>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css" />
     <style>
 
+
    body {
         background-color: white;
       }
 
+     .navbar_logo img{
+     width:100px;
+     height:100px;
+     }
+     
       .logo_search {
         display: flex;
         align-items: center;
         justify-content: start;
       }
-
+     .form-inline{
+     margin: 0;
+     }
       .search-container {
         display: flex;
         background-color: #f7f7f7;
         margin-left: 20px;
         align-items: center;
-        padding: 0 5px;
+        padding: 10px;
         /* 아이콘과 입력 필드 사이의 간격 조정 */
         border: 2px solid F7F7F7;
         border-radius: 10px;
@@ -51,6 +59,9 @@ pageEncoding="UTF-8"%>
 
       a {
         color: black;
+      }
+      a:hover {
+      	color: #d4a035;
       }
 
       .login_signup {
@@ -189,10 +200,10 @@ pageEncoding="UTF-8"%>
         /* 드롭다운 메뉴 내 링크에 호버 시 배경색 변경 */
       }
 .CartLogo {
-	position: relative;
+   position: relative;
 }
 
-#cartCount {
+#cartCount,#side-cartCount {
     position: absolute;
     top: -7px;
     right: -5px;
@@ -206,58 +217,65 @@ pageEncoding="UTF-8"%>
 
       /* 부트스트랩 btn-primary */
       .btn-primary {
-	    color: #fff;
-	    background-color: #005930;
-	    border-color: #005930;
-	  }
-	  .btn-primary:hover,
-	  .btn-primary:focus,
-	  .btn-primary:active,
-	  .btn-primary.active.focus,
-	  .btn-primary.active:focus,
-	  .btn-primary.active:hover,
-	  .btn-primary:active.focus,
-	  .btn-primary:active:focus,
-	  .btn-primary:active:hover,
-	  .open>.dropdown-toggle.btn-primary.focus,
-	  .open>.dropdown-toggle.btn-primary:focus,
-	  .open>.dropdown-toggle.btn-primary:hover,
-	  .btn-primary:not(:disabled):not(.disabled):active  {
-	    color: #fff;
-	    background-color:  #005930;
-	    border-color:  #005930;
-	  }
-	  .btn-primary:not(:disabled):not(.disabled):active:focus,
-	  .btn-primary:focus {
-	  	box-shadow: 0 0 0 .2rem #01710080;
-	  }
-	  
+       color: #fff;
+       background-color: #005930;
+       border-color: #005930;
+     }
+     .btn-primary:hover,
+     .btn-primary:focus,
+     .btn-primary:active,
+     .btn-primary.active.focus,
+     .btn-primary.active:focus,
+     .btn-primary.active:hover,
+     .btn-primary:active.focus,
+     .btn-primary:active:focus,
+     .btn-primary:active:hover,
+     .open>.dropdown-toggle.btn-primary.focus,
+     .open>.dropdown-toggle.btn-primary:focus,
+     .open>.dropdown-toggle.btn-primary:hover,
+     .btn-primary:not(:disabled):not(.disabled):active  {
+       color: #fff;
+       background-color:  #005930;
+       border-color:  #005930;
+     }
+     .btn-primary:not(:disabled):not(.disabled):active:focus,
+     .btn-primary:focus {
+        box-shadow: 0 0 0 .2rem #01710080;
+     }
+     
       .btn-outline-primary {
-	    color: #005930;
-/* 	    background-color: #005930; */
-	    border-color: #005930;
-	  }
-	  .btn-outline-primary:hover,
-	  .btn-outline-primary:focus,
-	  .btn-outline-primary:active,
-	  .btn-outline-primary.active.focus,
-	  .btn-outline-primary.active:focus,
-	  .btn-outline-primary.active:hover,
-	  .btn-outline-primary:active.focus,
-	  .btn-outline-primary:active:focus,
-	  .btn-outline-primary:active:hover,
-	  .open>.dropdown-toggle.btn-primary.focus,
-	  .open>.dropdown-toggle.btn-primary:focus,
-	  .open>.dropdown-toggle.btn-primary:hover,
-	  .btn-outline-primary:not(:disabled):not(.disabled):active  {
-	    color: #fff;
-	    background-color:  #005930;
-	    border-color:  #005930;
-	  }
-	  .btn-outline-primary:not(:disabled):not(.disabled):active:focus,
-	  .btn-outline-primary:focus {
-	  	box-shadow: 0 0 0 .2rem #01710080;
-	  }
+       color: #005930;
+/*        background-color: #005930; */
+       border-color: #005930;
+     }
+     .btn-outline-primary:hover,
+     .btn-outline-primary:focus,
+     .btn-outline-primary:active,
+     .btn-outline-primary.active.focus,
+     .btn-outline-primary.active:focus,
+     .btn-outline-primary.active:hover,
+     .btn-outline-primary:active.focus,
+     .btn-outline-primary:active:focus,
+     .btn-outline-primary:active:hover,
+     .open>.dropdown-toggle.btn-primary.focus,
+     .open>.dropdown-toggle.btn-primary:focus,
+     .open>.dropdown-toggle.btn-primary:hover,
+     .btn-outline-primary:not(:disabled):not(.disabled):active  {
+       color: #fff;
+       background-color:  #005930;
+       border-color:  #005930;
+     }
+     .btn-outline-primary:not(:disabled):not(.disabled):active:focus,
+     .btn-outline-primary:focus {
+        box-shadow: 0 0 0 .2rem #01710080;
+     }
+
+     
+     
+     @media (max-width:720px) {
+     .form-inline{
+     display:none}
+     }
 
 
       @media (max-width: 575px) {
@@ -284,6 +302,7 @@ pageEncoding="UTF-8"%>
           /* 내용을 수직으로 배치 */
           padding-top: 50px;
           /* 내용이 화면에 가려지지 않도록 padding 추가 */
+          
         }
         .show-side-menu .side-menu {
           right: 0 !important;
@@ -298,9 +317,12 @@ pageEncoding="UTF-8"%>
         .navbar-nav-main {
           display: none!important;
         }
-        a.login {
-          display: none;
+        
+        .LevelImgNav , .nickname{
+           display:none;
         }
+   
+
         .side-menu .navbar-nav-side {
           list-style: none;
           /* 리스트 스타일 제거 */
@@ -360,6 +382,17 @@ pageEncoding="UTF-8"%>
           margin-bottom: 0;
           background-color: white;
           border-bottom: none;
+          display:flex;
+          align-items:center;
+        }
+        .profile-header {
+          padding: 0.75rem 1.25rem;
+          margin-bottom: 0;
+          background-color: white;
+          border-bottom: none;
+          display:flex;
+          align-items:center;
+          justify-content:space-around;
         }
         .side-card {
           background-color: #fff;
@@ -371,6 +404,11 @@ pageEncoding="UTF-8"%>
           font-size: 15px;
           display: flex;
           align-items: center;
+        }
+        .side-card-body:hover {
+        	cursor:pointer;
+        	background-color: #f8f9fa;
+        	color: #d4a035;
         }
         .side-card-body img {
           width: 32px;
@@ -396,12 +434,17 @@ pageEncoding="UTF-8"%>
           font-weight: 600;
           font-style: normal;
         }
+      .main-cart , .logout , .nologin , .CartLogo  {
+         display:none;
+      }
+        
       }
 
       @media (min-width: 575px) {
-        .side-menu {
+        .side-menu  {
           display: none;
         }
+        
       }
 
       /* footer */
@@ -433,15 +476,14 @@ pageEncoding="UTF-8"%>
       
       /*       img 추가(양예진) */
       .LevelImgNav{
-      	width: 40px;
-      	margin-top: 5px;
-      	display:none;
+         width: 40px;
+         margin-top: 5px;
       }
       
         .LevelImgNav1{
-      	width: 40px;
-    	display: block;
-    	margin-left: -6px;
+         width: 40px;
+       display: block;
+       margin-left: -6px;
       }
       
       .LevelImgNavSpan1 {
@@ -486,24 +528,24 @@ $(document).ready(function () {
 
 <!--              img 추가(양예진) -->
 
-$(document).ready(function(){
-	if($(window).width() > 575){
-		$(".LevelImgNav").css("display", "block");
-	}
-	
-	if($(window).width() <= 575){
-		$(".LevelImgNav").css("display", "none");
-	}
-	
-});
+// $(document).ready(function(){
+//    if($(window).width() > 575){
+//       $(".LevelImgNav").css("display", "block");
+//    }
+   
+//    if($(window).width() <= 575){
+//       $(".LevelImgNav").css("display", "none");
+//    }
+   
+// });
 
-$(window).resize(function() {
-	if ($(window).width() < 575) { 	
-		$(".LevelImgNav").css("display", "none");
-	} else {
-		$(".LevelImgNav").css("display", "block");
-	}
-});
+// $(window).resize(function() {
+//    if ($(window).width() < 575) {    
+//       $(".LevelImgNav").css("display", "none");
+//    } else {
+//       $(".LevelImgNav").css("display", "block");
+//    }
+// });
 
 
 </script>
@@ -518,106 +560,117 @@ $(window).resize(function() {
           <div class="logo_search">
             <div class="navbar_logo" onclick="location.href='main.ko';">
               <img
-                src="${pageContext.request.contextPath}/img/navbar/bichena.png"
-                style="width: 100px; margin: 15px 0"
+                src="${pageContext.request.contextPath}/img/imgProdlist/비채나 로고 검은색 배경투명 resize.png"
+                style="width: 83px; margin: 15px 0"
               />
             </div>
-			<form class="form-inline" action="prodList.ko" method="GET">
-			    <div class="search-container">
-			        <svg
-			            clip-rule="evenodd"
-			            fill-rule="evenodd"
-			            stroke-linejoin="round"
-			            stroke-miterlimit="2"
-			            viewBox="0 0 24 24"
-			            xmlns="http://www.w3.org/2000/svg"
-			        >
-			            <path
-			                d="m15.97 17.031c-1.479 1.238-3.384 1.985-5.461 1.985-4.697 0-8.509-3.812-8.509-8.508s3.812-8.508 8.509-8.508c4.695 0 8.508 3.812 8.508 8.508 0 2.078-.747 3.984-1.985 5.461l4.749 4.75c.146.146.219.338.219.531 0 .587-.537.75-.75.75-.192 0-.384-.073-.531-.22zm-5.461-13.53c-3.868 0-7.007 3.14-7.007 7.007s3.139 7.007 7.007 7.007c3.866 0 7.007-3.14 7.007-7.007s-3.141-7.007-7.007-7.007z"
-			                fill-rule="nonzero"
-			            />
-			        </svg>
-			        <input
-			            type="search"
-			            name="searchKeyword"
-			            aria-label="Search"
-			            placeholder="무엇을 찾고 계신가요?"
-			        />
-			    </div>
-			</form>
+         <form class="form-inline" action="prodList.ko" method="GET">
+             <div class="search-container">
+                 <svg
+                     clip-rule="evenodd"
+                     fill-rule="evenodd"
+                     stroke-linejoin="round"
+                     stroke-miterlimit="2"
+                     viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg"
+                 >
+                     <path
+                         d="m15.97 17.031c-1.479 1.238-3.384 1.985-5.461 1.985-4.697 0-8.509-3.812-8.509-8.508s3.812-8.508 8.509-8.508c4.695 0 8.508 3.812 8.508 8.508 0 2.078-.747 3.984-1.985 5.461l4.749 4.75c.146.146.219.338.219.531 0 .587-.537.75-.75.75-.192 0-.384-.073-.531-.22zm-5.461-13.53c-3.868 0-7.007 3.14-7.007 7.007s3.139 7.007 7.007 7.007c3.866 0 7.007-3.14 7.007-7.007s-3.141-7.007-7.007-7.007z"
+                         fill-rule="nonzero"
+                     />
+                 </svg>
+                 <input
+                     type="search"
+                     name="searchKeyword"
+                     aria-label="Search"
+                     placeholder="무엇을 찾고 계신가요?"
+                 />
+             </div>
+         </form>
           </div>
           <div class="login_signup">
             <c:choose>
               <c:when test="${userID eq null }">
+                 <div class="nologin">
                 <a class="login" href="loginPage.ko">로그인 / 회원가입 > </a>
-                <span class="CartLogo" onclick="location.href='myCartList.ko';" style="cursor : pointer">
-	                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
-		              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-		            </svg>
-		        </span>
+                </div>
+                <div class="cart-icon">
+                   <span class="CartLogo" onclick="location.href='myCartList.ko';" style="cursor : pointer">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                       <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                     </svg>
+                 </span>
+              </div>
               </c:when>
               <c:otherwise>
               
               <!--              img 추가(양예진) -->
-				<c:choose>
-					<c:when test="${uLev eq '실버'}">
-						<img class="LevelImgNav" src="img/login/S_Level.png" alt="실버 레벨 아이콘"/>
-					</c:when>
-					<c:when test="${uLev eq '골드'}">
-						<img class="LevelImgNav" src="img/login/G_Level.png" alt="골드 레벨 아이콘"/>
-					</c:when>
-					<c:when test="${uLev eq '다이아'}">
-						<img class="LevelImgNav" src="img/login/D_Level.png" alt="다이아 레벨 아이콘"/>
-					</c:when>
-				</c:choose>
-              
-                <a class="login" href="myPage.ko">${userID }님 </a>&nbsp;환영합니다.&nbsp;
-                
-				<c:choose>
-					<c:when test="${howLogin eq 3}">
-						<a id="howLogin" href="logout.ko">로그아웃</a>
-					</c:when>
-					<c:when test="${howLogin eq 2}">
-						<a id="howLogin" href="javascript:kakaoLogout()">로그아웃</a>
-					</c:when>
-					<c:when test="${howLogin eq 1}">
-						<a id="howLogin" href="javascript:naverLogout()">로그아웃</a>
-					</c:when>
-				</c:choose>
-
-                <span class="CartLogo" onclick="CartList()" style="cursor : pointer">
-	                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
-		              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-		            </svg>
-		            <span id="cartCount"></span>
-		            <c:if test="${userID ne null}">
-		            <script>
-		            (function (){
-		            	selectCount();
-		            })();
-		            
-		            function selectCount(){
-		            	var u_id = '${userID}';
-		            	$.ajax({
-		            		url : "cartSelectCount.ko",
-		            		type : "post",
-		            		contentType: "application/json",
-		            		data : JSON.stringify({u_id : u_id }),
-		            		success : function(data){
-		            			$("#cartCount").html(data);
-		            			console.log(data);
-		            		},
-		            		error : function(error) {
-		            			alert("에러발생");
-		            		}
-		            	});
-		            }
-		            function CartList() {
-		            	location.href="myCartList.ko";
-		            }
-		            </script>
-		            </c:if>
-                </span>
+              <div class="rank">
+            <c:choose>
+                  <c:when test="${uLev eq '실버'}">
+                     <img class="LevelImgNav" src="img/login/S_Level.png" alt="실버 레벨 아이콘"/>
+                  </c:when>
+                  <c:when test="${uLev eq '골드'}">
+                     <img class="LevelImgNav" src="img/login/G_Level.png" alt="골드 레벨 아이콘"/>
+                  </c:when>
+                  <c:when test="${uLev eq '다이아'}">
+                     <img class="LevelImgNav" src="img/login/D_Level.png" alt="다이아 레벨 아이콘"/>
+                  </c:when>
+               
+            </c:choose>
+            </div>
+                 
+                 <div class="nickname">
+                   <a class="login" href="myPage.ko">${userID }님 </a>&nbsp;환영합니다.&nbsp;
+                </div>
+                <div class="logout">
+            <c:choose>
+               <c:when test="${howLogin eq 3}">
+                  <a id="howLogin" href="logout.ko">로그아웃</a>
+               </c:when>
+               <c:when test="${howLogin eq 2}">
+                  <a id="howLogin" href="javascript:kakaoLogout()">로그아웃</a>
+               </c:when>
+               <c:when test="${howLogin eq 1}">
+                  <a id="howLogin" href="javascript:naverLogout()">로그아웃</a>
+               </c:when>
+            </c:choose>
+            </div>
+            <div class="main-cart">
+                   <span class="CartLogo" onclick="CartList()" style="cursor : pointer">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                       <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                     </svg>
+                     <span id="cartCount"></span>
+                     <c:if test="${userID ne null}">
+                     <script>
+                     (function (){
+                        selectCount();
+                     })();
+                     
+                     function selectCount(){
+                        var u_id = '${userID}';
+                        $.ajax({
+                           url : "cartSelectCount.ko",
+                           type : "post",
+                           contentType: "application/json",
+                           data : JSON.stringify({u_id : u_id }),
+                           success : function(data){
+                              $("#cartCount").html(data);
+                              console.log(data);
+                           },
+                           error : function(error) {
+                              alert("에러발생");
+                           }
+                        });
+                     }
+                     function CartList() {
+                        location.href="myCartList.ko";
+                     }
+                     </script>
+                     </c:if>
+                   </span>
+                </div>
               </c:otherwise>
             </c:choose>
             <button
@@ -642,7 +695,7 @@ $(window).resize(function() {
             </li>
             <li class="nav-item dropdown">
               <a
-                class="nav-link dropdown-toggle side-nav-link"
+                class="nav-link dropdown-toggle custom-navlink "
                 id="navbardrop"
                 data-toggle="dropdown"
                 >상품</a
@@ -653,27 +706,27 @@ $(window).resize(function() {
                     src="${pageContext.request.contextPath}/img/navbar/all_product.png"
                   />전체상품</a
                 >
-                <a class="dropdown-item custom-dropdown-item" href="#"
-                  ><img
-                    src="${pageContext.request.contextPath}/img/navbar/icon_takju.png"
-                  />탁주</a
-                >
-                <a class="dropdown-item custom-dropdown-item" href="#"
+                
+                <a class="dropdown-item custom-dropdown-item" href="prodList.ko?type=탁주">
+                <img src="${pageContext.request.contextPath}/img/navbar/icon_takju.png" />탁주
+                </a>
+                
+                <a class="dropdown-item custom-dropdown-item" href="prodList.ko?type=과실주"
                   ><img
                     src="${pageContext.request.contextPath}/img/navbar/icon_gwashilju.png"
                   />과실주</a
                 >
-                <a class="dropdown-item custom-dropdown-item" href="#"
+                <a class="dropdown-item custom-dropdown-item" href="prodList.ko?type=약·청주"
                   ><img
                     src="${pageContext.request.contextPath}/img/navbar/icon_cheongju.png"
                   />약·청주</a
                 >
-                <a class="dropdown-item custom-dropdown-item" href="#"
+                <a class="dropdown-item custom-dropdown-item" href="prodList.ko?type=증류주"
                   ><img
                     src="${pageContext.request.contextPath}/img/navbar/icon_jeungryuju.png"
                   />증류주</a
                 >
-                <a class="dropdown-item custom-dropdown-item" href="#"
+                <a class="dropdown-item custom-dropdown-item" href="prodList.ko?type=기타"
                   ><img
                     src="${pageContext.request.contextPath}/img/navbar/icon_merchandise_listing.png"
                   />기타</a
@@ -701,14 +754,26 @@ $(window).resize(function() {
                   href="getFaqList.ko"
                   >FAQ</a
                 >
-                <a class="dropdown-item custom-dropdown-item" href="#"
-                  >오시는길</a
-                >
               </div>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About Us</a>
+             <li class="nav-item dropdown custom-dropdown-item">
+              <a
+                class="nav-link dropdown-toggle custom-navlink"
+                id="navbardrop"
+                data-toggle="dropdown"
+                >About Us</a
+              >
+              <div class="dropdown-menu custom-dropdown-menu">
+                <a class="dropdown-item custom-dropdown-item" href="introduce.jsp">회사 소개</a>
+                <a class="dropdown-item custom-dropdown-item" href="map.jsp">오시는 길</a>
+              </div>
+              
+    
+
             </li>
+<!--             <li class="nav-item"> -->
+<!--               <a class="nav-link" href="#">About Us</a> -->
+<!--             </li> -->
           </ul>
         </div>
       </div>
@@ -732,22 +797,62 @@ $(window).resize(function() {
         <c:otherwise>
           <div class="profile">
             <div class="card side-card">
-              <div class="card-header side-card-header">
-              
+              <div class="card-header profile-header">
                <!--              img 추가(양예진) -->
-				<c:choose>
-					<c:when test="${uLev eq '실버'}">
-						<div class="LevelImgNavSpan1"><img class="LevelImgNav1" src="img/login/S_Level.png" alt="실버 레벨 아이콘"/>Silver</div>
-					</c:when>
-					<c:when test="${uLev eq '골드'}">
-						<div class="LevelImgNavSpan1"><img class="LevelImgNav1" src="img/login/G_Level.png" alt="골드 레벨 아이콘"/>Gold</div>
-					</c:when>
-					<c:when test="${uLev eq '다이아'}">
-						<div class="LevelImgNavSpan1"><img class="LevelImgNav1" src="img/login/D_Level.png" alt="다이아 레벨 아이콘"/>Diamond</div>
-					</c:when>
-				</c:choose>
-              
-                <a class="collapsed card-link" href="myPage.ko">${userID }님</a>
+               <div>
+               <c:choose>
+                  <c:when test="${uLev eq '실버'}">
+                     <div class="LevelImgNavSpan1"><img class="LevelImgNav1" src="img/login/S_Level.png" alt="실버 레벨 아이콘"/>
+                        <a class="collapsed card-link" href="myPage.ko">${userID }님</a>
+                     </div>
+                  </c:when>
+                  <c:when test="${uLev eq '골드'}">
+                     <div class="LevelImgNavSpan1"><img class="LevelImgNav1" src="img/login/G_Level.png" alt="골드 레벨 아이콘"/>
+                        <a class="collapsed card-link" href="myPage.ko">${userID }님</a>
+                     </div>
+                  </c:when>
+                  <c:when test="${uLev eq '다이아'}">
+                     <div class="LevelImgNavSpan1"><img class="LevelImgNav1" src="img/login/D_Level.png" alt="다이아 레벨 아이콘"/>
+                        <a class="collapsed card-link" href="myPage.ko">${userID }님</a>
+                     </div>
+                  </c:when>
+               </c:choose>
+                 </div> 
+                 <div>
+                  <span class="CartLogo" onclick="CartList()" style="cursor : pointer">
+                   <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                  </svg>
+                  <span id="side-cartCount"></span>
+                  <c:if test="${userID ne null}">
+                  <script>
+                  (function (){
+                     selectCount();
+                  })();
+                  
+                  function selectCount(){
+                     var u_id = '${userID}';
+                     $.ajax({
+                        url : "cartSelectCount.ko",
+                        type : "post",
+                        contentType: "application/json",
+                        data : JSON.stringify({u_id : u_id }),
+                        success : function(data){
+                           $("#side-cartCount").html(data);
+                           console.log(data);
+                        },
+                        error : function(error) {
+                           alert("에러발생");
+                        }
+                     });
+                  }
+                  function CartList() {
+                     location.href="myCartList.ko";
+                  }
+                  </script>
+                  </c:if>
+                </span>
+                 </div>
               </div>
             </div>
             <div class="mini-menu">
@@ -762,16 +867,16 @@ $(window).resize(function() {
                     height="100"
                   />
                   <c:choose>
-					<c:when test="${howLogin eq 3}">
-						<a id="howLogin" href="logout.ko">로그아웃</a>
-					</c:when>
-					<c:when test="${howLogin eq 2}">
-						<a id="howLogin" href="javascript:kakaoLogout()">로그아웃</a>
-					</c:when>
-					<c:when test="${howLogin eq 1}">
-						<a id="howLogin" href="javascript:naverLogout()">로그아웃</a>
-					</c:when>
-				  </c:choose>
+               <c:when test="${howLogin eq 3}">
+                  <a id="howLogin" href="logout.ko">로그아웃</a>
+               </c:when>
+               <c:when test="${howLogin eq 2}">
+                  <a id="howLogin" href="javascript:kakaoLogout()">로그아웃</a>
+               </c:when>
+               <c:when test="${howLogin eq 1}">
+                  <a id="howLogin" href="javascript:naverLogout()">로그아웃</a>
+               </c:when>
+              </c:choose>
                 </div>
               </div>
               <div class="quick-group">
@@ -846,7 +951,7 @@ $(window).resize(function() {
               id="collapseOne"
               class="collapse"
               data-parent="#accordion"
-              onclick=""
+              onclick="location.href='prodList.ko?type=탁주';"
             >
               <div class="card-body side-card-body">
                 <img
@@ -860,8 +965,7 @@ $(window).resize(function() {
               id="collapseOne"
               class="collapse"
               data-parent="#accordion"
-              onclick=""
-            >
+              onclick="location.href='prodList.ko?type=과실주';">
               <div class="card-body side-card-body">
                 <img
                   src="${pageContext.request.contextPath}/img/navbar/icon_gwashilju.png"
@@ -874,12 +978,10 @@ $(window).resize(function() {
               id="collapseOne"
               class="collapse"
               data-parent="#accordion"
-              onclick=""
+              onclick="location.href='prodList.ko?type=약·청주';"
             >
               <div class="card-body side-card-body">
-                <img
-                  src="${pageContext.request.contextPath}/img/navbar/icon_cheongju.png"
-                />
+                <img src="${pageContext.request.contextPath}/img/navbar/icon_cheongju.png"/>
                 약·청주
               </div>
             </div>
@@ -888,7 +990,7 @@ $(window).resize(function() {
               id="collapseOne"
               class="collapse"
               data-parent="#accordion"
-              onclick=""
+              onclick="location.href='prodList.ko?type=증류주';"
             >
               <div class="card-body side-card-body">
                 <img
@@ -902,7 +1004,7 @@ $(window).resize(function() {
               id="collapseOne"
               class="collapse"
               data-parent="#accordion"
-              onclick=""
+              onclick="location.href='prodList.ko?type=기타';"
             >
               <div class="card-body side-card-body">
                 <img
@@ -915,14 +1017,11 @@ $(window).resize(function() {
 
           <div class="card side-card">
             <div class="card-header side-card-header">
-              <a
-                class="collapsed card-link"
-                data-toggle="collapse"
-                href="#collapseTwo"
-              >
+              <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
                 고객 센터
               </a>
             </div>
+            
             <div
               id="collapseTwo"
               class="collapse"
@@ -931,6 +1030,7 @@ $(window).resize(function() {
             >
               <div class="card-body side-card-body">공지사항</div>
             </div>
+            
             <div
               id="collapseTwo"
               class="collapse"
@@ -939,6 +1039,7 @@ $(window).resize(function() {
             >
               <div class="card-body side-card-body">Q&A</div>
             </div>
+            
             <div
               id="collapseTwo"
               class="collapse"
@@ -947,16 +1048,39 @@ $(window).resize(function() {
             >
               <div class="card-body side-card-body">FAQ</div>
             </div>
+            
           </div>
+          
+          <div class="card side-card">
+            <div class="card-header side-card-header">
+              <a
+                class="collapsed card-link"
+                data-toggle="collapse"
+                href="#collapseThree"
+              >
+                About Us
+              </a>
+            </div>
+            <div
+              id="collapseThree"
+              class="collapse"
+              data-parent="#accordion"
+              onclick="location.href='introduce.jsp';">
+              <div class="card-body side-card-body">회사 소개</div>
+            </div>
+            <div
+              id="collapseThree"
+              class="collapse"
+              data-parent="#accordion"
+              onclick="location.href='map.jsp';"
+            >
+              <div class="card-body side-card-body">오시는 길</div>
+            </div>
+          </div>
+          
+          
+         </div>
       </ul>
-
-      <div class="card side-card">
-        <div class="card-header side-card-header">
-          <a class="collapsed card-link" data-toggle="collapse" href="">
-            About Us
-          </a>
-        </div>
-      </div>
     </div>
 
     <!-- 기타 메뉴 항목 추가 -->

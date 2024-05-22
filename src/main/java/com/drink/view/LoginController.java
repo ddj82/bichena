@@ -110,7 +110,6 @@ public class LoginController {
 	@RequestMapping("/login.ko")
 	@ResponseBody
 	public String login(UsersVO vo, Model model, HttpServletResponse response,
-			@RequestParam(value = "rememberPW", defaultValue = "", required = false) String rememberPW,
 			@RequestParam(value = "remember", defaultValue = "", required = false) String remember) {
 
 		String pw = vo.getU_pw();
@@ -133,18 +132,6 @@ public class LoginController {
 					noCookie.setMaxAge(0);
 					response.addCookie(noCookie);
 					System.out.println("id 쿠키 삭제완료");
-				}
-
-				if (rememberPW != null && !(rememberPW.equals(""))) {
-					Cookie pcookie = new Cookie("rememberPW", pw);
-					pcookie.setMaxAge(60 * 60);
-					response.addCookie(pcookie);
-					System.out.println("pw 쿠키 생성완료");
-				} else {
-					Cookie noPwCookie = new Cookie("rememberPW", "");
-					noPwCookie.setMaxAge(0);
-					response.addCookie(noPwCookie);
-					System.out.println("pw 쿠키 삭제완료");
 				}
 				return "main.ko";
 			} else {
@@ -188,6 +175,7 @@ public class LoginController {
 	public String loginErr2() {
 		return "redirect:main.ko?err=1";
 	}
+
 	@RequestMapping("/loginErr3.ko")
 	public String loginErr3() {
 		return "redirect:adminLoginPage.ko?err=3";

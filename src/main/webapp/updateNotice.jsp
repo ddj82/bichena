@@ -18,8 +18,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <!-- 20240503_ym 스타일추가 시작 -->
 <style type="text/css">
-/* 	body { margin: 10px; } */
-	div.se2_input_area.husky_seditor_editing_area_container {width:100vw !important; height: 600px !important;}
+	body { margin: 10px; }
+	div.se2_input_area.husky_seditor_editing_area_container {width:100% !important; height: 600px !important;}
 	div#se2_iframe {width:100vw !important;height: 100% !important;}
 	#smart_editor2 {width: 100% !important;}
 	.container {width: 80%; margin: 0 auto;}
@@ -31,29 +31,29 @@
 <div class="container">
 <!-- 20240503_ym 영미 수정 시작 -->
 <div id="se2_sample" style="margin:10px 0;">
-<!-- 	<input type="button" onclick="pasteHTML();" value="본문에 내용 넣기" /> -->
-<!-- 	<input type="button" onclick="showHTML();" value="본문 내용 가져오기" /> -->
-<!-- 	<input type="button" onclick="setDefaultFont();" value="기본 폰트 지정하기 (궁서_24)" /><br><br> -->
-
+	<div class="title">
+			<h3>공지사항</h3>
+	</div>
 
 <!--20240503_ym  에디터에서 수정하면 데이터가 직접 들어오는 장소 시작-->
-	<form action="updateNotice.ko" method="post" id="dataTransferForm" enctype="multipart/form-data">
-		<input type="hidden" name="not_no" value="${notice.not_no}">
-			<div style="padding-left: 10px;">
-				<input type="text" name="not_title" required value="${notice.not_title}" style="width: 80%; height: 30px; margin: 0 auto; display: inline-block; padding-left: 10;">
-				<input type="button" onclick="submitContents();" value="수정하기" style="float: right; margin: 0 10px;">
-				<button id="conList" type="button" style="float: right;">글목록</button>
-			</div>
-			<div>
-      <textarea name="not_content" id="ir1" rows="10" cols="100" style="width:766px; height:412px; display:none;">${notice.not_content}</textarea>      
-			</div>
-			<div>
-				<input type="file" id="upImg0" name="upImg"
-					onchange="imgPreView(this);" style="display: none;">
-			</div>
-		</form>
+	<div class="insert_container">
+		<form action="updateNotice.ko" method="post" id="dataTransferForm" enctype="multipart/form-data">
+			<input type="hidden" name="not_no" value="${notice.not_no}">
+			<table class="insert_table">
+				<tr>
+					<td class="insert_title">제목</td>
+					<td>
+						<input type="text" name="not_title" required value="${notice.not_title}">
+					</td>
+				</tr>
+				<tr>
+				<td class="insert_title">내용</td>
+					<td>
+						<textarea name="not_content" id="ir1">${notice.not_content}</textarea>
+					</td>  		
+				</tr>  		
+			</table>
 <!--20240503_ym  에디터에서 수정하면 데이터가 직접 들어오는 장소 종료-->
-</div>
 <div id="imgSetDiv"></div>
 <!-- 20240503_ym 영미 수정 종료 -->
 
@@ -825,7 +825,14 @@
 	</div>
 </div>
 <!-- SE2 Markup End -->
+			<div class="buttons">
+				<button type="button" class="btn btn-primary btn-sm" onclick="submitContents();">수정하기</button>
+				<button type="button" class="btn btn-primary btn-sm" id="conList">글목록</button>
+			</div>
+		</form> 
 </div>
+
+	</div></div>
 <script>
 /*20240503_ym 이미지 파일 업로드 하는 창 열기 시작*/
 var len = 0, prelen = 0, cnt = 0;

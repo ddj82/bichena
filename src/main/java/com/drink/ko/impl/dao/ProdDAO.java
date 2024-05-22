@@ -60,5 +60,10 @@ public class ProdDAO {
 	public List<ProdVO> mainPageSlideListChunju(ProdVO vo) {
 		return mybatis.selectList("ProdDAO.mainPageSlideListChunju", vo);
 	}
+	
+	public int stockUpdate(ProdVO vo) {
+		return mybatis.update("ProdDAO.stockUpdate", vo);
+		
+	}
 
 }

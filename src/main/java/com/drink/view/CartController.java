@@ -59,24 +59,50 @@ public class CartController {
 		return "prodOne.ko?p_no=" + vo.getP_no();
 	}
 
+	// ======================== 수정부분 ==========================
+	// 장바구니 중복값 추가
 	@RequestMapping(value = "/selectcount.ko", produces = "application/json")
 	@ResponseBody
-	public Map<String, Object> selectCount(@RequestBody Map<String, Integer> requestData) {
-		int productno = requestData.get("p_no"); // JSON에서 productno 추출
+	public Map<String, Object> selectCount(@RequestBody Map<String, String> requestData) {
+		String productno = requestData.get("p_no");
+		String userid = requestData.get("u_id");
 		System.out.println("장바구니 컨트롤러 진입");
-		System.out.println("상품번호 값 확인 : " + productno);
-		CartVO cartDetails = cartService.selectCart(productno); // 수정된 서비스 호출
+		System.out.println("컨트롤러 상품번호 값 확인 : " + productno);
+		System.out.println("컨트롤러 u_id 값 확인 : " + userid);
+		Map<String, String> params = new HashMap<>();
+		params.put("u_id", userid);
+		params.put("p_no", productno);
+		CartVO cartDetails = cartService.selectCart(params);
 
 		Map<String, Object> response = new HashMap<>();
-		if (cartDetails != null && cartDetails.getC_stock() > 0) {
+		if (cartDetails != null && cartDetails.getU_id() != null && userid.equals(cartDetails.getU_id())) {
 			System.out.println("이미 존재하는 상품 !");
 			response.put("code", "no");
-			response.put("c_stock", cartDetails.getC_stock()); // 현재 수량 추가
-			response.put("c_total", cartDetails.getC_total()); // 현재 총 가격 추가
+			response.put("c_stock", cartDetails.getC_stock());
+			response.put("c_total", cartDetails.getC_total());
 		} else {
 			response.put("code", "ok");
 		}
+
 		return response;
+	}
+
+	// ======================== 수정부분 ==========================
+	// 장바구니 삭제
+	@PostMapping("/cartdelete.ko")
+	public String deleteCart(@RequestBody Map<String, Object> requestData) {
+		List<String> productNos = (List<String>) requestData.get("p_no");
+		String u_id = (String) requestData.get("u_id");
+		System.out.println("삭제 컨트롤러 진입: userID = " + u_id);
+
+		for (String productNo : productNos) {
+			System.out.println("상품번호값: " + productNo);
+			CartVO vo = new CartVO();
+			vo.setP_no(Integer.parseInt(productNo.trim()));
+			vo.setU_id(u_id);
+			cartService.deleteCart(vo);
+		}
+		return "redirect:/myCartList.ko";
 	}
 
 	// 장바구니 변경
@@ -89,19 +115,6 @@ public class CartController {
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body("오류 발생");
 		}
-	}
-
-	// 장바구니 삭제
-	@PostMapping("/cartdelete.ko")
-	public String deleteCart(@RequestBody List<Integer> productNos) {
-		System.out.println("삭제 컨트롤러 진입");
-		for (int productno : productNos) {
-			System.out.println("상품번호값: " + productno);
-			CartVO vo = new CartVO();
-			vo.setP_no(productno);
-			cartService.deleteCart(vo);
-		}
-		return "redirect:myCartList.ko";
 	}
 
 	// 상품재고 확인
@@ -141,7 +154,6 @@ public class CartController {
 	// 장바구니에서 주문
 	@RequestMapping("/order.ko")
 	@ResponseBody
-//		public int order(@RequestBody List<Integer> productNos, HttpServletRequest request, Model model) {
 	public Map<String, Object> order(@RequestBody List<Integer> productNos, HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
 		int price = 0;
@@ -176,7 +188,6 @@ public class CartController {
 
 			}
 		}
-//			p_name = p_name.split(",");
 		Map<String, Object> map = new HashMap<>();
 		map.put("user", users);
 		map.put("p_name", p_name);

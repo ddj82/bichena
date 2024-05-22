@@ -16,6 +16,7 @@ public class ProdVO {
 	private String p_mat;
 	private String p_cap;
 	private int p_stock;
+	private int p_maxstock;
 	private String p_img; // pthumbnail
 	private String editfile; // pfilename // 에디터로 생성된 jsp파일이름
 	private String edithtml; // pdetail // 에디터로 쓴 내용의 html형식 문자열
@@ -193,13 +194,13 @@ public class ProdVO {
 	public void setO_stock(String o_stock) {
 		this.o_stock = o_stock;
 	}
-	
-	public int getRnum() {
-		return rnum;
+
+	public int getP_maxstock() {
+		return p_maxstock;
 	}
 
-	public void setRnum(int rnum) {
-		this.rnum = rnum;
+	public void setP_maxstock(int p_maxstock) {
+		this.p_maxstock = p_maxstock;
 	}
 
 	@Override
@@ -207,7 +208,15 @@ public class ProdVO {
 		return "ProdVO [p_no=" + p_no + ", p_name=" + p_name + ", p_price=" + p_price + ", p_img=" + p_img
 				+ ", editfile=" + editfile + ", p_desc=" + p_desc + ", p_made=" + p_made + ", p_type=" + p_type
 				+ ", p_dgr=" + p_dgr + ", p_sw=" + p_sw + ", p_su=" + p_su + ", p_sp=" + p_sp + ", p_mat=" + p_mat
-				+ ", p_cap=" + p_cap + ", p_stock=" + p_stock + ", uploadFile=" + uploadFile + "]";
+				+ ", p_cap=" + p_cap + ", p_maxstock=" + p_maxstock + ", p_stock=" + p_stock + ", uploadFile=" + uploadFile + "]";
+	}
+	
+	public int getRnum() {
+		return rnum;
+	}
+	
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
 	}
 
 

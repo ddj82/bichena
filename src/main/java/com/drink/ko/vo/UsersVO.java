@@ -40,6 +40,15 @@ public class UsersVO {
 
 	private boolean prev; // 이전 페이지 여부
 	private boolean next; // 다음 페이지 여부
+	
+
+	@Override
+	public String toString() {
+		return "유저페이징 [searchVoca=" + searchVoca + ", searchWord=" + searchWord + ", currPageNo=" + currPageNo
+				+ ", sizePerPage=" + sizePerPage + ", totalCnt=" + totalCnt + ", pageCnt=" + pageCnt + ", startList="
+				+ startList + ", range=" + range + ", pageSize=" + pageSize + ", startPage=" + startPage + ", endPage="
+				+ endPage + "]";
+	}
 
 	public int getU_no() {
 		return u_no;
@@ -309,12 +318,5 @@ public class UsersVO {
 		this.selectedStateValue = selectedStateValue;
 	}
 
-	@Override
-	public String toString() {
-		return "UsersVO [u_no=" + u_no + ", u_id=" + u_id + ", u_pw=" + u_pw + ", u_name=" + u_name + ", u_nick="
-				+ u_nick + ", u_gen=" + u_gen + ", u_birth=" + u_birth + ", u_tel=" + u_tel + ", u_email=" + u_email
-				+ ", addr1=" + addr1 + ", addr2=" + addr2 + ", addr3=" + addr3 + ", u_lev=" + u_lev + ", u_state="
-				+ u_state + ", n_pw=" + n_pw + "]";
-	}
 
 }

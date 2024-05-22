@@ -10,99 +10,107 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <style>
 body {
-    margin: 0;
-    padding: 0;
+margin: 0;
+padding: 0;
 }
 .container#container-Info {
-	display: flex;
-	justify-content: center;
-	width: 1040px;
-	margin: 50px auto;
-	padding: 50px 20px;
-	border: 1px solid #e0e0e0;
-	border-radius: 10px;
-	}
+display: flex;
+justify-content: center;
+width: 1040px;
+margin: 50px auto;
+padding: 50px 20px;
+border: 1px solid #e0e0e0;
+border-radius: 10px;
+}
 
 .info-box#info-box {
-	width: 800px;
- 	display: inline;  
-	}
+width: 800px;
+display: inline;  
+}
 	
 .infoContent{
-	margin: 30px 0;
+margin: 20px 10px;
 }
         
 .box-top{
-	border-bottom: 2px solid #e0e0e0;
-	vertical-align: middle;
-	padding: 10px 5px;
-	}
+border-bottom: 2px solid black;
+vertical-align: middle;
+padding: 5px 5px;
+}
+
+.box-top span{
+font-weight:600;
+font-size:20px;
+}
+
+.box-top h2{
+font-size: 24px;
+font-weight:bold;
+}
 
 .uMyPage button[type=button], button[type=submit] {
-	float: right;
-    padding: 5px 10px;
-    background-color: #005930;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-	}
+float: right;
+padding: 5px 10px;
+background-color: #005930;
+border: none;
+border-radius: 8px;
+color: white;
+font-weight: bold;
+font-size: 14px;
+}
 	
 .uMyPage button[type=button]#delBtn{
-    background-color: transparent;
-    border: none;
-	color: black;
-	font-weight: normal;
-	margin-top: 20px;
-	float: left;
-	text-decoration: none;
-	
+background-color: transparent;
+border: none;
+color: black;
+font-weight: normal;
+margin-top: 5px;
+float: left;
+text-decoration: none;
 }
 
 .uMyPage button[type=submit]:hover, button[type=button]:hover  {
-	background-color: #e6e5d58c;
-	color:  #4a4a4a;
-	font-weight: bold;
-	}
+background-color: #2d4739;
+color:  #fff;
+font-weight: bold;
+}
 	
 .uMyPage button#delBtn:hover{
-	color: #4a4a4a;
-	font-weight: bold;
-	}
+color: #4a4a4a;
+font-weight: bold;
+}
 	
 .item_box{
-    display: flex;
-    justify-content: space-between;	
-    margin: 10px 20px;
-	padding: 10px;
-	font-size: 18px;
-	align-items: center;
-	color: #4a4a4a;
-	}
+display: flex;
+justify-content: space-between;	
+margin: 15px 20px;
+padding: 10px;
+font-size: 17px;
+align-items: center;
+}
 
 .item_name {
-	color: #4a4a4a;
-	display: inline-block;
-    vertical-align: middle;
-    font-weight: bold;
-	}
+color: #4a4a4a;
+display: inline-block;
+vertical-align: middle;
+font-weight: bold;
+}
 
 .form_item {
-    display: inline-block;
-    vertical-align: middle;
-    font-weight: bold;
-    font-size:
+display: inline-block;
+vertical-align: middle;
+font-weight: bold;
 }
 
 .infoDel {
-	border-top: 2px solid #e0e0e0;
+border-top: 2px solid black;
 }
+
 
 /* extra small */
 @media screen and (max-width:540px) {
     .container#container-Info {
-    	width: 100%;
+    	width: 80%;
         margin: 20px auto;
         padding: 20px;
     }
@@ -110,23 +118,44 @@ body {
         width: 100%;
     }
     .item_box {
-        flex-direction: column;
         align-items: center;
-        font-size: 16px;
+        font-size: 14px;
+        margin: 15px -25px;
     }
+    
+    .infoContent {
+	    margin: 20px 10px;
+	}
+	    
+    .box-top h2 {
+    	font-size: 20px;
+    	font-weight: bold;
+	}
+
+	.box-top span {
+	    font-weight: 600;
+	    font-size: 14px;
+	}
     
     .item_name, .form_item {
         width: 100%;
         text-align: center;
     }
-    .uMyPage button[type=button], button[type=submit] {
-        width: 100%;
-        margin-top: 10px;
+    
+    .uMyPage button[type=button]{
+        width: 80%;
+        font-size: 12px;
         float: none;
     }
+    
+    .uMyPage button[type=submit] {
+        font-size: 12px;
+    }
+    
     .uMyPage button[type=button]#delBtn {
      	width: 100%;
         text-align: left;
+        margin-top: 5px;
     }
 }
 
@@ -142,15 +171,34 @@ body {
     }
     .item_box {
         align-items: flex-start;
-        font-size: 16px;
+        font-size: 15px;
     }
+    
     .uMyPage button[type=button], button[type=submit] {
-        width: auto;
-        margin-top: 10px;
-    }
+	    padding: 5px 20px;
+	    font-weight: bold;
+	    font-size: 12px;
+	}
+
     .uMyPage button[type=button]#delBtn {
         float: none;
+        margin-top: 5px;
     }
+    
+    .box-top h2 {
+    	font-size: 22px;
+    	font-weight: bold;
+	}
+
+	.box-top span {
+	    font-weight: 600;
+	    font-size: 14px;
+	}
+	
+	.form_item{
+		font-size: 14px;
+	}
+
 }
 
 /* medium */
@@ -164,39 +212,53 @@ body {
         width: 100%;
     }
     .item_box {
-        align-items: flex-start;
-        font-size: 17px;
+        align-items: center;
+        font-size: 15px;
     }
     .uMyPage button[type=button], button[type=submit] {
         width: auto;
-        margin-top: 10px;
+        font-size: 14px;
     }
     .uMyPage button[type=button]#delBtn {
         float: none;
+        margin-top: 5px;
+        font-size: 12px;
     }
-}
+    
+    .box-top h2 {
+		font-size: 22px;
+		font-weight: bold;
+	}
+    
+    .box-top span {
+	    font-weight: 600;
+	    font-size: 17px;
+	}
 
 /* large */
 @media screen and (min-width:961px) and (max-width:1140px) {
     .container#container-Info {
         width: 100%;
         margin: 50px auto;
-        padding: 50px 20px;
+        padding: 60px 100px;
     }
+    
     .info-box#info-box {
         width: 100%;
     }
+    
     .item_box {
         flex-direction: row;
         align-items: center;
-        font-size: 18px;
+        font-size: 17px;
     }
+    
     .uMyPage button[type=button], button[type=submit] {
         width: auto;
-        margin-top: 0;
     }
     .uMyPage button[type=button]#delBtn {
         float: left;
+        margin-top: 5px;
     }
 }
 </style>
@@ -212,8 +274,8 @@ function goDelAcc(){
 </head>
 
 <body>
-<jsp:include page="../../common/navbar.jsp" />
-<jsp:include page="/WEB-INF/user/myPageHeader.jsp" />
+<%@ include file="../../common/navbar.jsp" %>
+<%@ include file="../user/myPageHeader.jsp" %>
 
 <div class="container" id="container-Info">
     <div class="info-box" id="info-box">
@@ -221,7 +283,7 @@ function goDelAcc(){
             <div class="infoFormbox" id="infoFormbox">
                 <div class="box-top">
                     <button type="submit">수정</button>
-                    <h3 style="font-weight: bold;">${users.u_nick}님 회원정보</h3>
+                    <h2>${users.u_nick} <span>님 회원 정보</span></h2>
                 </div>
                 <div class="infoContent">
                 	<div class="item_box">
@@ -252,7 +314,7 @@ function goDelAcc(){
         </form>
 	</div>
 </div>
-    <%-- <jsp:include page="/WEB-INF/common/footer.jsp"/> --%>
+<%@ include file="../../common/footer.jsp" %>
 </body>
 
 </html>

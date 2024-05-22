@@ -12,10 +12,17 @@ location.href="main.ko";
 <head>
 <meta charset="UTF-8">
 <title>주류추가</title>
+<style>
+div.djmain {
+	width: 1140px;
+	margin: 0 auto;
+}
+
+</style>
 </head>
 <body>
 <%@ include file="/WEB-INF/admin/adminMain.jsp" %>
-<div class="container">
+<div class="djmain">
 <%@ include file="/prodUpdateEditer.jsp" %>
 </div>
 </body>

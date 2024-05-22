@@ -19,4 +19,6 @@ public interface ProdService {
 	List<ProdVO> mainPageSlideListGwasilju(ProdVO vo);
 	List<ProdVO> mainPageSlideListChunju(ProdVO vo);
 	List<ProdVO> mainPageSlideListJeungryuju(ProdVO vo);
+	
+	int stockUpdate(ProdVO vo);
 }

@@ -110,8 +110,7 @@ a.a_class:visited {
 		padding-bottom: 5px;
 		text-decoration-line: none;
 		color: black;
-		border-right: 1px solid rgb(224, 224, 224);
-		padding-right: 15px;
+		display: flex;
 	}
 	a.app_class:visited {
 		color: black;
@@ -136,6 +135,7 @@ a.a_class:visited {
 		height: 50px;
 		align-items: center;
         font-weight: bold;
+		font-size: 14px;
 	}
 	div.list {
 		flex-wrap: wrap;
@@ -145,8 +145,7 @@ a.a_class:visited {
 		padding-bottom: 5px;
 		text-decoration-line: none;
 		color: black;
-		border-right: 1px solid rgb(224, 224, 224);
-		padding-right: 35px;
+		display: flex;
 	}
 	a.app_class:visited {
 		color: black;
@@ -171,6 +170,7 @@ a.a_class:visited {
 		height: 50px;
 		align-items: center;
         font-weight: bold;
+		font-size: 14px;
 	}
 	div.list {
 		flex-wrap: wrap;
@@ -180,8 +180,7 @@ a.a_class:visited {
 		padding-bottom: 5px;
 		text-decoration-line: none;
 		color: black;
-		border-right: 1px solid rgb(224, 224, 224);
-		padding-right: 35px;
+		display: flex;
 	}
 	a.app_class:visited {
 		color: black;
@@ -197,7 +196,7 @@ a.a_class:visited {
 </style>
 <body>
 	<div id='boxFlex' class="all">
-			<!--              img 추가(양예진) -->
+			<!-- img 추가(양예진) -->
             <c:choose>
 	            <c:when test="${uLev eq '실버'}">
 	            	<img class="LevelImgNavMypage" src="img/login/S_Level.png" alt="실버 레벨 아이콘"/>
@@ -240,16 +239,20 @@ a.a_class:visited {
 	</div>
 	<div id="appFlex" class="appli">
 		<div id='drop' class="all-app">
-			<a href='myPage.ko' class="app_class" style="padding-left:15px;">
+			<a href='myPage.ko' class="app_class">
+				<div class="img-div"><img class="borrowImg c" id="app-order" src='img/imgUser/order.png' style="width:25px;"></div>
 				<div id="dropP1" class="list">주문 내역</div> 
 			</a>
 			<a href='orderCancleList.ko' class="app_class">
+				<div class="img-div"><img class="borrowImg c" id="app-recall" src='img/imgUser/recall.png' style="width:25px;"></div>
 				<div id="dropP2" class="list">취소/환불내역</div> 
 			</a>
 			<a href='myRevList.ko' class="app_class">
+				<div class="img-div"><img class="borrowImg c" id="app-review" src='img/imgUser/review.png' style="width:25px;"></div>
 				<div id="dropP3" class="list">리뷰</div> 
 			</a>
-			<a href='confirm.ko' class="app_class" style="border-right:0px;">
+			<a href='confirm.ko' class="app_class">
+				<div class="img-div"><img class="borrowImg c" id="app-card" src='img/imgUser/card.png' style="width:25px;"></div>
 				<div id="dropP4" class="list">회원정보</div> 
 			</a>
 		</div>

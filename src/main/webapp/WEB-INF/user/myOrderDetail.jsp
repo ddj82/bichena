@@ -34,20 +34,21 @@
 }
 .text-content {
 	display: flex;
+	align-items: center;
 }
 .text-content div {
-	width: 140px;
+	width: 130px;
 }
 .dtlist {
 	display: flex;
 	border-bottom: 1px solid rgb(238, 238, 238);
 	padding-top: 5px;
 	padding-bottom: 5px;
-	justify-content: end;
 	font-weight: bold;
+	padding-left: 175px;
 }
 .dtlist div {
-	margin-right: 100px;
+	margin-right: 90px;
 }
 .prod-img {
 	cursor: pointer;
@@ -105,14 +106,13 @@
 .wrap {
 	width: 100%;
 }
-.img-size {
-	margin-left: 50px;
-}
+
 .app-info {
 	display: none;
 }
 .btn-div {
-	margin: 0 36.15%;
+	display: flex;
+    justify-content: space-around;
 }
 .submit {
 	margin-bottom: 40px;
@@ -137,9 +137,6 @@
 	}
 	.img-size {
 		margin-left: 0px;
-	}
-	.text-content {
-		display: block;
 	}
 	.info {
 		display: block;
@@ -177,9 +174,6 @@
 	.img-size {
 		margin-left: 0px;
 	}
-	.text-content {
-		display: block;
-	}
 	.info {
 		display: block;
 	}
@@ -215,9 +209,6 @@
 	}
 	.img-size {
 		margin-left: 0px;
-	}
-	.text-content {
-		display: block;
 	}
 	.info {
 		display: block;
@@ -264,6 +255,15 @@
 	.addr-info {
 		width: 200px;
 	}
+	.dtlist {
+		padding-left: 130px;
+	}
+	.dtlist div {
+		margin-right: 75px;
+	}
+	.text-content {
+		width: 85%;
+	}
 }
 </style>
 <body>
@@ -278,7 +278,6 @@
 			<div>개별가격</div>
 			<div>구매수량</div>
 			<div>총 금액</div>
-<!-- 			<div>리뷰</div> -->
 		</div>
 		<c:forEach items="${myOrderDetail }" var="detail">
 			<div class="detail-content">
@@ -287,18 +286,32 @@
 				</div>
 				<div class="text-content">
 					<div style="margin-right:8px;">${detail.p_name }</div>
-					<div style="margin-right:25px;">${detail.p_desc }</div>
-					<div style="margin-right:24px;">${detail.p_price }원</div>
-					<div style="margin-right:35px;">수량 ${detail.o_stock }개</div>				
-					<div>${detail.str_total }원</div>
-						<c:if test="${detail.o_state eq '배송완료' }">
-							<c:if test="${detail.o_revstate eq '0' }">
-								<div>
-									<button type='button' class='btn btn-outline-primary btn-sm' data-toggle='modal' data-target='#myModal' 
+					<div style="margin-right:40px;">${detail.p_desc }</div>
+					<div style="margin-right:20px;">${detail.p_price }원</div>
+					<div style="margin-right:25px;">수량 ${detail.o_stock }개</div>				
+					<div style="margin-right:10px;">${detail.str_total }원</div>
+					<c:choose>
+					<c:when test="${detail.o_state eq '배송완료' }">
+						<c:choose>
+							<c:when test="${detail.o_revstate eq '0' }">
+								<div style="width: 100px;">
+									<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#myModal' 
 									data-pno="${detail.p_no }" data-ono="${detail.o_no }">리뷰작성</button>
 								</div>
-							</c:if>
-						</c:if>
+							</c:when>
+							<c:otherwise>
+								<div style="width: 100px;">
+									<button type="button" class='btn btn-outline-primary btn-sm' onclick="location.href='myRevList.ko';">리뷰목록</button>
+								</div>
+							</c:otherwise>
+						</c:choose>
+					</c:when>
+					<c:otherwise>
+						<div style="width: 100px;">
+							<button type="button" class='btn btn-outline-primary btn-sm' onclick="location.href='prodOne.ko?p_no=${detail.p_no}';">상품보기</button>
+						</div>
+					</c:otherwise>
+					</c:choose>
 				</div>
 				<div class="app-info">
 					<div class="application">${detail.p_name }</div>

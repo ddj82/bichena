@@ -7,13 +7,20 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <title>상세보기</title>
 <style>
-.notice_container {
+div.container{
+	width: 80%;
+	margin: 0 auto;
+}
+.container_header {
+	height: 50px;
+	
+}
+.content_container {
 	width: 876px;
 	margin: 0 auto;
-	float: left;
 }
 
-.not_title_wrapper {
+.content_title_wrapper {
 	width: 100%;
 	line-height: 1.3;
 	border-top: 1px solid #7e7e7e;
@@ -22,15 +29,11 @@
 	background-color: #f9f9f9;
 	word-break: break-all;
 	font-weight: bold;
-	padding: 25px 0;
+	padding: 25px 20px;
 	margin-top: 0 !important;
 }
 
-.not_title {
-	margin: 0 25px;
-}
-
-.not_date_wrapper {
+.content_date_wrapper {
 	width: 100%;
 	height: 55px;
 	line-height: 55px;
@@ -39,18 +42,14 @@
 	text-align: right;
 }
 
-.not_date {
+.content_date {
 	padding-right: 25px;
 }
 
-.not_content_wrapper {
+.content_content_wrapper {
 	margin: 25px;
-	width: 80%;
-	margin: 0 auto;
-}
-
-.not_content {
-	
+    width: 100%;
+    margin: 30px auto;
 }
 
 .back_btn {
@@ -70,25 +69,24 @@
 }
 
 .back_btn:hover {
-	background-color: #0056b3;
+	background-color: #d9ccbb;
 	color: #ffffff;
 }
 /* 이전 다음글 */
 .pn {
 	text-align: center;
+	padding: 15px 0;
 }
 
-.preNext {
+table.preNext {
 	width: 100%;
 	margin: 100px auto;
 	border-collapse: collapse;
 }
 
 td {
-	padding: 10px 0;
 	border-top: 1px solid #777;
 	border-bottom: 1px solid #777;
-	border-col
 }
 
 .preNextTitle {
@@ -115,42 +113,88 @@ td {
 .preNext_link:hover {
 	cursor: pointer;
 }
+
+div.content_content img {
+	max-width: 100%!important;
+}
+
+/* 반응형 할때 */
+@media screen and (max-width: 1140px) {
+	div.content_content img {
+		max-width: 100%;
+	} 
+	.content_container {
+		width: 800px;
+	}
+}
+@media screen and (max-width: 960px) {
+	div.container {
+	    width: 100%;
+	    margin: 0 auto;
+	}
+	.content_container {
+		width: 680px;
+	}
+}
+@media screen and (max-width: 720px) {
+	.content_container {
+		width: 500px;
+	}
+	.content_title_wrapper {
+		font-size: large;
+	}
+	.preNext_link {
+		display: none;
+	}
+	.preNextDate {
+		display: none;
+	}
+	.preNextTitle {
+		width: 90%;
+	}
+	h2 {
+		font-size: x-large!important;
+
+	}
+	
+}
+@media screen and (max-width: 540px) {
+	.content_container {
+		width: 95%;
+	}
+	.btn_top {
+		display: none;
+	}
+}
 </style>
 </head>
 <body>
 <%@ include file="../../common/navbar.jsp" %>
-<div class="container" style="width: 80%; margin: 0 auto;">
-	<div class="notice_container">
-		<div>
-			<h1>
+<div class="container">
+	<div class="content_container">
+		<div class="container_header">
+			<h2>
 				공지 사항
 				<button id="conList" class="back_btn" type="button">목록</button>
-				<button class="back_btn conMod" type="button">수정</button>
-				<button class="back_btn conDel" type="button">삭제</button>
-			</h1>
+			</h2>
 		</div>
 
-		<div class="not_title_wrapper">
-			<span class="not_title">${notice.not_title}</span>
+		<div class="content_title_wrapper">
+			<span class="content_title">${notice.not_title}</span>
 		</div>
-		<div class="not_date_wrapper">
-			<span class="not_date">${notice.not_date}</span>
+		<div class="content_date_wrapper">
+			<span class="content_date">${notice.not_date}</span>
 		</div>
-		<div class="not_content_wrapper">
-			<div class="not_content" style="clear: both;">${notice.not_content }</div>
-		</div>
-		<div id="footer" style="display: none">
-			<button class="back_btn conMod" type="button">수정</button>
-			<button class="back_btn conDel" type="button">삭제</button>
+		<div class="content_content_wrapper">
+			<div class="content_content" style="clear: both;">${notice.not_content }</div>
 		</div>
 		
 		<!-- 이전 다음글 -->
 		<table class="preNext">
 			<tr>
-				<td class="pn" onclick="goToPrevPage()"><span
-					class="preNext_link"><img class="preNextArrow"
-						src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/page_up.png"
-						alt="이전글"> 이전글</span></td>
+				<td class="pn" onclick="goToPrevPage()">
+					<img class="preNextArrow" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/page_up.png" alt="이전글">
+					<span class="preNext_link"> 이전글</span></td>
 				<td class="preNextTitle"><c:choose>
 						<c:when test="${prevNextNotice.prevNum == 0}">
 							<span style="color: gray;">이전글이 없습니다.</span>
@@ -162,9 +206,9 @@ td {
 					</c:choose></td>
 				<td class="preNextDate"><c:choose>
 						<c:when test="${prevNextNotice.prevNum != 0}">
-							<span><img
-								src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/sub_date_new.png"
-								alt="시간">${prevNextNotice.prevDate}</span>
+							<span>
+								<img src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/sub_date_new.png" alt="시간">${prevNextNotice.prevDate}
+							</span>
 						</c:when>
 						<c:otherwise>
 							<span style="color: gray;">-</span>
@@ -172,10 +216,9 @@ td {
 					</c:choose></td>
 			</tr>
 			<tr class="preNextContent">
-				<td class="pn" onclick="goToNextPage()"><span
-					class="preNext_link"><img class="preNextArrow"
-						src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/page_down.png"
-						alt="다음글"> 다음글</span>
+				<td class="pn" onclick="goToNextPage()">
+					<img class="preNextArrow" src="https://ssl.nexon.com/s2/game/maplestory/renewal/common/page_down.png" alt="다음글">
+					<span class="preNext_link"> 다음글</span>
 				</td>
 				<td class="preNextTitle"><c:choose>
 						<c:when test="${prevNextNotice.nextNum == 0}">

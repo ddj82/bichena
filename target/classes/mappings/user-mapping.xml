@@ -87,7 +87,7 @@
 	<!-- 관리자 회원 목록 -->
 	<select id="getUserList" resultType="userdto">
 		SELECT * FROM BC_USERS WHERE U_ID != 'admin'
-		<if test="searchVoca != null">
+		<if test="searchWord != null and searchWord != ''">
 			<if test="searchVoca == 'u_no' "> AND U_NO LIKE CONCAT('%', #{searchWord}, '%') </if>
 			<if test="searchVoca == 'u_id' "> AND U_ID LIKE CONCAT('%', #{searchWord}, '%') </if>
 			<if test="searchVoca == 'u_name' "> AND U_NAME LIKE CONCAT('%', #{searchWord}, '%') </if>
@@ -104,7 +104,7 @@
 	<!-- 관리자 회원 목록 카운트 -->
 	<select id="getCount" resultType="int">
 		SELECT COUNT(*) FROM BC_USERS WHERE U_ID != 'admin'
-		<if test="searchVoca != null">
+		<if test="searchWord != null and searchWord != ''">
 			<if test="searchVoca == 'u_no' "> AND U_NO LIKE CONCAT('%', #{searchWord}, '%') </if>
 			<if test="searchVoca == 'u_id' "> AND U_ID LIKE CONCAT('%', #{searchWord}, '%') </if>
 			<if test="searchVoca == 'u_name' "> AND U_NAME LIKE CONCAT('%', #{searchWord}, '%') </if>

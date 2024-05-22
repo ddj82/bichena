@@ -17,6 +17,7 @@
 		<result property="p_mat" column="P_MAT" />
 		<result property="p_cap" column="P_CAP" />
 		<result property="p_stock" column="P_STOCK" />
+		<result property="p_maxstock" column="P_MAXSTOCK" />
 		<result property="p_img" column="P_IMG" />
 	</resultMap>
 	
@@ -86,9 +87,9 @@
 	
 	<insert id="insertProduct">
 		INSERT INTO BC_PROD
-		(P_NO, P_NAME, P_PRICE, EDITFILE, P_IMG, EDITHTML, P_DESC, P_MADE, P_TYPE, P_DGR, P_SW, P_SU, P_SP, P_MAT, P_CAP, P_STOCK)
+		(P_NO, P_NAME, P_PRICE, EDITFILE, P_IMG, EDITHTML, P_DESC, P_MADE, P_TYPE, P_DGR, P_SW, P_SU, P_SP, P_MAT, P_CAP, P_STOCK, P_MAXSTOCK)
 		VALUES 
-		(#{p_no}, #{p_name}, #{p_price}, #{editfile}, #{p_img}, #{edithtml}, #{p_desc}, #{p_made}, #{p_type}, #{p_dgr}, #{p_sw}, #{p_su}, #{p_sp}, #{p_mat}, #{p_cap}, #{p_stock})
+		(#{p_no}, #{p_name}, #{p_price}, #{editfile}, #{p_img}, #{edithtml}, #{p_desc}, #{p_made}, #{p_type}, #{p_dgr}, #{p_sw}, #{p_su}, #{p_sp}, #{p_mat}, #{p_cap}, #{p_maxstock}, #{p_maxstock})
 	</insert>
 	
 	<delete id="deleteProduct">
@@ -131,4 +132,8 @@
 		WHERE 1=1 and P_TYPE='증류주'
 		ORDER BY P_NO DESC
 	</select>
+	
+	<update id="stockUpdate">
+		UPDATE BC_PROD SET P_STOCK = #{p_stock} WHERE P_NO = #{p_no}
+	</update>
 </mapper>

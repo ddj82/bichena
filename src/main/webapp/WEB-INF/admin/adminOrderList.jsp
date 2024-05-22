@@ -66,45 +66,52 @@ div#myModal>div.modal-dialog>div.modal-content tr>.td.col-td {
 <div class="container" id="container-MemList">
 	<h2 style="margin-bottom:20px; font-weight:bold; font-size: 24px;">전체 주문 목록</h2>
 	<div class="divTable">
-	<table class="table table-bordered">
-		<thead>
-			<tr>
-			    <td id="td-title">주문 번호</td>
-			    <td>
-			    	<div class="col-xs-4">
-						<input class="form-control" id="myInput1" type="text" placeholder="주문번호">
-			    	</div>
-			    </td>
-			</tr>
-			<tr>
-			    <td id="td-title">주문자 이름</td>
-			    <td>
-			    	<div class="col-xs-4">
-						<input class="form-control" id="myInput2" type="text" placeholder="주문자이름">
-			    	</div>
-			    </td>
-			</tr>
-			<tr>
-				<td id="td-title">주문 날짜</td>
-				<td>
-			    	<div class="col-xs-4">
-		                <input class="form-control" id="myInput3" type="text" placeholder="주문 날짜 yyyy-mm-dd">
-			    	</div>
-				</td>
-			</tr>
-			<tr>
-				<td id="td-title">주문 상태</td>
-				<td>
-					<div style="text-align:left;padding-left: 15px;">
-		                <label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk1" onclick="chk1()" value="상품 준비중">상품 준비중</label>
-						<label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk2" onclick="chk2()" value="배송중">배송중</label>
-						<label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk3" onclick="chk3()" value="배송완료">배송완료</label>
-						<label class="checkbox-inline"><input class="cBox" type="checkbox" id="mychk4" onclick="chk4()" value="취소">취소</label>
-			    	</div>
-				</td>
-			</tr>
-		</thead>
-	</table>
+	
+	
+		<form class="searchForm" action="adminOrderList.ko" method="get">
+		    <table class="table table-bordered">
+		        <thead>
+		            <tr>
+		                <td id="td-title">주문 번호</td>
+		                <td>
+		                    <div class="col-xs-4">
+		                        <input class="form-control" name="o_no" type="text" placeholder="주문번호">
+		                    </div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td id="td-title">주문자 이름</td>
+		                <td>
+		                    <div class="col-xs-4">
+		                        <input class="form-control" name="u_name" type="text" placeholder="주문자이름">
+		                    </div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td id="td-title">주문 날짜</td>
+		                <td>
+		                    <div class="col-xs-4">
+		                        <input class="form-control" name="o_date" type="text" placeholder="주문 날짜 yyyy-mm-dd">
+		                    </div>
+		                </td>
+		            </tr>
+		            <tr>
+		                <td id="td-title">주문 상태</td>
+		                <td>
+		                    <div style="text-align:left;padding-left: 15px;">
+		                        <label class="checkbox-inline"><input class="cBox" type="checkbox" name="o_state" value="상품 준비중">상품 준비중</label>
+		                        <label class="checkbox-inline"><input class="cBox" type="checkbox" name="o_state" value="배송중">배송중</label>
+		                        <label class="checkbox-inline"><input class="cBox" type="checkbox" name="o_state" value="배송완료">배송완료</label>
+		                        <label class="checkbox-inline"><input class="cBox" type="checkbox" name="o_state" value="취소">취소</label>
+		                    </div>
+		                </td>
+		            </tr>
+		        </thead>
+		    </table>
+		    <button type="submit" class="btn btn-primary btn-sm">검색</button>
+		</form>
+	
+	
 	<table class="table table-order">
 		<thead>
 			<tr>
@@ -156,135 +163,47 @@ div#myModal>div.modal-dialog>div.modal-content tr>.td.col-td {
 		</tbody>
 	</table>
 	<!-- 페이징 처리 -->
-	<ul class="pagination list-pagination">
-		<c:choose>
-			<c:when test="${pagination.currPageNo == 1}">
-				<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
-				<li class="page-item"><a class="page-link">이전</a></li>
-			</c:when>
-			<c:otherwise>
-				<li class="page-item">
-           			 <a class="page-link" href="adminOrderList.ko?currPageNo=${pagination.currPageNo - 1}">이전</a>
-         		</li>
-			</c:otherwise>
-		</c:choose>
-		<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
-			<c:choose>
-				<c:when test="${page eq pagination.currPageNo}">
-					<li class="page-item active"><a class="page-link">${page}</a></li>
-				</c:when>
-				<c:otherwise>
-					<li class="page-item">
-           			 	<a class="page-link" href="adminOrderList.ko?currPageNo=${page}">${page}</a>
-         			</li>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
+   	<ul class="pagination list-pagination">
+      <c:choose>
+         <c:when test="${pagination.currPageNo == 1}">
+            <!-- 현재 페이지가 첫 번째 페이지인 경우 -->
+            <li class="page-item"><a class="page-link">이전</a></li>
+         </c:when>
+         <c:otherwise>
+            <li class="page-item">
+                     <a href="adminOrderList.ko?currPageNo=${pagination.currPageNo - 1}&o_no=${param.o_no}&u_name=${param.u_name}&o_date=${param.o_date}&o_state=${param.o_state}" class="btn btn-primary btn-xs">이전</a>
+               </li>
+         </c:otherwise>
+      </c:choose>
+      <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
+         <c:choose>
+            <c:when test="${page eq pagination.currPageNo}">
+               <li class="page-item active"><a class="page-link">${page}</a></li>
+            </c:when>
+            <c:otherwise>
+               <li class="page-item">
+                        <a href="adminOrderList.ko?currPageNo=${page}&o_no=${param.o_no}&u_name=${param.u_name}&o_date=${param.o_date}&o_state=${param.o_state}" class="">${page}</a>
+                  </li>
+            </c:otherwise>
+         </c:choose>
+      </c:forEach>
 
-		<c:choose>
-			<c:when test="${pagination.currPageNo == pagination.pageCnt}">
-				<!-- 현재 페이지가 마지막 페이지인 경우 -->
-				<li class="page-item"><a class="page-link">다음</a></li>
-			</c:when>
-			<c:otherwise>
-				<!-- 다음 페이지로 이동하는 링크 -->
-					<li class="page-item">
-           			 	<a class="page-link" href="adminOrderList.ko?currPageNo=${pagination.currPageNo + 1}">다음</a>
-         			</li>
-			</c:otherwise>
-		</c:choose>
+      <c:choose>
+         <c:when test="${pagination.currPageNo == pagination.pageCnt or pagination.pageCnt <= 1}">
+            <!-- 현재 페이지가 마지막 페이지인 경우 -->
+            <li class="page-item"><a class="page-link">다음</a></li>
+         </c:when>
+         <c:otherwise>
+            <!-- 다음 페이지로 이동하는 링크 -->
+               <li class="page-item">
+                        <a href="adminOrderList.ko?currPageNo=${pagination.currPageNo + 1}&o_no=${param.o_no}&u_name=${param.u_name}&o_date=${param.o_date}&o_state=${param.o_state}" class="btn btn-primary btn-xs">다음</a>
+                  </li>
+         </c:otherwise>
+      </c:choose>
 	</ul>
 	</div>
 </div>
 <script>
-$(document).ready(function(){
-    $("#myInput1").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-        $("#myList tr").filter(function() {
-            $(this).toggle($(this).children(".o_no").text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-});
-
-$(document).ready(function(){
-    $("#myInput2").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-        $("#myList tr").filter(function() {
-            $(this).toggle($(this).children(".u_name").text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-});
-
-$(document).ready(function(){
-    $("#myInput3").on("keyup", function() {
-    var value = $(this).val().toLowerCase();
-        $("#myList tr").filter(function() {
-            $(this).toggle($(this).children(".o_date").text().toLowerCase().indexOf(value) > -1)
-        });
-    });
-});
-
-function chk1() {
-	let mychk1 = document.getElementById("mychk1").checked;
-	if (mychk1) {
-		console.log(document.getElementById("mychk1").value);
-		document.getElementById("mychk2").checked = false;
-		document.getElementById("mychk3").checked = false;
-		document.getElementById("mychk4").checked = false;
-		let value = document.getElementById("mychk1").value;
-		$("#myList tr").filter(function() {
-            $(this).toggle($(this).children(".o_state").text().toLowerCase().indexOf(value) > -1)
-        });
-	} else {
-		window.location.reload();
-	}
-}
-function chk2() {
-	let mychk2 = document.getElementById("mychk2").checked;
-	if (mychk2) {
-		console.log(document.getElementById("mychk2").value);
-		document.getElementById("mychk1").checked = false;
-		document.getElementById("mychk3").checked = false;
-		document.getElementById("mychk4").checked = false;
-		let value = document.getElementById("mychk2").value;
-		$("#myList tr").filter(function() {
-            $(this).toggle($(this).children(".o_state").text().toLowerCase().indexOf(value) > -1)
-        });
-	} else {
-		window.location.reload();
-	}
-}
-function chk3() {
-	let mychk3 = document.getElementById("mychk3").checked;
-	if (mychk3) {
-		console.log(document.getElementById("mychk3").value);
-		document.getElementById("mychk1").checked = false;
-		document.getElementById("mychk2").checked = false;
-		document.getElementById("mychk4").checked = false;
-		let value = document.getElementById("mychk3").value;
-		$("#myList tr").filter(function() {
-            $(this).toggle($(this).children(".o_state").text().toLowerCase().indexOf(value) > -1)
-        });
-	} else {
-		window.location.reload();
-	}
-}
-function chk4() {
-	let mychk4 = document.getElementById("mychk4").checked;
-	if (mychk4) {
-		console.log(document.getElementById("mychk4").value);
-		document.getElementById("mychk1").checked = false;
-		document.getElementById("mychk2").checked = false;
-		document.getElementById("mychk3").checked = false;
-		let value = document.getElementById("mychk4").value;
-		$("#myList tr").filter(function() {
-            $(this).toggle($(this).children(".o_state").text().toLowerCase().indexOf(value) > -1)
-        });
-	} else {
-		window.location.reload();
-	}
-}
-
 
 function cancelModule(val){
 	let result = confirm('취소하시겠습니까?');

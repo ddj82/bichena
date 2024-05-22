@@ -9,7 +9,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <style>
 .none {
-display: none;
+	display: none;
 }
 .whole-div {
 	width: 1050px;
@@ -44,23 +44,17 @@ display: none;
     flex-direction: column;
     align-items: center;
 }
-.list-order {
-/* 	display: flex; */
-/* 	justify-content: space-around; */
-/* 	flex-wrap: wrap; */
-}
+
 .orderTable {
 	border: 1px solid rgb(238, 238, 238);
 	border-radius: 10px;
 	padding: 10px;
 	width:50%;
-/* 	height: 400px; */
 	margin: 30px auto;
 	display: flex;
     flex-direction: column;
 }
 .name-tel {
-/* 	background-color: #deffdd; */
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
@@ -104,7 +98,7 @@ table#revContentTB {
     font-weight: bold;
 }
 .submit {
-	width: 300px;
+	width: 100%;
     padding: 5px;
     height: 40px;
     background-color: #005930;
@@ -115,15 +109,13 @@ table#revContentTB {
 	font-size: 15px;
 	font-weight: bold;
 }
-.btn-div {
-	
-}
+
 .text-p {
 	width: 65%;
     margin: 0 auto;
 }
 /* extra small */
-@media screen and (max-width:540px) {
+@media screen and (max-width:645px) {
 	.whole-div {
 		width: 90%;
 	}
@@ -131,12 +123,14 @@ table#revContentTB {
 		width: 100%;
 	}
 	.orderEmpty {
-		margin: 100px 13%;
-	    font-size: 15px;
+		margin: 100px auto;
+	    font-size: 16px;
 	    font-weight: bold;
+	    width: 250px;
 	}
 	.submit {
 		width: 100%;
+		margin: 0;
 	}
 	.list-count {
 		width: 100%;
@@ -151,13 +145,19 @@ table#revContentTB {
 		width: 80%;
 	}
 	.orderEmpty {
-		margin: 100px 21%;
+		margin: 100px auto;
+		width: 50%;
 	}
 	.submit {
 		width: 100%;
+		margin: 0;
 	}
 	.list-count {
 		width: 50%;
+	}
+	.text-p {
+		width: 70%;
+	    margin: 0 auto;
 	}
 }
 /* medium */
@@ -169,13 +169,19 @@ table#revContentTB {
 		width: 70%;
 	}
 	.orderEmpty {
-		margin: 100px 35%;
+		margin: 100px auto;
+		width: 300px;
 	}
 	.submit {
 		width: 100%;
+		margin: 0;
 	}
 	.list-count {
 		width: 50%;
+	}
+	.text-p {
+		width: 93%;
+	    margin: 0 auto;
 	}
 }
 /* large */
@@ -187,10 +193,15 @@ table#revContentTB {
 		width: 60%;
 	}
 	.orderEmpty {
-		margin: 100px 32%;
+		margin: 100px auto;
+		width: 35%;
 	}
 	.list-count {
 		width: 40%;
+	}
+	.submit {
+		margin: 0;
+		width: 100%;
 	}
 }
 </style>
@@ -262,12 +273,14 @@ $(document).ready(function(){
 			</c:if>
 		</c:forEach>
 	</div>
-	<div id="orderEmpty" class="orderEmpty">
-		<p class="text-p">주문내역이 없습니다.</p>
-		<div class="btn-div">
-			<input type="button" value="주문하러 가기" id="submit" class="submit" onclick="history.back()">
+	<form action="prodList.ko">
+		<div id="orderEmpty" class="orderEmpty">
+			<p class="text-p" style="text-align:center;">주문내역이 없습니다.</p>
+			<div class="btn-div" style="margin-top: 10px;">
+				<input type="submit" value="주문하러 가기" id="submit" class="submit">
+			</div>
 		</div>
-	</div>
+	</form>
 </div>
 
 <div class="modal" id="myModal">

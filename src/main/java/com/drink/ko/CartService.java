@@ -1,6 +1,7 @@
 package com.drink.ko;
 
 import java.util.List;
+import java.util.Map;
 
 import com.drink.ko.vo.CartVO;
 
@@ -13,7 +14,7 @@ public interface CartService {
 
 	public void updateCart(CartVO vo);
 
-	public CartVO selectCart(int productno);
+	public CartVO selectCart(Map<String, String> params);
 	
 	public List<CartVO> selectList(CartVO vo);
 	

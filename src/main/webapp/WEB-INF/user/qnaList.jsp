@@ -132,7 +132,7 @@ function qnaView(uid, qno, sid) {
 				</c:forEach>
 		
 				<c:choose>
-					<c:when test="${pagination.currPageNo == pagination.pageCnt}">
+					<c:when test="${pagination.currPageNo == pagination.pageCnt or pagination.pageCnt <= 1}">
 						<!-- 현재 페이지가 마지막 페이지인 경우 -->
 						<li class="page-item"><a class="page-link">다음</a></li>
 					</c:when>

@@ -102,7 +102,7 @@ table#revContentTB {
     font-weight: bold;
 }
 /* extra small */
-@media screen and (max-width:540px) {
+@media screen and (max-width:575px) {
 	.whole-div {
 		width: 90%;
 	}
@@ -111,12 +111,12 @@ table#revContentTB {
 	}
 	.orderEmpty {
 		margin: 100px 29%;
-	    font-size: 15px;
+	    font-size: 16px;
 	    font-weight: bold;
 	}
 }
 /* small */
-@media screen and (min-width:541px) and (max-width:720px) {
+@media screen and (max-width:720px) {
 	.whole-div {
 		width: 90%;
 	}
@@ -222,7 +222,7 @@ function priceToString(price) {
 			</c:forEach>
 		</div>
 		<div id="orderEmpty" class="orderEmpty">
-			<p>취소 내역이 없습니다.</p>
+			<p style="text-align:center;">취소 내역이 없습니다.</p>
 		</div>
 </div>
 </body>

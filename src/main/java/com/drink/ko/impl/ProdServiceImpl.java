@@ -74,4 +74,9 @@ public class ProdServiceImpl implements ProdService {
 		return dao.mainPageSlideListJeungryuju(vo);
 	}
 
+	@Override
+	public int stockUpdate(ProdVO vo) {
+		return dao.stockUpdate(vo);
+	}
+
 }

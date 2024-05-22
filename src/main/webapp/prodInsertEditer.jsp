@@ -18,9 +18,17 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/smarteditor2.js" charset="utf-8"></script>
 <!-- 20240503_ym 스타일추가 시작 -->
 <style type="text/css">
-div.se2_input_area.husky_seditor_editing_area_container {width: 1140px !important; height: 600px !important;}
-div#se2_iframe {width: 1140px !important;height: 100% !important;}
-#smart_editor2 {width: 1140px !important;}
+div.se2_input_area.husky_seditor_editing_area_container {
+	width: 1140px !important;
+	height: 600px !important;
+}
+div#se2_iframe {
+	width: 1140px !important;
+	height: 100% !important;
+}
+#smart_editor2 {
+	width: 1140px !important;
+}
 	
 table.table>tbody>tr>td, table.table>tbody>tr>th, table th {
     text-align: center;
@@ -56,22 +64,33 @@ table.table#form>tbody>tr>td#td-rowspan5,
 table.table#form>tbody>tr>td#td-rowspan2 {
     width: 40%;
 }
-.navbar-default {
-    background-color: white;
-    border: none;
+
+
+@media (max-width: 1200px) {
+	div.se2_input_area.husky_seditor_editing_area_container,
+	div#se2_iframe,
+	#smart_editor2, 
+	div.djmain {
+		width: 720px !important;
+	}
+	form#dataTransferForm>div {
+		width: 100% !important;
+	}
+	table#form, table#form1 {
+		font-size: 14px !important;
+	} 
 }
-.navbar {
-    max-width: 1140px;
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    margin: 10px auto;
-}
-.bottom-line {
-    display: block;
-    width: 100%;
-    border-bottom: 1px solid #E0E0E0;
-    margin-bottom: 20px;
+
+@media (max-width: 750px) {
+	div.se2_input_area.husky_seditor_editing_area_container,
+	div#se2_iframe,
+	#smart_editor2, 
+	div.djmain {
+		max-width: 500px !important;
+	}
+	form#dataTransferForm>div {
+		width: 100% !important;
+	}
 }
 </style>
 <!-- 20240503_ym 스타일추가 종료 -->
@@ -79,91 +98,82 @@ table.table#form>tbody>tr>td#td-rowspan2 {
 <body>
 <!-- 20240503_ym 영미 수정 시작 -->
 <div id="se2_sample" style="margin:10px 0;">
-	<p>
-		<button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal2">상품정보</button>
-	</p>
-	<input class="btn btn-primary" type="button" onclick="submitContents();" value="등록" />
-	<input class="btn btn-danger" type="button" onclick="location.href='adminProdList.ko';" value="취소" />
 <!--20240503_ym  에디터에서 수정하면 데이터가 직접 들어오는 장소 시작-->
 	<form action="adminProdInsert.ko" method="post" id="dataTransferForm" enctype="multipart/form-data">
-		<textarea name="edithtml" id="ir1" rows="10" cols="100" style="width:766px; height:412px; display:none;"></textarea>
-		<div class="modal fade" id="myModal2" role="dialog">
-		    <div class="modal-dialog">
-		        <div class="modal-content">
-		            <div class="modal-body">
-						<table class="table table0" id="form">
-						    <tr>
-						        <td rowspan="5" id="td-rowspan5">
-						            <img id="preview" src="" alt="" style="width: 200px;"></td>
-						    	<td><label for="name">상품 이름</label> <input type="text" id="name" name="p_name"></td>
-							</tr>
-							
-							<tr>
-								<td>
-								<label for="desc" style="vertical-align: top;">상품 설명</label> 
-								<textarea id="desc" name="p_desc" rows="3"></textarea>
-								</td>
-							</tr>
-							
-							<tr><td><label for="price">상품 가격</label> <input type="text" id="price" name="p_price"></td></tr>
-							
-							<tr><td><label for="made">제조사</label> <input type="text" id="made" name="p_made"></td></tr>
-							
-							<tr><td><label for="dgr">도수</label> <input type="text" id="dgr" name="p_dgr"> %</td></tr>
-							
-							<tr>
-							    <td rowspan="2" id="td-rowspan2">
-							        <button type="button" class="btn btn-default" onclick="fileUploadBtn()">사진등록</button>
-									<input type="file" id="p_img" name="uploadFile" class="custom-file-label" style="display: none;">
-						        </td>
-							    <td><label for="cap">용량</label> <input type="text" id="cap" name="p_cap"> ml</td>
-							</tr>
-							
-							<tr>
-						        <td><label for="stock">수량</label> <input type="text" id="stock" name="p_stock"> 개</td>
-						    </tr>
-						</table>
-						
-						<table class="table table0" id="form1">
-						    <tr>
-						        <th>주류종류</th>
-						        <td><input type="radio" name="p_type" id="p_type1" value="탁주"> <label for="p_type1">탁주</label></td>
-						        <td><input type="radio" name="p_type" id="p_type2" value="약·청주"> <label for="p_type2">약·청주</label></td>
-						        <td><input type="radio" name="p_type" id="p_type3" value="증류주"> <label for="p_type3">증류주</label></td>
-						        <td><input type="radio" name="p_type" id="p_type4" value="과실주"> <label for="p_type4">과실주</label></td>
-						        <td><input type="radio" name="p_type" id="p_type5" value="기타"> <label for="p_type5">기타</label></td>
-						    </tr>
-						    <tr>
-						        <th>단맛</th>
-						        <td><input type="radio" name="p_sw" id="p_sw1" value="강"> <label for="p_sw1">강</label></td>
-						        <td><input type="radio" name="p_sw" id="p_sw2" value="중"> <label for="p_sw2">중</label></td>
-						        <td><input type="radio" name="p_sw" id="p_sw3" value="약"> <label for="p_sw3">약</label></td>
-						    </tr>
-						    <tr>
-						        <th>신맛</th>
-						        <td><input type="radio" name="p_su" id="p_su1" value="강"> <label for="p_su1">강</label></td>
-						        <td><input type="radio" name="p_su" id="p_su2" value="중"> <label for="p_su2">중</label></td>
-						        <td><input type="radio" name="p_su" id="p_su3" value="약"> <label for="p_su3">약</label></td>
-						    </tr>
-						    <tr>
-						        <th>탄산</th>
-						        <td><input type="radio" name="p_sp" id="p_sp1" value="강"> <label for="p_sp1">강</label></td>
-						        <td><input type="radio" name="p_sp" id="p_sp2" value="중"> <label for="p_sp2">중</label></td>
-						        <td><input type="radio" name="p_sp" id="p_sp3" value="약"> <label for="p_sp3">약</label></td>
-						        <td><input type="radio" name="p_sp" id="p_sp4" value="없음"> <label for="p_sp4">없음</label></td>
-						    </tr>
-						    <tr>
-						        <th>원료</th>
-						        <td><input type="radio" name="p_mat" id="p_mat1" value="과일"> <label for="p_mat1">과일</label></td>
-						        <td><input type="radio" name="p_mat" id="p_mat2" value="꽃"> <label for="p_mat2">꽃</label></td>
-						        <td><input type="radio" name="p_mat" id="p_mat3" value="견과"> <label for="p_mat3">견과</label></td>
-						        <td><input type="radio" name="p_mat" id="p_mat4" value="약재"> <label for="p_mat4">약재</label></td>
-						        <td><input type="radio" name="p_mat" id="p_mat5" value="기타"> <label for="p_mat5">기타</label></td>
-						    </tr>
-						</table>
-		            </div>
-		        </div>
-		    </div>
+		<textarea name="edithtml" id="ir1" rows="10" cols="100" style="width:500px; height:412px; display:none;"></textarea>
+		<input class="btn btn-primary" type="button" onclick="submitContents();" value="등록" />
+		<input class="btn btn-danger" type="button" onclick="location.href='adminProdList.ko';" value="취소" />
+		<div style="width:60%;">
+			<table class="table table0" id="form">
+			    <tr>
+			        <td rowspan="5" id="td-rowspan5">
+			            <img id="preview" src="" alt="" style="width: 200px;"></td>
+			    	<td><label for="name">상품 이름</label> <input type="text" id="name" name="p_name"></td>
+				</tr>
+				
+				<tr>
+					<td>
+					<label for="desc" style="vertical-align: top;">상품 설명</label> 
+					<textarea id="desc" name="p_desc" rows="3"></textarea>
+					</td>
+				</tr>
+				
+				<tr><td><label for="price">상품 가격</label> <input type="text" id="price" name="p_price"></td></tr>
+				
+				<tr><td><label for="made">제조사</label> <input type="text" id="made" name="p_made"></td></tr>
+				
+				<tr><td><label for="dgr">도수</label> <input type="text" id="dgr" name="p_dgr"> %</td></tr>
+				
+				<tr>
+				    <td rowspan="2" id="td-rowspan2">
+				        <button type="button" class="btn btn-default" onclick="fileUploadBtn()">사진등록</button>
+						<input type="file" id="p_img" name="uploadFile" class="custom-file-label" style="display: none;">
+			        </td>
+				    <td><label for="cap">용량</label> <input type="text" id="cap" name="p_cap"> ml</td>
+				</tr>
+				
+				<tr>
+			        <td><label for="maxstock">입고</label> <input type="text" id="maxstock" name="p_maxstock"> 개</td>
+			    </tr>
+			</table>
+			
+			<table class="table table0" id="form1">
+			    <tr>
+			        <th>주류종류</th>
+			        <td><input type="radio" name="p_type" id="p_type1" value="탁주"> <label for="p_type1">탁주</label></td>
+			        <td><input type="radio" name="p_type" id="p_type2" value="약·청주"> <label for="p_type2">약·청주</label></td>
+			        <td><input type="radio" name="p_type" id="p_type3" value="증류주"> <label for="p_type3">증류주</label></td>
+			        <td><input type="radio" name="p_type" id="p_type4" value="과실주"> <label for="p_type4">과실주</label></td>
+			        <td><input type="radio" name="p_type" id="p_type5" value="기타"> <label for="p_type5">기타</label></td>
+			    </tr>
+			    <tr>
+			        <th>단맛</th>
+			        <td><input type="radio" name="p_sw" id="p_sw1" value="강"> <label for="p_sw1">강</label></td>
+			        <td><input type="radio" name="p_sw" id="p_sw2" value="중"> <label for="p_sw2">중</label></td>
+			        <td><input type="radio" name="p_sw" id="p_sw3" value="약"> <label for="p_sw3">약</label></td>
+			    </tr>
+			    <tr>
+			        <th>신맛</th>
+			        <td><input type="radio" name="p_su" id="p_su1" value="강"> <label for="p_su1">강</label></td>
+			        <td><input type="radio" name="p_su" id="p_su2" value="중"> <label for="p_su2">중</label></td>
+			        <td><input type="radio" name="p_su" id="p_su3" value="약"> <label for="p_su3">약</label></td>
+			    </tr>
+			    <tr>
+			        <th>탄산</th>
+			        <td><input type="radio" name="p_sp" id="p_sp1" value="강"> <label for="p_sp1">강</label></td>
+			        <td><input type="radio" name="p_sp" id="p_sp2" value="중"> <label for="p_sp2">중</label></td>
+			        <td><input type="radio" name="p_sp" id="p_sp3" value="약"> <label for="p_sp3">약</label></td>
+			        <td><input type="radio" name="p_sp" id="p_sp4" value="없음"> <label for="p_sp4">없음</label></td>
+			    </tr>
+			    <tr>
+			        <th>원료</th>
+			        <td><input type="radio" name="p_mat" id="p_mat1" value="과일"> <label for="p_mat1">과일</label></td>
+			        <td><input type="radio" name="p_mat" id="p_mat2" value="꽃"> <label for="p_mat2">꽃</label></td>
+			        <td><input type="radio" name="p_mat" id="p_mat3" value="견과"> <label for="p_mat3">견과</label></td>
+			        <td><input type="radio" name="p_mat" id="p_mat4" value="약재"> <label for="p_mat4">약재</label></td>
+			        <td><input type="radio" name="p_mat" id="p_mat5" value="기타"> <label for="p_mat5">기타</label></td>
+			    </tr>
+			</table>
 		</div>
 	</form>
 <script>

@@ -73,7 +73,7 @@ p.guidance {
 	margin-top: 10px;
 	width: 300px;
 	padding: 5px;
-	background-color: #005930;
+	background-color: #0a6633e5;
 	color: rgb(255, 255, 255);
 	border-radius: 5px;
 	border: none;
@@ -125,62 +125,125 @@ pre {
 	margin-right: 10px;
 }
 
+input#delBtn:hover{
+	background-color:#2d4739;
+}
+</style>
+
+<style>
 
 /* extra small */
-@media screen and (max-width: 540px) {
-    .wrapSign {
-        width: 300px;
-    }
-    .div1 {
-        width: 100%;
-    }
-    #delBtn {
-        width: 100%;
-    }
+@media screen and (max-width:540px) {
+input#clause1 {
+    margin-right: 4px;
+    margin-left: 0px;
+}
+
+p.must {
+    font-size: 14px;
+}
+
+p.guidance {
+    font-size: 14px;
+}
+
+p.del-guaidance {
+    line-height: 22px;
+}
+
+.info-box#info-box {
+    width: 338px;
+}
+
+.form1 {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.form2 {
+    
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.div1 {
+    width: auto;
+    display: block;
+}
+
+.container#container-delAccInfo {
+    padding: 0px 0px;
+}
 }
 
 /* small */
-@media screen and (min-width: 541px) and (max-width: 720px) {
-    .wrapSign {
-        width: 305px;
-    }
-    .div1 {
-        width: 100%;
-    }
-    #delBtn {
-        width: 100%;
-    }
+@media screen and (min-width:541px) and (max-width:720px) {
+.container#container-delAccInfo {
+    padding: 0px 0px;
+}
+
+	.form1 {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.form2 {
+    width: 500px;
+    
+        margin: 0 10px;
+}
+
+.div1 {
+    width: auto;
+}
+
+p.del-guaidance {
+    font-size: 13.5px;
+}
+
 }
 
 /* medium */
-@media screen and (min-width: 721px) and (max-width: 960px) {
-    .wrapSign {
-        width: 300px;
-    }
-    .div1 {
-        width: 100%;
-    }
-    #delBtn {
-        width: 100%;
-    }
+@media screen and (min-width:721px) and (max-width:960px) {
+.container#container-delAccInfo {
+    padding: 0px 0px;
+}
+
+.form1 {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.form2 {
+	    width: 642px;
+	}
+	
+.div1 {
+    width: auto;
+}
 }
 
 /* large */
-@media screen and (min-width: 961px) and (max-width: 1140px) {
-    .wrapSign {
-        width: 300px;
-    }
-    .div1 {
-        width: 100%;
-    }
-    #delBtn {
-        width: 100%;
-    }
+@media screen and (min-width:961px) and (max-width:1140px) {
+.container#container-delAccInfo {
+    width: auto;
+}
+
+}
+
 </style>
+
+
 </head>
 <body>
-<%@ include file="../../common/navbar.jsp" %>
-<%-- <%@ include file="../user/myPageHeader.jsp" %> --%>
+<%-- <%@ include file="../../common/navbar.jsp" %> --%>
+
 <div class="container" id="container-delAccInfo">
 	<div class="info-box" id="info-box">
 		<form class="form1" name="form1" id="delAcct">

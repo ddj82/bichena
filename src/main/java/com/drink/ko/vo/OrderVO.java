@@ -48,6 +48,26 @@ public class OrderVO {
 	public void setStr_allTotal(String str_allTotal) {
 		this.str_allTotal = str_allTotal;
 	}
+	
+	// 차트
+	private int salesCount;
+	private int cancelCount;
+
+	public int getCancelCount() {
+		return cancelCount;
+	}
+
+	public void setCancelCount(int cancleCount) {
+		this.cancelCount = cancleCount;
+	}
+
+	public int getSalesCount() {
+		return salesCount;
+	}
+
+	public void setSalesCount(int salesCount) {
+		this.salesCount = salesCount;
+	}
 
 	// 페이징 처리를 위한 변수
 	private int currPageNo; // 현재 페이지 번호

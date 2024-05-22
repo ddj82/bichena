@@ -86,4 +86,19 @@ public class OrderServiceImpl implements OrderService {
 		dao.orderDelete(mid);
 	}
 
+	@Override
+	public List<OrderVO> delOrderSelect(String mid) {
+		return dao.delOrderSelect(mid);
+	}
+
+    @Override
+    public List<OrderVO> chartResult(int limit) {
+        return dao.chartResult(limit);
+    }
+    
+    @Override
+    public int adminOrderRepeatCount(OrderVO vo) {
+    	return dao.adminOrderRepeatCount(vo);
+    }
+
 }

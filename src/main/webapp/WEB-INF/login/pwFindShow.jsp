@@ -5,8 +5,8 @@
 <%
 if (request.getParameter("email") == null || request.getParameter("email").equals("")) {%>
 	<script>location.href="loginPage.ko";</script>
-<!-- response.sendRedirect("loginPage.ko"); -->
-<%}
+<%
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -32,6 +32,7 @@ if (request.getParameter("email") == null || request.getParameter("email").equal
     display: flex;
     flex-direction: column;
     align-items: center;
+	margin-bottom: 100px;
 }
 
 div#box1 {
@@ -60,23 +61,7 @@ div#finallyPW {
     color: #2d4739;
 }
 
-@media (max-width: 575px) {
-	.idFindSearchSubBox {
-		width: 324.91px;
-	}
-	
-	a.loginbutton{
-		width: 100;
-		font-size: 13px;
-	}
-	
-	div#finallyPW{
-		 text-align: center;
-	}
-	
-}
-
-span {
+span.fakePW {
     color: #e5c687;
     font-weight: bolder;
 }
@@ -85,6 +70,40 @@ a.loginbutton:hover{
 	background-color:#2d4739;
 }
 
+@media (max-width: 575px) {
+	.idFindSearchSubBox {
+		width: 370px;
+	}
+	
+	a.loginbutton{
+		width: 120px;
+		font-size: 14px;
+	    text-align: center; 
+	}
+	
+	div#finallyPW{
+		 text-align: center;
+	}
+	
+}
+
+@media (min-width: 576px) and (max-width: 760px) {
+	.idFindSearchSubBox {
+		width: 500px;
+	}
+	
+	a.loginbutton{
+		width: 120px;
+		font-size: 15px;
+	    text-align: center; 
+	}
+	
+	div#finallyPW{
+		 text-align: center;
+	}
+	
+	
+}
 </style>
 <script>
 
@@ -123,26 +142,27 @@ $(window).resize(function() {
 	</div>
 </body>
 <script>
-	let email ="<%=email%>";
-		var formData = {
-			u_email : email
-		};
+let email ="<%=email%>";
 
-		$.ajax({
-			type : 'POST',
-			data : formData,
-			url : 'pwFindStart.ko',
-			success : function(data) {
-				console.log("data : " + data);
-				code = data;
-				$('#finallyPW').html("<b>회원님의 임시 비밀번호는</b> "+" <span>"+data+"</span> <b>입니다.</b>");
-			}
-		});
-		
-		
-		window.onload = function(){
-			history.replaceState({}, null, location.pathname);
-			}
+var formData = {
+	u_email : email
+};
+
+$.ajax({
+	type : 'POST',
+	data : formData,
+	url : 'pwFindStart.ko',
+	success : function(data) {
+		console.log("data : " + data);
+		code = data;
+		$('#finallyPW').html("<b>회원님의 임시 비밀번호는</b> "+" <span class='fakePW'>"+data+"</span> <b>입니다.</b>");
+	}
+});
+
+
+window.onload = function(){
+// 	history.replaceState({}, null, location.pathname);
+}
 </script>
 </body>
 <%@ include file="../../common/footer.jsp" %>

@@ -70,6 +70,7 @@
     }
 
     function plus(index, p_no) {
+    	var u_id = "${userID}";
         var stock = document.getElementById('qty_' + index);
         var price = document.getElementById('price_' + index);
         var currentQty = parseInt(stock.value);  
@@ -88,7 +89,7 @@
                 url: "cartupdate.ko",
                 type: "post",
                 contentType: "application/json",
-                data: JSON.stringify({ p_no: p_no, c_stock: p_stock, c_total: updatedTotal1 }),
+                data: JSON.stringify({ p_no: p_no, c_stock: p_stock, c_total: updatedTotal1, u_id: u_id }),
                 success: function(response) {
                     stock.value = p_stock;  
                     price.innerText = updatedTotal1.toLocaleString() + "원";
@@ -103,7 +104,7 @@
                  url: "cartupdate.ko",
                  type: "post",
                  contentType: "application/json",
-                 data: JSON.stringify({ p_no: p_no, c_stock: newQty, c_total: updatedTotal }),
+                 data: JSON.stringify({ p_no: p_no, c_stock: newQty, c_total: updatedTotal, u_id: u_id }),
                  success: function(response) {
                      stock.value = newQty;  
                      price.innerText = updatedTotal.toLocaleString() + "원";
@@ -116,6 +117,7 @@
         }
     }
     function minus(index, p_no) {
+    	var u_id = "${userID}";
         var stock = document.getElementById('qty_' + index);
         var price = document.getElementById('price_' + index);
         var currentQty = parseInt(stock.value); 
@@ -133,7 +135,7 @@
 	                url: "cartupdate.ko",
 	                type: "post",
 	                contentType: "application/json",
-	                data: JSON.stringify({ p_no: p_no, c_stock: p_stock, c_total: updatedTotal1 }),
+	                data: JSON.stringify({ p_no: p_no, c_stock: p_stock, c_total: updatedTotal1, u_id: u_id }),
 	                success: function(response) {
 	                    stock.value = p_stock;  
 	                    price.innerText = updatedTotal1.toLocaleString() + "원";
@@ -148,7 +150,7 @@
 	                url: "cartupdate.ko",
 	                type: "post",
 	                contentType: "application/json",
-	                data: JSON.stringify({ p_no: p_no, c_stock: newQty, c_total: updatedTotal }),
+	                data: JSON.stringify({ p_no: p_no, c_stock: newQty, c_total: updatedTotal, u_id: u_id }),
 	                success: function(response) {
 	                    stock.value = newQty;  
 	                    price.innerText = updatedTotal.toLocaleString() + "원";
@@ -179,31 +181,29 @@
         var selectedItems = $(".item-checkbox:checked").map(function() {
             return this.value;  // 체크된 항목의 상품번호만을 배열로 변환
         }).get();
+        var u_id = "${userID}" ;
 
         if (selectedItems.length === 0) {
-        	if ($("#Xcart").css("display") === "block") {
-	            alert("상품이 없습니다.");
-        	} else {
 	            alert("삭제할 상품을 선택하세요.");
-        	}
             return;
         }
         var result = confirm("선택한 상품을 삭제하시겠습니까?");
         if (result) {
-            $.ajax({
-                url: "cartdelete.ko",
-                type: "post",
-                contentType: "application/json",
-                data: JSON.stringify(selectedItems),
-                success: function(response) {
-                    console.log("삭제 성공");
-                    listCart();
-                    selectCount();
-                },
-                error: function(xhr, status, error) {
-                    alert("삭제 실패: " + error);
-                }
-            });
+        	$.ajax({
+        	    url: "cartdelete.ko",
+        	    type: "post",
+        	    contentType: "application/json",
+        	    data: JSON.stringify({ p_no: selectedItems, u_id: u_id }),
+        	    success: function(response) {
+        	        console.log("삭제 성공");
+        	        listCart();
+        	        selectCount();
+        	    },
+        	    error: function(xhr, status, error) {
+        	        alert("삭제 실패: " + error);
+        	    }
+        	});
+
         }
     }
 
@@ -284,10 +284,56 @@
 	var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ? true : false;
 	
 	function order() {
-		let values = {};
-		var selectedItems = $(".item-checkbox:checked").map(function() {
-			return this.value; // 체크된 항목의 상품번호만을 배열로 변환
-		}).get();
+	      let values = {};
+	      var u_id = "${userID}";
+	      var selectedItems = $(".item-checkbox:checked").map(function() {
+	         return this.value; 
+	      }).get();
+	      var overstockItems = []; 
+	       var allValid = true; 
+
+	       $(".item-checkbox:checked").each(function() {
+	           var p_no = $(this).val();
+	           var index = $(this).closest('tr').index(); 
+	           var qtyElement = document.getElementById('qty_' + index);
+	           var currentQty = parseInt(qtyElement.value); 
+	           var price = document.getElementById('price_' + index);
+	           var currentPrice = parseInt(price.innerText.replace('원', '').replace(/,/g, ''));
+//	            alert("현재 입력된 상품 가격" + currentPrice);
+	           var p_price = currentPrice / currentQty;
+	           var p_stock = stockchk(p_no);
+
+	           if (p_stock < currentQty) {
+	               overstockItems.push(p_no);
+	               allValid = false; 
+	               var c_total = p_stock * p_price;
+//	                alert("총가격" + c_total);
+	            if(selectedItems.length > 1) {
+	               alert( p_no + "번 상품의 재고수량을 초과합니다");
+	            }
+	               alert("해당상품은 현재 최대 " + p_stock + "개 까지만 구매 가능합니다.");
+	               
+	              $.ajax({
+	                   url: "cartupdate.ko",
+	                   type: "post",
+	                   contentType: "application/json",
+	                   data: JSON.stringify({ p_no: p_no, c_stock: p_stock, c_total: c_total, u_id : u_id }),
+	                   success: function(response) {
+	                      qtyElement.value = p_stock;  
+	                       price.innerText = c_total.toLocaleString() + "원";
+	                       updateTotal();
+	                   },
+	                   error: function(xhr, status, error) {
+	                       alert("업데이트 실패: " + error);
+	                   }
+	               });
+	           }
+	       });
+
+        if (!allValid) {
+            return; 
+        }
+
 
 		if (selectedItems.length === 0) {
 			alert("주문할 상품을 선택하세요.");

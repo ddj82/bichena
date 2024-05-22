@@ -12,13 +12,51 @@ location.href="main.ko";
 <head>
 <meta charset="UTF-8">
 <title>주류상세페이지</title>
-<link href="${pageContext.request.contextPath}/resources/css/prodOne.css" rel="stylesheet" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
-.main {
-width: 100%;
+/* 썸네일,리모콘,설명 (상세jsp 위) */
+div.div-wid-mar {
+	width: 700px;
+	margin: 0 auto;
+}
+div.div-flex {
+	margin: 0 auto;
+	text-align: left;
+	display: flex;
+	justify-content: center;
+	max-width: 700px;
+}
+div.div-img {
+	text-align: center;
+	width: 370px;
+}
+img.img-main {
+	padding: 10px;
+	width: 100%;
+}
+div.div-cart {
+	text-align: left;
+	padding: 10px;
+	width: 350px;
+}
+div.div-col {
+	border: 1px solid lightgray;
+	border-radius: 10px;
+	margin-top: 30px;
+	display: flex;
+}
+div.tableDiv {
+	width: 100%;
+}
+table.tableDiv-tb, table {
+	width: 100%;
+	text-align: center;
+	border: none;
+}
+tr th, td {
+	text-align: center;
 }
 </style>
 <script>
@@ -51,19 +89,24 @@ $(function(){
 </head>
 <body>
 <%@ include file="/WEB-INF/admin/adminMain.jsp" %>
-<div class="container">
-	<div class="main">
-		<div class="div1" style="width:60%;">
-			<img class="float" src="img/${prodOne.p_img }" title="img" alt="img" style="padding:10px;">
+<div class="div-wid-mar">
+	<div class="div-flex">
+		<div class="div-img">
+			<img class="img-main" src="img/${prodOne.p_img }" title="img" alt="img">
+		</div>
+		<div class="div-cart">
 			<div class="clear">
-				<p><span class="span1"><small>${prodOne.p_desc}</small></span></p>
-				<p><span class="span2"><strong>${prodOne.p_name}</strong></span></p>
-				<p class="p1"><span class="span3"><small>판매가격</small></span></p>
-				<p class="p2"><span class="span2"><strong>${prodOne.p_price}원</strong></span></p>
+				<div class="product_desc"><small>${prodOne.p_desc}</small></div>
+				<div style="margin-top:10px;font-weight: bolder;font-size:20px;">${prodOne.p_name}</div>
+				<div style="margin-top:10px;"><small>판매가격</small></div>
+				<div style="margin-top:5px;font-weight: bolder;">${prodOne.p_price}원</div>
 			</div>
 		</div>
-		<div class="dtable" style="width:30%;">
-			<table style="width:100%;">
+	</div>
+	
+	<div class="div-wid-mar div-col">
+		<div class="tableDiv">
+			<table class="tableDiv-tb">
 				<tr>
 					<th>주류종류</th><td>${prodOne.p_type}</td>
 				</tr>
@@ -72,12 +115,18 @@ $(function(){
 				</tr>
 				<tr>
 					<th>용량</th><td>${prodOne.p_cap}ml</td>
+				</tr>											
+				<tr>
+					<th>재고</th><td>${prodOne.p_stock}</td>
+				</tr>
+				<tr>
+					<th>제조사</th><td>${prodOne.p_made}</td>
 				</tr>
 			</table>
 		</div>
 		<br><br><br> 
-		<div class="dtable" style="display:inline-block; width:30%">
-			<table style="width:100%;">
+		<div class="tableDiv">
+			<table class="tableDiv-tb">
 				<tr>
 					<th>단맛</th>
 					<td>${prodOne.p_sw}</td>
@@ -90,37 +139,30 @@ $(function(){
 					<th>탄산</th>
 					<td>${prodOne.p_sp}</td>
 				</tr>
-			</table>
-		</div>
-		<div class="dtable" style="display:inline-block; width:30%">
-			<table style="width:100%;">
 				<tr>
 					<th>원료</th><td>${prodOne.p_mat}</td>
 				</tr>
-				<tr>
-					<th>재고</th><td>${prodOne.p_stock}</td>
-				</tr>
 			</table>
 		</div>
-		<div id="detail2" style="width:60%;">${pageContext.request.contextPath }/WEB-INF/product/${prodOne.editfile }</div>
-		<br>
-		<br>
-		<br> 
-		<br>
-		<br>
-		<br> 
-		<br>
-		<br>
-		<br> 
-		<br>
-		<br>
-		<br> 
-		<br>
-		<br>
-		<br> 
-		<div id="revTB"></div>
 	</div>
 </div>
+<div class="div-wid-mar" id="detail2">${pageContext.request.contextPath }/WEB-INF/product/${prodOne.editfile }</div>
+<br>
+<br>
+<br> 
+<br>
+<br>
+<br> 
+<br>
+<br>
+<br> 
+<br>
+<br>
+<br> 
+<br>
+<br>
+<br> 
+<div id="revTB"></div>
 <br>
 <br>
 <br> 

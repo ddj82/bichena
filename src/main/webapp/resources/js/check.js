@@ -80,16 +80,16 @@ function insertchk() {
 		}
 		
 		if(cnt == 0) {
-			alert('아이디 중복체크를 해주세요');
 			istrue = false;
 		}
 		if(nickCheck == 0) {
-			alert('닉네임 중복체크를 해주세요');
 			istrue = false;
 		}
 		if(emailCheck == 0) {
-			alert('이메일 중복체크를 해주세요');
 			istrue = false;
+		}
+		if(!istrue){
+			alert('입력한 정보를 다시 확인해주세요.');
 		}
 		console.log(istrue);
 		return istrue;
@@ -246,7 +246,7 @@ function insertchk() {
 
 		postcode.focus(); // Focus on the input field
 
-		postcode.addEventListener('input', function() {
+		postcode.addEventListener('blur', function() {
 			var postcodevalue = postcode.value.trim();
 			if (postcodevalue == "") {
 				postcodeErrorMessage.style.display = 'block'; // Display error message
@@ -261,7 +261,7 @@ function insertchk() {
 
 		address.focus(); // Focus on the input field
 
-		address.addEventListener('input', function() {
+		address.addEventListener('blur', function() {
 			var addressvalue = address.value.trim();
 			if (addressvalue == "") {
 				addressErrorMessage.style.display = 'block'; // Display error message
@@ -276,7 +276,7 @@ function insertchk() {
 
 		detail.focus(); // Focus on the input field
 
-		detail.addEventListener('input', function() {
+		detail.addEventListener('blur', function() {
 			var detailvalue = detail.value.trim();
 			if (detailvalue == "") {
 				detailErrorMessage.style.display = 'block'; // Display error message

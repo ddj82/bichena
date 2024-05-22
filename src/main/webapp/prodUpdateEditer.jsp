@@ -64,22 +64,35 @@ table.table#form>tbody>tr>td#td-rowspan5,
 table.table#form>tbody>tr>td#td-rowspan2 {
     width: 40%;
 }
-.navbar-default {
-    background-color: white;
-    border: none;
+
+@media (max-width: 1200px) {
+	div.se2_input_area.husky_seditor_editing_area_container,
+	div#se2_iframe,
+	#smart_editor2, 
+	div.djmain {
+		width: 720px !important;
+	}
+	form#dataTransferForm>div {
+		width: 100% !important;
+	}
 }
-.navbar {
-    max-width: 1140px;
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
-    margin: 10px auto;
-}
-.bottom-line {
-    display: block;
-    width: 100%;
-    border-bottom: 1px solid #E0E0E0;
-    margin-bottom: 20px;
+
+@media (max-width: 750px) {
+	div.se2_input_area.husky_seditor_editing_area_container,
+	div#se2_iframe,
+	#smart_editor2, 
+	div.djmain {
+		max-width: 500px !important;
+	}
+	form#dataTransferForm>div {
+		width: 100% !important;
+	}
+	table#form, table#form1 {
+		font-size: 14px !important;
+	}
+/* 	img { */
+/* 		width: 500px !important; */
+/* 	} */
 }
 </style>
 <!-- 20240503_ym 스타일추가 종료 -->
@@ -88,7 +101,7 @@ table.table#form>tbody>tr>td#td-rowspan2 {
 <!-- 20240503_ym 영미 수정 시작 -->
 <div id="se2_sample" style="margin:10px 0;">
 	<form action="adminProdUpdate.ko" method="post" id="dataTransferForm" enctype="multipart/form-data">
-		<textarea name="edithtml" id="ir1" rows="10" cols="100" style="display:none;">${prodOne.edithtml }</textarea>
+		<textarea name="edithtml" id="ir1" rows="10" cols="100" style="width:766px; height:412px; display:none;">${prodOne.edithtml }</textarea>
 		<input class="btn btn-primary" type="button" onclick="submitContents();" value="수정" />
 		<input class="btn btn-warning" type="button" onclick="resetContents();" value="되돌리기" />
 		<input class="btn btn-danger" type="button" onclick="location.href='adminProdList.ko';" value="수정취소" />
@@ -121,7 +134,7 @@ table.table#form>tbody>tr>td#td-rowspan2 {
 			        </td>
 				    <td><label for="cap">용량</label> <input type="text" id="cap" name="p_cap" value="${prodOne.p_cap }"> ml</td>
 				</tr>
-				<tr><td><label for="stock">수량</label> <input type="text" id="stock" name="p_stock" value="${prodOne.p_stock }"> 개</td></tr>
+				<tr><td><label for="stock">재고</label> <input type="text" id="stock" name="p_stock" value="${prodOne.p_stock }"> 개</td></tr>
 			</table>
 			
 			<table class="table table0" id="form1">

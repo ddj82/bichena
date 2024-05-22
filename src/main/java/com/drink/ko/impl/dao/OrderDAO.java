@@ -2,6 +2,7 @@ package com.drink.ko.impl.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -63,6 +64,10 @@ public class OrderDAO {
 		return mybatis.selectOne("OrderDAO.orderTotalCnt", vo);
 	}
 	
+	public int adminOrderRepeatCount(OrderVO vo) {
+		return mybatis.selectOne("OrderDAO.adminOrderRepeatCount", vo);
+	}
+	
 	public int orderInsert(OrderVO vo) {
 		String pno = vo.getP_no();
 		String[] pnoArray = pno.split(","); //고른 제품 번호
@@ -85,5 +90,14 @@ public class OrderDAO {
 		
 	public void orderDelete(String mid) {
 		mybatis.update("OrderDAO.deleteOrder", mid);
+	}
+	
+	public List<OrderVO> delOrderSelect(String mid) {
+		return mybatis.selectList("OrderDAO.delOrderSelect", mid);
+	}
+	
+	public List<OrderVO> chartResult(@Param("limit") int limit){
+		System.out.println("DAO탔음" + limit);
+		return mybatis.selectList("OrderDAO.chartResult" ,limit);
 	}
 }

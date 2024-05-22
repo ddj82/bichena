@@ -1,6 +1,7 @@
 package com.drink.ko.impl.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,9 @@ public class CartDAO {
 	}
 
 	//장바구니 중복상품여부 조회 
-	public CartVO selectCart(int productno) {
-		System.out.println("장바구니 조회할 상품번호 : " + productno);
-		return mybatis.selectOne("CartDAO.selectCount", productno);
+	public CartVO selectCart(Map<String, String> params) {
+		System.out.println("장바구니 조회할 상품번호 : " + params);
+		return mybatis.selectOne("CartDAO.selectCount", params);
 	}
 
 	//장바구니 리스트 조회

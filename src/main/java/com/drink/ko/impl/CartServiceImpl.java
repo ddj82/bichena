@@ -1,6 +1,7 @@
 package com.drink.ko.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,13 +32,9 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public CartVO selectCart(int productno) {
-		return cartDAO.selectCart(productno);
+	public CartVO selectCart(Map<String, String> params) {
+		return cartDAO.selectCart(params);
 	}
-//	@Override
-//	public int selectCart(int productno) {
-//		return cartDAO.selectCart(productno);
-//	}
 
 	@Override
 	public List<CartVO> selectList(CartVO vo) {

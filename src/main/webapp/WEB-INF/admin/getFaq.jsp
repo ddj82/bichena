@@ -14,15 +14,22 @@ location.href="main.ko";
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-<title>상세보기</title>
+<title>FAQ</title>
 <style>
-.faq_container {
+div.container{
+	width: 80%;
+	margin: 0 auto;
+}
+.container_header {
+	height: 50px;
+	
+}
+.content_container {
 	width: 876px;
 	margin: 0 auto;
-	float: left;
 }
 
-.faq_title_wrapper {
+.content_title_wrapper {
 	width: 100%;
 	line-height: 1.3;
 	border-top: 1px solid #7e7e7e;
@@ -31,18 +38,15 @@ location.href="main.ko";
 	background-color: #f9f9f9;
 	word-break: break-all;
 	font-weight: bold;
-	padding: 25px 0;
+	padding: 25px 20px;
 	margin-top: 0 !important;
 }
 
-.faq_title {
-	margin: 0 25px;
-}
-
-.faq_content_wrapper {
+.content_content_wrapper {
 	margin: 25px;
-	width: 80%;
-	margin: 0 auto;
+    width: 100%;
+    margin: 30px auto;
+    padding: 0 20px;
 }
 
 .back_btn {
@@ -60,28 +64,67 @@ location.href="main.ko";
 	cursor: pointer;
 	border-radius: 10px;
 }
+.back_btn:hover {
+	background-color: #005930;
+	color: #ffffff;
+}
+/* 반응형 할때 */
+@media screen and (max-width: 1140px) {
+	.content_container {
+		width: 800px;
+	}
+}
+@media screen and (max-width: 960px) {
+	div.container {
+	    width: 100%;
+	    margin: 0 auto;
+	}
+	.content_container {
+		width: 680px;
+	}
+}
+@media screen and (max-width: 720px) {
+	.content_container {
+		width: 500px;
+	}
+	.content_title_wrapper {
+		font-size: large;
+	}
+	h2 {
+		font-size: x-large!important;
+
+	}
+	
+}
+@media screen and (max-width: 540px) {
+	.content_container {
+		width: 95%;
+	}
+	.btn_top {
+		display: none;
+	}
+}
 </style>
 <body>
 <%@ include file="/WEB-INF/admin/adminMain.jsp" %>
-<div class="container" style="width: 80%; margin: 0 auto;">
-	<div class=faq_container>
-	<div>
-		<h1>
-			상세 보기
-			<button class="back_btn conMod" type="button">수정</button>
-			<button class="back_btn conDel" type="button">삭제</button>
-		</h1>
-	</div>
-	<div>
-		<div class="faq_title_wrapper">
-			<span class="faq_title">${faq.faq_title}</span>
+<div class="container">
+	<div class="content_container">
+		<div class="container_header">
+			<h2>
+				FAQ
+			</h2>
 		</div>
-		<div class="faq_content_wrapper">
-			<div class="faq_content" style="clear: both;">${faq.faq_content }</div>
+	<div>
+		<div class="content_title_wrapper">
+			<span class="content_title">${faq.faq_title}</span>
+		</div>
+		<div class="content_content_wrapper">
+			<div class="content_content" style="clear: both;">${faq.faq_content }</div>
 		</div>
 		<div id="footer" style="display: none">
 			<button class="back_btn conMod" type="button">수정</button>
 			<button class="back_btn conDel" type="button">삭제</button>
+			<button class="back_btn conList" type="button">목록</button>
 		</div>
 	</div>
 	</div>
@@ -105,13 +148,9 @@ location.href="main.ko";
 
 	$(".conMod").click(function(){
 		location.href = "modifyFaq.ko?faq_no="+ ${faq.faq_no};
-	})
-
-	$("#conWrite").click(function(){
-		location.href = "insertFaq.jsp";
 	});
 
-	$("#conList").click(function(){
+	$(".conList").click(function(){
 		location.href = "getFaqList.ko";
 	});
 </script>
