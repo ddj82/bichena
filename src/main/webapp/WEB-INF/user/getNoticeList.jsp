@@ -281,7 +281,7 @@ table.table {
 		<br> <br>
 	</div>
 </div>
-
+<%@ include file="../../common/footer.jsp"%>
 <script>
 function selTr(val){
 	location.href = "getNotice.ko?not_no="+val;

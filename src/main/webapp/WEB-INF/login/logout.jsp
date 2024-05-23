@@ -15,6 +15,7 @@ response.setHeader("pragma","no-cache");
 <body>
 <script>
 let logout ="<%=request.getParameter("logout")%>";
+console.log("logout : " + logout);
 if(logout == "2"){
 	kakaoLogout();
 }else if(logout == "3"){
@@ -25,21 +26,6 @@ naverLogout();
 	naverLogoutS();
 }
 
-function naverLogout(){
-	$.ajax({
-		type: 'POST',
-		url: "logoutNaver.ko",
-		success : function(res){
-			let popup = window.open("https://nid.naver.com/nidlogin.logout");	
-			myExec = setTimeout(function(){ 
-				popup.close();
-				location.reload();
-				location.href="main.ko";
-			}, 10); 
-		}
-	});
-}
-
 function naverLogoutS(){
 	$.ajax({
 		type: 'POST',
@@ -48,24 +34,47 @@ function naverLogoutS(){
 			let popup = window.open("https://nid.naver.com/nidlogin.logout");	
 			myExec = setTimeout(function(){ 
 				popup.close();
-				location.reload();
 				location.href="loginFailure.ko";
-			}, 10); 
+			}, 50); 
 		}
 	});
 }
 
 
+
 function kakaoLogout(){
-	location.href="logout.ko";
+	$.ajax({
+		url : 'logoutKaKao.ko',
+		type : 'POST',
+		async : false,
+		success : function(res){
+			console.log('성공: ', res);
+		},
+		error : function(err){
+			console.log('에러: ', err);
+		}
+	});
+	
 	let ifr = document.createElement("iframe");
 	ifr.setAttribute("src","https://accounts.kakao.com/logout?continue=https://accounts.kakao.com/weblogin/account");
 	ifr.setAttribute("style","display:none");
 	document.body.appendChild(ifr);
+	location.href="main.ko";
 }
 
 function kakaoLogoutS(){
-	location.href="logout.ko";
+	$.ajax({
+		url : 'logoutKaKao.ko',
+		type : 'POST',
+		async : false,
+		success : function(res){
+			console.log('성공: ', res);
+		},
+		error : function(err){
+			console.log('에러: ', err);
+		}
+	});
+	
 	let ifr = document.createElement("iframe");
 	ifr.setAttribute("src","https://accounts.kakao.com/logout?continue=https://accounts.kakao.com/weblogin/account");
 	ifr.setAttribute("style","display:none");

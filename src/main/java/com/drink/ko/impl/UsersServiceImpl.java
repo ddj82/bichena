@@ -154,4 +154,9 @@ public class UsersServiceImpl implements UsersService {
 		return usersDAO.getCount(vo);
 	}
 
+	@Override
+	public int updateTotal(UsersVO vo) {
+		return usersDAO.updateTotal(vo);
+	}
+	
 }

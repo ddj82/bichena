@@ -255,46 +255,74 @@ span.all {
 		
 		
 		IMP.init("imp70405420");
-
+		var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ? true : false;
+		
 		function requestCert(){
-			
-			IMP.certification(
-					  {
-					    pg: "inicis_unified.MIIiasTest"
-// 					    ,
-// 					    m_redirect_url: "http://localhost:8090"
-					  },
-					  function (rsp) {
-						  console.log(rsp);
-					    if (rsp.success) {
-					    	jQuery.ajax({
-					            url: "cer.ko",
-					            method: "POST",
-					            async : false,
-					            data: { "imp_uid" : rsp.imp_uid }
-					          }).done(function(res){
-					        	  console.log(res);
-					        	  if(res == '') {
-					        		  location.href = "success.ko?result=1";
-					        	  } else if(new Date(res.birth).getFullYear() > 2005) {
-					        		  location.href = "main.ko?result=2";
-					        	  } else if(new Date(res.birth).getFullYear() <= 2005){
-					        		  location.href = "insertPage.ko?name="+res.name+"&tel="+res.phone+"&birth="+res.birth;
-					        	  } else {
-					        		  alert('인증에 실패하였습니다. 에러 내용 : ' + res.msg);
-					        	  }
-					          });
-					        
-					    } else {
-					    	
-					    }
-					  },
-					  
-					);
-			
-			
+			if(!isMobile) {
+				IMP.certification(
+				  {
+				    pg: "inicis_unified.MIIiasTest"
+				  },
+				  function (rsp) {
+				    if (rsp.success) {
+				    	jQuery.ajax({
+				            url: "cer.ko",
+				            method: "POST",
+				            async : false,
+				            data: { "imp_uid" : rsp.imp_uid }
+				          }).done(function(res){
+				        	  console.log(res);
+				        	  if(res == '') {
+				        		  location.href = "success.ko?result=1";
+				        	  } else if(new Date(res.birth).getFullYear() > 2005) {
+				        		  location.href = "main.ko?result=2";
+				        	  } else if(new Date(res.birth).getFullYear() <= 2005){
+				        		  location.href = "insertPage.ko?name="+res.name+"&tel="+res.phone+"&birth="+res.birth;
+				        	  } else {
+				        		  alert('인증에 실패하였습니다. 에러 내용 : ' + res.msg);
+				        	  }
+				          });
+				        
+				    } else {
+				    	
+				    }
+				  },
+				  
+				);
+			} else {
+				IMP.certification(
+				  {
+				    pg: "inicis_unified.MIIiasTest",
+				    m_redirect_url: "http://localhost:8090/ko/mobileCer.ko"
+				  },
+				  function (rsp) {
+				    if (rsp.success) {
+				    	jQuery.ajax({
+				            url: "cer.ko",
+				            method: "POST",
+				            async : false,
+				            data: { "imp_uid" : rsp.imp_uid }
+				          }).done(function(res){
+				        	  console.log(res);
+				        	  if(res == '') {
+				        		  location.href = "success.ko?result=1";
+				        	  } else if(new Date(res.birth).getFullYear() > 2005) {
+				        		  location.href = "main.ko?result=2";
+				        	  } else if(new Date(res.birth).getFullYear() <= 2005){
+				        		  location.href = "insertPage.ko?name="+res.name+"&tel="+res.phone+"&birth="+res.birth;
+				        	  } else {
+				        		  alert('인증에 실패하였습니다. 에러 내용 : ' + res.msg);
+				        	  }
+				          });
+				    } else {
+				    	
+				    }
+				  },
+				  
+				);
+			}
 		}
 	</script>
-	
+<%@ include file="../../common/footer.jsp"%>
 </body>
 </html>

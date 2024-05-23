@@ -8,7 +8,6 @@
 <%
 if (request.getParameter("u_name") == null || request.getParameter("u_name").equals("")) {%>
 	<script>location.href="idf.ko";</script>
-<!-- 	response.sendRedirect("idf.ko"); -->
 <%}%>
 <!DOCTYPE html>
 <html>
@@ -256,111 +255,65 @@ $(window).resize(function(){
 <body>
 	<div class="idFindSearchMainBox">
 		<div class="idFindSearchSubBox">
-			
-			
 			<c:choose>
-			<c:when test="${userList == null or fn:length(userList) == 0}">
-			<div id="box1">회원님의 아이디를 확인해 주세요</div>
-			<div id="idFindList">
-			<div class="noneList">입력하신 정보와 일치하는 아이디가 없습니다.</div>
-			</div>
-			<div id="buttonInsert">
-				<a href="insertPage.ko" class="joinInsertButton">회원가입</a> 
-			</div>
-			</c:when>
-			<c:otherwise>
-			<div id="box2">회원님의 아이디를 확인해 주세요</div>
-			<div id="idFindList">
-				<c:forEach items="${userList}" var="list">
-					<c:choose>
-						<c:when test="${list.u_state eq 2 }">
-							<div class="kakaoBox">
-								<img src="img/login/k_Icon.png" alt="카카오 아이콘" />
-								<div id="idKakao"></div>
-								<script>
-									var str = "${list.u_id}";
-									var kakao = str.search('@');
-									//@전까지 가져오기
-									let k_id1 = str.substring(0, kakao);
+				<c:when test="${userList == null or fn:length(userList) == 0}">
+					<div id="box1">회원님의 아이디를 확인해 주세요</div>
+					<div id="idFindList">
+						<div class="noneList">입력하신 정보와 일치하는 아이디가 없습니다.</div>
+					</div>
+					<div id="buttonInsert">
+						<a href="insertPage.ko" class="joinInsertButton">회원가입</a> 
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div id="box2">회원님의 아이디를 확인해 주세요</div>
+					<div id="idFindList">
+						<c:forEach items="${userList}" var="list">
+							<c:choose>
+								<c:when test="${list.u_state eq 2 }">
+									<div class="kakaoBox">
+										<img src="img/login/k_Icon.png" alt="카카오 아이콘" />
+		<!-- 							양예진 수정 -->
+										<div id="idKakao">카카오로 가입한 이력이 있습니다.</div>
+									</div>
+								</c:when>
+								<c:when test="${list.u_state eq 1 }">
+									<div class="naverBox">
+										<img src="img/login/n_Icon.png" alt="네이버 아이콘" />
+										<div id="idNaver">네이버로 가입한 이력이 있습니다.</div>
+									</div>
+		<!-- 							양예진 수정 끝 -->
+								</c:when>
+								<c:otherwise>
+									<div class="bichenaBox">
+										<img src="img/login/bichena.png" alt="bichena 아이콘" />
+										<div id="idUser"></div>
+										<script>
+											let idUser = "${list.u_id}";
+											let id1 = idUser.substring(0, 3);
+											let id2 = idUser.substring(3, 6);
+											let id3 = idUser.substring(6);
+											let idStar ="";
+											for (let i = 0; i < id2.length; i++) {
+												idStar += "*";
+											}
 
-									let k_id2 = k_id1.substring(0, 3);
-									let k_id3 = k_id1.substring(3);
-									let k_id4 = str.substring(kakao);
-									let k_star = "";
-									for (let i = 0; i < k_id3.length; i++) {
-										k_star += "*";
-									 // k_id2 += "*";
-									}
-
-									// k_id4 = k_id2 + k_id4;
-
-// 									$("#idKakao").html(k_id2+'<div id="idKakaoStar" style="color:#e5c687">'+k_star+'</div>'+k_id4);
-									$("#idKakao").html(k_id2+k_star+k_id4);
-								</script>
-							</div>
-						</c:when>
-						<c:when test="${list.u_state eq 1 }">
-							<div class="naverBox">
-								<img src="img/login/n_Icon.png" alt="네이버 아이콘" />
-								<div id="idNaver"></div>
-								<script>
-									var str = "${list.u_id}";
-									console.log("str :",str)
-									var naver = str.search('@');
-									//@전까지 가져오기
-									let n_id1 = str.substring(0, naver);
-								// 05-12 변수명 n_id1로 변경
-									let n_id2 = n_id1.substring(0, 3);
-									let n_id3 = n_id1.substring(3);
-									let n_id4 = str.substring(naver);
-									let n_star = "";
-
-									for (let i = 0; i < n_id3.length; i++) {
-										n_star += "*";
-// 										n_id2 += "*";
-									}
-
-// 									n_id4 = n_id2 + n_id4;
-
-// 									$("#idNaver").html(n_id2+'<div id="idNaverStar" style="color:#e5c687">'+n_star+'</div>'+n_id4);
-									$("#idNaver").html(n_id2+n_star+n_id4);
-								</script>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<div class="bichenaBox">
-<!-- 							05-12 alt변경 -->
-								<img src="img/login/bichena.png" alt="bichena 아이콘" />
-								<div id="idUser"></div>
-								<script>
-									let idUser = "${list.u_id}";
-									let id1 = idUser.substring(0, 3);
-									let id2 = idUser.substring(3, 6);
-									let id3 = idUser.substring(6);
-									let idStar ="";
-									for (let i = 0; i < id2.length; i++) {
-// 										id1 += "*";
-										idStar += "*";
-									}
-
-// 									$("#idUser").html(id1+'<div id="idStar" style="color:#e5c687;">'+idStar+'</div>'+id3);
-									$("#idUser").html(id1+idStar+id3);
-								</script>
-							</div>
-								
-						</c:otherwise>
-					</c:choose>
-				</c:forEach>
-			</div>
-			<div id="button">
-				<a href="loginPage.ko" class="loginbutton">로그인 하기</a> 
-				<a href="pwf.ko" class="pwFindbutton">비밀번호 찾기</a>
-			</div>
-			</c:otherwise>
+											$("#idUser").html(id1+idStar+id3);
+										</script>
+									</div>
+										
+								</c:otherwise>
+							</c:choose>
+						</c:forEach>
+					</div>
+					<div id="button">
+						<a href="loginPage.ko" class="loginbutton">로그인 하기</a> 
+						<a href="pwf.ko" class="pwFindbutton">비밀번호 찾기</a>
+					</div>
+				</c:otherwise>
 			</c:choose>
-			</div>
-
 		</div>
+	</div>
 
 	<script>
 	

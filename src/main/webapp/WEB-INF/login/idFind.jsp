@@ -7,14 +7,8 @@
 <meta charset="UTF-8">
 <title>비채나</title>
 <!-- jQuery -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
-<!-- iamport.payment.js -->
-<script type="text/javascript"
-	src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
-<!-- <link rel="stylesheet" -->
-<!-- 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <style>
 
 .form-group.idFind {
@@ -304,7 +298,6 @@ form#form-signin-id {
 	//사용자가 전송한 데이터를 받아 실행
 	function search() {
 		alert("search()를 탔습니다.");
-		// 		location.href = "idFind.ko?u_name=" + $("#u_name").val() + "&u_tel=" + trimPhon;
 		document.getElementById("form-signin-id").submit();
 	}
 	
@@ -315,5 +308,5 @@ form#form-signin-id {
 		}
 	}
 	</script>
-<%-- <%@ include file="../../common/footer.jsp" %> --%>
+<%@ include file="../../common/footer.jsp"%>
 </html>

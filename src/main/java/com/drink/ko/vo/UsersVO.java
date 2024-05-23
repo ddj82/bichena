@@ -16,6 +16,7 @@ public class UsersVO {
 	private String u_lev;
 	private int u_state;
 	private String n_pw;
+	private int u_total;
 
 	// 검색
 	private String searchVoca;
@@ -40,7 +41,6 @@ public class UsersVO {
 
 	private boolean prev; // 이전 페이지 여부
 	private boolean next; // 다음 페이지 여부
-	
 
 	@Override
 	public String toString() {
@@ -48,6 +48,14 @@ public class UsersVO {
 				+ ", sizePerPage=" + sizePerPage + ", totalCnt=" + totalCnt + ", pageCnt=" + pageCnt + ", startList="
 				+ startList + ", range=" + range + ", pageSize=" + pageSize + ", startPage=" + startPage + ", endPage="
 				+ endPage + "]";
+	}
+
+	public int getU_total() {
+		return u_total;
+	}
+
+	public void setU_total(int u_total) {
+		this.u_total = u_total;
 	}
 
 	public int getU_no() {
@@ -317,6 +325,5 @@ public class UsersVO {
 	public void setSelectedStateValue(String selectedStateValue) {
 		this.selectedStateValue = selectedStateValue;
 	}
-
 
 }

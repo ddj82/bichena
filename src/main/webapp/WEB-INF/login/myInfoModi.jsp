@@ -368,6 +368,10 @@ input.menu_h:hover {
 	    width: 80px;
 	    font-size: 11px;
 	}
+	
+	.send{
+		margin: 20px 5px;
+	}
 	    
 }
 
@@ -522,7 +526,7 @@ input.menu_h:hover {
         </form>
     </div>
 </div>
-<%-- <jsp:include page="../common/footer.jsp"/> --%>
+<%@ include file="../../common/footer.jsp"%>
 </body>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://cdn.iamport.kr/v1/iamport.js"></script>

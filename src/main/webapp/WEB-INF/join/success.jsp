@@ -107,5 +107,6 @@ p {
 			</c:otherwise>
 		</c:choose>
 	</div>
+<%@ include file="../../common/footer.jsp"%>
 </body>
 </html>

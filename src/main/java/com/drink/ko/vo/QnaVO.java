@@ -10,11 +10,8 @@ public class QnaVO {
 	private String q_writer;
 	private String q_date;
 	private String q_state;
-	private String q_img;
 	private String a_content;
 
-	private MultipartFile uploadFile;
-	
 	private int rnum;
 	public int getRnum() {
 		return rnum;
@@ -98,14 +95,6 @@ public class QnaVO {
 		this.q_state = q_state;
 	}
 
-	public String getQ_img() {
-		return q_img;
-	}
-
-	public void setQ_img(String q_img) {
-		this.q_img = q_img;
-	}
-
 	public String getA_content() {
 		return a_content;
 	}
@@ -114,19 +103,10 @@ public class QnaVO {
 		this.a_content = a_content;
 	}
 
-	public MultipartFile getUploadFile() {
-		return uploadFile;
-	}
-
-	public void setUploadFile(MultipartFile uploadFile) {
-		this.uploadFile = uploadFile;
-	}
-
 	@Override
 	public String toString() {
 		return "QnaVO [q_no=" + q_no + ", q_cate=" + q_cate + ", q_title=" + q_title + ", q_content=" + q_content
-				+ ", q_writer=" + q_writer + ", q_date=" + q_date + ", q_state=" + q_state + ", q_img=" + q_img
-				+ ", a_content=" + a_content + "]";
+				+ ", q_writer=" + q_writer + ", q_date=" + q_date + ", q_state=" + q_state + ", a_content=" + a_content + "]";
 	}
 
 	public String getSearchCondition() {

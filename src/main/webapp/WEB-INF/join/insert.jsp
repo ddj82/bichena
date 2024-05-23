@@ -10,6 +10,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
 <script src="resources/js/check.js?ver=2"></script>
 <script>
+$(document).ready(function(){
+	var birth = document.getElementById('birth').value;
+	if(new Date(birth).getFullYear() > 2005) {
+		location.href = "main.ko?result=2";
+	}
+});
+
 var cnt = 0;
 var nickCheck = 0;
 var emailCheck = 0;
@@ -86,7 +93,7 @@ var emailCheck = 0;
 			}
 		});
 		
-		//닉네임 중복체크
+		//이메일 중복체크
 		$("#email").change(function() {
 			var emailCheckMessage = document.getElementById('emailCheckMessage');
 			let email = document.joinform.email.value;
@@ -438,5 +445,5 @@ input.menu_h:hover {
 		}).open();
 	}
 </script>
-
+<%@ include file="../../common/footer.jsp"%>
 </html>

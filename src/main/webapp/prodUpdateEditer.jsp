@@ -144,7 +144,7 @@ table.table#form>tbody>tr>td#td-rowspan2 {
 			        <td><input type="radio" name="p_type" id="p_type2" value="약·청주"> <label for="p_type2">약·청주</label></td>
 			        <td><input type="radio" name="p_type" id="p_type3" value="증류주"> <label for="p_type3">증류주</label></td>
 			        <td><input type="radio" name="p_type" id="p_type4" value="과실주"> <label for="p_type4">과실주</label></td>
-			        <td><input type="radio" name="p_type" id="p_type5" value="기타"> <label for="p_type5">기타</label></td>
+			        <td><input type="radio" name="p_type" id="p_type5" value="기타주류"> <label for="p_type5">기타</label></td>
 			    </tr>
 			    <tr>
 			        <th>단맛</th>

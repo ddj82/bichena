@@ -218,42 +218,42 @@ a#naver-login-btn {
 
 @media (max-width: 575px) {
 
-.container-sub {
-    width: 280px;
-    margin-top: -50px;
-}
-
-input#u_id,input#u_pw {
-    height: 40px;
-}
-
-a#kakao-login-btn,a#naver-login-btn {
-	height: 40px;
-}
-
-button.loginBtn {
-    font-size: 15px;
-    height: 40px;
-}
-
-
-.login-membership {
-    height: 40px;
-    line-height: 40px;
-    font-size: 15px;
-}
-
-.loginImg {
-    height: 18px;
-}
-
-a.nav-item {
-    font-size: 15px;
-}
-
-.rememberDiv {
-    font-size: 15px;
-}
+	.container-sub {
+	    width: 280px;
+	    margin-top: -50px;
+	}
+	
+	input#u_id,input#u_pw {
+	    height: 40px;
+	}
+	
+	a#kakao-login-btn,a#naver-login-btn {
+		height: 40px;
+	}
+	
+	button.loginBtn {
+	    font-size: 15px;
+	    height: 40px;
+	}
+	
+	
+	.login-membership {
+	    height: 40px;
+	    line-height: 40px;
+	    font-size: 15px;
+	}
+	
+	.loginImg {
+	    height: 18px;
+	}
+	
+	a.nav-item {
+	    font-size: 15px;
+	}
+	
+	.rememberDiv {
+	    font-size: 15px;
+	}
 
 }
 
@@ -356,7 +356,7 @@ function loginWithKakao() {
 		});
 	}else{
 	Kakao.Auth.authorize({
-		redirectUri : "http://bichena.kro.kr/ko/kakao.ko?version=2"
+		redirectUri : "http://bichena.kro.kr/kakao.ko?version=2"
 	});
 	}
 }
@@ -375,20 +375,18 @@ String state = new BigInteger(130, random).toString();
 function showLoginPopup() {
 	let url = window.location.href;
 	let r_u ="";
-	alert("url : "+url)
 	if(url.indexOf('localhost:8090') > 0){
 		r_u = 'http://localhost:8090/ko/NaverLoginCallback.ko';
 	}else if(url.indexOf('localhost:14192') > 0){
 		r_u = 'http://localhost:8090/ko/NaverLoginCallback.ko';
 	}else{
-		r_u = 'http://bichena.kro.kr/ko/NaverLoginCallback.ko';
+		r_u = 'http://bichena.kro.kr/NaverLoginCallback.ko';
 	}
 	let uri = 'https://nid.naver.com/oauth2.0/authorize?'
 			+ 'response_type=code' + // 인증과정에 대한 내부 구분값 code 로 전공 (고정값)
 			'&client_id=zxmdaRxHzFpwT89DdNZe' + // 발급받은 client_id 를 입력
 			'&state=${stat}' + // CORS 를 방지하기 위한 특정 토큰값(임의값 사용)
 			'&redirect_uri='+r_u; // 어플케이션에서 등록했던 CallBack URL를 입력
-	alert("uri : "+uri);		
 	location.href = uri;
 }
 
@@ -441,15 +439,7 @@ function btn() {
 	
 }
 
-// window.onpageshow = function(event){
-// 	if(event.persisted || (window.performance && window.performance.navigation.type == 2)){
-// 		console.log("뒤로가기");
-// 		location.reload();
-// 	}
-// }
-
-
 </script>
 </body>
-<%-- <%@ include file="../../common/footer.jsp" %> --%>
+<%@ include file="../../common/footer.jsp"%>
 </html>

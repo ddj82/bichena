@@ -245,7 +245,7 @@ div.content_content img {
 		</table>
 	</div>
 </div>
-	
+<%@ include file="../../common/footer.jsp"%>
 <script>
 $("#conList").click(function(){
 	location.href = "getNoticeList.ko";

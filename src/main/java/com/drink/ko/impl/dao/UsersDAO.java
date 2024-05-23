@@ -192,6 +192,10 @@ public class UsersDAO {
 		return mybatis.selectOne("UserDAO.getCount", vo);
 	}
 	
+	public int updateTotal(UsersVO vo) {
+		mybatis.update("UserDAO.updateTotal",vo);
+		return mybatis.update("UserDAO.updateLev",vo);
+	}
 	
 	//동준, 관리자로그인
 	public UsersVO loginAdmin(UsersVO vo) {

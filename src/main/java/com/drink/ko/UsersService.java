@@ -27,6 +27,7 @@ public interface UsersService {
 	void updatePw(UsersVO vo);
 	UsersVO checkTel(String tel);
 	UsersVO checkTelId(String tel, String uid);
+	int updateTotal(UsersVO vo);
 
 	// 페이징 처리된 글 목록 조회
 	List<UsersVO> getUserList(UsersVO vo);

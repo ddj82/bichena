@@ -53,6 +53,28 @@ page-link:hover {
 	margin-top: 30px;
 	display: right;
 }
+
+.container2 {
+	text-align: right;
+	margin-top: 40px;
+}
+table.table.table-hover {
+	margin-top: 20px;
+}
+
+@media (max-width: 576px) {
+	table.table.table-hover tr th.css-none,
+	table.table.table-hover tr td.css-none {
+		display:none;
+	}
+	
+	table.table.table-hover th {
+		font-size: 15px;
+	}
+	table.table.table-hover td {
+		font-size: 14px;
+	}
+}
 </style>
 <script>
 function qnaView(uid, qno, sid) {
@@ -68,7 +90,7 @@ function qnaView(uid, qno, sid) {
 </head>
 <body>
 <%@ include file="../../common/navbar.jsp" %>
-<div class="container">
+<div class="container container2">
 	<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href = 'qnaList.ko';">목록</button>
 	<c:if test="${userID ne null }">
 		<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href = 'qnaListMy.ko';">나의 문의</button>
@@ -76,10 +98,10 @@ function qnaView(uid, qno, sid) {
 	<table class="table table-hover">
 		<thead>
 			<tr>
-				<th>번호</th>
+				<th class="css-none">번호</th>
 				<th>카테고리</th>
 				<th>제목</th>
-				<th>작성자</th>
+				<th class="css-none">작성자</th>
 				<th>날짜</th>
 				<th>상태</th>
 			</tr>
@@ -87,10 +109,10 @@ function qnaView(uid, qno, sid) {
 	    <tbody>
 		<c:forEach items="${qnaList }" var="qna">
 			<tr onclick="qnaView('${qna.q_writer }', ${qna.q_no }, '${userID }')" style="cursor: pointer">
-				<td>${qna.q_no }</td>
+				<td class="css-none">${qna.q_no }</td>
 				<td>${qna.q_cate }</td>
 				<td>${qna.q_title }</td>
-				<td>${qna.q_writer }</td>
+				<td class="css-none">${qna.q_writer }</td>
 				<td>${qna.q_date }</td>
 				<td>${qna.q_state }</td>
 			</tr>
@@ -149,7 +171,7 @@ function qnaView(uid, qno, sid) {
 		<c:otherwise>
 			<ul class="pagination list-pagination">
 				<c:choose>
-					<c:when test="${pagination.currPageNo == 1}">
+					<c:when test="${paginationMy.currPageNo == 1}">
 						<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
 						<li class="page-item"><a class="page-link">이전</a></li>
 					</c:when>
@@ -159,9 +181,9 @@ function qnaView(uid, qno, sid) {
 		         		</li>
 					</c:otherwise>
 				</c:choose>
-				<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
+				<c:forEach begin="${paginationMy.startPage}" end="${paginationMy.endPage}" var="page">
 					<c:choose>
-						<c:when test="${page eq pagination.currPageNo}">
+						<c:when test="${page eq paginationMy.currPageNo}">
 							<li class="page-item active"><a class="page-link">${page}</a></li>
 						</c:when>
 						<c:otherwise>
@@ -173,7 +195,7 @@ function qnaView(uid, qno, sid) {
 				</c:forEach>
 		
 				<c:choose>
-					<c:when test="${pagination.currPageNo == pagination.pageCnt}">
+					<c:when test="${paginationMy.currPageNo == paginationMy.pageCnt}">
 						<!-- 현재 페이지가 마지막 페이지인 경우 -->
 						<li class="page-item"><a class="page-link">다음</a></li>
 					</c:when>
@@ -188,5 +210,6 @@ function qnaView(uid, qno, sid) {
 		</c:otherwise>
 	</c:choose>
 </div>	
+<%@ include file="../../common/footer.jsp"%>
 </body>
 </html>

@@ -352,11 +352,11 @@
 				</div>
 				<div class="porter-info" style="font-weight:bold;">
 					<div class="cus-tt">총 주문 금액</div>
-					<div>${allTotal}원</div>
+					<div>${prodTotal}원</div>
 				</div>
 				<div class="porter-info">
 					<div class="cus-tt">상품 금액</div>
-					<div>${allTotal}원</div>
+					<div>${prodTotal}원</div>
 				</div>
 				<div class="porter-info">
 					<div class="cus-tt">배송비</div>
@@ -364,7 +364,11 @@
 				</div>
 				<div class="porter-info" style="font-weight:bold; border-top:1px solid rgb(238, 238, 238);">
 					<div class="cus-tt">총 할인 금액</div>
-					<div>0원</div>
+					<div>${dcTotal }원</div>
+				</div>
+				<div class="porter-info">
+					<div class="cus-tt">등급 할인</div>
+					<div>${dcTotal }원</div>				
 				</div>
 				<div class="porter-info">
 					<div class="cus-tt">상품 할인</div>
@@ -575,5 +579,6 @@ $(".cancel_module").click(function () {
 	}
 });
 </script>
+<%@ include file="../../common/footer.jsp"%>
 </body>
 </html>

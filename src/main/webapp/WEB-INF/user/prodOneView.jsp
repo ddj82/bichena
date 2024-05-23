@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>주류상세페이지</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.js"></script>
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
 <script>
 $(function(){
 	let pno = ${prodOne.p_no};
@@ -20,11 +21,16 @@ $(function(){
 			if (res.code == "OK") { //controller에서 넘겨준 성공여부 코드
 				values = res.prodOneRev; //java에서 정의한 ArrayList명을 적어준다.
 				console.log("배열 : ", values);
-				$.each(values, function(i, o){
-					$("#revTB").append("<table class='dtable'><tr class='revTitle'><td id='revTd1'>" + o.u_nick + "</td><td id='revTd2'>" + o.p_name + "</td><td id='revTd3'>" + o.pr_date + "</td></tr>"
-							+ "<tr class='revPad'><td>" + o.pr_content + "</td></tr>"
-							+ "<tr class='revPad'><td>" + "<img alt='' src='img/imgRev/" + o.pr_img  + "' style='width:100px;'>" + "</td><tr></table>");
-				});
+				console.log("배열 : ", values.length);
+				if (values.length == 0) {
+					$("#revTB").append("<div style='text-align:center;'>등록 된 리뷰가 없습니다.</div>");
+				} else {
+					$.each(values, function(i, o){
+						$("#revTB").append("<table class='dtable'><tr class='revTitle'><td id='revTd1'>" + o.u_nick + "</td><td id='revTd2'>" + o.p_name + "</td><td id='revTd3'>" + o.pr_date + "</td></tr>"
+								+ "<tr class='revPad'><td>" + o.pr_content + "</td></tr>"
+								+ "<tr class='revPad'><td>" + "<img alt='' src='img/imgRev/" + o.pr_img  + "' style='width:100px;'>" + "</td><tr></table>");
+					});
+				}
 				console.log("성공");
 			} else {
 				console.log("실패");
@@ -44,9 +50,6 @@ input[type=number]::-webkit-outer-spin-button {
 /* Firefox에서 화살표를 숨기기 */
 input[type=number] {
     -moz-appearance: textfield;
-}
-th, td {
-	width:50%;
 }
 .product_desc{
 	display:flex;
@@ -102,7 +105,8 @@ table.dtable {
     margin-bottom: 30px;
 }
 tr.revTitle {
-    background-color: lightgray;
+    background-color: #c99c3c26;
+    font-weight: bold;
 }
 tr.revTitle td, tr.revPad td, tr.revPad td {
     padding: 10px;
@@ -120,17 +124,23 @@ td#revTd3 {
 	width: 30%;
     border-radius: 0 10px 10px 0;
 }
+div#revTB {
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
 
 
 @media (max-width: 720px) {
-	div.div-wid-mar, #detail2 * {
-		width: 500px!important;
-/* 		max-width: 100%; */
+	div.div-wid-mar {
+		max-width: 90%;
+	}
+	#detail2 * {
+		max-width: 100%;
 	}
 	div.div-flex, div.div-img, div.div-cart {
 		display:block;
 		margin: 0 auto;
-		width: 500px;
+		max-width: 100%;
 	}
 }
 
@@ -201,29 +211,12 @@ td#revTd3 {
 		</div>
 	</div>
 </div>
-
 <div class="div-wid-mar" id="detail2">${pageContext.request.contextPath }/WEB-INF/product/${prodOne.editfile }</div>
-
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<div id="revTB" class="div-wid-mar"></div>
-<br>
-<br>
-<br> 
-<br>
+<div class="div-wid-mar" style="margin-top:100px;">
+	<span style="font-family: 'Spoqa Han Sans Neo', 'sans-serif';">REVIEW</span>
+	<div class="bottom-line"></div>
+</div>
+<div class="div-wid-mar" id="revTB"></div>
 <script>
 window.onload = function(){
 	var httpReq = new XMLHttpRequest();
@@ -231,42 +224,20 @@ window.onload = function(){
 	httpReq.onreadystatechange = function(){
 		if( httpReq.readyState == 4 && httpReq.status == 200  ) {
 			var fileData = httpReq.responseText;
-			console.log('fileData: ',fileData);
 			document.querySelector("#detail2").innerHTML = fileData;
 		}
 	};
 	httpReq.send();
+	
+	let price = document.getElementById("total").value;
+	document.getElementById("total-disabled").value = priceCommaA(price) + '원';
 };
+
+function priceCommaA(price) {
+    let val = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return val;
+}
 </script>
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br> 
+<%@ include file="../../common/footer.jsp"%>
 </body>
 </html>

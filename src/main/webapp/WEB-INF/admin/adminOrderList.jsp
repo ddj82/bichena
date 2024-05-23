@@ -171,7 +171,7 @@ div#myModal>div.modal-dialog>div.modal-content tr>.td.col-td {
          </c:when>
          <c:otherwise>
             <li class="page-item">
-                     <a href="adminOrderList.ko?currPageNo=${pagination.currPageNo - 1}&o_no=${param.o_no}&u_name=${param.u_name}&o_date=${param.o_date}&o_state=${param.o_state}" class="btn btn-primary btn-xs">이전</a>
+                     <a class="page-link" href="adminOrderList.ko?currPageNo=${pagination.currPageNo - 1}&o_no=${param.o_no}&u_name=${param.u_name}&o_date=${param.o_date}&o_state=${param.o_state}" class="btn btn-primary btn-xs">이전</a>
                </li>
          </c:otherwise>
       </c:choose>
@@ -182,7 +182,7 @@ div#myModal>div.modal-dialog>div.modal-content tr>.td.col-td {
             </c:when>
             <c:otherwise>
                <li class="page-item">
-                        <a href="adminOrderList.ko?currPageNo=${page}&o_no=${param.o_no}&u_name=${param.u_name}&o_date=${param.o_date}&o_state=${param.o_state}" class="">${page}</a>
+                        <a class="page-link" href="adminOrderList.ko?currPageNo=${page}&o_no=${param.o_no}&u_name=${param.u_name}&o_date=${param.o_date}&o_state=${param.o_state}" class="">${page}</a>
                   </li>
             </c:otherwise>
          </c:choose>
@@ -196,7 +196,7 @@ div#myModal>div.modal-dialog>div.modal-content tr>.td.col-td {
          <c:otherwise>
             <!-- 다음 페이지로 이동하는 링크 -->
                <li class="page-item">
-                        <a href="adminOrderList.ko?currPageNo=${pagination.currPageNo + 1}&o_no=${param.o_no}&u_name=${param.u_name}&o_date=${param.o_date}&o_state=${param.o_state}" class="btn btn-primary btn-xs">다음</a>
+                        <a class="page-link" href="adminOrderList.ko?currPageNo=${pagination.currPageNo + 1}&o_no=${param.o_no}&u_name=${param.u_name}&o_date=${param.o_date}&o_state=${param.o_state}" class="btn btn-primary btn-xs">다음</a>
                   </li>
          </c:otherwise>
       </c:choose>

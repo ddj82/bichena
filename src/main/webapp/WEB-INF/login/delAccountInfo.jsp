@@ -267,7 +267,7 @@ p.del-guaidance {
 				</p>
 				<label>
 					<p class="must"> <input type="checkbox" name="clause" id="clause1" value="agree">안내 사항을 모두 확인하였으며, 이에 동의합니다.</p>
-				</label><br> <br>
+				</label>
 
 				<div id="div1" class="div1">
 					<input type="button" value="회원 탈퇴" id="delBtn" class="delBtn" onclick="delConfirm()" disabled>

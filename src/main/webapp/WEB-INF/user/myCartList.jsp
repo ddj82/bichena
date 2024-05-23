@@ -45,7 +45,7 @@
         var output = "";
         for (var i = 0; i < items.length; i++) {
             output += "<tr class='cart-item'>" +
-                "<td class='checkbox_td'><input type='checkbox' name='chk' class='item-checkbox' value='" + items[i].p_no + "'></td>" +
+                "<td class='checkbox_td'><input type='checkbox' onclick='updateTotal()' name='chk' class='item-checkbox' value='" + items[i].p_no + "'></td>" +
                 "<td class='imgclass'><img class='prodimg' src='img/" + items[i].p_img + "' alt='상품 이미지'></td>" +
                 "<td class='product-details'>" +
                     "<div class='product-info'>" +
@@ -167,13 +167,32 @@
 
     function updateTotal() {
         var total = 0;
-        $("[id^=price_]").each(function() {
-            var value = parseInt($(this).text().replace('원', '').replace(/,/g, ''));
+        var dc = 0;
+        var c_total = 0;
+        
+        // 체크된 항목들의 총 금액 계산
+        $(".item-checkbox:checked").each(function() {
+            var index = $(this).closest('tr').index();
+            var value = parseInt($("#price_" + index).text().replace('원', '').replace(/,/g, ''));
             total += value;
+            c_total += value;
         });
-        $('#protot').text(total.toLocaleString() + "원");
-        $('#totalP').text(total.toLocaleString() + "원");
-        $('.totalprice span').first().text(total.toLocaleString() + "원");
+        
+        if('${uLev}' === '다이아') {
+           dc = total * 0.1;
+           dc = Math.ceil(dc);
+           total = total - dc;
+           total = Math.floor(total);
+        } else if ('${uLev}' === '골드') {
+           dc = total * 0.05;
+           dc = Math.ceil(dc);
+           total = total - dc;
+           total = Math.floor(total);
+        }
+        $('#protot').text(c_total.toLocaleString() + "원");
+        $('#totalP').text(c_total.toLocaleString() + "원");
+        $('.totalprice span').first().text(c_total.toLocaleString() + "원");
+        $('.discountprice span').first().text(dc.toLocaleString() + "원");
         $('.tot span').last().text(total.toLocaleString() + "원");
     }
 
@@ -221,6 +240,7 @@
             itemCheckboxes[i].checked = allCheckbox.checked;
         }
         Allselect();
+        updateTotal();
     }
 
     function ok(res) {
@@ -355,9 +375,8 @@
 						data : JSON.stringify(selectedItems),
 						contentType : "application/json",
 						success : function(response) {
-							console.log('vo : ', response.user);
-							
 							if(!isMobile) {
+								console.log('pc환경');
 								IMP.request_pay({
 									pg : 'html5_inicis.INIpayTest', // 자신이 설정한 pg사 설정
 									pay_method : 'card',
@@ -368,7 +387,9 @@
 									buyer_name : response.user.u_name,
 									buyer_tel : response.user.u_tel,
 									buyer_addr : response.addr,
-									custom_data : response.p_no
+									custom_data : response.p_no,
+									m_redirect_url: 'http://bichena.kro.kr/ko/pay.ko',
+									popup : false
 								}, function(rsp) {
 									console.log(rsp);
 									if (rsp.success) {
@@ -385,6 +406,7 @@
 									}
 								});
 							} else {
+								console.log('mobile환경');
 								IMP.request_pay({
 									pg : 'html5_inicis.INIpayTest', // 자신이 설정한 pg사 설정
 									pay_method : 'card',
@@ -396,7 +418,7 @@
 									buyer_tel : response.user.u_tel,
 									buyer_addr : response.addr,
 									custom_data : response.p_no,
-									m_redirect_url: 'http://localhost:8090',
+									m_redirect_url: 'http://bichena.kro.kr/ko/pay.ko',
 									popup : false
 								}, function(rsp) {
 									console.log(rsp);
@@ -425,17 +447,11 @@
 					alert("주문번호 실패: " + error);
 					//밑에 결제 안들어가게 order()를 종료시키게
 				}
-			});
-			
-			
-			
+			});	
 		}
 	}
     
     </script>
-    <style>
-
-    </style>
 </head>
 <body>
 <div class="bichena">
@@ -483,10 +499,13 @@
         <div class="totalprice">총상품 금액 <span></span></div>
         <div class="totalprice">총 배송비 <span>무료배송</span></div>
         <hr>
+        <div class="discountprice totalprice">할인 금액 <span></span></div>
+        <hr>
         <div class="tot">총 결제 예상금액 <span id="alltot"></span></div>
         <button class="button" onclick="order()">구매하기</button>
     </div>
 </div>
 </div>
+<%-- <%@ include file="../../common/footer.jsp"%> --%>
 </body>
 </html>

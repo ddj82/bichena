@@ -19,7 +19,7 @@ display: none;
 	padding: 0 15px;
 }
 .title {
-	border-bottom: 2px solid #deffdd;
+	border-bottom: 1px solid lightgray;
 	margin-top: 20px;
 	align-items: center;
 	padding-bottom: 15px;
@@ -41,11 +41,6 @@ display: none;
 	display: flex;
     flex-direction: column;
     align-items: center;
-}
-.list-order {
-/* 	display: flex; */
-/* 	justify-content: space-around; */
-/* 	flex-wrap: wrap; */
 }
 .orderTable {
 	border: 1px solid rgb(238, 238, 238);
@@ -174,7 +169,7 @@ function priceToString(price) {
 <%@ include file="../../common/navbar.jsp" %>
 <%@ include file="myPageHeader.jsp" %>
 <div class="whole-div">
-		<div class="title">주문 내역</div>
+		<div class="title">취소/환불 내역</div>
 		<div class="list-count">
 			<div class="status">
 				<span class="count">${cancle }</span>
@@ -225,5 +220,6 @@ function priceToString(price) {
 			<p style="text-align:center;">취소 내역이 없습니다.</p>
 		</div>
 </div>
+<%@ include file="../../common/footer.jsp"%>
 </body>
 </html>

@@ -48,21 +48,21 @@
 	<insert id="kakaoLoginFirst">
 		INSERT INTO BC_USERS 
 		(U_ID, U_PW, U_NAME, U_BIRTH, U_TEL, ADDR1, ADDR2, ADDR3, U_EMAIL, U_NICK, U_GEN, U_STATE) 
-		VALUES(#{u_email}, 'kakao', #{u_name}, #{u_birth}, #{u_tel}, #{addr1}, #{addr2}, #{addr3}, #{u_email}, #{u_nick}, #{u_gen}, 2)
+		VALUES(#{u_id}, 'kakao', #{u_name}, #{u_birth}, #{u_tel}, #{addr1}, #{addr2}, #{addr3}, #{u_email}, #{u_nick}, #{u_gen}, 2)
 	</insert>
 
 	<select id="kakaoLogin" resultType="userdto">
-		SELECT * FROM BC_USERS WHERE U_TEL = #{u_tel}
+	SELECT * FROM BC_USERS WHERE U_ID = #{u_id} OR U_TEL = #{u_tel}
 	</select>
 
 	<insert id="naverLoginFirst">
 		INSERT INTO BC_USERS
 		(U_ID,U_PW,U_NAME,U_BIRTH,U_TEL,ADDR1,ADDR2,ADDR3,U_EMAIL,U_NICK,U_GEN,U_STATE)
-		VALUES(#{u_email},'naver',#{u_name},#{u_birth},#{u_tel},#{addr1},#{addr2},#{addr3},#{u_email},#{u_nick},#{u_gen},1)
+		VALUES(#{u_id},'naver',#{u_name},#{u_birth},#{u_tel},#{addr1},#{addr2},#{addr3},#{u_email},#{u_nick},#{u_gen},1)
 	</insert>
 
 	<select id="naverLogin" resultMap="user">
-		SELECT * FROM BC_USERS WHERE U_TEL = #{u_tel}
+		SELECT * FROM BC_USERS WHERE U_ID = #{u_id} OR U_TEL = #{u_tel}
 	</select>
 	
 	<select id="loginAdmin" resultMap="user">

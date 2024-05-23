@@ -98,7 +98,8 @@ location.href="main.ko";
     </style>
 </head>
 <body>
-    <div class="graph-box">
+<%@ include file="/WEB-INF/admin/adminMain.jsp" %>
+    <div class="container graph-box">
         <div id="columnchart_values" style="width: 100%; height: 100%; margin:0 auto"></div>
     </div>
 </body>

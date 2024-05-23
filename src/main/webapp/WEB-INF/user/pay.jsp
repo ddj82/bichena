@@ -11,15 +11,25 @@
 	<div style="margin-top:10px;"><small>수량</small></div>
 	<div style="text-align:center;margin-top:5px;">
 		<div class="btn-group" style="width:100%;height: 35px;">
-			<button class="btn btn-primary btn-sm" onclick="stockMinus();" style="width:30%;vertical-align: top;"> - </button>
-			<input type="number" id="stock" name="stock" placeholder="개수를 입력하세요." value="1" style="width:50%;text-align:center;">
-			<button class="btn btn-primary btn-sm" onclick="stockPlus('${prodOne.p_no}', '${prodOne.p_price}');" style="width:30%;vertical-align: top;"> + </button>
+			<button class="btn btn-primary btn-sm" onclick="stockMinus();" style="width:30%;vertical-align: top;">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+				  <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+				</svg>
+			</button>
+			<input type="number" id="stock" name="stock" value="1" style="width:40%;text-align:center;border:none;">
+			<button class="btn btn-primary btn-sm" onclick="stockPlus('${prodOne.p_no}', '${prodOne.p_price}');" style="width:30%;vertical-align: top;">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+				  <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+				</svg>
+			</button>
 		</div>
 	</div>
 	
 	<div style="margin-top:10px;"><small>가격</small></div>
 	<div style="text-align:center;margin-top:5px;">
-		<input type="text" id="total" name="total" value="${prodOne.p_price}" style="text-align:center;width:100%;height: 35px;" readonly>
+		<input type="hidden" id="total" name="total" value="${prodOne.p_price}" readonly>
+		<input type="text" id="total-disabled" name="disabled" value="${prodOne.p_price}" 
+		style="text-align:center;width:100%;height: 35px;border: 1px solid gray;border-radius: 5px;" disabled>
 		<span id="defaultPrice" style="display:none;">${prodOne.p_price}</span>
 	</div>
 	<div style="text-align:center; margin-top:15px;">
@@ -45,8 +55,14 @@ document.getElementById("stock").addEventListener("change", function(event) {
     	let price = document.getElementById("defaultPrice").innerText; //기본가격
     	let total = tot * price;
     	document.getElementById("total").value = total;
+    	document.getElementById("total-disabled").value = priceComma(total) + '원';
     }
 });
+
+function priceComma(total) {
+    let tot = total.toLocaleString();
+    return tot;
+}
 
 function stockMinus() {
 	let numberInput = document.getElementById("stock");
@@ -60,6 +76,7 @@ function stockMinus() {
     	let price = document.getElementById("defaultPrice").innerText; //기본가격
     	let total = tot * price;
     	document.getElementById("total").value = total;
+    	document.getElementById("total-disabled").value = priceComma(total) + '원';
     }
 }
 function stockPlus(p_no, p_price) {
@@ -74,6 +91,7 @@ function stockPlus(p_no, p_price) {
     	let price = document.getElementById("defaultPrice").innerText; //기본가격
     	let total = tot * price;
     	document.getElementById("total").value = total;
+    	document.getElementById("total-disabled").value = priceComma(total) + '원';
     }
 	var maxPstock = stockchk(p_no); //현재 재고
 	let nowStock = document.getElementById('stock').value;
@@ -81,6 +99,7 @@ function stockPlus(p_no, p_price) {
 		alert("해당상품은 현재 최대 " + maxPstock + "개 까지만 구매 가능합니다.");
 		document.getElementById('stock').value = maxPstock;
 		document.getElementById("total").value = maxPstock * p_price;
+		document.getElementById("total-disabled").value = priceComma((maxPstock * p_price)) + '원';
 		return;
 	}
 }
@@ -96,7 +115,10 @@ function Total(p_price) {
 function addCart(uid) {
 	var u_id = uid;
 	if (uid == "") {
-		alert("로그인창으로 보내기");
+		let res = confirm("로그인 후 이용 가능합니다.");
+    	if (res) {
+    		location.href="loginPage.ko";
+    	}
 	} else {
 	    $.ajax({
 	        url: "selectcount.ko",

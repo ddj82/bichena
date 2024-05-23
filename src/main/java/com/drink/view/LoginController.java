@@ -34,7 +34,7 @@ import com.drink.ko.vo.KaKaoVO;
 import com.drink.ko.vo.UsersVO;
 import com.google.gson.Gson;
 
-@SessionAttributes({ "userID", "userNO", "howLogin", "uLev" })
+@SessionAttributes({ "userID", "userNO", "howLogin", "uLev","uNick"})
 @Controller
 public class LoginController {
 
@@ -118,6 +118,7 @@ public class LoginController {
 		if (user != null) {
 			Boolean result = encoder.matches(pw, user.getU_pw());
 			if (result == true) {
+				System.out.println(user);
 				model.addAttribute("userID", user.getU_id());
 				model.addAttribute("userNO", user.getU_no());
 				model.addAttribute("howLogin", user.getU_state());
@@ -194,9 +195,10 @@ public class LoginController {
 		}
 	}
 
-	@RequestMapping("/logout.ko")
-	public String logout(HttpSession session, SessionStatus sessionStatus, RedirectAttributes ra) throws Exception {
-		System.out.println("logout.do 메서드를 탔습니다.");
+//	양예진 수정
+	@RequestMapping("/logoutKaKao.ko")
+	@ResponseBody
+	public String logoutKaKao(HttpSession session, SessionStatus sessionStatus, RedirectAttributes ra) throws Exception {
 		if (kakao != null) {
 			kakao.kakaoLogout(accessToken, session.getAttribute("userID").toString());
 			HttpClient client = HttpClientBuilder.create().build();
@@ -208,8 +210,17 @@ public class LoginController {
 		}
 		sessionStatus.setComplete();
 		session.invalidate();
+		return "success";
+	}
+	
+	@RequestMapping("/logout.ko")
+	public String logout(HttpSession session, SessionStatus sessionStatus, RedirectAttributes ra) throws Exception {
+		sessionStatus.setComplete();
+		session.invalidate();
 		return "redirect:/main.ko";
 	}
+
+//	양예진 수정 끝	
 
 	@RequestMapping("/logoutNaver.ko")
 	@ResponseBody
@@ -314,6 +325,7 @@ public class LoginController {
 				model.addAttribute("userNO", user.getU_no());
 				model.addAttribute("howLogin", user.getU_state());
 				model.addAttribute("uLev", user.getU_lev());
+				model.addAttribute("uNick", user.getU_nick());
 				return "main.ko";
 			} else if (i <= 0) {
 				System.out.println("카카오 데이터 업데이트 실패");
@@ -321,11 +333,12 @@ public class LoginController {
 			}
 		} else {
 
-			if (user.getU_state() == 2) {
+			if (user.getU_state() == 2 && user.getU_id().equals(vo.getU_id())) {
 				model.addAttribute("userID", user.getU_id());
 				model.addAttribute("userNO", user.getU_no());
 				model.addAttribute("howLogin", user.getU_state());
 				model.addAttribute("uLev", user.getU_lev());
+				model.addAttribute("uNick", user.getU_nick());
 				return "main.ko";
 			} else {
 				model.addAttribute("userID", user.getU_id());
@@ -356,11 +369,12 @@ public class LoginController {
 		UsersVO user = usersService.naverLogin(vo);
 		if (user != null) {
 			System.out.println("이미 가입한 사용자입니다.");
-			if (user.getU_state() == 1) {
+			if (user.getU_state() == 1 && user.getU_id().equals(vo.getU_id())) {
 				model.addAttribute("userID", user.getU_id());
 				model.addAttribute("userNO", user.getU_no());
 				model.addAttribute("howLogin", user.getU_state());
 				model.addAttribute("uLev", user.getU_lev());
+				model.addAttribute("uNick", user.getU_nick());
 				return "main.ko";
 			} else {
 				return "logoutProceeding.ko?logout=s3";
@@ -375,6 +389,7 @@ public class LoginController {
 				model.addAttribute("userNO", user.getU_no());
 				model.addAttribute("howLogin", user.getU_state());
 				model.addAttribute("uLev", user.getU_lev());
+				model.addAttribute("uNick", user.getU_nick());
 				return "main.ko";
 			}
 		}

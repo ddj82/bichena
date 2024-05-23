@@ -87,7 +87,7 @@ background-color: #2d4739;
 	}
 	
     .conPwForm#conForm {
-        width: 80%;
+        width: 100%;
     }
 
     .pwConBtn {
@@ -104,10 +104,10 @@ background-color: #2d4739;
 	}
     
 	p.del-conPw {
-	    font-size: 12px;
+	    font-size: 15px;
 	    line-height: 21px;
 	    font-weight: 700;
-	    text-align: center;
+	    text-align: justify;
 	    color: #333;
 	    padding: 10px 0;
 	}
@@ -158,7 +158,7 @@ background-color: #2d4739;
      } 
 
     .conPwForm#conForm {
-        width: 50%;
+        width: 60%;
     }
 	.confirmPw input[type=password] {
 		font-size: 14px;

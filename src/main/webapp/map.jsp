@@ -120,7 +120,7 @@
 }
 
 .content-box {
-    width: 900px;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -194,7 +194,7 @@
     font-weight: 800;
 }
 .tel-desc{
-    width: 900px;
+    width: 100%;
     display: flex;
     justify-content: space-around;
     font-weight: 600;
@@ -219,13 +219,57 @@ svg{
     margin: 30px 0;
     opacity: 0.6;
 }
+
+@media (max-width:768px){
+		
+.tel-title div:first-child  {
+	font-size:26px;
+	}
+.tel-box{
+	font-size:14px
+}
+
+.content img {
+    margin: 10px 20px;
+    width: 150px;
+    height: 150px;
+}
+
+.sector {
+
+	font-size:16px
+}
+
+.tel , .addr{
+	font-size:14px
+}
+
+
+}
+
+@media (max-width:500px) {
+.tel-title div:first-child  {
+   font-size:22px;
+   }
+.tel-title div:nth-child(2){
+   font-size:18px;
+}
+.tel-box{
+   font-size:14px
+}
+.tel-desc{
+	flex-direction:column
+}
+
+}
+
 </style>
 
 
 
 </head>
 <body>
-<div class="body-wrapper">
+<div class="container body-wrapper">
     <div class="map">
         <section class="title">
             오시는길

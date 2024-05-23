@@ -110,7 +110,7 @@ border-top: 2px solid black;
 /* extra small */
 @media screen and (max-width:540px) {
     .container#container-Info {
-    	width: 80%;
+    	width: 90%;
         margin: 20px auto;
         padding: 20px;
     }
@@ -143,13 +143,15 @@ border-top: 2px solid black;
     }
     
     .uMyPage button[type=button]{
-        width: 80%;
+        width: auto;
         font-size: 12px;
         float: none;
+	    padding: 6px;        
     }
     
     .uMyPage button[type=submit] {
         font-size: 12px;
+	    padding: 6px 14px;
     }
     
     .uMyPage button[type=button]#delBtn {
@@ -157,6 +159,7 @@ border-top: 2px solid black;
         text-align: left;
         margin-top: 5px;
     }
+    
 }
 
 /* small */
@@ -175,11 +178,15 @@ border-top: 2px solid black;
     }
     
     .uMyPage button[type=button], button[type=submit] {
-	    padding: 5px 20px;
+	    padding: 6px;
 	    font-weight: bold;
 	    font-size: 12px;
 	}
 
+	.uMyPage button[type=submit] {
+        padding: 6px 10px;
+    }
+    
     .uMyPage button[type=button]#delBtn {
         float: none;
         margin-top: 5px;
@@ -282,7 +289,7 @@ function goDelAcc(){
         <form action="infoForm.ko" class="uMyPage" name="uMyPage" method="post">
             <div class="infoFormbox" id="infoFormbox">
                 <div class="box-top">
-                    <button type="submit">수정</button>
+                    <button type="submit">수 정</button>
                     <h2>${users.u_nick} <span>님 회원 정보</span></h2>
                 </div>
                 <div class="infoContent">

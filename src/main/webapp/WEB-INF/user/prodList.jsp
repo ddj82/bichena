@@ -129,10 +129,46 @@ input[class="form-check-input"] {
 	margin: 0px auto;
 }
 
+/* 유저 페이징처리 스타일 통일사항 */
 .list-pagination {
-	display: flex;
-	justify-content: center;
-	margin: 0 auto;
+   display: flex;
+   justify-content: center;
+   margin-bottom: 60px;
+   margin-top: 20px;
+}
+page-link:hover {
+    z-index: 2;
+    color: #005930!important!important;
+    text-decoration: none!important;
+    background-color: #e9ecef!important;
+    border-color: #dee2e6!important;
+    border-radios: 5px!important;
+}
+.page-link:focus {
+    box-shadow: 0 0 0 .2rem rgb(23 147 9 / 25%)!important;
+    color: #005930!important;
+    border-radius: 5px!important;
+}
+
+.page-link {
+    padding: .5rem .75rem!important;
+    margin-left: -1px;
+    line-height: 1.25!important;
+    color: #005930!important;
+    background-color: #fff!important;
+    border: none!important;
+}
+
+.page-item.active .page-link {
+    background-color: #005930!important;
+    border-color: #005930!important;
+    border-radius: 5px!important;
+    color:white!important;
+}
+.findMem{
+   text-align: center;
+   margin-top: 30px;
+   display: right;
 }
 
 .list-image-wrapper {
@@ -215,7 +251,6 @@ input[class="form-check-input"] {
 
 .jumbotron img {
 	width: 100px;
-	height: 100%;
 }
 
 .filter-button {
@@ -423,6 +458,25 @@ a:hover {
 		display: none;
 	}
 }
+
+@media (max-width: 425px){
+   .jumbotron-left , .jumbotron-right {
+   padding:0 40px
+   
+   }
+   .jumbotron img {
+   width:60px
+   }
+   .jumbotron-title {
+   font-size: 16px;
+   }
+   .jumbotron-subtitle {
+   font-size: 12px;
+   white-space:pre;
+   }
+
+}
+
 </style>
 <script>
 $(document).ready(function () {
@@ -808,40 +862,44 @@ $(document).ready(function () {
 		
 	</div>
 	<!-- 페이징 처리 -->
-	<ul class="pagination list-pagination">
-		<c:choose>
-			<c:when test="${pagination.currPageNo == 1}">
-				<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
-				<span>이전</span>
-			</c:when>
-			<c:otherwise>
-				<!-- 이전 페이지로 이동하는 링크 -->
-				<a href="#" onclick="goToPage(${pagination.currPageNo - 1})"
-					class="btn btn-primary btn-xs">이전</a>
-			</c:otherwise>
-		</c:choose>
-		<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
-			<c:choose>
-				<c:when test="${page eq pagination.currPageNo}">
-					<span>${page}</span>
-				</c:when>
-				<c:otherwise>
-					<a href="#" onclick="goToPage(${page})" class="">${page}</a>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
+   <ul class="pagination list-pagination">
+      <c:choose>
+         <c:when test="${pagination.currPageNo == 1}">
+            <!-- 현재 페이지가 첫 번째 페이지인 경우 -->
+            <li class="page-item"><a class="page-link">이전</a></li>
+         </c:when>
+         <c:otherwise>
+            <li class="page-item">
+                     <a class="page-link" href="#" onclick="goToPage(${pagination.currPageNo - 1})">이전</a>
+               </li>
+         </c:otherwise>
+      </c:choose>
+      <c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
+         <c:choose>
+            <c:when test="${page eq pagination.currPageNo}">
+               <li class="page-item active"><a class="page-link">${page}</a></li>
+            </c:when>
+            <c:otherwise>
+               <li class="page-item">
+                        <a class="page-link" href="#" onclick="goToPage(${page})">${page}</a>
+                  </li>
+            </c:otherwise>
+         </c:choose>
+      </c:forEach>
 
-		<c:choose>
-			<c:when test="${pagination.currPageNo == pagination.pageCnt or pagination.pageCnt <= 1}">
-				<!-- 현재 페이지가 마지막 페이지인 경우 -->
-				<span>다음</span>
-			</c:when>
-			<c:otherwise>
-				<!-- 다음 페이지로 이동하는 링크 -->
-				<a href="#" onclick="goToPage(${pagination.currPageNo + 1})" class="btn btn-primary btn-xs">다음</a>
-			</c:otherwise>
-		</c:choose>
-	</ul>
+      <c:choose>
+         <c:when test="${pagination.currPageNo == pagination.pageCnt or pagination.pageCnt <= 1}">
+            <!-- 현재 페이지가 마지막 페이지인 경우 -->
+            <li class="page-item"><a class="page-link">다음</a></li>
+         </c:when>
+         <c:otherwise>
+            <!-- 다음 페이지로 이동하는 링크 -->
+               <li class="page-item">
+                        <a class="page-link" href="#" onclick="goToPage(${pagination.currPageNo + 1})">다음</a>
+                  </li>
+         </c:otherwise>
+      </c:choose>
+   </ul>
 	
 	<div class="list-side-menu" id="list-sideMenu">
 		<div class="list-sidemenu-logo-imagewrapper">

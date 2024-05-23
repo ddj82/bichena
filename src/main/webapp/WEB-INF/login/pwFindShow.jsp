@@ -161,7 +161,7 @@ $.ajax({
 
 
 window.onload = function(){
-// 	history.replaceState({}, null, location.pathname);
+	history.replaceState({}, null, location.pathname);
 }
 </script>
 </body>

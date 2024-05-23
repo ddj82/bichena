@@ -29,7 +29,7 @@ public class KaKaoVO {
 		if (version.equals("1")) {
 			kakaoRedirectUri = "http://localhost:8090/ko/kakao.ko?version=1";
 		}else if(version.equals("2")) {
-			kakaoRedirectUri = "http://bichena.kro.kr/ko/kakao.ko?version=2";
+			kakaoRedirectUri = "http://bichena.kro.kr/kakao.ko?version=2";
 		}
 	}
 //    @Value("${kakao.api_key}")

@@ -12,7 +12,6 @@
 		<result property="q_writer" column="Q_WRITER" />
 		<result property="q_date" column="Q_DATE" />
 		<result property="q_state" column="Q_STATE" />
-		<result property="q_img" column="Q_IMG" />
 		<result property="a_content" column="A_CONTENT" />
 	</resultMap>
 	
@@ -28,7 +27,6 @@
 	</select>
 	
 	<select id="qnaList" resultMap="qnalist">
-<!-- 		SELECT * FROM BC_QNA WHERE 1=1 -->
 		SELECT q.*, ROW_NUMBER() OVER() AS rnum FROM BC_QNA q WHERE 1=1 
 		<if test="searchCondition != null">
 			<if test="searchCondition == 'q_cate' "> AND Q_CATE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
@@ -55,7 +53,7 @@
 	</select>
 	
 	<insert id="qnaInsert">
-		INSERT INTO BC_QNA (Q_CATE, Q_TITLE, Q_CONTENT, Q_WRITER, Q_IMG) VALUES (#{q_cate}, #{q_title}, #{q_content}, #{q_writer}, #{q_img})
+		INSERT INTO BC_QNA (Q_CATE, Q_TITLE, Q_CONTENT, Q_WRITER) VALUES (#{q_cate}, #{q_title}, #{q_content}, #{q_writer})
 	</insert>
 
 	<delete id="qnaDelete">

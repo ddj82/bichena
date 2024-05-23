@@ -21,7 +21,7 @@
 	padding: 0 15px;
 }
 .title {
-	border-bottom: 2px solid #deffdd;
+	border-bottom: 1px solid lightgray;
 	margin-top: 20px;
 	align-items: center;
 	padding-bottom: 15px;
@@ -420,5 +420,6 @@ function starFill(star) {
 	}
 };
 </script>
+<%@ include file="../../common/footer.jsp"%>
 </body>
 </html>

@@ -116,77 +116,92 @@ input[type="file"]#p_img {
 		</tbody>
 	</table>
 	
-	<div class="searchDiv">
-		<form action="adminProdList.ko" method="post" class="searchForm">
-	        <select id="sel1" name="searchCondition">
-	            <option value="${conditionMapProd['상품명']}">상품명</option>
-				<option value="${conditionMapProd['제조사']}">제조사</option>
-				<option value="${conditionMapProd['상품번호']}">상품번호</option>
-				<option value="${conditionMapProd['주종']}">주종</option>
-	        </select>
+	    <div class="searchDiv">
+		    <form class="searchForm" action="adminProdList.ko" method="post">
+		        <select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;">
+		            <c:choose>
+		                <c:when test="${searchCondition == 'pname'}">
+		                    <option value="${conditionMapProd['상품명']}">상품명</option>
+		                    <option value="${conditionMapProd['제조사']}">제조사</option>
+		                    <option value="${conditionMapProd['상품번호']}">상품번호</option>
+		                    <option value="${conditionMapProd['주종']}">주종</option>
+		                </c:when>
+		                <c:when test="${searchCondition == 'pmade'}">
+		                    <option value="${conditionMapProd['제조사']}">제조사</option>
+		                    <option value="${conditionMapProd['상품명']}">상품명</option>
+		                    <option value="${conditionMapProd['상품번호']}">상품번호</option>
+		                    <option value="${conditionMapProd['주종']}">주종</option>
+		                </c:when>
+		                <c:when test="${searchCondition == 'pno'}">
+		                    <option value="${conditionMapProd['상품번호']}">상품번호</option>
+		                    <option value="${conditionMapProd['상품명']}">상품명</option>
+		                    <option value="${conditionMapProd['제조사']}">제조사</option>
+		                    <option value="${conditionMapProd['주종']}">주종</option>
+		                </c:when>
+		                <c:when test="${searchCondition == 'ptype'}">
+		                    <option value="${conditionMapProd['주종']}">주종</option>
+		                    <option value="${conditionMapProd['상품명']}">상품명</option>
+		                    <option value="${conditionMapProd['제조사']}">제조사</option>
+		                    <option value="${conditionMapProd['상품번호']}">상품번호</option>
+		                </c:when>
+		                <c:otherwise>
+		                    <option value="${conditionMapProd['상품명']}">상품명</option>
+		                    <option value="${conditionMapProd['제조사']}">제조사</option>
+		                    <option value="${conditionMapProd['상품번호']}">상품번호</option>
+		                    <option value="${conditionMapProd['주종']}">주종</option>
+		                </c:otherwise>
+		            </c:choose>
+		        </select>
+		        <c:choose>
+		           <c:when test="${searchKeyword == '' or searchKeyword == null}">
+		              <input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
+		           </c:when>
+		           <c:otherwise>
+		              <input type="text" name="searchKeyword" value ="${searchKeyword}">
+		           </c:otherwise>
+		        </c:choose>
+				<button type="submit" class="btn btn-primary btn-sm">검색</button>
+			</form>
+	    </div>
+<!-- 페이징 처리 -->
+		<ul class="pagination list-pagination">
 			<c:choose>
-				<c:when test="${keyword == ''}">
-					<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요.">
-				</c:when>
-				<c:otherwise>
-					<input type="text" name="searchKeyword" value ="${keyword}">
-				</c:otherwise>
-	        </c:choose>
-			<button type="submit" class="btn btn-primary btn-sm">검색</button>
-		</form>
-	</div>
-	
-<!-- 	<div style="text-align: center;"> -->
-<!-- 		<form action="adminProdList.ko" method="post"> -->
-<!-- 			<select id="sel1" name="searchCondition" style="display: inline-block !important; margin-right: 10px;"> -->
-<%-- 				<option value="${conditionMapProd['상품명']}">상품명</option> --%>
-<%-- 				<option value="${conditionMapProd['상품번호']}">상품번호</option> --%>
-<%-- 				<option value="${conditionMapProd['주종']}">주종</option> --%>
-<!-- 			</select> -->
-<!-- 			<input type="text" name="searchKeyword" placeholder="검색어를 입력하세요."> -->
-<!-- 			<button type="submit" class="btn btn-primary btn-sm">검색</button> -->
-<!-- 		</form> -->
-<!-- 	</div> -->
-	
-	<!-- 페이징 처리 -->
-	<ul class="pagination list-pagination">
-		<c:choose>
-			<c:when test="${pagination.currPageNo == 1}">
-				<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
-				<li class="page-item"><a class="page-link">이전</a></li>
-			</c:when>
-			<c:otherwise>
-				<li class="page-item">
-           			 <a class="page-link" href="adminProdList.ko?currPageNo=${pagination.currPageNo - 1}&searchKeyword=${keyword}&searchCondition=${condition}">이전</a>
-         		</li>
-			</c:otherwise>
-		</c:choose>
-		<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
-			<c:choose>
-				<c:when test="${page eq pagination.currPageNo}">
-					<li class="page-item active"><a class="page-link">${page}</a></li>
+				<c:when test="${pagination.currPageNo == 1}">
+					<!-- 현재 페이지가 첫 번째 페이지인 경우 -->
+					<li class="page-item"><a class="page-link">이전</a></li>
 				</c:when>
 				<c:otherwise>
 					<li class="page-item">
-           			 	<a class="page-link" href="adminProdList.ko?currPageNo=${page}&searchKeyword=${keyword}&searchCondition=${condition}">${page}</a>
+	           			 <a class="page-link" href="adminProdList.ko?currPageNo=${pagination.currPageNo - 1}&searchKeyword=${searchKeyword}&searchCondition=${searchCondition}">이전</a>
+	         		</li>
+				</c:otherwise>
+			</c:choose>
+			<c:forEach begin="${pagination.startPage}" end="${pagination.endPage}" var="page">
+				<c:choose>
+					<c:when test="${page eq pagination.currPageNo}">
+						<li class="page-item active"><a class="page-link">${page}</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item">
+	           			 	<a class="page-link" href="adminProdList.ko?currPageNo=${page}&searchKeyword=${searchKeyword}&searchCondition=${searchCondition}">${page}</a>
+	         			</li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+	
+			<c:choose>
+				<c:when test="${pagination.currPageNo == pagination.pageCnt or pagination.pageCnt <= 1}">
+					<!-- 현재 페이지가 마지막 페이지인 경우 -->
+					<li class="page-item"><a class="page-link">다음</a></li>
+				</c:when>
+				<c:otherwise>
+					<!-- 다음 페이지로 이동하는 링크 -->
+					<li class="page-item">
+		 				<a class="page-link" href="adminProdList.ko?currPageNo=${pagination.currPageNo + 1}&searchKeyword=${searchKeyword}&searchCondition=${searchCondition}">다음</a>
          			</li>
 				</c:otherwise>
 			</c:choose>
-		</c:forEach>
-
-		<c:choose>
-			<c:when test="${pagination.currPageNo == pagination.pageCnt or pagination.pageCnt <= 1}">
-				<!-- 현재 페이지가 마지막 페이지인 경우 -->
-				<li class="page-item"><a class="page-link">다음</a></li>
-			</c:when>
-			<c:otherwise>
-				<!-- 다음 페이지로 이동하는 링크 -->
-					<li class="page-item">
-           			 	<a class="page-link" href="adminProdList.ko?currPageNo=${pagination.currPageNo + 1}&searchKeyword=${keyword}&searchCondition=${condition}">다음</a>
-         			</li>
-			</c:otherwise>
-		</c:choose>
-	</ul>
+		</ul>
 	</div>
 </div>
 <script>

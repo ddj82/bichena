@@ -238,7 +238,6 @@ input#cancleDel {
 </head>
 <body>
 <%@ include file="../../common/navbar.jsp" %>
-<%-- <%@ include file="../user/myPageHeader.jsp" %> --%>
 	
 <div class="container" id="containerPw">
 	<div class="delAccForm" id="delAccForm">
@@ -253,7 +252,7 @@ input#cancleDel {
 		</form>
 	</div>
 </div>
-<%-- <jsp:include page="../common/footer.jsp"/> --%>
+<%@ include file="../../common/footer.jsp"%>
 </body>
 <script>
 document.addEventListener('DOMContentLoaded', function() {

@@ -77,7 +77,8 @@ public class BichenaController {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
-	String realPath = "C:/swork/bichena/src/main/webapp/img/";
+	String realPath = "C:/apache-tomcat-9.0.86/webapps/bichena/img/";
+	String realPathJSP = "C:/apache-tomcat-9.0.86/webapps/bichena/WEB-INF/product/";
 
 	public final String IMPORT_TOKEN_URL = "https://api.iamport.kr/users/getToken";
 	public final String IMPORT_PAYMENTINFO_URL = "https://api.iamport.kr/payments/find/";
@@ -168,35 +169,8 @@ public class BichenaController {
 	// 공지 등록
 	@PostMapping(value = "/insertNotice.ko")
 	public String insertNotice(NoticeVO vo) throws IllegalStateException, IOException {
-		System.out.println("글 등록 초기");
 		int not_no = noticeService.getMaxNotice();
-		System.out.println("여기는, not_no가 받아지는 순간 : " + not_no);
-		String filename = "not_no" + not_no + ".jsp";
 		vo.setNot_no(not_no);
-		System.out.println("vo 값을 확인해 봅시다. : " + vo);
-		vo.setFilename(filename);
-		// 총 파일의 갯수 + 1 을 한 숫자값을 가져와 pno + 숫자값.jsp 파일을 만들 준비를 함 == filename
-		File file = new File("C:/swork/bichena/src/main/webapp/WEB-INF/notice");
-		if (!file.exists()) {
-			file.mkdir();
-		} // 폴더 생성
-		FileWriter fw = null;
-		// 파일에 문자를 쓰기 위한, 표준 라이브러리
-		try {
-			fw = new FileWriter(file + "/" + filename); // // 경로 + / + 파일.jsp
-			fw.write("<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>");
-			fw.write(vo.getNot_content());
-			fw.flush(); // 내보내기
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				fw.close();
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
-		}
-
 		noticeService.insertNotice(vo);
 		return "redirect:/getNoticeList.ko";
 	}
@@ -212,45 +186,8 @@ public class BichenaController {
 	// 공지 수정 업데이트
 	@RequestMapping("/updateNotice.ko")
 	public String updateNotice(@ModelAttribute("notice") NoticeVO vo, HttpSession session) {
-		System.out.println("공지 업데이트 : " + vo);
-
-		// 기존 파일 삭제
-		String fileName = "not_no" + vo.getNot_no() + ".jsp";
-		vo.setFilename(fileName);
-		File oldFile = new File("C:/swork/bichena/src/main/webapp/WEB-INF/notice" + "/" + vo.getFilename());
-		System.out.println("옛날 파일 이름:" + oldFile);
-		if (oldFile.exists()) {
-			oldFile.delete(); // 파일 삭제
-		}
-
-		// 새로운 파일 생성
 		int not_no = vo.getNot_no();
-		String filename = vo.getFilename();
 		vo.setNot_no(not_no);
-		vo.setFilename(filename);
-		// 총 파일의 갯수 + 1 을 한 숫자값을 가져와 pno + 숫자값.jsp 파일을 만들 준비를 함 == filename
-
-		File file = new File("C:/swork/bichena/src/main/webapp/WEB-INF/notice");
-		if (!file.exists()) {
-			file.mkdir();
-		} // 폴더 생성
-
-		FileWriter fw = null;
-		// 파일에 문자를 쓰기 위한, 표준 라이브러리
-		try {
-			fw = new FileWriter(file + "/" + filename); // // 경로 + / + 파일.jsp
-			fw.write("<%@ page language=\"java\" contentType=\"text/html; charset=UTF-8\" pageEncoding=\"UTF-8\" %>");
-			fw.write(vo.getNot_content());
-			fw.flush(); // 내보내기
-		} catch (IOException e) {
-			System.out.println(e.getMessage());
-		} finally {
-			try {
-				fw.close();
-			} catch (IOException e) {
-				System.out.println(e.getMessage());
-			}
-		}
 		System.out.println("공지 업데이트 확인부분 : " + vo);
 		noticeService.updateNotice(vo);
 		System.out.println("공지 업데이트 확인부분2 : " + vo);
@@ -260,23 +197,6 @@ public class BichenaController {
 	// 공지 삭제
 	@RequestMapping("/deleteNotice.ko")
 	public String deleteNotice(NoticeVO vo) {
-		// 파일 경로 설정
-		String directoryPath = "C:/swork/bichena/src/main/webapp/WEB-INF/notice";
-		String fileName = "not_no" + vo.getNot_no() + ".jsp";
-
-		// 파일 객체 생성
-		File file = new File(directoryPath, fileName);
-		System.out.println("파일명: " + fileName);
-		// 파일 삭제
-		if (file.exists()) {
-			if (file.delete()) {
-				System.out.println("파일이 성공적으로 삭제되었습니다.");
-			} else {
-				System.out.println("파일을 삭제하는 데 실패했습니다.");
-			}
-		} else {
-			System.out.println("삭제할 파일이 존재하지 않습니다.");
-		}
 		noticeService.deleteNotice(vo);
 		noticeService.updateNot_no1(vo);
 		noticeService.updateNot_no2(vo);
@@ -316,7 +236,7 @@ public class BichenaController {
 
 		try {
 			currPageNo = Integer.parseInt(NotcurrPageNo);
-			range = Integer.parseInt(Notrange);
+			range = (currPageNo - 1) / vo.getPageSize() + 1;
 		} catch (NumberFormatException e) {
 			currPageNo = 1;
 			range = 1;
@@ -407,7 +327,7 @@ public class BichenaController {
 
 		try {
 			currPageNo = Integer.parseInt(NotcurrPageNo);
-			range = Integer.parseInt(Notrange);
+			range = (currPageNo - 1) / vo.getPageSize() + 1;
 		} catch (NumberFormatException e) {
 			currPageNo = 1;
 			range = 1;
@@ -510,7 +430,7 @@ public class BichenaController {
 		return paramList;
 	}
 
-	@RequestMapping(value = "/cer.ko", method = RequestMethod.POST)
+	@RequestMapping(value = "/cer.ko")
 	@ResponseBody
 	public Object certification(HttpSession session, HttpServletRequest request) throws IOException {
 		String imp_uid = request.getParameter("imp_uid");
@@ -544,6 +464,32 @@ public class BichenaController {
 		}
 
 		return map;
+	}
+
+	@RequestMapping("/mobileCer.ko")
+	public String mobileCer(HttpSession session, HttpServletRequest request) throws IOException {
+		String imp_uid = request.getParameter("imp_uid");
+		String token = getImportToken();
+		HttpClient client = HttpClientBuilder.create().build();
+		HttpGet get = new HttpGet(IMPORT_CERTIFICATION_URL + "/" + imp_uid);
+		get.setHeader("Authorization", token);
+		HttpResponse res = client.execute(get);
+		ObjectMapper mapper = new ObjectMapper();
+		String body = EntityUtils.toString(res.getEntity());
+		JsonNode rootNode = mapper.readTree(body);
+		JsonNode resNode = rootNode.get("response");
+
+		if (resNode.asText().equals("null")) {
+			return "main.ko";
+		} else {
+			UsersVO vo = usersService.checkTel(resNode.get("phone").asText());
+			if (vo == null) {
+				return "insertPage.ko?name=" + resNode.get("name").asText() + "&tel=" + resNode.get("phone").asText()
+						+ "&birth=" + resNode.get("birthday").asText();
+			} else {
+				return "success.ko?result=1";
+			}
+		}
 	}
 
 	// 아임포트 결제금액 변조는 방지하는 함수
@@ -581,13 +527,25 @@ public class BichenaController {
 		userVO = usersService.checkTelId(request.getParameter("u_tel"), (String) session.getAttribute("userID"));
 		for (int i = 0; i < stock.length; i++) {
 			prodVO = prodService.prodOne(pno[i]);
+			int ott = (prodVO.getP_price() * Integer.parseInt(stock[i]));
+			userVO.setU_total(ott + userVO.getU_total());
+			int levUp = usersService.updateTotal(userVO);
+			if (userVO.getU_lev().equals("다이아")) {
+				ott = ott - (int) Math.floor(ott * 0.1);
+			} else if (userVO.getU_lev().equals("골드")) {
+				ott = ott - (int) Math.floor(ott * 0.05);
+			}
+			if (levUp > 0) {
+				userVO = usersService.checkId((String) session.getAttribute("userID"));
+				session.setAttribute("uLev", userVO.getU_lev());
+			}
 			orderVO.setO_no(request.getParameter("o_no"));
 			orderVO.setU_no(userVO.getU_no());
 			orderVO.setU_name(userVO.getU_name());
 			orderVO.setP_no(pno[i]);
 			orderVO.setP_name(prodVO.getP_name());
 			orderVO.setO_stock(stock[i]);
-			orderVO.setO_total(prodVO.getP_price() * Integer.parseInt(stock[i]));
+			orderVO.setO_total(ott);
 			orderVO.setO_addr(request.getParameter("o_addr"));
 			orderVO.setU_tel(request.getParameter("u_tel"));
 
@@ -606,17 +564,16 @@ public class BichenaController {
 		}
 
 		if (count > stock.length - 1) {
-			System.out.println("주문 완료");
 			return "orderComple.ko";
 		} else {
-			System.out.println("주문 실패");
 			return "myCartList.ko";
 		}
 	}
 
 	@RequestMapping(value = "/cancle.ko", method = RequestMethod.POST)
 	@ResponseBody
-	public int cancle(String mid) throws IOException {
+	public int cancle(String mid, HttpSession session) throws IOException {
+		UsersVO userVO = usersService.checkId((String) session.getAttribute("userID"));
 		String token = getImportToken();
 		HttpClient client = HttpClientBuilder.create().build();
 		HttpPost post = new HttpPost(IMPORT_CANCEL_URL);
@@ -634,8 +591,11 @@ public class BichenaController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		List<OrderVO> myOrderDetail = orderService.myOrderDetail(mid);
+		int total = 0;
+
 		if (asd.equals("null")) {
-			System.out.println("환불실패");
 			return -1;
 		} else {
 			orderService.orderDelete(mid);
@@ -658,7 +618,14 @@ public class BichenaController {
 				prodService.stockUpdate(prodVOstock);
 			}
 
-			System.out.println("환불성공");
+			for (OrderVO detail : myOrderDetail) {
+				ProdVO prodVO = new ProdVO();
+				prodVO = prodService.prodOne(detail.getP_no());
+				total += prodVO.getP_price() * Integer.parseInt(detail.getO_stock());
+			}
+			userVO.setU_total(userVO.getU_total() - total);
+			usersService.updateTotal(userVO);
+
 			return 1;
 		}
 	}
@@ -810,6 +777,8 @@ public class BichenaController {
 	@RequestMapping("/myOrderDetail.ko")
 	public String myOrderDetail(@RequestParam(value = "o_no") String o_no, Model model) {
 		int total = 0;
+		int dc = 0;
+		int pt = 0;
 		List<OrderVO> myOrderDetail = orderService.myOrderDetail(o_no);
 		for (OrderVO detail : myOrderDetail) {
 			total += detail.getO_total();
@@ -817,15 +786,24 @@ public class BichenaController {
 
 		for (int i = 0; i < myOrderDetail.size(); i++) {
 			String price = String.format("%,d", Integer.parseInt(myOrderDetail.get(i).getP_price()));
+			int p_total = Integer.parseInt(myOrderDetail.get(i).getP_price())
+					* Integer.parseInt(myOrderDetail.get(i).getO_stock());
+			pt += p_total;
 			String tt = String.format("%,d", myOrderDetail.get(i).getO_total());
 			myOrderDetail.get(i).setP_price(price);
 			myOrderDetail.get(i).setStr_total(tt);
 		}
 
+		dc = pt - total;
+
+		String prodTotal = String.format("%,d", pt);
 		String allTotal = String.format("%,d", total);
+		String dcTotal = String.format("%,d", dc);
 
 		model.addAttribute("myOrderDetail", myOrderDetail);
 		model.addAttribute("allTotal", allTotal);
+		model.addAttribute("prodTotal", prodTotal);
+		model.addAttribute("dcTotal", dcTotal);
 
 		return "/WEB-INF/user/myOrderDetail.jsp";
 	}
@@ -1039,7 +1017,7 @@ public class BichenaController {
 
 		try {
 			currPageNo = Integer.parseInt(NotcurrPageNo);
-			range = Integer.parseInt(Notrange);
+			range = (currPageNo - 1) / vo.getPageSize() + 1;
 		} catch (NumberFormatException e) {
 			currPageNo = 1;
 			range = 1;
@@ -1068,7 +1046,7 @@ public class BichenaController {
 
 		try {
 			currPageNo = Integer.parseInt(NotcurrPageNo);
-			range = Integer.parseInt(Notrange);
+			range = (currPageNo - 1) / vo.getPageSize() + 1;
 		} catch (NumberFormatException e) {
 			currPageNo = 1;
 			range = 1;
@@ -1134,19 +1112,6 @@ public class BichenaController {
 	@PostMapping("/qnaInsert.ko")
 	public String qnaInsert(QnaVO vo) throws IllegalStateException, IOException {
 		System.out.println(vo);
-		MultipartFile uploadFile = vo.getUploadFile();
-		realPath += "imgQna/";
-		File f = new File(realPath);
-		if (!f.exists()) {
-			f.mkdirs();
-		}
-
-		if (!uploadFile.isEmpty()) {
-			vo.setQ_img(uploadFile.getOriginalFilename());
-			// 실질적으로 파일이 설정한 경로에 업로드 되는 지점
-			uploadFile.transferTo(new File(realPath + vo.getQ_img()));
-		}
-
 		int cnt = qnaService.qnaInsert(vo);
 
 		if (cnt > 0) {
@@ -1192,7 +1157,7 @@ public class BichenaController {
 
 		try {
 			currPageNo = Integer.parseInt(NotcurrPageNo);
-			range = Integer.parseInt(Notrange);
+			range = (currPageNo - 1) / vo.getPageSize() + 1;
 		} catch (NumberFormatException e) {
 			currPageNo = 1;
 			range = 1;
@@ -1222,7 +1187,7 @@ public class BichenaController {
 
 		try {
 			currPageNo = Integer.parseInt(NotcurrPageNo);
-			range = Integer.parseInt(Notrange);
+			range = (currPageNo - 1) / vo.getPageSize() + 1;
 		} catch (NumberFormatException e) {
 			currPageNo = 1;
 			range = 1;
@@ -1296,7 +1261,7 @@ public class BichenaController {
 
 		try {
 			currPageNo = Integer.parseInt(NotcurrPageNo);
-			range = Integer.parseInt(Notrange);
+			range = (currPageNo - 1) / vo.getPageSize() + 1;
 		} catch (NumberFormatException e) {
 			currPageNo = 1;
 			range = 1;
@@ -1367,7 +1332,7 @@ public class BichenaController {
 		vo.setP_no(pno);
 		vo.setEditfile(editFilename);
 
-		File file = new File("C:/swork/bichena/src/main/webapp/WEB-INF/product");
+		File file = new File(realPathJSP);
 		if (!file.exists()) {
 			file.mkdirs();
 		}
@@ -1406,9 +1371,9 @@ public class BichenaController {
 		ProdVO oldvo = prodService.prodOne(String.valueOf(vo.getP_no()));
 
 		// 기존 상품 상세페이지jsp파일
-		File oldFile = new File("C:/swork/bichena/src/main/webapp/WEB-INF/product/" + oldvo.getEditfile());
+		File oldFile = new File(realPathJSP + oldvo.getEditfile());
 		// 기존 상품 이미지파일
-		File oldImg = new File("C:/swork/bichena/src/main/webapp/img/" + oldvo.getP_img());
+		File oldImg = new File(realPath + oldvo.getP_img());
 		System.out.println("옛날 파일 경로,이름:" + oldFile);
 		System.out.println("옛날 사진 경로,이름:" + oldImg);
 		System.out.println("업데이트할 vo :" + vo);
@@ -1437,7 +1402,7 @@ public class BichenaController {
 		String editFilename = "pno" + pno + ".jsp";
 		vo.setEditfile(editFilename);
 
-		File file = new File("C:/swork/bichena/src/main/webapp/WEB-INF/product");
+		File file = new File(realPathJSP);
 		if (!file.exists()) {
 			file.mkdirs();
 		}
@@ -1475,9 +1440,9 @@ public class BichenaController {
 		ProdVO oldvo = prodService.prodOne(p_no);
 
 		// 기존 상품 상세페이지jsp파일
-		File oldFile = new File("C:/swork/bichena/src/main/webapp/WEB-INF/product/" + oldvo.getEditfile());
+		File oldFile = new File(realPathJSP + oldvo.getEditfile());
 		// 기존 상품 이미지파일
-		File oldImg = new File("C:/swork/bichena/src/main/webapp/img/" + oldvo.getP_img());
+		File oldImg = new File(realPath + oldvo.getP_img());
 
 		if (oldFile.exists()) {
 			oldImg.delete(); // 기존 이미지 있으면 삭제
@@ -1519,19 +1484,19 @@ public class BichenaController {
 		int range = 0;
 		System.out.println("searchVoca: " + searchVoca);
 		System.out.println("searchWord: " + searchWord);
-		
+
 		if (searchWord != null && !searchWord.isEmpty()) {
 			vo.setSearchWord(searchWord);
 		}
 		if (searchVoca != null && !searchVoca.isEmpty()) {
 			vo.setSearchVoca(searchVoca);
 		}
-		
+
 		int totalCnt = usersService.userTotalCnt(vo);
 
 		try {
 			currPageNo = Integer.parseInt(NotcurrPageNo);
-			range = Integer.parseInt(Notrange);
+			range = (currPageNo - 1) / vo.getPageSize() + 1;
 		} catch (NumberFormatException e) {
 			currPageNo = 1;
 			range = 1;
@@ -1606,7 +1571,7 @@ public class BichenaController {
 
 		try {
 			currPageNo = Integer.parseInt(NotcurrPageNo);
-			range = Integer.parseInt(Notrange);
+			range = (currPageNo - 1) / vo.getPageSize() + 1;
 		} catch (NumberFormatException e) {
 			currPageNo = 1;
 			range = 1;

@@ -188,6 +188,15 @@ public class CartController {
 
 			}
 		}
+		
+		if(users.getU_lev().equals("다이아")) {
+			int dc = (int)Math.floor(price * 0.1);
+			price = price - dc;
+		} else if (users.getU_lev().equals("골드")) {
+			int dc = (int)Math.floor(price * 0.05);
+			price = price - dc;
+		}
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("user", users);
 		map.put("p_name", p_name);

@@ -290,7 +290,10 @@ location.href="main.ko";
         <p onclick="location.href='adminOrderList.ko';" class="main-p">관리자 페이지</p>
       </div>
       <div>
-        <ul class="navbar-nav navbar-nav-main">
+ 		<ul class="navbar-nav navbar-nav-main">
+      	  <li class="nav-item">
+            <a class="nav-link" href="adminChart.ko">판매현황</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="adminOrderList.ko">주문목록</a>
           </li>
@@ -342,6 +345,9 @@ location.href="main.ko";
       </div>
       <div class="side-bottom-line"></div>
       <div class="navbar-nav navbar-nav-side">
+          <div class="nav-item">
+          <a class="nav-link" href="adminChart.ko">판매현황</a>
+        </div>
         <div class="nav-item">
           <a class="nav-link" href="adminOrderList.ko">주문목록</a>
         </div>
@@ -359,7 +365,7 @@ location.href="main.ko";
         </div>
         <div class="bottom-line"></div>
         <div class="nav-item">
-          <a class="nav-link" href="">상품후기</a>
+          <a class="nav-link" href="adminRevList.ko">상품후기</a>
         </div>
         <div class="bottom-line"></div>
         <div class="nav-item">

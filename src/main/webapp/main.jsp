@@ -2,6 +2,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <c:set var="result" value='<%=request.getParameter("result")%>' />
+<c:choose>
+	<c:when test="${result eq '2'}">
+		<script>
+			alert('미성년자는 가입이 불가합니다.');
+		</script>
+	</c:when>
+</c:choose>
 <%
 response.setHeader("cache-control", "no-cache");
 response.setHeader("expires", "0");
@@ -153,28 +160,9 @@ overflow-x:hidden
 	text-decoration: none;
 	background-color: transparent;
 	outline: none;
-	cursor: pointer;
 	transition: color 0.3s;
 }
 
-.swiper-content
-,
-{
-width
-:
- 
-100
-%;
-
-            
-cursor
-:
- 
-pointer
-;
-
-        
-}
 .swiper-text {
 	padding-top: 10px;
 	flex-direction: column;
@@ -230,6 +218,7 @@ pointer
 
 .section-title1 {
 	max-width: 1440px;
+/*     padding-left: 60px; */
     margin: 0;
 	line-height: 0.5;
 	display: flex;
@@ -238,7 +227,8 @@ pointer
 .moreproduct-box{
 	display:flex;
 	align-items:center;
-	cursor:pointer;
+   
+        cursor:pointer;
 }
 
 .moreproduct{
@@ -306,6 +296,7 @@ pointer
 .types {
 	display: flex;
 	justify-content: flex-start;
+	/* flex-direction: column;  */
 }
 
 .sw, .su, .sp, .dgr {
@@ -346,13 +337,13 @@ pointer
 	right: -60;
 }
 .swiper-reviewtext{
-	display:flex;
-	flex-direction:column;
-	align-items: center;
+display:flex;
+flex-direction:column;
+align-items: center;
 }
 .swiper-productscore{
-	margin-top:30px;
-	color:DarkOrange;
+margin-top:30px;
+color:DarkOrange;
 }
 .swiper-productrecontent{
 	font-size:12px;
@@ -362,7 +353,7 @@ pointer
     font-size: 14px;
 }
 .swiper-reuser{
-	color: dimgray;
+color: dimgray;
     margin-top: 30px;
     font-size: 16px;
 }
@@ -370,64 +361,67 @@ pointer
     display: flex;
     justify-content: center;
     text-align: center;
-}
+    }
 
 
-[class*="main-slider"] {
-	width: 100%;
-	overflow: hidden;
-	position: relative;
-	margin:0 auto;
-}
+      [class*="main-slider"] {
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        margin:0 auto;
+      }
 
-.main-slider div {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-}
+      .main-slider div {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+      }
 
-.main-slider img {
-	width: 100%;
-	display:block;
-	min-width: 100%;
-	max-width: 100%;
-	min-height: 100%;
-	max-height: 100%;
-	object-fit: cover;
-}
-     
-.main-prev,.main-next{
-	width:100px;
-	height: 100px;
-    position: absolute;
-    cursor: pointer;
-    border: none;
-    outline: none;
-    display: block;
-    z-index: 999;
-    opacity:0.8
-}
-   
-.main-bannerbox-pc , .main-bannerbox-mo{
-	position:relative;
-	margin-bottom:60px
-}
-     
-   
-.main-prev{	
+      .main-slider img {
+     	width: 100%;
+/*         max-width: 100%; */
+        display:block;
+/*         cursor: pointer; */
+        min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    object-fit: cover;
+      }
+      
+	 .main-prev,.main-next{
+		width:100px;
+		height: 100px;
+	    position: absolute;
+	    cursor: pointer;
+	    border: none;
+	    outline: none;
+	    display: block;
+	    z-index: 999;
+	    opacity:0.8
+	    
+    }
+    
+        .main-bannerbox-pc , .main-bannerbox-mo{
+      position:relative;
+      margin-bottom:60px
+      }
+      
+    
+    .main-prev{	
 	top: 60%;
-	left: 10%;
-	transform: translate(20%, -50%);
-}
-   
-.main-next{
-	top: 60%;
-	right: 10%;
-	transform: translate(20%, -50%);
-}
-   
-   
-.main-bannerbox-mo {
+    left: 10%;
+    transform: translate(20%, -50%);
+    }
+    
+    .main-next{
+    	top: 60%;
+    right: 10%;
+    transform: translate(20%, -50%);
+    }
+    
+    
+    .main-bannerbox-mo {
     display: none; /* 기본적으로 숨김 */
 }
 
@@ -481,6 +475,22 @@ pointer
 		height:40px;
 		margin-right:4px;
 		}
+      }
+      
+       	@media (max-width:412px){
+		.title-picture img  {
+		width:30px;
+		height:30px;
+		margin-right:4px;
+		}
+		.moreproduct-box a {
+		font-size:12px}
+      }
+      
+      @media (max-width:500px){
+        .section-sub-title p {
+        display:none;
+        }
       }
 	
 
@@ -901,14 +911,14 @@ display:none;
 						<c:forEach items="${mainRevList}" var="list">
 							<swiper-slide>
 							<div class="swiper-content">
-								<a class="swiper-link" href="prodOneRev?pr_no=${list.pr_no}">
+								<div class="swiper-link">
 									<div class="swiper-slide-imagewrapper">
 										<span class="slide-image-span1"> <span
 											class="slide-image-span2"></span> <img class="slide-image"
 											src="img/${list.pr_img}" />
 										</span>
 									</div>
-								</a>
+								</div>
 								<div class="swiper-reviewtext">
 									<div class="swiper-productscore" >
 						            	<c:choose>
@@ -1016,13 +1026,14 @@ display:none;
 	
 
 	
-	<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 	<script src="resources/js/slide.js"></script>
 </div>
 <%@ include file="common/footer.jsp"%>
-	
 <script>
+
 window.onload = function(){ //쿼리스트링 지워주는 친구
    history.replaceState({}, null, location.pathname);
 };

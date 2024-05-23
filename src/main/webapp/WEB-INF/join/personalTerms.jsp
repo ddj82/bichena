@@ -81,5 +81,6 @@
 	<input type="button" value="이전" id="submit" class="submit" onclick="history.back()">
 </div>
 </div>
+<%@ include file="../../common/footer.jsp"%>
 </body>
 </html>

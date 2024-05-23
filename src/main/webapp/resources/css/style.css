@@ -152,7 +152,7 @@ label[for="All"] {
 .tot {
     display: flex;
     justify-content: space-between;
-    margin-top: 110px;
+    margin-top: 55px;
     margin-bottom: 10px;
 }
 
@@ -224,7 +224,9 @@ label[for="All"] {
 #Xcart {
     width: 450px;
     height: 100px;
-    background-color: rgb(201, 201, 201);
+	font-weight : 600;
+/*     background-color: rgb(201, 201, 201); */
+	color : rgba(201, 201, 201, 0.9);
     text-align: center;
     margin: auto;
     line-height: 100px;
@@ -288,7 +290,7 @@ label[for="All"] {
         width: 100%;
     }
     .header-container {
-        margin-top: 130px !important;
+        margin-top: 170px !important;
     }
     .container {
         position: relative;
@@ -313,16 +315,6 @@ label[for="All"] {
     .first-box, .summary, .box, #dddd, .deletechk, .showpping, .button, #Xcart {
         width: 100%;
     }
-/*   	    .qty-container, .price-container { */
-/*         width: 100%; */
-/*         margin-top: 3px; */
-/*         padding-top: 5px; */
-/*         border-top: 1px solid #e7e3e3; */
-/*         margin-top: : 5px !important; */
-/*     } */
-/*     .product-name { */
-/*          margin-top: 8px; */
-/*          } */
 
     .price-container {
         text-align: right; 
@@ -336,7 +328,7 @@ label[for="All"] {
         width: 100%;
     }
      .header-container {
-        margin-top: 165px;
+        margin-top: 220px;
     }
     .product-info {
     flex-direction: row;
@@ -382,7 +374,7 @@ label[for="All"] {
     border : none;
     }
     .header-container {
-    margin-top : 170px;
+    margin-top : 220px;
     }
     .box1, .first-box, .summary, .box, #dddd, .deletechk, .showpping, .button, #Xcart {
         width: 100%; 

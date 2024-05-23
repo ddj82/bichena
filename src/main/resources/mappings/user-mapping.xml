@@ -117,4 +117,20 @@
 		</if>
 		<if test="orderBy == null"> ORDER BY U_NO ASC </if>
 	</select>
+	
+	<update id="updateTotal">
+		UPDATE BC_USERS SET U_TOTAL =#{u_total} WHERE U_ID =#{u_id}
+	</update>
+	
+	<update id="updateLev">
+		UPDATE bc_users
+		SET u_lev = 
+		CASE 
+        WHEN u_total >= 1000 THEN '다이아'
+        WHEN u_total >= 500 THEN '골드'
+        ELSE '실버'
+		END
+		WHERE U_ID = #{u_id};
+	</update>
+	
 </mapper>

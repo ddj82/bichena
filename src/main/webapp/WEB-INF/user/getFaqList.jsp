@@ -229,7 +229,7 @@ page-link:hover {
 	<br>
 	<br>
 </div>	
-
+<%@ include file="../../common/footer.jsp"%>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const accordionItems = document.querySelectorAll('.accordionFaq-item');
