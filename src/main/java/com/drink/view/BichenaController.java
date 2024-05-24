@@ -77,8 +77,10 @@ public class BichenaController {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
-	String realPath = "C:/apache-tomcat-9.0.86/webapps/bichena/img/";
-	String realPathJSP = "C:/apache-tomcat-9.0.86/webapps/bichena/WEB-INF/product/";
+//	String realPath = "C:/apache-tomcat-9.0.86/webapps/bichena/img/";
+//	String realPathJSP = "C:/apache-tomcat-9.0.86/webapps/bichena/WEB-INF/product/";
+	String realPath = "C:/swork/bichena/src/main/webapp/img/";
+	String realPathJSP = "C:/swork/bichena/src/main/webapp/WEB-INF/product/";
 
 	public final String IMPORT_TOKEN_URL = "https://api.iamport.kr/users/getToken";
 	public final String IMPORT_PAYMENTINFO_URL = "https://api.iamport.kr/payments/find/";
@@ -252,7 +254,6 @@ public class BichenaController {
 		mav.addObject("noticeList", noticeService.noticeListPaging(vo)); // parameter로 때온 값들을 보내준다.
 		if (session.getAttribute("userID") != null) {
 			if (session.getAttribute("userID").equals("admin")) {
-				System.out.println("일단 여기까지는 찍고,");
 				mav.setViewName("WEB-INF/admin/adminGetNoticeList.jsp");
 			} else {
 				mav.setViewName("WEB-INF/user/getNoticeList.jsp");
@@ -725,6 +726,9 @@ public class BichenaController {
 	@RequestMapping("/myPage.ko")
 	public String myPage(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
+		if (session.getAttribute("userNO") == null) {
+			return "redirect:main.ko";
+		}
 		int u_no = (int) session.getAttribute("userNO");
 		int ready = 0;
 		int porter = 0;
@@ -811,6 +815,9 @@ public class BichenaController {
 	@RequestMapping("/orderCancleList.ko")
 	public String orderCancleList(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
+		if (session.getAttribute("userNO") == null) {
+			return "redirect:main.ko";
+		}
 		int u_no = (int) session.getAttribute("userNO");
 		int cancle = 0;
 		int recall = 0;
@@ -929,6 +936,9 @@ public class BichenaController {
 	@RequestMapping("myRevList.ko") // 마이페이지-리뷰
 	public String myRevList(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
+		if (session.getAttribute("userNO") == null) {
+			return "redirect:main.ko";
+		}
 		int u_no = (int) session.getAttribute("userNO");
 		List<ProdRevVO> myRevList = prodRevService.myRevList(u_no);
 		model.addAttribute("myRevList", myRevList);
@@ -939,6 +949,9 @@ public class BichenaController {
 	@ResponseBody
 	public Object myRevIstOrder(HttpServletRequest request, Model model) {
 		HttpSession session = request.getSession();
+		if (session.getAttribute("userNO") == null) {
+			return "redirect:main.ko";
+		}
 		int u_no = (int) session.getAttribute("userNO");
 		List<OrderVO> myRevIstOrder = orderService.myRevIstOrder(u_no);
 		model.addAttribute("myRevIstOrder", myRevIstOrder);
@@ -953,8 +966,8 @@ public class BichenaController {
 			throws IllegalStateException, IOException {
 		System.out.println("리뷰등록 : " + vo);
 		MultipartFile uploadFile = vo.getUploadFile();
-		realPath += "imgRev/";
-		File f = new File(realPath);
+		String realPathREV = realPath + "imgRev/";
+		File f = new File(realPathREV);
 		if (!f.exists()) {
 			f.mkdirs();
 		}
@@ -962,7 +975,7 @@ public class BichenaController {
 		if (!uploadFile.isEmpty()) {
 			vo.setPr_img(uploadFile.getOriginalFilename());
 			// 실질적으로 파일이 설정한 경로에 업로드 되는 지점
-			uploadFile.transferTo(new File(realPath + vo.getPr_img()));
+			uploadFile.transferTo(new File(realPathREV + vo.getPr_img()));
 		}
 
 		int cnt = prodRevService.prodRevInsert(vo);
@@ -1001,7 +1014,15 @@ public class BichenaController {
 	@RequestMapping("/orderRevDelchk.ko") // 리뷰state 처리
 	public String orderRevDelchk(OrderVO vo, HttpSession session) {
 		orderService.orderRevDelchk(vo);
-		return "redirect:/myRevList.ko";
+		if (session.getAttribute("userID") != null) {
+			if (session.getAttribute("userID").equals("admin")) {
+				return "redirect:/adminRevList.ko";
+			} else {
+				return "redirect:/myRevList.ko";
+			}
+		} else {
+			return "redirect:/main.ko";
+		}
 	}
 
 	@RequestMapping("/qnaList.ko")
@@ -1038,6 +1059,9 @@ public class BichenaController {
 			@RequestParam(value = "currPageNo", required = false, defaultValue = "1") String NotcurrPageNo,
 			@RequestParam(value = "range", required = false, defaultValue = "1") String Notrange, Model model) {
 
+		if (session.getAttribute("userID") == null) {
+			return "redirect:main.ko";
+		}
 		String q_writer = (String) session.getAttribute("userID");
 		vo.setQ_writer(q_writer);
 		int currPageNo = 0;
@@ -1615,7 +1639,7 @@ public class BichenaController {
 		System.out.println("요청받음");
 		int limit = 5;
 		List<OrderVO> chartResult = orderService.chartResult(limit);
-		System.out.println(chartResult);
+		System.out.println("차트 데이터 \n" + chartResult);
 		return chartResult;
 	}
 

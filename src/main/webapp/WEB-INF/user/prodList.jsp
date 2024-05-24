@@ -92,7 +92,6 @@ input[class="form-check-input"] {
 .form-check-label {
 	display: flex;
 	align-items: center;
-	/*         padding: 20px; */
 }
 
 .form-check-label p {
@@ -386,8 +385,8 @@ a:hover {
         font-size: 15px;
         display: flex;
         align-items: center;
-        color: #707070;
-       padding: 0px 0px 0px 120px;
+		color: #707070;
+        padding: 0px 0px 0px 120px;
 	}
 	.list-card-body img {
 		width: 32px;
@@ -557,7 +556,7 @@ $(document).ready(function () {
         }
     });
 });
- // 페이지 이동 함수
+    // 페이지 이동 함수
     function goToPage(pageNo) {
         // 현재 페이지의 URL 가져오기
         let currentUrl = decodeURIComponent(window.location.href);
@@ -577,7 +576,13 @@ $(document).ready(function () {
 		<div class="jumbotron">
 			<div class="row jumbotron-grid">
 				<div class="jumbotron-left col-6">
-					<p class="jumbotron-title">전체보기</p>
+					<p class="jumbotron-title">
+						<c:choose>
+							<c:when test="${type ne null }">${type }</c:when>
+							<c:otherwise>전제보기</c:otherwise>
+						</c:choose>
+					</p>
+					
 					<p class="jumbotron-subtitle">비채나만의 특별한 전통주를 지금 만나보세요.</p>
 				</div>
 				<div class="jumbotron-right col-6">
@@ -633,7 +638,7 @@ $(document).ready(function () {
 								</label>
 							</div>
 							<div class="form-check col-6">
-								<label class="form-check-label"> <input type="checkbox" data-filter-type="type" class="form-check-input" value="기타" />
+								<label class="form-check-label"> <input type="checkbox" data-filter-type="type" class="form-check-input" value="기타주류" />
 									<p>기타</p>
 								</label>
 							</div>
@@ -790,7 +795,7 @@ $(document).ready(function () {
 								</label>
 							</div>
 							<div class="form-check col-6">
-								<label class="form-check-label"> <input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="기타" />
+								<label class="form-check-label"> <input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="기타주류" />
 									<p>기타</p>
 								</label>
 							</div>
@@ -995,7 +1000,7 @@ $(document).ready(function () {
 							<div class="card-body list-card-body" data-filter-type="type">
 								<div class="form-filter-box">
 									<label class="form-check-label"> 
-										<input type="checkbox" class="form-check-input" data-filter-type="type" value="기타"/> <p>기타</p>
+										<input type="checkbox" class="form-check-input" data-filter-type="type" value="기타주류"/> <p>기타</p>
 									</label>
 								</div>
 							</div>
@@ -1128,7 +1133,7 @@ $(document).ready(function () {
 							<div class="card-body list-card-body" data-filter-type="ingredient">
 								<div class="form-filter-box">
 								<label class="form-check-label"> 
-									<input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="기타"/><p>기타</p>
+									<input type="checkbox" class="form-check-input" data-filter-type="ingredient" value="기타주류"/><p>기타</p>
 								</label>
 								</div>
 							</div>

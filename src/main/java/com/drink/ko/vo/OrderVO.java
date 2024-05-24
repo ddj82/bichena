@@ -77,7 +77,7 @@ public class OrderVO {
 
 	private int startList; // 게시판 시작 번호
 	private int range = 1; // 페이지 범위. 1 : 1~5 2: 6~10 ...
-	private int pageSize = 10; // 한 페이지 범위에 보여질 페이지 개수
+	private int pageSize = 5; // 한 페이지 범위에 보여질 페이지 개수
 	private int startPage; // 각 페이지 범위의 시작 번호
 	private int endPage; // 각 페이지 범위 끝 번호
 
@@ -215,8 +215,9 @@ public class OrderVO {
 	@Override
 	public String toString() {
 		return "OrderVO [o_no=" + o_no + ", u_no=" + u_no + ", u_name=" + u_name + ", p_no=" + p_no + ", p_name="
-				+ p_name + ", o_stock=" + o_stock + ", o_total=" + o_total + ", o_addr=" + o_addr + ", u_tel=" + u_tel
-				+ ", o_date=" + o_date + ", o_state=" + o_state + ", o_revstate=" + o_revstate + "]";
+				+ p_name + "/n, o_stock=" + o_stock + ", o_total=" + o_total + ", o_addr=" + o_addr + ", u_tel=" + u_tel
+				+ ", o_date=" + o_date + ", o_state=" + o_state + ", o_revstate=" + o_revstate + "]/n"
+				+ "salesCount = " + salesCount + "/n, cancelCount = " + cancelCount + "]/n";
 	}
 	
 

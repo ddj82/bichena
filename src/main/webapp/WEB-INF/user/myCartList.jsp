@@ -1,6 +1,14 @@
 <%@ include file="/common/navbar.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%
+if (session.getAttribute("userID") == null) {
+%>
+<script>
+location.href="loginPage.ko";
+</script>
+<%
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -388,7 +396,6 @@
 									buyer_tel : response.user.u_tel,
 									buyer_addr : response.addr,
 									custom_data : response.p_no,
-									m_redirect_url: 'http://bichena.kro.kr/ko/pay.ko',
 									popup : false
 								}, function(rsp) {
 									console.log(rsp);
@@ -418,7 +425,7 @@
 									buyer_tel : response.user.u_tel,
 									buyer_addr : response.addr,
 									custom_data : response.p_no,
-									m_redirect_url: 'http://bichena.kro.kr/ko/pay.ko',
+									m_redirect_url: 'http://bichena.kro.kr/orderComple.ko',
 									popup : false
 								}, function(rsp) {
 									console.log(rsp);

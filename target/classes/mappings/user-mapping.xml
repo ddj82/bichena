@@ -126,8 +126,8 @@
 		UPDATE bc_users
 		SET u_lev = 
 		CASE 
-        WHEN u_total >= 1000 THEN '다이아'
-        WHEN u_total >= 500 THEN '골드'
+        WHEN u_total >= 2000000 THEN '다이아'
+        WHEN u_total >= 500000 THEN '골드'
         ELSE '실버'
 		END
 		WHERE U_ID = #{u_id};

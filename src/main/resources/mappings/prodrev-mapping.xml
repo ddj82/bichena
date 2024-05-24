@@ -30,15 +30,13 @@
 	</select>
 	
 	<select id="adminRevList" resultType="prodRevDTO">
-<!-- 		SELECT * FROM BC_PRODREV WHERE 1=1 -->
-		SELECT pr.*, ROW_NUMBER() OVER() AS rnum FROM BC_PRODREV pr WHERE 1=1
+		SELECT pr.*, ROW_NUMBER() OVER(ORDER BY pr_no DESC) AS rnum FROM BC_PRODREV pr WHERE 1=1
 		<if test="searchCondition != null">
 			<if test="searchCondition == 'pname' "> AND P_NAME LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'pno' "> AND P_NO LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'unick' "> AND U_NICK LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 		</if>
-<!-- 		ORDER BY PR_NO DESC -->
-		ORDER BY rnum DESC
+		ORDER BY pr_no DESC
 		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 

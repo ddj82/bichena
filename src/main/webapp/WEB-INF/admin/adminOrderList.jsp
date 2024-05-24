@@ -59,6 +59,15 @@ div#myModal>div.modal-dialog>div.modal-content tr.tr.detail-tr {
 div#myModal>div.modal-dialog>div.modal-content tr>.td.col-td {
 	width: 20%;
 }
+/* 검색버튼 */
+form.searchForm {
+	display: block;
+}
+button.btn-form-submit {
+	margin-top: 0;
+	margin-bottom: 20px;
+	width: 100px;
+}
 </style>
 </head>
 <body>
@@ -108,7 +117,7 @@ div#myModal>div.modal-dialog>div.modal-content tr>.td.col-td {
 		            </tr>
 		        </thead>
 		    </table>
-		    <button type="submit" class="btn btn-primary btn-sm">검색</button>
+		    <button type="submit" class="btn btn-primary btn-sm btn-form-submit">검색</button>
 		</form>
 	
 	

@@ -27,14 +27,14 @@
 	</select>
 	
 	<select id="qnaList" resultMap="qnalist">
-		SELECT q.*, ROW_NUMBER() OVER() AS rnum FROM BC_QNA q WHERE 1=1 
+		SELECT q.*, ROW_NUMBER() OVER(ORDER BY q_no DESC) AS rnum FROM BC_QNA q WHERE 1=1 
 		<if test="searchCondition != null">
 			<if test="searchCondition == 'q_cate' "> AND Q_CATE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'q_state' "> AND Q_STATE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'q_title' "> AND Q_TITLE LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 			<if test="searchCondition == 'q_writer' "> AND Q_WRITER LIKE CONCAT('%', #{searchKeyword}, '%') </if>
 		</if>
-		ORDER BY rnum ASC
+		ORDER BY q_no desc
 		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 	
@@ -44,7 +44,7 @@
 	
 	<select id="qnaListMy" resultMap="qnalist">
 		SELECT * FROM BC_QNA WHERE Q_WRITER = #{q_writer}
-		ORDER BY Q_NO ASC
+		ORDER BY Q_NO desc
 		LIMIT #{sizePerPage} OFFSET #{startList}
 	</select>
 

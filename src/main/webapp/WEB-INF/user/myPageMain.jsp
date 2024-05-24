@@ -116,6 +116,9 @@ table#revContentTB {
 }
 /* extra small */
 @media screen and (max-width:645px) {
+	.each-content {
+		font-size: 14px;
+	}
 	.whole-div {
 		width: 90%;
 	}

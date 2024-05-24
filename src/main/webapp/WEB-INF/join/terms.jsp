@@ -293,7 +293,7 @@ span.all {
 				IMP.certification(
 				  {
 				    pg: "inicis_unified.MIIiasTest",
-				    m_redirect_url: "http://localhost:8090/ko/mobileCer.ko"
+				    m_redirect_url: "http://bichena.kro.kr/mobileCer.ko"
 				  },
 				  function (rsp) {
 				    if (rsp.success) {

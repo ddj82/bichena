@@ -136,7 +136,7 @@
 		FROM bc_order o
 		JOIN bc_prod p ON o.p_no = p.p_no
 		GROUP BY p.p_name
-		ORDER BY SUM(o.o_stock) ASC
+		ORDER BY SUM(o.o_stock) DESC
 		LIMIT 5;
 	</select>
 </mapper>

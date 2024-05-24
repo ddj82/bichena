@@ -27,8 +27,8 @@ $(function(){
 				} else {
 					$.each(values, function(i, o){
 						$("#revTB").append("<table class='dtable'><tr class='revTitle'><td id='revTd1'>" + o.u_nick + "</td><td id='revTd2'>" + o.p_name + "</td><td id='revTd3'>" + o.pr_date + "</td></tr>"
-								+ "<tr class='revPad'><td>" + o.pr_content + "</td></tr>"
-								+ "<tr class='revPad'><td>" + "<img alt='' src='img/imgRev/" + o.pr_img  + "' style='width:100px;'>" + "</td><tr></table>");
+								+ "<tr class='revPad'><td colspan='3'>" + o.pr_content + "</td></tr>"
+								+ "<tr class='revPad'><td colspan='3'>" + "<img alt='' src='img/imgRev/" + o.pr_img  + "' style='width:100px;'>" + "</td><tr></table>");
 					});
 				}
 				console.log("성공");
@@ -107,6 +107,7 @@ table.dtable {
 tr.revTitle {
     background-color: #c99c3c26;
     font-weight: bold;
+    font-size: 14px;
 }
 tr.revTitle td, tr.revPad td, tr.revPad td {
     padding: 10px;
@@ -142,6 +143,9 @@ div#revTB {
 		margin: 0 auto;
 		max-width: 100%;
 	}
+	table.tableDiv-tb {
+		font-size: 13px;
+	}
 }
 
 @media (min-width: 721px) {
@@ -163,7 +167,7 @@ div#revTB {
 				<div class="product_desc"><small>${prodOne.p_desc}</small></div>
 				<div style="margin-top:10px;font-weight: bolder;font-size:20px;">${prodOne.p_name}</div>
 				<div style="margin-top:10px;"><small>판매가격</small></div>
-				<div style="margin-top:5px;font-weight: bolder;">${prodOne.p_price}원</div>
+				<div style="margin-top:5px;font-weight: bolder;" id="div-p_price">${prodOne.p_price}</div>
 			</div>
 			<%@ include file="pay.jsp" %>
 		</div>
@@ -218,6 +222,11 @@ div#revTB {
 </div>
 <div class="div-wid-mar" id="revTB"></div>
 <script>
+function priceCommaA(price) {
+    let val = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return val;
+}
+
 window.onload = function(){
 	var httpReq = new XMLHttpRequest();
 	httpReq.open("GET", './productDetailpage.ko?p_no=${prodOne.p_no}', false);
@@ -231,12 +240,9 @@ window.onload = function(){
 	
 	let price = document.getElementById("total").value;
 	document.getElementById("total-disabled").value = priceCommaA(price) + '원';
+	document.getElementById("div-p_price").innerText = priceCommaA(document.getElementById("div-p_price").innerText) + '원';
 };
 
-function priceCommaA(price) {
-    let val = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    return val;
-}
 </script>
 <%@ include file="../../common/footer.jsp"%>
 </body>

@@ -216,8 +216,7 @@ function revDel() {
 	if (result) {
 		let res = confirm("정말 삭제하시겠습니까?");
 		if (res) {
-			console.log(delPrNo);
-//	 		location.href="prodRevDelete.ko?pr_no=" + delPrNo;
+	 		location.href="prodRevDelete.ko?pr_no=" + delPrNo;
 		}
 	}
 }

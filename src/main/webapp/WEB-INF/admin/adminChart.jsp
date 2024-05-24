@@ -26,6 +26,10 @@ location.href="main.ko";
                     method: "GET",
                     success: function(chartResult) {
                         console.log(chartResult);
+                        if (chartResult.length == 0) {
+                        	$("#columnchart_values").append("<div style='margin:100px 0;font-size:25px;'>판매내역이 없습니다.<div>");
+                        	return;
+                        }
                         var chartData = [
                             ["상품 이름", "판매 개수", { role: "style" }, { role: 'annotation' }]// 색상을 추가할 열을 선언
                         ];

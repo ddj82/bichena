@@ -70,7 +70,7 @@ body {
 }
 
 .pwBtn button {
-    background-color: #0a6633e5;
+    background-color: #005930;
     border: none;
     border-radius: 5px;
     color: #fff;
@@ -95,7 +95,7 @@ body {
 }
 
 .pwBtn button[type="submit"]:hover {
-    background-color: #2d4739;
+    background-color: #005930;
 }
 
 #pwErrorMessage,
@@ -104,9 +104,6 @@ body {
     margin-bottom: 30px;
 }
 
-button {
-        width: 153px;
-}
 
 </style>
     

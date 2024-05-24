@@ -107,7 +107,7 @@ table.table#form>tbody>tr>td#td-rowspan2 {
 			<table class="table table0" id="form">
 			    <tr>
 			        <td rowspan="5" id="td-rowspan5">
-			            <img id="preview" src="" alt="" style="width: 200px;"></td>
+			            <img id="preview" src="" alt="" style="width: 200px; display:none;"></td>
 			    	<td><label for="name">상품 이름</label> <input type="text" id="name" name="p_name"></td>
 				</tr>
 				
@@ -198,6 +198,7 @@ document.getElementById("p_img").addEventListener('change', function(event){
 
             // FileReader가 읽은 데이터를 img 요소의 src 속성에 설정하여 이미지 표시
             imgElement.src = event.target.result;
+            imgElement.style = "width: 200px; display:inline;";
         };
 
         // 파일을 읽기

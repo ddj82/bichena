@@ -151,7 +151,9 @@
 		width: 100%;
 	}
 	.app-info {
-		display: block;
+		width: 65%;
+        display: block;
+        font-size: 14px;
 	}
 	.text-content {
 		display: none;

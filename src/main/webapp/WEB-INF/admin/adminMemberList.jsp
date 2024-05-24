@@ -420,6 +420,13 @@ button#detailMemBtn:active {
 
 }
 
+
+/* 관리자 회원관리페이지 id말줄임 */
+#user-id, #userid-td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 </style>
 <script>
 $(function(){
@@ -459,7 +466,7 @@ $(function(){
                 <c:if test="${user.u_id ne 'admin'}">
                     <tr>
                         <td>${user.u_no}</td>
-                        <td class="css-none">${user.u_id}</td>
+                        <td class="css-none" id="userid-td">${user.u_id}</td>
                         <td>${user.u_name}</td>
                         <td class="css-none">${user.u_tel}</td>
                         <td class="css-none">${user.u_lev}</td>

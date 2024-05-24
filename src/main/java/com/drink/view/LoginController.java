@@ -73,7 +73,10 @@ public class LoginController {
 	}
 
 	@RequestMapping("/confirm.ko")
-	public String confirm(UsersVO vo) {
+	public String confirm(UsersVO vo, HttpSession session) {
+		if (session.getAttribute("userID") == null) {
+			return "redirect:main.ko";
+		}
 		return "/WEB-INF/login/userMyPassConfirm.jsp";
 	}
 

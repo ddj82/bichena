@@ -181,6 +181,7 @@ function updateCart(stock, total) {
     var updatedStock = stock + addStock; 
     var price = total / stock; 
     var updatedTotal = updatedStock * price; 
+    var u_id = "${userID}";
 
     $.ajax({
         url: "cartupdate.ko",
@@ -189,7 +190,8 @@ function updateCart(stock, total) {
         data: JSON.stringify({
             p_no: productno,
             c_stock: updatedStock,
-            c_total: updatedTotal
+            c_total: updatedTotal,
+            u_id: u_id
         }),
         success: function(updateResponse) {
             alert("장바구니가 업데이트되었습니다.");

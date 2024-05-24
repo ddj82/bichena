@@ -29,13 +29,13 @@ public class UsersVO {
 	// 페이징 처리를 위한 변수
 
 	private int currPageNo; // 현재 페이지 번호
-	private int sizePerPage = 3; // 한 페이지당 보여질 리스트 개수
+	private int sizePerPage = 10; // 한 페이지당 보여질 리스트 개수
 	private int totalCnt; // 전체 목록 개수
 	private int pageCnt; // 전체 페이지 개수
 
 	private int startList; // 게시판 시작 번호
 	private int range = 1; // 페이지 범위. 1 : 1~5 2: 6~10 ...
-	private int pageSize = 10; // 한 페이지 범위에 보여질 페이지 개수
+	private int pageSize = 5; // 한 페이지 범위에 보여질 페이지 개수
 	private int startPage; // 각 페이지 범위의 시작 번호
 	private int endPage; // 각 페이지 범위 끝 번호
 

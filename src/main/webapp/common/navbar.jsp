@@ -766,7 +766,7 @@ window.onpageshow = function(event){
                     src="${pageContext.request.contextPath}/img/navbar/icon_jeungryuju.png"
                   />증류주</a
                 >
-                <a class="dropdown-item custom-dropdown-item" href="prodList.ko?type=기타"
+                <a class="dropdown-item custom-dropdown-item" href="prodList.ko?type=기타주류"
                   ><img
                     src="${pageContext.request.contextPath}/img/navbar/icon_merchandise_listing.png"
                   />기타</a
@@ -805,7 +805,7 @@ window.onpageshow = function(event){
               >
               <div class="dropdown-menu custom-dropdown-menu">
                 <a class="dropdown-item custom-dropdown-item" href="introduce.jsp">회사 소개</a>
-                <a class="dropdown-item custom-dropdown-item" href="/map.jsp">오시는 길</a>
+                <a class="dropdown-item custom-dropdown-item" href="map.jsp">오시는 길</a>
               </div>
 
             </li>
@@ -1035,7 +1035,7 @@ window.onpageshow = function(event){
               id="collapseOne"
               class="collapse"
               data-parent="#accordion"
-              onclick="prodList.ko?type=탁주"
+              onclick="location.href='prodList.ko?type=탁주';"
             >
               <div class="card-body side-card-body">
                 <img
@@ -1049,7 +1049,7 @@ window.onpageshow = function(event){
               id="collapseOne"
               class="collapse"
               data-parent="#accordion"
-              onclick="prodList.ko?type=과실주">
+              onclick="location.href='prodList.ko?type=과실주';">
               <div class="card-body side-card-body">
                 <img
                   src="${pageContext.request.contextPath}/img/navbar/icon_gwashilju.png"
@@ -1062,7 +1062,7 @@ window.onpageshow = function(event){
               id="collapseOne"
               class="collapse"
               data-parent="#accordion"
-              onclick="prodList.ko?type=약·청주"
+              onclick="location.href='prodList.ko?type=약·청주';"
             >
               <div class="card-body side-card-body">
                 <img src="${pageContext.request.contextPath}/img/navbar/icon_cheongju.png"/>
@@ -1074,7 +1074,7 @@ window.onpageshow = function(event){
               id="collapseOne"
               class="collapse"
               data-parent="#accordion"
-              onclick="prodList.ko?type=증류주"
+              onclick="location.href='prodList.ko?type=증류주';"
             >
               <div class="card-body side-card-body">
                 <img
@@ -1088,7 +1088,7 @@ window.onpageshow = function(event){
               id="collapseOne"
               class="collapse"
               data-parent="#accordion"
-              onclick="prodList.ko?type=기타"
+              onclick="location.href='prodList.ko?type=기타주류';"
             >
               <div class="card-body side-card-body">
                 <img

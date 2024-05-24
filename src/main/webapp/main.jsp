@@ -48,7 +48,6 @@ overflow-x:hidden
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	/*             margin: 0; */
 	max-width: 1440px;
 }
 
@@ -57,8 +56,6 @@ overflow-x:hidden
 	max-width: 1244px;
 	margin: 0 auto 60px;
 	font-weight: bold;
-	/*             display: flex; */
-	/*             align-items: center; */
 	position: relative;
 	margin-top: 10px;
 	margin-bottom:60px;
@@ -212,13 +209,12 @@ overflow-x:hidden
 	padding-top: 20;
 }
 .section{
-        max-width: 1440px;
-        }
+	max-width: 1440px;
+}
         
 
 .section-title1 {
 	max-width: 1440px;
-/*     padding-left: 60px; */
     margin: 0;
 	line-height: 0.5;
 	display: flex;
@@ -227,8 +223,7 @@ overflow-x:hidden
 .moreproduct-box{
 	display:flex;
 	align-items:center;
-   
-        cursor:pointer;
+	cursor:pointer;
 }
 
 .moreproduct{
@@ -296,7 +291,6 @@ overflow-x:hidden
 .types {
 	display: flex;
 	justify-content: flex-start;
-	/* flex-direction: column;  */
 }
 
 .sw, .su, .sp, .dgr {
@@ -337,13 +331,13 @@ overflow-x:hidden
 	right: -60;
 }
 .swiper-reviewtext{
-display:flex;
-flex-direction:column;
-align-items: center;
+	display:flex;
+	flex-direction:column;
+	align-items: center;
 }
 .swiper-productscore{
-margin-top:30px;
-color:DarkOrange;
+	margin-top:30px;
+	color:DarkOrange;
 }
 .swiper-productrecontent{
 	font-size:12px;
@@ -361,7 +355,7 @@ color: dimgray;
     display: flex;
     justify-content: center;
     text-align: center;
-    }
+}
 
 
       [class*="main-slider"] {
@@ -379,9 +373,7 @@ color: dimgray;
 
       .main-slider img {
      	width: 100%;
-/*         max-width: 100%; */
         display:block;
-/*         cursor: pointer; */
         min-width: 100%;
     max-width: 100%;
     min-height: 100%;
@@ -402,10 +394,10 @@ color: dimgray;
 	    
     }
     
-        .main-bannerbox-pc , .main-bannerbox-mo{
+    .main-bannerbox-pc , .main-bannerbox-mo{
       position:relative;
       margin-bottom:60px
-      }
+     }
       
     
     .main-prev{	
@@ -644,7 +636,7 @@ display:none;
 							<div class="swiper-text">
 								<div class="swiper-productname">${list.p_name}</div>
 								<div class="swiper-productdesc">${list.p_desc}</div>
-								<div class="swiper-price">${list.p_price}원</div>
+								<div class="swiper-price p-price-comma">${list.p_price}</div>
 								<div class="types">
 										<div class="sw">
 											<p>단맛</p>
@@ -716,7 +708,7 @@ display:none;
 							<div class="swiper-text">
 								<div class="swiper-productname">${list.p_name}</div>
 								<div class="swiper-productdesc">${list.p_desc }</div>
-								<div class="swiper-price">${list.p_price}원</div>
+								<div class="swiper-price p-price-comma">${list.p_price}</div>
 								<div class="types">
 									<div class="sw">
 										<p>단맛</p>
@@ -787,7 +779,7 @@ display:none;
 							<div class="swiper-text">
 								<div class="swiper-productname">${list.p_name}</div>
 								<div class="swiper-productdesc">${list.p_desc }</div>
-								<div class="swiper-price">${list.p_price}원</div>
+								<div class="swiper-price p-price-comma">${list.p_price}</div>
 								<div class="types">
 									<div class="sw">
 										<p>단맛</p>
@@ -858,7 +850,7 @@ display:none;
 							<div class="swiper-text">
 								<div class="swiper-productname">${list.p_name}</div>
 								<div class="swiper-productdesc">${list.p_desc }</div>
-								<div class="swiper-price">${list.p_price}원</div>
+								<div class="swiper-price p-price-comma">${list.p_price}</div>
 								<div class="types">
 									<div class="sw">
 										<p>단맛</p>
@@ -915,7 +907,7 @@ display:none;
 									<div class="swiper-slide-imagewrapper">
 										<span class="slide-image-span1"> <span
 											class="slide-image-span2"></span> <img class="slide-image"
-											src="img/${list.pr_img}" />
+											src="img/imgRev/${list.pr_img}" />
 										</span>
 									</div>
 								</div>
@@ -1034,8 +1026,17 @@ display:none;
 <%@ include file="common/footer.jsp"%>
 <script>
 
+function priceCommaA(price) {
+    let val = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return val;
+}
+
 window.onload = function(){ //쿼리스트링 지워주는 친구
-   history.replaceState({}, null, location.pathname);
+	history.replaceState({}, null, location.pathname);
+	let priceComma = document.getElementsByClassName("p-price-comma");
+	for (let i = 0; i < priceComma.length; i++) {
+		priceComma[i].innerText = priceCommaA(priceComma[i].innerText) + '원';
+	}
 };
 </script>
 </body>

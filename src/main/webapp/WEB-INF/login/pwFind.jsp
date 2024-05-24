@@ -367,7 +367,7 @@ h4 {
 					data : formData,
 					url : 'mailCheck.ko',
 					success : function(data) {
-						console.log("data(인증번호ㅋ) : " + data);
+						console.log("data(인증번호) : " + data);
 						code = data;
 						$('.form-group').css('display', 'block');
 						$('.pwFindMybutton').text("인증번호 확인");

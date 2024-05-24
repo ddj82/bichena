@@ -82,7 +82,12 @@ a.loginbutton:hover{
 	}
 	
 	div#finallyPW{
-		 text-align: center;
+		text-align: center;
+		font-size: 18px;
+		padding: 0 25px;
+	}
+	div#box1 {
+		font-size: 18px;
 	}
 	
 }
@@ -153,7 +158,6 @@ $.ajax({
 	data : formData,
 	url : 'pwFindStart.ko',
 	success : function(data) {
-		console.log("data : " + data);
 		code = data;
 		$('#finallyPW').html("<b>회원님의 임시 비밀번호는</b> "+" <span class='fakePW'>"+data+"</span> <b>입니다.</b>");
 	}

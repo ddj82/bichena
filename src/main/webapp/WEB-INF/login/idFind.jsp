@@ -265,7 +265,6 @@ form#form-signin-id {
 			// 엔터 키가 눌렸을 때 기본 이벤트(폼 제출) 막기
 			if (event.key === "Enter") {
 				event.preventDefault();
-				alert("enter이벤트");
 				test();
 			}
 		});
@@ -297,7 +296,6 @@ form#form-signin-id {
 
 	//사용자가 전송한 데이터를 받아 실행
 	function search() {
-		alert("search()를 탔습니다.");
 		document.getElementById("form-signin-id").submit();
 	}
 	

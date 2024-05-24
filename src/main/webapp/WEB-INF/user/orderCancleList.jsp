@@ -97,7 +97,10 @@ table#revContentTB {
     font-weight: bold;
 }
 /* extra small */
-@media screen and (max-width:575px) {
+@media screen and (max-width:645px) {
+	.each-content {
+		font-size: 14px;
+	}
 	.whole-div {
 		width: 90%;
 	}
@@ -105,13 +108,21 @@ table#revContentTB {
 		width: 100%;
 	}
 	.orderEmpty {
-		margin: 100px 29%;
+		margin: 100px auto;
 	    font-size: 16px;
 	    font-weight: bold;
+	    width: 250px;
+	}
+	.submit {
+		width: 100%;
+		margin: 0;
+	}
+	.list-count {
+		width: 100%;
 	}
 }
 /* small */
-@media screen and (max-width:720px) {
+@media screen and (min-width:541px) and (max-width:720px) {
 	.whole-div {
 		width: 90%;
 	}
@@ -119,7 +130,19 @@ table#revContentTB {
 		width: 80%;
 	}
 	.orderEmpty {
-		margin: 100px 29%;
+		margin: 100px auto;
+		width: 50%;
+	}
+	.submit {
+		width: 100%;
+		margin: 0;
+	}
+	.list-count {
+		width: 50%;
+	}
+	.text-p {
+		width: 70%;
+	    margin: 0 auto;
 	}
 }
 /* medium */
@@ -131,7 +154,19 @@ table#revContentTB {
 		width: 70%;
 	}
 	.orderEmpty {
-		margin: 100px 34%;
+		margin: 100px auto;
+		width: 300px;
+	}
+	.submit {
+		width: 100%;
+		margin: 0;
+	}
+	.list-count {
+		width: 50%;
+	}
+	.text-p {
+		width: 93%;
+	    margin: 0 auto;
 	}
 }
 /* large */
@@ -143,7 +178,15 @@ table#revContentTB {
 		width: 60%;
 	}
 	.orderEmpty {
-		margin: 100px 38%;
+		margin: 100px auto;
+		width: 35%;
+	}
+	.list-count {
+		width: 40%;
+	}
+	.submit {
+		margin: 0;
+		width: 100%;
 	}
 }
 </style>

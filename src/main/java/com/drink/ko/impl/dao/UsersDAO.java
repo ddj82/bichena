@@ -173,7 +173,7 @@ public class UsersDAO {
 	public UsersVO checkTel(String tel) {
 		UsersVO vo = new UsersVO();
 		vo.setU_tel(tel);
-		return mybatis.selectOne("UserDAO.checkTelId", vo);
+		return mybatis.selectOne("UserDAO.checkTel", vo);
 	}
 	
 	public UsersVO checkTelId(String tel, String uid) {
