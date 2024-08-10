@@ -90,11 +90,11 @@ public class BichenaController {
 	public final String IMPORT_CERTIFICATION_URL = "https://api.iamport.kr/certifications";
 
 	// "아임포트 Rest Api key로 설정";
-	public final String KEY = "5332741436286106";
+	public final String KEY = "";
 	// "아임포트 Rest Api Secret로 설정";
-	public final String SECRET = "xGMw5WNK4QaCvoXJtVwSp7VWp2HtteV0RPzVrRvMfNGe6GfLsRyaBM3GlRLdF93YHnAHea1XgPZu4Yj1";
+	public final String SECRET = "";
 	// 아임포트 가맹점 식별코드 값
-	public final String IMPORT_ID = "imp70405420";
+	public final String IMPORT_ID = "";
 
 	@RequestMapping("/main.ko")
 	public String main(Model model) {
